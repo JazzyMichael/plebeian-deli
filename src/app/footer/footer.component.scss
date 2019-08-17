@@ -1,0 +1,43 @@
+// :host {
+//     display: block;
+//     background: white;
+// }
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 180px;
+    padding: 20px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.link-buttons {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.social-icons {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+@media (min-width: 420px) {
+    .logo {
+        font-size: 2.5em;
+    }
+}

@@ -1,0 +1,62 @@
+<div class="options-container">
+    <h1 style="text-align: center; font-weight: 400; margin: 0 auto 1em; letter-spacing: 1px;">Artists & Galleries</h1>
+
+    <mat-radio-group [(ngModel)]="membership" style="width: 500px; max-width: 95%; margin: 1em auto; display: flex; justify-content: space-around;">
+        <mat-radio-button #radioBtn value="artist" (click)="radioClick(radioBtn)">Artists Only</mat-radio-button>
+        <mat-radio-button #radioBtn2 value="gallery" (click)="radioClick(radioBtn2)">Galleries Only</mat-radio-button>
+    </mat-radio-group>
+
+    <div style="width: 95%; max-width: 500px; margin: 1em auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <mat-form-field color="accent">
+            <input
+                matInput
+                [(ngModel)]="searchTerm"
+                (keyup)="change()"
+                autocomplete="off"
+                placeholder="Search"
+                style="font-weight: 100">
+        </mat-form-field>
+
+        <mat-form-field color="accent">
+            <mat-label>Filter</mat-label>
+            <mat-select [(ngModel)]="selectedCategories" (selectionChange)="change()" multiple>
+                <mat-option *ngFor="let cat of categories" [value]="cat">
+                    {{ cat }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="member-container">
+
+    <ng-container *ngFor="let member of users$ | async">
+        <div
+            *ngIf="member.membership !== 'viewer' && ( !membership || (member.membership === membership) )"
+            class="member-card"
+            [routerLink]="'/' + member.username">
+
+            <div class="member-info">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: auto;">
+                    <img *ngIf="member.profileUrl" [src]="member.profileUrl" alt="Profile Pic" class="member-pic">
+                    <img *ngIf="!member.profileUrl" src="assets/jazzy-on-desk.jpg" alt="Profile Pic" class="member-pic">
+                    <span>{{ member.username }}</span>
+                </div>
+                <p *ngIf="member.membership === 'artist'" class="member-description">{{ member.medium }}</p>
+                <p *ngIf="member.membership === 'gallery'" class="member-description">Gallery</p>
+                <p class="member-description">{{ member.description }}</p>
+                <button
+                    mat-raised-button
+                    color="accent"
+                    class="member-description"
+                    style="width: 80%; margin: auto;"
+                    (click)="follow(member); $event.stopPropagation();">
+                    Follow
+                </button>
+            </div>
+
+        </div>
+    </ng-container>
+
+</div>
+

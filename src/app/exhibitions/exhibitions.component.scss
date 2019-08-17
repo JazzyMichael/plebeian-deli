@@ -1,0 +1,25 @@
+mat-card {
+    max-width: 200px;
+    margin: 1em;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+mat-card:hover {
+    opacity: 0.8;
+    box-shadow: none;
+}
+
+.selected {
+    opacity: 0.8;
+    box-shadow: none;
+}
+
+img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}

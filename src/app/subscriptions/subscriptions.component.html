@@ -1,0 +1,26 @@
+
+<div style="text-align: center; margin: 3em auto;">
+    <h2 style="font-size: 2em; font-weight: 400;">Get Involved</h2>
+</div>
+
+<div style="width: 100%; max-width: 1200px; margin: 3em auto; display: flex; flex-direction: row; justify-content: space-around; flex-wrap: wrap;">
+
+    <mat-card *ngFor="let plan of plans" style="width: 300px; padding: 1em 0; margin: 0;">
+
+        <h3 style="font-weight: 400">{{ plan.title }}</h3>
+
+        <p>{{ plan.price | currency }}</p>
+
+        <p>{{ plan.subtitle }}</p>
+
+        <button mat-raised-button color="accent" style="width: 100%; border-radius: 0;">Select</button>
+
+        <mat-list style="text-align: left">
+            <ng-container *ngFor="let perk of plan.perks; index as i;">
+                <mat-list-item style="padding: 1em">{{ perk }}</mat-list-item>
+                <mat-divider *ngIf="i !== plan.perks.length - 1"></mat-divider>
+            </ng-container>
+        </mat-list>
+    </mat-card>
+
+</div>

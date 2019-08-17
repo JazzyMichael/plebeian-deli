@@ -1,0 +1,179 @@
+.parallax-container {
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    z-index: -1;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    transform: translateZ(-1px) scale(2);
+    overflow-x: hidden;
+    margin-left: -1em;
+}
+
+.static-container {
+    position: relative;
+    display: block;
+    background-color: white;
+    z-index: 3;
+    -webkit-box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
+    box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
+}
+
+.static-container-2 {
+    position: relative;
+    display: block;
+    background-color: white;
+    z-index: 3;
+    -webkit-box-shadow: 1px 1px 6px 2px rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px 1px 6px 2px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 6px 2px rgba(0,0,0,0.5);
+}
+
+.content {
+    margin: 0 auto;
+    padding: 2rem 0;
+    font-size: 1rem;
+    // z-index: 1;
+}
+
+.process {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2em auto;
+}
+
+.process-graphic {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+}
+
+.process-graphic span {
+    font-family: 'Roboto', sans-serif;
+}
+
+.process-img {
+    height: 150px;
+    width: auto;
+}
+
+p {
+    margin: 2em 1em;
+}
+
+.visibility-txt {
+    // color: white;
+    z-index: 2;
+    font-size: 1rem;
+    font-weight: 100;
+    text-shadow: -1px 1px 0 white,
+    1px 1px 0 white,
+   1px -1px 0 white,
+  -1px -1px 0 white;
+}
+
+.bg1 {
+    background: url('../../assets/images/gren.jpg');
+    background-position: center;
+    margin-top: -1rem;
+    text-align: center;
+    height: 100vh;
+    // background-size: cover;
+    text-shadow: -1px 1px 0 #000,
+    1px 1px 0 #000,
+   1px -1px 0 #000,
+  -1px -1px 0 #000;
+}
+
+.bg2-txt {
+    color: white;
+    background-color: #4bd1a0;
+    font-weight: 200;
+    margin: 1em auto;
+    max-width: 70%;
+    padding: 0.5em;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    text-shadow: -1px 1px 0 #000,
+				  1px 1px 0 #000,
+				 1px -1px 0 #000,
+				-1px -1px 0 #000;
+}
+
+.bg3 {
+    margin-top: 10vh;
+    // background: #e0dede;
+    height: 30vh;
+    align-items: flex-start;
+    // z-index: 1;
+    // transform: translateZ(-2px) scale(2);
+}
+
+:host {
+    display: block;
+    background: linear-gradient(transparent, transparent, gray);
+}
+
+.signup-btn-top {
+    font-size: 1.5rem;
+    font-weight: 100;
+    width: 80%;
+    height: 50px;
+    display: block;
+    margin: -1.75em auto 0;
+    transition: 100ms all ease-out;
+}
+
+.signup-btn-top:hover {
+    margin-top: -2.5em;
+    height: 75px;
+    width: 100%;
+}
+
+.signup-btn-bottom {
+    font-size: 1.5rem;
+    font-weight: 100;
+    width: 80%;
+    height: 50px;
+    display: block;
+    margin: 0 auto -1.75em;
+    transition: 100ms all ease-out;
+    color: white;
+}
+
+.signup-btn-bottom:hover {
+    margin-bottom: -2.5em;
+    height: 75px;
+    width: 100%;
+}
+
+@media (min-width: 658px) {
+    .bg1 {
+        height: 80vh;
+        margin-top: -10em;
+    }
+
+    .bg2-txt {
+        font-size: 2rem;
+    }
+
+    .content {
+        padding: 2rem 0;
+        font-size: 2rem;
+    }
+
+    .visibility-txt {
+        font-size: 2.5rem;
+    }
+
+    .process {
+        flex-direction: row;
+    }
+}

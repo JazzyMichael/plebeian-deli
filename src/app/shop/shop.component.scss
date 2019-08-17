@@ -1,0 +1,16 @@
+* {
+    font-family: Roboto, sans-serif;
+}
+
+.top-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 0;
+}
+
+@media only screen and (max-width: 974px) {
+    .top-container {
+        grid-template-columns: 100%;
+    }
+}

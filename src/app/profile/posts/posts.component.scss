@@ -1,0 +1,16 @@
+.post-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.post-thumbnail {
+    margin: 0.5em;
+    cursor: pointer;
+    max-width: 300px;
+    transition: all 200ms ease-out;
+}
+
+.post-thumbnail:hover {
+    margin: 0.75em 0.5em 0.25em;
+}

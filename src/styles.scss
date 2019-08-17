@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Archivo Black', "Helvetica Neue", sans-serif;
+    scroll-behavior: smooth;
+}
+
+* {
+    font-family: 'Archivo Black', "Helvetica Neue", sans-serif;
+}
+
+*:focus {
+    outline: none;
+}
+
+mat-icon {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.main-container {
+    perspective: 1px;
+    transform-style: preserve-3d;
+    height: 100vh;
+    overflow-x: hidden;
+    // overflow-y: scroll;
+}
+
+@media (min-width: 777px) {
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 10px;
+        background-color: #F5F5F5;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-image: -webkit-gradient(linear,
+                            left bottom,
+                            left top,
+                            color-stop(0.2, #fdf5a2),
+                            color-stop(1, #4bd1a0));
+    }
+}

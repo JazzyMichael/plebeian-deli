@@ -1,0 +1,160 @@
+
+<div *ngIf="user$ | async as user" class="cont">
+
+    <div class="left-column">
+
+        <!-- Profile Pic-->
+        <div
+            class="profile-pic"
+            [ngStyle]="{'background': user.profileUrl ? 'url(' + user.profileUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}"
+            [ngClass]="user.profileUrl ? 'bg' : ''">
+            <ng-container *ngIf="editable">
+                <label for="profile-pic-upload" class="upload-btn">
+                    <mat-icon>publish</mat-icon>
+                    <span style="margin-left: 10px">Upload</span>
+                </label>
+                <input
+                    id="profile-pic-upload"
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    (change)="uploadProfilePic($event)">
+            </ng-container>
+        </div>
+
+        <!-- Medium -->
+        <mat-form-field
+            *ngIf="user.membership === 'artist' && editable"
+            color="accent"
+            style="margin-top: 1em">
+            <mat-label>Medium</mat-label>
+            <mat-select [value]="user.medium" (selectionChange)="updateUserMedium($event)">
+                <mat-option *ngFor="let cat of categories" [value]="cat.name">
+                    {{ cat.name | titlecase }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Real Name -->
+        <p>{{ user.displayName || user.username }}</p>
+
+        <!-- Location -->
+        <p>Location</p>
+
+        <!-- Follower Count -->
+        <p>{{ user.followers }} Followers</p>
+
+        <button mat-raised-button>Send Message</button>
+
+        <!-- Social Links -->
+        <div style="width: 90%">
+            <mat-form-field>
+                <input
+                    matInput
+                    type="text"
+                    placeholder="Instagram"
+                    autocomplete="off">
+                <mat-icon
+                    matSuffix
+                    (click)="$event.stopPropagation()">
+                    link
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input
+                    matInput
+                    type="text"
+                    placeholder="Other"
+                    autocomplete="off">
+                <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- Gallery Contact Info -->
+            <!-- Email, Phone, Address -->
+
+        <!-- <p>Institution</p> -->
+
+        <!-- Galleries -->
+        <p *ngIf="user.membership === 'artist'">Galleries</p>
+
+        <!-- CV -->
+        <ng-container *ngIf="user.membership === 'artist' && editable; else viewCV">
+            <button *ngIf="user.cv" mat-button>
+                <a href="{{ user.cv }}" target="_blank">View CV</a>
+            </button>
+            <button mat-button style="padding: 0">
+                <label for="cv-upload" class="cv-upload-btn">
+                    <mat-icon>publish</mat-icon>
+                    <span style="margin-left: 10px">Upload New CV</span>
+                </label>
+            </button>
+            <input
+                id="cv-upload"
+                type="file"
+                accept="application/pdf"
+                style="display: none"
+                (change)="uploadCv($event)">
+        </ng-container>
+
+        <ng-template #viewCV>
+            <button *ngIf="user.membership === 'artist' && user.cv" mat-button>
+                <a href="{{ user.cv }}" target="_blank" style="text-decoration: none">View CV</a>
+            </button>
+        </ng-template>
+
+    </div>
+
+    <div class="right-column">
+
+        <!-- Username and Medium/Membership -->
+        <div style="display: flex; justify-content: space-around; align-items: center;">
+            <h1 style="font-weight: 200">{{ user.username }}</h1>
+            <h1 *ngIf="user.membership === 'viewer'" style="font-weight: 200">{{ 'Member' }}</h1>
+            <h1 *ngIf="user.membership === 'artist' && user.medium" style="font-weight: 200">{{ user.medium | titlecase }}</h1>
+            <h1 *ngIf="user.membership === 'artist' && !user.medium" style="font-weight: 200">Artist</h1>
+            <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
+        </div>
+
+        <!-- Bio/Description -->
+        <ng-container *ngIf="editable; else readonlyDescription">
+            <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
+                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
+                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
+                <textarea matInput #descriptionInput placeholder="Bio" maxlength="240" rows="5" [value]="user.description"></textarea>
+                <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-template #readonlyDescription>
+            <div>{{ user.description }}</div>
+        </ng-template>
+
+        <br><br>
+
+        <!-- Posts -->
+        <app-posts
+            *ngIf="user.membership === 'artist'"
+            [user]="user"
+            [editable]="editable"
+            [categories]="categories">
+        </app-posts>
+
+        <!-- Events -->
+        <app-events
+            *ngIf="user.membership === 'gallery'"
+            [user]="user"
+            [editable]="editable">
+        </app-events>
+
+        <!-- Artists -->
+        <app-artists
+            *ngIf="user.membership === 'gallery'"
+            [user]="user"
+            [editable]="editable">
+        </app-artists>
+
+    </div>
+
+</div>

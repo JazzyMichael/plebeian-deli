@@ -1,0 +1,105 @@
+
+
+<h1 style="text-align: center; font-weight: 400; margin: 2em auto;">Prime Cuts</h1>
+
+
+<ngx-hm-carousel
+    [(ngModel)]="carouselIndex"
+    show-num="auto"
+    [breakpoint]="carouselBreakpoints"
+    [infinite]="carouselInfinite"
+    [drag-many]="true"
+    [data]="carouselData"
+    class="carousel">
+
+
+    <section ngx-hm-carousel-container class="carousel-content">
+        <article ngx-hm-carousel-item class="item"
+          *ngFor="let data of carouselData; let i = index"
+            [ngClass]="{'visible': carouselIndex === i}">
+          <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
+            <iframe
+                [src]="data.videoUrl"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <button mat-button style="margin: 1em" (click)="$event.stopPropagation()">Full Post</button>
+          </div>
+        </article>
+        <ng-template #infiniteContainer></ng-template>
+    </section>
+    
+    <ng-template #carouselContent let-data let-i="index">
+        <article class="item" [ngClass]="{'visible': carouselIndex === i}">
+          <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
+            <iframe
+                [src]="data.videoUrl"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <button mat-button style="margin: 1em" (click)="$event.stopPropagation()">Full Post</button>
+          </div>
+        </article>
+    </ng-template>
+    
+    <ng-template #carouselPrev>
+        <div class="click-area">
+          <i class="material-icons" style="font-size: 3em">keyboard_arrow_left</i>
+        </div>
+      </ng-template>
+      <ng-template #carouselNext>
+        <div class="click-area">
+          <i class="material-icons" style="font-size: 3em">keyboard_arrow_right</i>
+        </div>
+    </ng-template>
+
+</ngx-hm-carousel>
+
+
+
+
+
+<div class="feature-friday">
+    <div class="title">
+        <span>Feature Friday</span>
+    </div>
+
+    <div class="featured">
+        <span>Joey</span>
+        <span>Forrest</span>
+        <span>Colleen</span>
+        <span>Sam</span>
+    </div>
+</div>
+
+
+<div class="tv-bg">
+    <div style="width: 80%; height: 55%; overflow-y: scroll;">
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+        <mat-card>Post</mat-card>
+    </div>
+</div>

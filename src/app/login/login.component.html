@@ -1,0 +1,80 @@
+
+
+
+<mat-tab-group mat-stretch-tabs dynamicHeight color="accent" style="margin: 1em auto; width: 500px; max-width: 85%;">
+
+    <mat-tab label="Sign Up">
+        <form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
+
+            <mat-form-field color="accent" style="width: 100%">
+                <input
+                    matInput
+                    autocomplete="off"
+                    uniqueUsernameValidator
+                    formControlName="username"
+                    placeholder="Username"
+                    required>
+                <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
+                Username already taken
+                </mat-error>
+                <mat-error *ngIf="signUpForm.get('username').hasError('required')">
+                Username is required
+                </mat-error>
+            </mat-form-field>
+        
+        
+            <div style="width: 100%; min-width: 200px; margin: 1em auto; display: flex; justify-content: space-around;">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    style="color: white"
+                    [disabled]="!signUpForm.valid"
+                    (click)="auth.signUpWithGoogle(signUpForm.get('username').value)">
+                    Sign Up With Google
+                </button>
+                <button
+                    mat-raised-button
+                    style="background-color: #3f6fff; color: white;"
+                    [disabled]="!signUpForm.valid">
+                    Sign Up With Facebook
+                </button>
+            </div>
+
+            <!-- <button
+                mat-raised-button
+                [disabled]="!signUpForm.valid"
+                (click)="gallerySignUp()"
+                style="margin: 3em auto; display: block;">
+                New Gallery
+            </button> -->
+            
+        </form>
+    </mat-tab>
+
+    <mat-tab label="Log In">
+
+        <div style="width: 100%; min-width: 200px; margin: 2em auto; display: flex; justify-content: space-around;">
+            <button
+                mat-raised-button
+                color="primary"
+                style="color: white"
+                (click)="auth.loginWithGoogle()">
+                Login With Google
+            </button>
+            <button
+                mat-raised-button
+                style="background-color: #3f6fff; color: white;">
+                Login With Facebook
+            </button>
+        </div>
+
+    </mat-tab>
+
+</mat-tab-group>
+
+
+
+
+
+
+

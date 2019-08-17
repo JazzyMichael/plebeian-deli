@@ -1,0 +1,47 @@
+
+<div style="font-size: 2rem; width: 300px; margin: 3rem auto; display: flex; justify-content: space-between; align-items: center;">
+    <mat-icon
+        style="cursor: pointer"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        keyboard_arrow_left
+    </mat-icon>
+    <span>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+    <mat-icon
+        style="cursor: pointer"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        keyboard_arrow_right
+    </mat-icon>
+</div>
+
+
+
+<div *ngIf="events$ | async; let events" style="width: 100%; max-width: 1000px; margin: 1em auto 3rem;">
+    <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)" >
+    </mwl-calendar-month-view>
+</div>
+
+
+
+<!-- <div style="width: 100%; max-width: 1000px; margin: 5rem auto;">
+    <h2 style="font-weight: 300">Institutions</h2>
+
+    <div>
+        <button mat-button>Vicki (NY)</button>
+        <button mat-button>Gazebo (NY)</button>
+        <button mat-button>University of Delaware</button>
+        <button mat-button>Delaware State University</button>
+    </div>
+</div> -->
+

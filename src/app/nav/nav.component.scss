@@ -1,0 +1,95 @@
+button {
+    font-size: 0.85em;
+    display: block;
+    min-width: 0;
+    padding: 0 8px;
+}
+
+mat-toolbar-row {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.flashlight {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.dark {
+    background-color: black;
+    color: white;
+}
+
+.light {
+    background-color: #f5f5f5;
+    color: black;
+}
+
+.mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+.mat-drawer-container {
+    background: none;
+}
+
+.logo {
+    height: 50px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.logo:focus {
+    outline: none;
+}
+
+.subscriptions-btn {
+    border-radius: 20px;
+    padding: 0.3em 0.55em;
+}
+
+.nav-link {
+    cursor: pointer;
+    font-size: 0.85em;
+    display: none;
+}
+
+.nav-link:hover {
+    color: #80caa2;
+}
+
+.subscriptions-btn:hover {
+    color: black;
+}
+
+.active-link {
+    color: #ff4081;
+}
+
+.perm-nav-link {
+    display: block;
+}
+
+@media (min-width: 800px) {
+    .menu-button {
+        display: none;
+    }
+
+    .nav-link {
+        display: block;
+    }
+
+    .flashlight {
+        margin-right: 10px;
+    }
+
+    mat-toolbar-row {
+        justify-content: space-around;
+    }
+}

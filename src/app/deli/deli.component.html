@@ -1,0 +1,69 @@
+
+<ngx-hm-carousel
+    #carousel
+    [(ngModel)]="carouselIndex"
+    (ngModelChange)="carouselIndexChanged($event)"
+    [infinite]="infinite"
+    [data]="cats"
+    class="carousel">
+
+    <section ngx-hm-carousel-container class="content">
+        <article ngx-hm-carousel-item *ngFor="let cat of cats" class="item">
+            <span>{{ cat.name | titlecase }}</span>
+            <mat-icon style="font-size: 30px">{{ cat.icon }}</mat-icon>
+        </article>
+        <ng-template #infiniteContainer></ng-template>
+    </section>
+
+    <ng-template #carouselContent let-cat let-i="index">
+        <article class="item">
+            <span>{{ cat.name | titlecase }}</span>
+            <mat-icon style="font-size: 30px">{{ cat.icon }}</mat-icon>
+        </article>
+        <!-- <article class="item cursor-pointer">
+          <div class="img"
+            [style.backgroundImage]="'url('+avatar.url+')'">
+          </div>
+        </article> -->
+    </ng-template>
+
+    <ng-template #carouselPrev>
+        <div style="text-align: center">
+            <mat-icon style="font-size: 2em">keyboard_arrow_left</mat-icon>
+        </div>
+    </ng-template>
+
+    <ng-template #carouselNext>
+        <div style="text-align: center">
+            <mat-icon style="font-size: 2em">keyboard_arrow_right</mat-icon>
+        </div>
+    </ng-template>
+
+</ngx-hm-carousel>
+
+<div class="icon-container">
+
+    <mat-icon
+        *ngFor="let cat of cats; let i = index"
+        (click)="categorySelect(i)"
+        [ngClass]="{'selected': i == carouselIndex}">
+        {{ cat.icon }}
+    </mat-icon>
+
+</div>
+
+<br><br><br><br>
+
+<div class="post-list">
+    <ng-container *ngFor="let post of postService.posts$ | async">
+        <mat-card *ngIf="post.category && post.category.toLowerCase() === category" class="post-thumbnail" (click)="postClick(post)">
+            <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image">
+            <mat-card-content>
+                <p>{{ post.title }}</p>
+                <p>{{ post.createdDate.seconds | date }}</p>
+                <p>Author Username</p>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+</div>
+

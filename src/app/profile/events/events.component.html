@@ -1,0 +1,116 @@
+<div class="event-header">
+    <h2 style="font-weight: 300">Events</h2>
+
+    <div *ngIf="editable && eventForm">
+        <button
+            mat-raised-button
+            *ngIf="editing"
+            color="primary"
+            [disabled]="!eventForm.touched || !eventForm.valid"
+            style="margin-right: 1em"
+            (click)="submitEvent()">
+            <mat-icon>done</mat-icon>
+            <span>Submit</span>
+        </button>
+        <button
+            mat-raised-button
+            *ngIf="editing"
+            (click)="editing = false">
+            <mat-icon>close</mat-icon>
+            <span>Cancel</span>
+        </button>
+        <button
+            mat-raised-button
+            *ngIf="!editing"
+            (click)="editing = true">
+            <mat-icon>add</mat-icon>
+            <span style="margin-left: 10px">New Event</span>
+        </button>
+    </div>
+</div>
+
+<form *ngIf="editing" [formGroup]="eventForm" class="event-form">
+    <mat-form-field class="responsive-field">
+        <input
+            matInput
+            type="text"
+            placeholder="Title"
+            formControlName="title"
+            autocomplete="off"
+            required>
+    </mat-form-field>
+
+    <mat-form-field class="responsive-field">
+        <input
+            matInput
+            type="text"
+            placeholder="Location"
+            formControlName="location"
+            autocomplete="off"
+            required>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="responsive-field">
+        <input
+            matInput
+            [matDatepicker]="picker"
+            [matDatepickerFilter]="pickerFilter"
+            placeholder="Date"
+            formControlName="date"
+            (click)="picker.open()"
+            autocomplete="off"
+            required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="responsive-field">
+        <input
+            matInput
+            placeholder="Start Time"
+            formControlName="time"
+            autocomplete="off">
+        <mat-hint>Optional</mat-hint>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field style="width: 100%">
+        <textarea
+            matInput
+            placeholder="Description"
+            formControlName="description"
+            rows="5"
+            required>
+        </textarea>
+    </mat-form-field>
+
+    <br>
+
+    <button mat-button class="responsive-field">Picture</button>
+
+    <mat-form-field class="responsive-field">
+        <input
+            matInput
+            placeholder="Link"
+            formControlName="link">
+        <mat-hint>Optional</mat-hint>
+    </mat-form-field>
+
+</form>
+
+<div class="event-list">
+    <mat-card *ngFor="let event of eventService.events$ | async" class="event-card">
+        <mat-card-header>
+            <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg)"></div>
+            <mat-card-title>{{ event.title }}</mat-card-title>
+            <mat-card-subtitle>date</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="assets/images/person2.svg" alt="Event Image">
+        <!-- <mat-card-content>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit voluptates ut magnam. Maiores temporibus sit non, deleniti porro tenetur ea laudantium, necessitatibus officiis optio perferendis ad neque esse dolore quod.</p>
+        </mat-card-content> -->
+    </mat-card>
+</div>

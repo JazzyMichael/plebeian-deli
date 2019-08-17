@@ -1,0 +1,98 @@
+<mat-sidenav-container>
+
+    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; min-width: 150px;">
+        <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
+            <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button routerLink="/prime-cuts" (click)="sidenav.close()">Prime Cuts</button>
+        <button mat-button routerLink="/deli" (click)="sidenav.close()">Deli</button>
+        <button mat-button routerLink="/exhibitions" (click)="sidenav.close()">Exhibitions</button>
+        <button mat-button routerLink="/calendar" (click)="sidenav.close()">Calendar</button>
+        <button mat-button routerLink="/members" (click)="sidenav.close()">Members</button>
+        <button mat-button routerLink="/shop" (click)="sidenav.close()">Shop</button>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="main-container">
+        <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'">
+            <mat-toolbar-row>
+
+                <div style="display: flex; align-items: center;">
+                    <mat-icon [ngStyle]="{'color' : darkTheme ? '#fdf5a2' : 'black'}" class="flashlight" (click)="changeTheme()">highlight</mat-icon>
+          
+                    <svg class="logo" routerLink="/about" preserveAspectRatio="xMidYMid meet" data-bbox="4.014 5 1118.865 611.297" viewBox="0 0 1127.888 620.299" height="620.299" width="1127.888" xmlns="http://www.w3.org/2000/svg" data-type="ugc" role="img">
+                        <g>
+                            <path stroke-width="8" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M34.141 24.378H4.014L6.039 611.54l90.773.98-1.607-292.464h65.885l-1.563-296.91-125.386 1.232"></path>
+                            <path stroke-width="8" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M242.866 24.941h-77.133l-1.607 282.822h-61.064v78.741h46.601v229.793l964.388-.47-5.238-412.054-101.267 40.158-1.71-73.518-83.844.186-137.933-.864v68.958h59.547l.629 130.983-56.684 1.712-24.444-190.785h-92.538l26.19 187.293-62.856 3.492v57.618h59.364V549.48l-78.57-1.746V176.403l-66.347 1.746-87.3 13.402-1.746-151.901-72.988 1.273 1.402 316.497-48.887 1.746v80.316h60.902l.207 99.522h-85.553l1.746-357.929-69.84 3.492-3.427-159.626z"></path>
+                            <path stroke-width="8" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M750.198 27.428h-37.265l-.192 100.323h75.579l-1.589-98.577-36.533-1.746z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M49.224 5H180.67v321.353h-66.136v249.543h-65.31V5z"></path>
+                            <path d="M115.36 288.653h16.534l-.826-247.748H115.36z" stroke-width="6" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2"></path>
+                            <path d="M205.462 5c.55 189.7 2.232 382.083 2.783 571.783h65.007c-.276-189.102-.552-382.681-.827-571.783z" fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M298.043 149.028l2.821 428.267h112.98l-.287-50.955h-50.204l-.827-143.283h50.429l-.826-234.029H298.043z"></path>
+                            <path stroke-width="6" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M362.526 337.684h17.361l-1.653-143.283h-14.881l-.827 143.283z"></path>
+                            <path d="M435.905 5.707l1.202 571.588H567.36c-1.566-141.2-1.883-285.861-3.45-427.062-23.586.317-41.285-.274-60.729 0-.624-46.34.74-96 .133-144.526z" fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10"></path>
+                            <path stroke-width="6" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M503.182 183.829h17.931v366.594l-15.567-.239-2.364-366.355z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M597.277 150.233l.55 427.062 114.914-.889-.552-46.52h-49.602l-.827-144.172h50.429l-.827-235.481H597.277z"></path>
+                            <path stroke-width="6" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M661.76 340.06h17.361l-1.654-144.172h-14.88l-.827 144.172z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M739.048 150.275l65.544-.042v426.201h-65.105l-.439-426.159z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M946.464 576.261l-2.749-426.028-114.276-.781.408 49.874 49.611.206 1.464 142.718-50.427.98 1.873 233.204 114.096-.173z"></path>
+                            <path stroke-width="6" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M886.978 387.862l-17.36.338 2.305 144.007 17.533-.341-2.478-144.004z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M975.006 149.452h66.92l-.889 48.696 32.681-48.696h48.361l.8 426.982h-50.221l.93-335.36-31.621 53.658-.939 281.702h-66.022V149.452z"></path>
+                            <path fill="#fdf5a2" stroke-width="10" stroke="#231f20" stroke-miterlimit="10" d="M739.048 12.781l.05 90.888 65.494.041-.179-90.929h-65.365z"></path>
+                        </g>
+                    </svg>
+                </div>
+          
+                <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link perm-nav-link">Prime Cuts</span>
+                <span routerLink="/deli" routerLinkActive="active-link" class="nav-link perm-nav-link">Deli</span>
+                <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">Exhibitions</span>
+                <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">Calendar</span>
+                <span routerLink="/members" routerLinkActive="active-link" class="nav-link">Members</span>
+                <span routerLink="/shop" routerLinkActive="active-link" class="nav-link">Shop</span>
+                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link subscriptions-btn">Subscriptions</button>
+                <ng-container *ngIf="auth.user$ | async as user; else noUser">
+                    <button mat-button class="nav-link" [matMenuTriggerFor]="menu">
+                        <mat-icon>accessibility_new</mat-icon>
+                        <span style="display: inline-block; width: 0.5em;"></span>
+                        <span>{{ user.username }}</span>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="'/' + user.username">
+                            <mat-icon>sentiment_very_satisfied</mat-icon>
+                            <span>Profile</span>
+                        </button>
+                        <button mat-menu-item routerLink="/info">
+                            <mat-icon>sentiment_satisfied</mat-icon>
+                            <span>Info</span>
+                        </button>
+                        <button mat-menu-item (click)="auth.logout()">
+                            <mat-icon>sentiment_dissatisfied</mat-icon>
+                            <span>Log Out</span>
+                        </button>
+                    </mat-menu>
+                </ng-container>
+                <ng-template #noUser>
+                    <button mat-button class="nav-link" routerLink="/login" routerLinkActive="active-link">
+                        <mat-icon>face</mat-icon>
+                        <span style="display: inline-block; width: 0.5em;"></span>
+                        <span>Log In</span>
+                    </button>
+                </ng-template>
+
+                <button mat-icon-button class="menu-button" (click)="sidenav.open()">
+                    <mat-icon>waves</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+
+        <router-outlet></router-outlet>
+
+        <br><br><br><br>
+
+        <app-footer></app-footer>
+
+    </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

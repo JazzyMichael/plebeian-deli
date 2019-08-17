@@ -40,6 +40,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/e2e
+/src/environments/*
 
 # System Files
 .DS_Store
