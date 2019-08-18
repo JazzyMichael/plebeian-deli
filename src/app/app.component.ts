@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatService } from './services/chat.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   admin: boolean;
-  testChats: any[];
-  showMessages: boolean;
-  viewingChat: any;
-  chats$: Observable<any>;
 
-  constructor(private router: Router, private chatService: ChatService) {
+  constructor(private router: Router) {
     this.router.events.subscribe(x => {
       this.admin = this.router.url === '/admin'
         || this.router.url === '/admin/new-post'
@@ -27,29 +21,6 @@ export class AppComponent {
         || this.router.url === '/admin/more'
         || this.router.url === 'admin';
     });
-
-    this.chats$ = this.chatService.userChats$.asObservable();
-
-    this.testChats = [
-      { username: 'mike', messages: 'aye a message' },
-      { username: 'joey', messages: 'hey its a message' },
-      { username: 'forest', messages: 'message' },
-      { username: 'jeremy', messages: 'yo message' },
-      { username: 'james', messages: 'here is a message' },
-    ];
-  }
-
-  messagesToggle() {
-    return;
-    // this.showMessages = !this.showMessages;
-  }
-
-  viewChat(chat: any) {
-    this.viewingChat = chat;
-  }
-
-  goBack() {
-    this.viewingChat = null;
   }
 
   onSwipeRight(event: any) {

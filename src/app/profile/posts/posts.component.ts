@@ -52,7 +52,7 @@ export class PostsComponent implements OnInit {
   }
 
   viewPost(post: any) {
-    this.router.navigateByUrl(`/post/${post.title}`);
+    this.router.navigateByUrl(`/post/${post.userId}split${post.postId}`);
   }
 
 }

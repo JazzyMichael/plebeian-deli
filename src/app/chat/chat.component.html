@@ -1,0 +1,65 @@
+<button
+    mat-fab
+    color="light"
+    class="chat-fab"
+    [ngClass]="showChats ? 'showing-chats' : ''"
+    (click)="messagesToggle()">
+
+    <mat-icon
+        *ngIf="!showChats"
+        matBadge="2"
+        matBadgeOverlap="false"
+        matBadgeColor="accent">
+        local_post_office
+    </mat-icon>
+
+    <mat-icon
+        *ngIf="showChats"
+        color="accent">
+        close
+    </mat-icon>
+</button>
+
+<mat-card *ngIf="showChats" class="chats-card" [style.background]="viewingChat ? 'black' : 'white'">
+
+    <!-- chat box headers -->
+    <div *ngIf="viewingChat" class="chats-card-header">
+        <button mat-icon-button (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 style="font-weight: 300">{{ viewingChat.otherUser.username }}</h3>
+    </div>
+
+    <div *ngIf="!viewingChat" class="chats-card-header">
+        <h3 style="font-weight: 300">Messages</h3>
+    </div>
+
+    <!-- chat list -->
+    <mat-list *ngIf="!viewingChat">
+        <mat-list-item *ngFor="let chat of chatService.userChats$ | async" (click)="viewChat(chat)">
+            <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
+            <h3 matLine>{{ chat.otherUser?.username }}</h3>
+            <p matLine>Blegh</p>
+        </mat-list-item>
+    </mat-list>
+
+    <!-- chat messages -->
+    <div *ngIf="this.viewingChat" style="height: 97%; overflow: auto;">
+        <div
+            *ngFor="let message of viewingChat.messages; index as i"
+            [ngClass]="i % 2 === 0 ? 'left-chat' : 'right-chat'">
+            {{ message.content }}
+        </div>
+    </div>
+
+    <!-- <mat-form-field appearance="fill" style="width: 100%; color: white;">
+        <textarea
+            matInput
+            #chatInput
+            rows="3"
+            maxlength="120">
+        </textarea>
+        <mat-hint>{{ chatInput.value?.length || 0 }}/120</mat-hint>
+    </mat-form-field> -->
+
+</mat-card>

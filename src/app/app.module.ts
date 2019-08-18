@@ -35,6 +35,11 @@ import { FooterComponent } from './footer/footer.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
 import { LoginComponent } from './login/login.component';
+import { PostComponent } from './post/post.component';
+import { InfoComponent } from './info/info.component';
+import { EventsComponent } from './profile/events/events.component';
+import { ArtistsComponent } from './profile/artists/artists.component';
+import { ChatComponent } from './chat/chat.component';
 
 // 3rd Party Modules
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -42,10 +47,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
-import { PostComponent } from './post/post.component';
-import { InfoComponent } from './info/info.component';
-import { EventsComponent } from './profile/events/events.component';
-import { ArtistsComponent } from './profile/artists/artists.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -86,11 +87,12 @@ const routes: Routes = [
     PostComponent,
     InfoComponent,
     EventsComponent,
-    ArtistsComponent
+    ArtistsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

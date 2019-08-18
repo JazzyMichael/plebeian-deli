@@ -30,7 +30,6 @@ export class AuthService {
         ? this.afStore.doc<any>(`users/${user.uid}`).valueChanges()
         : of(null))
       ).subscribe(user => {
-        // console.log(user);
         if (user) {
           this.chatService.getUserChats(user.uid);
           this.username = user.username;

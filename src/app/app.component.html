@@ -5,56 +5,6 @@
 
 <router-outlet *ngIf="admin"></router-outlet>
 
-<button
-    *ngIf="!admin"
-    mat-fab
-    color="light"
-    class="messages-fab"
-    [ngClass]="showMessages ? 'showing-messages' : ''"
-    (click)="messagesToggle()">
-    <mat-icon
-        *ngIf="!showMessages"
-        matBadge="2"
-        matBadgeOverlap="false"
-        matBadgeColor="accent">
-        local_post_office
-    </mat-icon>
-    <mat-icon
-        *ngIf="showMessages"
-        color="accent">
-        close
-    </mat-icon>
-</button>
-
-<mat-card *ngIf="showMessages" class="messages-card">
-
-    <div *ngIf="viewingChat" class="messages-card-header">
-        <button mat-icon-button (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <!-- <h3 style="font-weight: 300">{{ viewingChat.username }}</h3> -->
-        <h3 style="font-weight: 300">Username</h3>
-    </div>
-
-    <div *ngIf="!viewingChat" class="messages-card-header">
-        <h3 style="font-weight: 300">Messages</h3>
-    </div>
-
-    <mat-list *ngIf="!viewingChat">
-        <mat-list-item *ngFor="let chat of chats$ | async" style="cursor: pointer" (click)="viewChat(chat)">
-            <img matListAvatar src="assets/images/instagram.svg" alt="Profile Pic">
-            <!-- <h3 matLine>{{ chat.username }}</h3>
-            <p matLine>{{ chat.messages }}</p> -->
-            <h3 matLine>Username</h3>
-            <p matLine>messages</p>
-        </mat-list-item>
-    </mat-list>
-
-    <div *ngIf="this.viewingChat">
-        <!-- {{ viewingChat.messages }} -->
-        messages go here
-    </div>
-
-</mat-card>
+<app-chat *ngIf="!admin"></app-chat>
 
 </div>

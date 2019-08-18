@@ -27,18 +27,18 @@ export class UserService {
       .catch((err) => console.log('error updating user'));
   }
 
-  addPost(uid: string, title: string, category: string, content: any) {
+  addPost(userId: string, title: string, category: string, content: any) {
     const doc = {
       title,
       category,
       content,
-      uid,
+      userId,
       createdTimestamp: Date.now(),
       createdDate: new Date()
     };
 
     return this.afStore
-      .doc(`users/${uid}`)
+      .doc(`users/${userId}`)
       .collection('posts')
       .add(doc);
   }
@@ -48,7 +48,7 @@ export class UserService {
       .collection('users')
       .doc(uid)
       .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(5))
-      .valueChanges();
+      .valueChanges({ idField: 'postId' });
   }
 
 }

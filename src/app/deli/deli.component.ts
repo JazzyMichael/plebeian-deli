@@ -34,7 +34,7 @@ export class DeliComponent implements OnInit {
   }
 
   postClick(post: any) {
-    this.router.navigateByUrl(`/post/${post.title}`);
+    this.router.navigateByUrl(`/post/${post.userId}split${post.postId}`);
   }
 
 }

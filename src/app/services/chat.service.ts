@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,32 +14,53 @@ export class ChatService {
   }
 
   getUserChats(uid: string) {
-    // const ref = this.afStore.collection('chats');
-    // const query = ref.
+    console.log('getUserChats', uid);
 
     this.afStore
       .collection('chats', ref => ref.where('users', 'array-contains', uid))
       .valueChanges({ idField: 'id' })
-      // .pipe(
-      //   map(async (chat) => {
-      //     console.log(chat.rootChatId);
-          // const docRef = this.afStore.collection('chats').doc(chat.rootChatId);
-          // docRef.get().toPromise().then(doc => {
-          //   console.log('got doc', doc);
-          // })
-          // .catch(err => console.log('error getting doc', err));
+      .pipe(
+        switchMap(async (chats: any) => {
 
-          // const docVal = await doc.toPromise();
-          // console.log('docVal', docVal);
-          // const data = docVal.data();
-          // console.log('data', data);
-          // const otherUid = data.users.find(userId => userId !== uid);
-      //     return { ...chat };
-      //   })
-      // )
-      .subscribe(chats => {
-        console.log(chats);
+          for await (let chat of chats) {
+
+            const otherUserIdIndex = chat.users.findIndex((u: string) => u !== uid);
+
+            const otherUserId = chat.users[otherUserIdIndex];
+
+            const otherUserDoc = await this.afStore.collection('users').doc(otherUserId).get().toPromise();
+
+            const otherUser = otherUserDoc.data();
+
+            chat['otherUser'] = otherUser;
+
+          }
+
+          return chats;
+        })
+      )
+      .subscribe((chats: any[]) => {
+        console.log('chats', chats);
         this.userChats$.next(chats);
       });
+  }
+
+  initiateChat(initiatingUserId: string, secondUserId: string, message: string = 'Hello!') {
+    const chatDoc = {
+      users: [initiatingUserId, secondUserId],
+      messages: [
+        {
+          content: message,
+          userId: initiatingUserId,
+          timestamp: Date.now()
+        }
+      ]
+    };
+
+    this.afStore
+      .collection('chats')
+      .add(chatDoc)
+      .then(res => console.log('chat started'))
+      .catch(e => console.log('error starting chat', e));
   }
 }

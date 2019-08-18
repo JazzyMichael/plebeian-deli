@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../services/post.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -7,20 +9,28 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  postId: string;
+  post$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private postService: PostService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
 
-      this.postId = params.get('id');
+      const postParam = params.get('id');
 
-      console.log(this.postId);
-
-      if (!this.postId) {
+      if (!postParam) {
         return this.router.navigateByUrl('/deli');
       }
+
+      const split = postParam.split('split');
+
+      const userId = split[0];
+      const postId = split[1];
+
+      this.post$ = this.postService.getPost(userId, postId);
     });
   }
 

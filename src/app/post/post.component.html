@@ -1,9 +1,8 @@
 
 <div style="width: 1000px; max-width: 100%; margin: 0 auto; padding: 4em 2em; background-color: #e7e7e7;">
 
-    <mat-card style="width: 80%; margin: 2em auto; height: 500px; display: flex; justify-content: center; align-items: center;">
-        {{ postId }}
-        <!-- <quill-view [content]="post.content"></quill-view> -->
+    <mat-card *ngIf="post$ | async as post" style="width: 80%; margin: 2em auto; height: 500px; display: flex; justify-content: center; align-items: center;">
+        <quill-view [content]="post.content"></quill-view>
     </mat-card>
 
 </div>

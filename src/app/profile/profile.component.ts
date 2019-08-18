@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { switchMap, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { switchMap, tap, debounceTime, first } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   editable: boolean;
   doneLoading: boolean;
   categories: any[];
+  update$: Subject<any> = new Subject();
 
   constructor(
     private router: Router,
@@ -26,7 +28,8 @@ export class ProfileComponent implements OnInit {
     private auth: AuthService,
     public userService: UserService,
     private storage: AngularFireStorage,
-    private catService: CategoriesService
+    private catService: CategoriesService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
@@ -50,6 +53,11 @@ export class ProfileComponent implements OnInit {
     }, 1111);
 
     this.categories = this.catService.getCategories();
+
+    this.update$.pipe(debounceTime(1000)).subscribe(userObj => {
+      this.userService.updateUser(this.uid, userObj);
+      console.log(userObj);
+    });
   }
 
   updateDescription(description: string) {
@@ -59,6 +67,47 @@ export class ProfileComponent implements OnInit {
   updateUserMedium(event: any) {
     const medium = event.value.toLowerCase();
     this.userService.updateUser(this.uid, { medium });
+  }
+
+  onLocationInput(location: string) {
+    this.update$.next({ location });
+  }
+
+  onInstagramInput(instagram: string) {
+    this.update$.next({ instagram });
+  }
+
+  openInstagram(instagram: string) {
+    console.log(`instagram.com/${instagram}`);
+  }
+
+  onFacebookInput(facebook: string) {
+    this.update$.next({ facebook });
+  }
+
+  openFacebook(facebook: string) {
+    console.log(facebook);
+  }
+
+  onOtherLinkInput(otherLink: string) {
+    this.update$.next({ otherLink });
+  }
+
+  openOtherLink(otherLink: string) {
+    console.log(otherLink);
+  }
+
+  async initiateChat(userToChat: any) {
+    const loggedInUser = await this.auth.user$.pipe(first()).toPromise();
+
+    if (!loggedInUser || loggedInUser.uid === userToChat.uid) {
+      window.alert('Must be signed in to send a message, sign up for free!');
+      return;
+    }
+
+    const message = 'yo whats good';
+
+    this.chatService.initiateChat(loggedInUser.uid, userToChat.uid, message);
   }
 
   async uploadProfilePic(event: any) {

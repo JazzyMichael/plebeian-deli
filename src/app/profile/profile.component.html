@@ -39,37 +39,84 @@
         <p>{{ user.displayName || user.username }}</p>
 
         <!-- Location -->
-        <p>Location</p>
+        <mat-form-field *ngIf="editable; else viewLocation" color="accent">
+            <input
+                matInput
+                [value]="user.location || ''"
+                placeholder="Location"
+                autocomplete="off"
+                (input)="onLocationInput($event.target.value)">
+        </mat-form-field>
+
+        <ng-template #viewLocation>
+            <p>{{ user.location }}</p>
+        </ng-template>
 
         <!-- Follower Count -->
         <p>{{ user.followers }} Followers</p>
 
-        <button mat-raised-button>Send Message</button>
+        <button mat-raised-button style="margin-bottom: 1em" (click)="initiateChat(user)">Send Message</button>
 
         <!-- Social Links -->
-        <div style="width: 90%">
-            <mat-form-field>
+        <div *ngIf="editable; else viewSocialLinks" style="width: 90%">
+            <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
                 <input
                     matInput
+                    #instagramInput
+                    [value]="user.instagram || ''"
                     type="text"
-                    placeholder="Instagram"
-                    autocomplete="off">
+                    placeholder="Instagram Name"
+                    autocomplete="off"
+                    (input)="onInstagramInput($event.target.value)">
                 <mat-icon
                     matSuffix
                     (click)="$event.stopPropagation()">
                     link
                 </mat-icon>
+                <mat-hint>*link is generated from name</mat-hint>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field style="margin-top: 1em">
                 <input
                     matInput
+                    #otherLinkInput
+                    [value]="user.facebook || ''"
                     type="text"
-                    placeholder="Other"
-                    autocomplete="off">
+                    placeholder="Facebook Link"
+                    autocomplete="off"
+                    (input)="onFacebookInput($event.target.value)">
+                <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field style="margin-top: 1em">
+                <input
+                    matInput
+                    #otherLinkInput
+                    [value]="user.otherLink || ''"
+                    type="text"
+                    placeholder="Other Link"
+                    autocomplete="off"
+                    (input)="onOtherLinkInput($event.target.value)">
                 <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
             </mat-form-field>
         </div>
+
+        <ng-template #viewSocialLinks>
+            <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
+                <img src="assets/images/instagram.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                <span>{{ user.instagram }}</span>
+            </button>
+
+            <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
+                <img src="assets/images/facebook.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                <span>{{ user.facebook }}</span>
+            </button>
+
+            <button *ngIf="user.otherLink" mat-button>
+                <mat-icon style="margin-right: 10px">link</mat-icon>
+                <span>{{ user.otherLink }}</span>
+            </button>
+        </ng-template>
 
         <!-- Gallery Contact Info -->
             <!-- Email, Phone, Address -->
@@ -120,8 +167,8 @@
         <!-- Bio/Description -->
         <ng-container *ngIf="editable; else readonlyDescription">
             <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
-                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
-                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
+                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
+                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
                 <textarea matInput #descriptionInput placeholder="Bio" maxlength="240" rows="5" [value]="user.description"></textarea>
                 <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
             </mat-form-field>
