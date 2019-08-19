@@ -49,11 +49,6 @@ mat-toolbar-row {
     outline: none;
 }
 
-.subscriptions-btn {
-    border-radius: 20px;
-    padding: 0.3em 0.55em;
-}
-
 .nav-link {
     cursor: pointer;
     font-size: 0.85em;
@@ -64,7 +59,12 @@ mat-toolbar-row {
     color: #80caa2;
 }
 
-.subscriptions-btn:hover {
+.highlighted-btn {
+    border-radius: 20px;
+    padding: 0 1em;
+}
+
+.highlighted-btn:hover {
     color: black;
 }
 

@@ -1,7 +1,29 @@
 
+<h1 style="text-align: center">Log In</h1>
+<div style="width: 100%; min-width: 200px; margin: 2em auto 5em; display: flex; justify-content: center; flex-wrap: wrap;">
+    <button
+        mat-raised-button
+        color="primary"
+        style="color: white; margin: 0.5em;"
+        (click)="auth.loginWithGoogle()">
+        Login With Google
+    </button>
+    <button
+        mat-raised-button
+        style="background-color: #3f6fff; color: white; margin: 0.5em;">
+        Login With Facebook
+    </button>
+</div>
 
 
-<mat-tab-group mat-stretch-tabs dynamicHeight color="accent" style="margin: 1em auto; width: 500px; max-width: 85%;">
+<app-subscriptions></app-subscriptions>
+
+
+
+
+<!-- old login/sign up tabs -->
+
+<!-- <mat-tab-group mat-stretch-tabs dynamicHeight color="accent" style="margin: 1em auto; width: 500px; max-width: 85%;">
 
     <mat-tab label="Sign Up">
         <form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
@@ -39,14 +61,6 @@
                     Sign Up With Facebook
                 </button>
             </div>
-
-            <!-- <button
-                mat-raised-button
-                [disabled]="!signUpForm.valid"
-                (click)="gallerySignUp()"
-                style="margin: 3em auto; display: block;">
-                New Gallery
-            </button> -->
             
         </form>
     </mat-tab>
@@ -70,11 +84,4 @@
 
     </mat-tab>
 
-</mat-tab-group>
-
-
-
-
-
-
-
+</mat-tab-group> -->

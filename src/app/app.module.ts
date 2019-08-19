@@ -59,7 +59,6 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
   { path: 'shop', component: ShopComponent },
-  { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'info', component: InfoComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },

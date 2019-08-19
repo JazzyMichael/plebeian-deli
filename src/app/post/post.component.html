@@ -1,8 +1,64 @@
 
-<div style="width: 1000px; max-width: 100%; margin: 0 auto; padding: 4em 2em; background-color: #e7e7e7;">
+<div style="width: 100%; max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
 
-    <mat-card *ngIf="post$ | async as post" style="width: 80%; margin: 2em auto; height: 500px; display: flex; justify-content: center; align-items: center;">
+    <p>Username</p>
+
+    <mat-card *ngIf="post$ | async as post" style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
+        <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
         <quill-view [content]="post.content"></quill-view>
+
+        <div>
+            <hr>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <button mat-icon-button>
+                        <mat-icon>nature</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>lens</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>music_note</mat-icon>
+                    </button>
+                    <button mat-button>
+                        <mat-icon>link</mat-icon>
+                        <span style="margin-left: 5px">Copy Link</span>
+                    </button>
+                </div>
+                <div>
+                    <button mat-icon-button>
+                        <mat-icon>favorite_border</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr>
+        </div>
     </mat-card>
+
+    <!-- recent posts by that artist -->
+    <div style="margin: 2em 0">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Recent Posts from Username</h2>
+            <button mat-raised-button>View All</button> 
+        </div>
+        <div style="display: flex; justify-content: space-around;">
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+        </div>
+    </div>
+
+    <!-- featured posts from prime cuts -->
+    <div style="margin: 2em 0">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Featured Posts</h2>
+            <button mat-raised-button>View All</button> 
+        </div>
+        <div style="display: flex; justify-content: space-around;">
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+        </div>
+    </div>
 
 </div>

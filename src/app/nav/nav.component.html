@@ -48,8 +48,9 @@
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">Exhibitions</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">Calendar</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">Members</span>
-                <span routerLink="/shop" routerLinkActive="active-link" class="nav-link">Shop</span>
-                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link subscriptions-btn">Subscriptions</button>
+                <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button>
+
+                <!-- logged in menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">
                     <button mat-button class="nav-link" [matMenuTriggerFor]="menu">
                         <mat-icon>accessibility_new</mat-icon>
@@ -71,6 +72,8 @@
                         </button>
                     </mat-menu>
                 </ng-container>
+
+                <!-- not logged in button -->
                 <ng-template #noUser>
                     <button mat-button class="nav-link" routerLink="/login" routerLinkActive="active-link">
                         <mat-icon>face</mat-icon>
