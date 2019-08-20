@@ -104,14 +104,18 @@
 
 <div class="event-list">
     <mat-card *ngFor="let event of eventService.events$ | async" class="event-card">
+
         <mat-card-header>
-            <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg)"></div>
-            <mat-card-title>{{ event.title }}</mat-card-title>
-            <mat-card-subtitle>date</mat-card-subtitle>
+            <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg); margin: 5px;"></div>
+            <mat-card-title style="font-size: 16px">{{ event.title }}</mat-card-title>
+            <mat-card-subtitle style="font-size: 12px">{{ event.date.seconds | date }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="assets/images/person2.svg" alt="Event Image">
-        <!-- <mat-card-content>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit voluptates ut magnam. Maiores temporibus sit non, deleniti porro tenetur ea laudantium, necessitatibus officiis optio perferendis ad neque esse dolore quod.</p>
-        </mat-card-content> -->
+
+        <img
+            mat-card-image
+            src="assets/images/event-1.webp"
+            alt="Event Image"
+            style="width: 100%; margin: 0 auto">
+
     </mat-card>
 </div>

@@ -9,10 +9,24 @@ export class ArtistsComponent implements OnInit {
   @Input() user: any;
   @Input() editable: boolean;
 
+  editing: boolean;
+  artists: any[];
+
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.user);
+    this.artists = [
+      { username: 'jim', profileUrl: '' },
+      { username: 'pete', profileUrl: '' },
+      { username: 'anne', profileUrl: '' },
+      { username: 'harold', profileUrl: '' },
+      { username: 'deborah', profileUrl: '' },
+      { username: 'steve', profileUrl: '' }
+    ];
+  }
+
+  removeArtist(index: number) {
+    this.artists.splice(index, 1);
   }
 
 }

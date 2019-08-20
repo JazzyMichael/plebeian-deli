@@ -55,7 +55,7 @@
         <!-- Follower Count -->
         <p>{{ user.followers }} Followers</p>
 
-        <button mat-raised-button style="margin-bottom: 1em" (click)="initiateChat(user)">Send Message</button>
+        <button mat-raised-button disabled style="margin-bottom: 1em" (click)="initiateChat(user)">Send Message</button>
 
         <!-- Social Links -->
         <div *ngIf="editable; else viewSocialLinks" style="width: 90%">

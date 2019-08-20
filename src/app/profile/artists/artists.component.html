@@ -1,10 +1,27 @@
-<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin: 2em auto;">
     <h2 style="font-weight: 300">Artists</h2>
 
     <div *ngIf="editable">
-        <button mat-raised-button>
+        <button *ngIf="!editing" mat-raised-button (click)="editing = true">
             <mat-icon>edit</mat-icon>
             <span style="margin-left: 10px">Manage Artists</span>
         </button>
+
+        <button *ngIf="editing" mat-raised-button (click)="editing = false">
+            <mat-icon>cancel</mat-icon>
+            <span style="margin-left: 10px">Stop Managing</span>
+        </button>
     </div>
+</div>
+
+
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+    <p *ngIf="artists && !artists.length" style="margin: 1em">No Artists!</p>
+    <mat-card *ngFor="let artist of artists; index as i" class="artist-card">
+        <button *ngIf="editable && editing" mat-icon-button (click)="removeArtist(i)">
+            <mat-icon>clear</mat-icon>
+        </button>
+        <br><br>
+        <p style="text-align: center">{{ artist.username }}</p>
+    </mat-card>
 </div>
