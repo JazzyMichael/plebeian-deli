@@ -2,8 +2,8 @@
 
 .carousel {
     height: 180px;
-    width: 250px;
-    max-width: 95%;
+    width: 100%;
+    max-width: 500px;
     margin: auto;
 }
 
@@ -72,12 +72,8 @@
 }
 
 @media (min-width: 777px) {
-    .carousel {
-        width: 500px;
-    }
-
     .item {
         font-size: 3em;
-        padding: 0 2em;
+        padding: 0 1em;
     }
 }

@@ -10,6 +10,16 @@
         <button mat-button routerLink="/calendar" (click)="sidenav.close()">Calendar</button>
         <button mat-button routerLink="/members" (click)="sidenav.close()">Members</button>
         <button mat-button routerLink="/shop" (click)="sidenav.close()">Shop</button>
+
+        <ng-container *ngIf="auth.user$ | async as user; else showLogin">
+            <button mat-button [routerLink]="'/' + user.username" (click)="sidenav.close()">Profile</button>
+            <button mat-button routerLink="/info" (click)="sidenav.close()">Info</button>
+            <button mat-button (click)="auth.logout(); sidenav.close();">Log Out</button>
+        </ng-container>
+
+        <ng-template #showLogin>
+            <button mat-button routerLink="/login" (click)="sidenav.close()">Log In</button>
+        </ng-template>
     </mat-sidenav>
 
     <mat-sidenav-content>
