@@ -56,11 +56,13 @@
     width: 100%;
     padding: 10px;
     background: linear-gradient(white, #f5f5f5);
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .post-thumbnail {
-    width: 777px;
-    max-width: 40%;
+    width: 95%;
+    max-width: 200px;
     margin: 1rem auto;
     cursor: pointer;
     padding-top: 0;
