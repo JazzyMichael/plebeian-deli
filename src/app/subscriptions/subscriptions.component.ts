@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const fbq: any;
+
 @Component({
   selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
@@ -42,6 +44,18 @@ export class SubscriptionsComponent implements OnInit {
         ]
       }
     ];
+  }
+
+  subscribe() {
+    // try {
+    //   fbq('track', 'Subscribe', {
+    //     value: '1.00',
+    //     currency: 'USD',
+    //     predicted_ltv: '20'
+    //   });
+    // } catch (e) {
+    //   console.log('fbq Subscribe error', e);
+    // }
   }
 
 }

@@ -7,7 +7,7 @@
 
 <div class="static-container">
     <div class="content">
-        <button mat-raised-button color="accent" class="signup-btn-top">Sign Up!</button>
+        <button mat-raised-button color="accent" class="signup-btn-top" routerLink="/login">Sign Up!</button>
         <div class="process">
         
             <div class="process-graphic">
@@ -15,14 +15,14 @@
                 <img src="assets/images/create.svg" class="process-img" />
             </div>
 
-            <mat-icon style="font-size: 2em">arrow_right_alt</mat-icon>
+            <mat-icon class="process-arrow">arrow_right_alt</mat-icon>
 
             <div class="process-graphic">
                 <span>Post</span>
                 <img src="assets/images/upload.svg" class="process-img" />
             </div>
 
-            <mat-icon style="font-size: 2em">arrow_right_alt</mat-icon>
+            <mat-icon class="process-arrow">arrow_right_alt</mat-icon>
 
             <div class="process-graphic">
                 <span>Sell</span>
@@ -62,7 +62,11 @@
 
         </div>
 
-        <button mat-raised-button color="primary" class="signup-btn-bottom">Sign Up!</button>
+        <button
+            mat-raised-button
+            color="primary"
+            class="signup-btn-bottom"
+            routerLink="/login">Sign Up!</button>
     </div>
 </div>
 

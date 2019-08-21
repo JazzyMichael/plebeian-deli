@@ -51,7 +51,7 @@ mat-toolbar-row {
 
 .nav-link {
     cursor: pointer;
-    font-size: 0.85em;
+    font-size: 1.3em;
     display: none;
 }
 
@@ -62,12 +62,20 @@ mat-toolbar-row {
 .highlighted-btn {
     border-radius: 20px;
     padding: 0 1em;
-    transition: all 200ms ease-out;
+    // transition: color 200ms ease-out;
+    // transition: padding 200ms ease-out;
+    transition: all 333ms ease-out;
+    -ms-transform: rotate(0deg); /* IE 9 */
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+    transform: rotate(0deg);
 }
 
 .highlighted-btn:hover {
     color: black;
     padding: 0 1.25em;
+    -ms-transform: rotate(360deg); /* IE 9 */
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+    transform: rotate(360deg);
 }
 
 .active-link {

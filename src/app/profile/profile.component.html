@@ -118,13 +118,19 @@
             </button>
         </ng-template>
 
-        <!-- Gallery Contact Info -->
-            <!-- Email, Phone, Address -->
-
         <!-- <p>Institution</p> -->
 
         <!-- Galleries -->
-        <p *ngIf="user.membership === 'artist'">Galleries</p>
+        <ng-container *ngIf="user.membership === 'artist'">
+            <p>Galleries</p>
+            <button
+                mat-button
+                *ngFor="let gallery of galleries$ | async"
+                [routerLink]="'/' + gallery.username"
+                style="display: block">
+                {{ gallery.username }}
+            </button>
+        </ng-container>
 
         <!-- CV -->
         <ng-container *ngIf="user.membership === 'artist' && editable; else viewCV">

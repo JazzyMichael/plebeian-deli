@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   doneLoading: boolean;
   categories: any[];
   update$: Subject<any> = new Subject();
+  galleries$: Observable<any>;
 
   constructor(
     private router: Router,
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
             if (!user) return this.router.navigateByUrl('/about');
             this.editable = user.username === this.auth.username;
             this.uid = user.uid || null;
+            this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );
       })
@@ -58,6 +60,7 @@ export class ProfileComponent implements OnInit {
       this.userService.updateUser(this.uid, userObj);
       console.log(userObj);
     });
+
   }
 
   updateDescription(description: string) {
