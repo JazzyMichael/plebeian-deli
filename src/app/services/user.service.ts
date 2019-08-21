@@ -66,11 +66,11 @@ export class UserService {
       .add(doc);
   }
 
-  getPosts(uid: string): Observable<any> {
+  getPosts(uid: string, limit: number = 5): Observable<any> {
     return this.afStore
       .collection('users')
       .doc(uid)
-      .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(5))
+      .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(limit))
       .valueChanges({ idField: 'postId' });
   }
 

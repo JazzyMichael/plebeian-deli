@@ -1,6 +1,6 @@
 .options-container {
     width: 100%;
-    padding: 2em 1em 1px;
+    padding: 1em 0;
     background: linear-gradient(white, #f5f5f5);
     box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
@@ -83,4 +83,10 @@
                         left top,
                         color-stop(0.44, #4bd1a0),
                         color-stop(0.86, #4bd1a0));
+}
+
+@media (min-width: 777px) {
+    .options-container {
+        padding: 2em 1em 1px;
+    }
 }

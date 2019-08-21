@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-post',
@@ -10,14 +11,17 @@ import { Observable } from 'rxjs';
 })
 export class PostComponent implements OnInit {
   post$: Observable<any>;
+  user: any;
+  userPosts$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private postService: PostService) { }
+    private postService: PostService,
+    private userService: UserService) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async params => {
 
       const postParam = params.get('id');
 
@@ -31,6 +35,10 @@ export class PostComponent implements OnInit {
       const postId = split[1];
 
       this.post$ = this.postService.getPost(userId, postId);
+
+      this.userPosts$ = this.userService.getPosts(userId, 3);
+
+      this.user = await this.userService.getUserById(userId);
     });
   }
 

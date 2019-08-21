@@ -1,7 +1,11 @@
 
 <div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
 
-    <p>Username</p>
+    <div *ngIf="user" style="display: flex; justify-content: start; align-items: center;">
+        <img [src]="user.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + user.username">
+        <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + user.username">{{ user.username }}</p>
+        <!-- <p>Timestamp</p> -->
+    </div>
 
     <mat-card *ngIf="post$ | async as post" style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
@@ -38,13 +42,17 @@
     <!-- recent posts by that artist -->
     <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>Recent Posts from Username</h2>
-            <button mat-raised-button>View All</button> 
+            <h2 *ngIf="user">Recent Posts from {{ user.username }}</h2>
+            <button mat-raised-button>View All</button>
         </div>
         <div style="display: flex; justify-content: space-around;">
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card *ngFor="let post of userPosts$ | async" style="width: 200px; margin: 0.5em; cursor: pointer;">
+                <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image" style="max-height: 200px">
+                <mat-card-content>
+                    <p>{{ post.title }}</p>
+                    <p>{{ post.createdDate.seconds | date }}</p>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 
@@ -52,7 +60,7 @@
     <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2>Featured Posts</h2>
-            <button mat-raised-button>View All</button> 
+            <button mat-raised-button routerLink="/prime-cuts">View More</button> 
         </div>
         <div style="display: flex; justify-content: space-around;">
             <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
