@@ -39,6 +39,11 @@ mat-toolbar-row {
     background: none;
 }
 
+::ng-deep.mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .logo {
     height: 50px;
     width: 100px;

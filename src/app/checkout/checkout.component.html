@@ -1,0 +1,95 @@
+<ng-container *ngIf="membership === 'viewer'">
+    <div>
+        <p>Viewer Signup</p>
+        <p>Username & Login</p>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="membership === 'artist'">
+    <div>Artist Signup</div>
+    <mat-horizontal-stepper labelPosition="bottom" color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
+        <mat-step label="Payment" editable="false" color="accent">
+            <div>Payment</div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+
+        <mat-step label="Username & Login" editable="false" color="accent">
+            <div>Username & Auth</div>
+            <!-- <form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
+
+                    <mat-form-field color="accent" style="width: 100%">
+                        <input
+                            matInput
+                            autocomplete="off"
+                            uniqueUsernameValidator
+                            formControlName="username"
+                            placeholder="Username"
+                            required>
+                        <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
+                        Username already taken
+                        </mat-error>
+                        <mat-error *ngIf="signUpForm.get('username').hasError('required')">
+                        Username is required
+                        </mat-error>
+                    </mat-form-field>
+                
+                
+                    <div style="width: 100%; min-width: 200px; margin: 1em auto; display: flex; justify-content: space-around;">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            style="color: white"
+                            [disabled]="!signUpForm.valid"
+                            (click)="auth.signUpWithGoogle(signUpForm.get('username').value)">
+                            Sign Up With Google
+                        </button>
+                        <button
+                            mat-raised-button
+                            style="background-color: #3f6fff; color: white;"
+                            [disabled]="!signUpForm.valid">
+                            Sign Up With Facebook
+                        </button>
+                    </div>
+                    
+                </form> -->
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+
+        <mat-step label="Setup Marketplace" optional="true" color="accent">
+            <div>Optional Marketplace register + info</div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</ng-container>
+
+<ng-container *ngIf="membership === 'gallery'">
+    <p>Gallery Signup</p>
+    <div>
+        <mat-horizontal-stepper color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
+            <mat-step label="Payment" editable="false" color="accent">
+                <div>Payment</div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+    
+            <mat-step label="Username & Login" editable="false" color="accent">
+                <div>Username & Auth</div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</ng-container>

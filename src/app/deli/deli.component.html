@@ -60,7 +60,7 @@
             <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image">
             <mat-card-content>
                 <p>{{ post.title }}</p>
-                <p>{{ post.createdDate.seconds | date }}</p>
+                <p>{{ post.createdDate.toDate() | date }}</p>
                 <p>Author Username</p>
             </mat-card-content>
         </mat-card>

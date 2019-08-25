@@ -47,6 +47,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'info', component: InfoComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },
+  { path: 'checkout/:membership', component: CheckoutComponent, ...canActivate(redirectLoggedInTo(['/']))},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/about', pathMatch: 'full' }
@@ -87,7 +89,8 @@ const routes: Routes = [
     InfoComponent,
     EventsComponent,
     ArtistsComponent,
-    ChatComponent
+    ChatComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

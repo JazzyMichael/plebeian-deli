@@ -24,7 +24,7 @@ export class PostsComponent implements OnInit {
   postCategory: string;
   content: any;
   modules: any = {
-    imageResize: {}
+    // imageResize: {}
   };
 
   constructor(
@@ -35,8 +35,8 @@ export class PostsComponent implements OnInit {
     this.posts$ = this.userService.getPosts(this.user.uid);
   }
 
-  onEditorCreated(event: any) {
-    console.log('onEditorCreated', event);
+  onEditorChanged(event: any) {
+    console.log('onEditorChanged', event);
   }
 
   submitPost() {

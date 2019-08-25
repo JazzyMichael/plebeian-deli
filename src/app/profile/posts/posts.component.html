@@ -55,7 +55,7 @@
     [(ngModel)]="postContent"
     [placeholder]="'The...'"
     [styles]="{'min-height': '200px', 'margin-bottom': '1em'}"
-    (onEditorCreated)="onEditorCreated($event)">
+    (onEditorChanged)="onEditorChanged($event)">
     <div quill-editor-toolbar>
         <span class="ql-formats">
             <select class="ql-font"></select>
@@ -106,7 +106,7 @@
         <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image">
         <mat-card-content>
             <p>{{ post.title }}</p>
-            <p>{{ post.createdDate.seconds | date }}</p>
+            <p>{{ post.createdDate.toDate() | date }}</p>
             <p>Author Username</p>
         </mat-card-content>
     </mat-card>

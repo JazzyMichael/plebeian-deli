@@ -89,7 +89,18 @@
 
     <br>
 
-    <button mat-button class="responsive-field">Picture</button>
+    <div class="responsive-field" style="display: inline-block; border-radius: 6px;" [ngStyle]="{'background': 'linear-gradient(rgb(225, 241, 232), rgb(181, 181, 181))'}" >
+        <label for="event-pic-upload" class="event-upload-btn">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">Upload Picture</span>
+        </label>
+        <input
+            id="event-pic-upload"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            (change)="uploadEventPic($event)">
+    </div>
 
     <mat-form-field class="responsive-field">
         <input
@@ -108,7 +119,7 @@
         <mat-card-header>
             <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg); margin: 5px;"></div>
             <mat-card-title style="font-size: 16px">{{ event.title }}</mat-card-title>
-            <mat-card-subtitle style="font-size: 12px">{{ event.date.seconds | date }}</mat-card-subtitle>
+            <mat-card-subtitle style="font-size: 12px">{{ event.date.toDate() | date }}</mat-card-subtitle>
         </mat-card-header>
 
         <img

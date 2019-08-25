@@ -15,6 +15,7 @@ export class SubscriptionsComponent implements OnInit {
   ngOnInit() {
     this.plans = [
       {
+        membership: 'viewer',
         title: 'Viewer',
         subtitle: 'Free',
         price: 0,
@@ -24,6 +25,7 @@ export class SubscriptionsComponent implements OnInit {
         ]
       },
       {
+        membership: 'artist',
         title: 'Artist',
         subtitle: 'Boost your work',
         price: 1,
@@ -34,6 +36,7 @@ export class SubscriptionsComponent implements OnInit {
         ]
       },
       {
+        membership: 'gallery',
         title: 'Gallery',
         subtitle: 'Subtitle for Galleries',
         price: 10,
@@ -47,6 +50,7 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   subscribe() {
+    console.log('subscribe');
     // try {
     //   fbq('track', 'Subscribe', {
     //     value: '1.00',

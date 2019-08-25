@@ -13,7 +13,14 @@
 
         <p>{{ plan.subtitle }}</p>
 
-        <button mat-raised-button color="accent" style="width: 100%; border-radius: 0;" (click)="subscribe()">Select</button>
+        <button
+            mat-raised-button
+            [routerLink]="'/checkout/' + plan.membership"
+            color="accent"
+            style="width: 100%; border-radius: 0;"
+            (click)="subscribe()">
+            Select
+        </button>
 
         <mat-list style="text-align: left">
             <ng-container *ngFor="let perk of plan.perks; index as i;">

@@ -1,9 +1,24 @@
 <mat-sidenav-container>
 
-    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; min-width: 150px;">
-        <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
-            <mat-icon>close</mat-icon>
-        </button>
+    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; width: 60%;">
+        <ng-container *ngIf="auth.user$ | async as user; else justCloseButton">
+            <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                <img [src]="user.profileUrl" alt="Profile Pic" style="height: 100px; width: 100px; margin: 0; padding: 0; border-radius: 50%;">
+                <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <p style="text-align: center">{{ user.username }}</p>
+            <hr style="width: 95%; margin: 0 auto 20px;">
+        </ng-container>
+
+
+        <ng-template #justCloseButton>
+            <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
+                <mat-icon>close</mat-icon>
+            </button>
+        </ng-template>
+
         <button mat-button routerLink="/prime-cuts" (click)="sidenav.close()">Prime Cuts</button>
         <button mat-button routerLink="/deli" (click)="sidenav.close()">Deli</button>
         <button mat-button routerLink="/exhibitions" (click)="sidenav.close()">Exhibitions</button>

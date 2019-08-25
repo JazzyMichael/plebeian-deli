@@ -14,7 +14,7 @@ export class EventService {
     this.events$ = new BehaviorSubject(cachedEvents);
 
     this.afStore
-      .collectionGroup('events')
+      .collectionGroup('events', ref => ref.orderBy('date', 'desc'))
       .valueChanges()
       .subscribe(events => {
         localStorage.setItem('events', JSON.stringify(events));

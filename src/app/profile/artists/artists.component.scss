@@ -4,4 +4,9 @@
     margin: 0.5em;
     padding-top: 5px;
     cursor: pointer;
+    transition: all 250ms ease-out;
+}
+
+.artist-card:hover {
+    margin: 0.75em 0 0.25em;
 }
