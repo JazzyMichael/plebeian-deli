@@ -1,0 +1,19 @@
+.small-viewer {
+    display: block;
+    margin: auto;
+}
+
+.large-viewer {
+    display: none;
+    margin: auto;
+}
+
+@media (min-width: 570px) {
+    .small-viewer {
+        display: none;
+    }
+
+    .large-viewer {
+        display: block;
+    }
+}

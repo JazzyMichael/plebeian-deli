@@ -25,17 +25,18 @@ export class PrimeCutsComponent implements OnInit {
     }
   ];
   carouselData: any[];
+  viewingStudio: any;
 
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.carouselData = [
-      { title: 'aye 1', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'red' },
-      { title: 'aye 2', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'green' },
-      { title: 'aye 3', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'blue' },
-      { title: 'aye 4', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'yellow' },
-      { title: 'aye 5', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'gray' },
-      { title: 'aye 6', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'orange' }
+      { title: 'Phil McGaughy', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'red' },
+      { title: 'Lindsay Keating', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'green' },
+      // { title: 'aye 3', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'blue' },
+      // { title: 'aye 4', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'yellow' },
+      // { title: 'aye 5', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'gray' },
+      // { title: 'aye 6', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'orange' }
     ];
   }
 
@@ -43,10 +44,17 @@ export class PrimeCutsComponent implements OnInit {
     if (this.carouselIndex !== i) {
       this.carouselIndex = i;
     }
+    this.viewingStudio = this.carouselData[i];
   }
 
   getPhotoUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  toggleViewer(showAll: boolean) {
+    if (showAll) {
+      this.viewingStudio = null;
+    }
   }
 
 }

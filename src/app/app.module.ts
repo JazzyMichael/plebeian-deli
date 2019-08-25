@@ -48,6 +48,7 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -90,7 +91,8 @@ const routes: Routes = [
     EventsComponent,
     ArtistsComponent,
     ChatComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    StudioViewerComponent
   ],
   imports: [
     BrowserModule,

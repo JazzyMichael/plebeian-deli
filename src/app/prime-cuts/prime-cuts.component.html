@@ -1,38 +1,70 @@
 
 
-<h1 style="text-align: center; font-weight: 400; margin: 2em auto;">Prime Cuts</h1>
+<h1 style="text-align: center; font-weight: 400; margin: 1em auto;">Prime Cuts</h1>
 
 
 <ngx-hm-carousel
-    [(ngModel)]="carouselIndex"
-    show-num="auto"
-    [breakpoint]="carouselBreakpoints"
-    [infinite]="carouselInfinite"
-    [drag-many]="true"
-    [data]="carouselData"
-    class="carousel">
+  *ngIf="!viewingStudio"
+  [(ngModel)]="carouselIndex"
+  show-num="auto"
+  [breakpoint]="carouselBreakpoints"
+  [infinite]="carouselInfinite"
+  [drag-many]="true"
+  [data]="carouselData"
+  class="carousel">
 
 
     <section ngx-hm-carousel-container class="carousel-content">
-        <article ngx-hm-carousel-item class="item"
+        <article
+          ngx-hm-carousel-item
+          class="item"
           *ngFor="let data of carouselData; let i = index"
-            [ngClass]="{'visible': carouselIndex === i}">
-          <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
+          [ngClass]="{'visible': carouselIndex === i}">
+          <mat-card (click)="click(i)">
+            <mat-card-header>
+              <mat-card-title>{{ data?.title }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="assets/images/gren.jpg" alt="Studio Thumbnail">
+            <mat-card-content>
+              <button
+                mat-button
+                color="accent"
+                style="margin: 1em auto; width: 100%;"
+                (click)="$event.stopPropagation()">
+                Full Post
+              </button>
+            </mat-card-content>
+          </mat-card>
+          <!-- <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
             <iframe
                 [src]="data.videoUrl"
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
-            <button mat-button style="margin: 1em" (click)="$event.stopPropagation()">Full Post</button>
-          </div>
+          </div> -->
         </article>
         <ng-template #infiniteContainer></ng-template>
     </section>
     
     <ng-template #carouselContent let-data let-i="index">
         <article class="item" [ngClass]="{'visible': carouselIndex === i}">
-          <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
+          <mat-card (click)="click(i)">
+            <mat-card-header>
+              <mat-card-title>{{ data?.title }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="assets/images/gren.jpg" alt="Studio Thumbnail">
+            <mat-card-content>
+              <button
+                mat-button
+                color="accent"
+                style="margin: 1em auto; width: 100%;"
+                (click)="$event.stopPropagation()">
+                Full Post
+              </button>
+            </mat-card-content>
+          </mat-card>
+          <!-- <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
             <iframe
                 [src]="data.videoUrl"
                 frameborder="0"
@@ -40,7 +72,7 @@
                 allowfullscreen>
             </iframe>
             <button mat-button style="margin: 1em" (click)="$event.stopPropagation()">Full Post</button>
-          </div>
+          </div> -->
         </article>
     </ng-template>
     
@@ -58,7 +90,11 @@
 </ngx-hm-carousel>
 
 
-
+<app-studio-viewer
+  *ngIf="viewingStudio"
+  [studio]="viewingStudio"
+  (viewAll)="toggleViewer($event)">
+</app-studio-viewer>
 
 
 <div class="feature-friday">
