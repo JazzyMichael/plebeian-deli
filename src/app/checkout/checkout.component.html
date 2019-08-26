@@ -1,12 +1,14 @@
 <ng-container *ngIf="membership === 'viewer'">
-    <div>
-        <p>Viewer Signup</p>
-        <p>Username & Login</p>
+    <div style="text-align: center">
+        <p>Choose a unique Username to setup your free account!</p>
+        <!-- <p>Username & Login</p> -->
     </div>
 </ng-container>
 
 <ng-container *ngIf="membership === 'artist'">
-    <div>Artist Signup</div>
+    <div style="text-align: center">
+        <p>Become a Plebeian Artist</p>
+    </div>
     <mat-horizontal-stepper labelPosition="bottom" color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
         <mat-step label="Payment" editable="false" color="accent">
             <div>Payment</div>
@@ -72,24 +74,24 @@
 </ng-container>
 
 <ng-container *ngIf="membership === 'gallery'">
-    <p>Gallery Signup</p>
-    <div>
-        <mat-horizontal-stepper color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
-            <mat-step label="Payment" editable="false" color="accent">
-                <div>Payment</div>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </mat-step>
-    
-            <mat-step label="Username & Login" editable="false" color="accent">
-                <div>Username & Auth</div>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </mat-step>
-        </mat-horizontal-stepper>
+    <div style="text-align: center">
+        <p>Plebeian Gallery Registration</p>
     </div>
+    <mat-horizontal-stepper color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
+        <mat-step label="Payment" editable="false" color="accent">
+            <div>Payment</div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+
+        <mat-step label="Username & Login" editable="false" color="accent">
+            <div>Username & Auth</div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
 </ng-container>

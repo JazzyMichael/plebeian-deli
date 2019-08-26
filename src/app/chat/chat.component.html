@@ -36,30 +36,36 @@
 
     <!-- chat list -->
     <mat-list *ngIf="!viewingChat">
-        <mat-list-item *ngFor="let chat of chatService.userChats$ | async" (click)="viewChat(chat)">
+        <mat-list-item *ngFor="let chat of chats$ | async" (click)="viewChat(chat)">
             <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
             <h3 matLine>{{ chat.otherUser?.username }}</h3>
-            <p matLine>Blegh</p>
+            <!-- <p matLine>Blegh</p> -->
         </mat-list-item>
     </mat-list>
 
     <!-- chat messages -->
-    <div *ngIf="this.viewingChat" style="height: 97%; overflow: auto;">
-        <div
-            *ngFor="let message of viewingChat.messages; index as i"
-            [ngClass]="i % 2 === 0 ? 'left-chat' : 'right-chat'">
-            {{ message.content }}
+    <div *ngIf="this.viewingChat" style="height: 97%; display: grid; grid-template-rows: 3fr 1fr;">
+        <div *ngIf="singleChat$ | async as singleChat" class="messages-container" style="overflow: auto">
+            <div
+                *ngFor="let message of singleChat.messages; index as i"
+                [ngClass]="message.userId === viewingChat.otherUser.uid ? 'left-chat' : 'right-chat'">
+                {{ message.content }}
+            </div>
         </div>
-    </div>
 
-    <!-- <mat-form-field appearance="fill" style="width: 100%; color: white;">
-        <textarea
-            matInput
-            #chatInput
-            rows="3"
-            maxlength="120">
-        </textarea>
-        <mat-hint>{{ chatInput.value?.length || 0 }}/120</mat-hint>
-    </mat-form-field> -->
+        <mat-form-field style="width: 100%; color: black; background: #f5f5f5; padding: 0;">
+            <textarea
+                matInput
+                #chatInput
+                [(ngModel)]="newChatMessage"
+                (keyup.enter)="sendMessage()"
+                matTextareaAutoSize="true"
+                rows="2"
+                maxlength="120">
+            </textarea>
+            <mat-icon matSuffix [color]="newChatMessage ? 'primary' : 'light'" (click)="sendMessage()">send</mat-icon>
+            <mat-hint>{{ chatInput.value?.length || 0 }}/120</mat-hint>
+        </mat-form-field>
+    </div>
 
 </mat-card>

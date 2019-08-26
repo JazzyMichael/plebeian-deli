@@ -29,6 +29,8 @@ export class PostComponent implements OnInit {
         return this.router.navigateByUrl('/deli');
       }
 
+      document.querySelector('.main-container').scrollTop = 0;
+
       const split = postParam.split('split');
 
       const userId = split[0];

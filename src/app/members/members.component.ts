@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CategoriesService } from '../services/categories.service';
 
 @Component({
   selector: 'app-members',
@@ -10,20 +11,7 @@ import { of } from 'rxjs';
 })
 export class MembersComponent implements OnInit {
 
-  categories = [
-    'Sculpture',
-    'Design',
-    'Illustration',
-    'Photography',
-    'Painting',
-    'Video',
-    'Typography',
-    'Animation',
-    'Mixed Media',
-    'Ceramics',
-    'Metal Work',
-    'Glass'
-  ];
+  categories: any[];
 
   users$;
 
@@ -32,10 +20,12 @@ export class MembersComponent implements OnInit {
   membership: string;
   radioSelection: string = null;
 
-  constructor(public userService: UserService, private ren: Renderer2) { }
+  constructor(public userService: UserService, private catService: CategoriesService, private ren: Renderer2) { }
 
   ngOnInit() {
     this.filterUsers();
+
+    this.categories = this.catService.getCategories().map(c => c.name);
   }
 
   filterUsers() {

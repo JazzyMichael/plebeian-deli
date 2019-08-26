@@ -45,6 +45,13 @@ export class ChatService {
       });
   }
 
+  watchSingleChat(docId: string) {
+    return this.afStore
+      .collection('chats')
+      .doc(docId)
+      .valueChanges();
+  }
+
   initiateChat(initiatingUserId: string, secondUserId: string, message: string = 'Hello!') {
     const chatDoc = {
       users: [initiatingUserId, secondUserId],
@@ -62,5 +69,14 @@ export class ChatService {
       .add(chatDoc)
       .then(res => console.log('chat started'))
       .catch(e => console.log('error starting chat', e));
+  }
+
+  addChatMessage(docId: string, messages: any[]) {
+    this.afStore
+    .collection('chats')
+    .doc(docId)
+    .update({ messages })
+    .then(() => console.log('message sent'))
+    .catch(e => console.log('error sending message', e));
   }
 }

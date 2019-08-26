@@ -1,3 +1,11 @@
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0.3em;
+    background: #f5f5f5;
+}
+
 .small-viewer {
     display: block;
     margin: auto;
@@ -9,6 +17,10 @@
 }
 
 @media (min-width: 570px) {
+    .viewer-header {
+        justify-content: space-around;
+    }
+
     .small-viewer {
         display: none;
     }

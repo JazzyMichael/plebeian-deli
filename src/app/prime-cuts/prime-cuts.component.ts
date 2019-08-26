@@ -31,8 +31,8 @@ export class PrimeCutsComponent implements OnInit {
 
   ngOnInit() {
     this.carouselData = [
-      { title: 'Phil McGaughy', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'red' },
-      { title: 'Lindsay Keating', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'green' },
+      { title: 'Phil McGaughy', thumbnail: 'assets/images/phil-mcgaughy-thumbnail.jpg', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'red' },
+      { title: 'Lindsay Keating', thumbnail: 'assets/images/lindsey-keating-thumbnail.jpg', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'green' },
       // { title: 'aye 3', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'blue' },
       // { title: 'aye 4', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'yellow' },
       // { title: 'aye 5', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'gray' },

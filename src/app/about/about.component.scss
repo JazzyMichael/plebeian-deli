@@ -5,7 +5,7 @@
     z-index: -1;
     height: 100vh;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
     transform: translateZ(-1px) scale(2);
     overflow-x: hidden;
     margin-left: -1em;
@@ -75,6 +75,23 @@ p {
     margin: 2em 1em;
 }
 
+.welcome-text {
+    background: #4bd1a0c9;
+    height: 280px;
+    width: 470px;
+    margin-left: 42vw;
+    margin-top: 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    font-size: 1.75em;
+//     text-shadow: -1px 1px 0 #000,
+//     1px 1px 0 #000,
+//    1px -1px 0 #000,
+//   -1px -1px 0 #000;
+}
+
 .visibility-txt {
     // color: white;
     z-index: 2;
@@ -87,16 +104,12 @@ p {
 }
 
 .bg1 {
-    background: url('../../assets/images/about-bg.png');
+    background: url('../../assets/images/about-top.png');
     background-size: cover;
     margin-top: -1rem;
     text-align: center;
     height: 100vh;
     // background-size: cover;
-    text-shadow: -1px 1px 0 #000,
-    1px 1px 0 #000,
-   1px -1px 0 #000,
-  -1px -1px 0 #000;
 }
 
 .bg2-txt {
@@ -117,9 +130,9 @@ p {
 .bg3 {
     margin-top: 10vh;
     // background: #e0dede;
-    height: 30vh;
+    height: 60vh;
     align-items: flex-start;
-    background: url('../../assets/images/about-bg.png');
+    background: url('../../assets/images/about-bottom.png');
     background-size: cover;
     // z-index: 1;
     // transform: translateZ(-2px) scale(2);

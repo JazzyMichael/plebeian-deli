@@ -12,6 +12,7 @@ export class CategoriesService {
     { name: 'photography', icon: 'camera_enhance' },
     { name: 'video', icon: 'videocam' },
     { name: 'typography', icon: 'wb_auto' },
+    { name: 'mural art', icon: 'settings_brightness' },
     { name: 'animation', icon: 'landscape' },
     { name: 'mixed media', icon: 'computer' },
     { name: 'ceramics', icon: 'texture' },

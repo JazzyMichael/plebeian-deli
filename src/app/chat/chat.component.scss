@@ -73,3 +73,11 @@ mat-list-item:hover {
     font-size: 14px;
     font-weight: 200;
 }
+
+.mat-form-field-flex {
+    padding: 0;
+}
+
+textarea {
+    resize: none !important;
+}
