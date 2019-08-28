@@ -24,7 +24,7 @@
             <mat-card-header>
               <mat-card-title>{{ data?.title }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image [src]="data.thumbnail" alt="Studio Thumbnail">
+            <img mat-card-image [src]="data?.thumbnail" alt="Studio Thumbnail" class="no-drag">
             <mat-card-content>
               <button
                 mat-button
@@ -35,14 +35,6 @@
               </button>
             </mat-card-content>
           </mat-card>
-          <!-- <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
-            <iframe
-                [src]="data.videoUrl"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-          </div> -->
         </article>
         <ng-template #infiniteContainer></ng-template>
     </section>
@@ -53,7 +45,7 @@
             <mat-card-header>
               <mat-card-title>{{ data?.title }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image [src]="data.thumbnail" alt="Studio Thumbnail">
+            <img mat-card-image [src]="data?.thumbnail" alt="Studio Thumbnail" class="no-drag">
             <mat-card-content>
               <button
                 mat-button
@@ -64,15 +56,6 @@
               </button>
             </mat-card-content>
           </mat-card>
-          <!-- <div class="sub-item" (click)="click(i)" [style.backgroundColor]="data.backgroundColor">
-            <iframe
-                [src]="data.videoUrl"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-            <button mat-button style="margin: 1em" (click)="$event.stopPropagation()">Full Post</button>
-          </div> -->
         </article>
     </ng-template>
     

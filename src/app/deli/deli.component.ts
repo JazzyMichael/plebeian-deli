@@ -12,7 +12,7 @@ export class DeliComponent implements OnInit {
   cats: any[];
   carouselIndex = 0;
   infinite = true;
-  category: string = 'sculpture';
+  category: string;
 
   constructor(
     public postService: PostService,
@@ -21,6 +21,7 @@ export class DeliComponent implements OnInit {
 
   ngOnInit() {
     this.cats = this.catService.getCategories();
+    this.category = this.cats[0] ? this.cats[0].name : 'sculpture';
   }
 
   categorySelect(index: number) {
@@ -33,8 +34,8 @@ export class DeliComponent implements OnInit {
     this.category = this.cats[index].name;
   }
 
-  postClick(post: any) {
-    this.router.navigateByUrl(`/post/${post.userId}split${post.postId}`);
+  postClick(postId: string) {
+    this.router.navigateByUrl(`/post/${postId}`);
   }
 
 }

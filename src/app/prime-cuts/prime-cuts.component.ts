@@ -31,12 +31,21 @@ export class PrimeCutsComponent implements OnInit {
 
   ngOnInit() {
     this.carouselData = [
-      { title: 'Phil McGaughy', thumbnail: 'assets/images/phil-mcgaughy-thumbnail.jpg', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'red' },
-      { title: 'Lindsay Keating', thumbnail: 'assets/images/lindsey-keating-thumbnail.jpg', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'green' },
-      // { title: 'aye 3', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'blue' },
-      // { title: 'aye 4', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'yellow' },
-      // { title: 'aye 5', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/plziHxS7r-4'), backgroundColor: 'gray' },
-      // { title: 'aye 6', videoUrl: this.getPhotoUrl('https://www.youtube.com/embed/tOXZ4rWu5go'), backgroundColor: 'orange' }
+      {
+        title: 'Phil McGaughy',
+        thumbnail: 'assets/images/phil-mcgaughy-thumbnail.jpg',
+        videoUrl: 'https://www.youtube.com/embed/plziHxS7r-4'
+      },
+      {
+        title: 'Lindsay Keating',
+        thumbnail: 'assets/images/lindsey-keating-thumbnail.jpg',
+        videoUrl: 'https://www.youtube.com/embed/tOXZ4rWu5go'
+      },
+      {
+        title: 'Alexis Nutini',
+        thumbnail: 'assets/images/alexis-nutini-thumbnail.jpg',
+        videoUrl: 'https://www.youtube.com/embed/ao2bFVcdUJ8'
+      }
     ];
   }
 
@@ -45,10 +54,6 @@ export class PrimeCutsComponent implements OnInit {
       this.carouselIndex = i;
     }
     this.viewingStudio = this.carouselData[i];
-  }
-
-  getPhotoUrl(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   toggleViewer(showAll: boolean) {

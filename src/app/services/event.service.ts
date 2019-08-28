@@ -9,34 +9,24 @@ export class EventService {
   events$: BehaviorSubject<any>;
 
   constructor(private afStore: AngularFirestore) {
-    const cachedEvents = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
-
-    this.events$ = new BehaviorSubject(cachedEvents);
+    this.events$ = new BehaviorSubject([]);
 
     this.afStore
-      .collectionGroup('events', ref => ref.orderBy('date', 'desc'))
-      .valueChanges()
+      .collection('events', ref => ref.orderBy('date', 'desc'))
+      .valueChanges({ idField: 'eventId' })
       .subscribe(events => {
-        localStorage.setItem('events', JSON.stringify(events));
         this.events$.next(events);
       });
   }
 
-  getGalleryEvents(uid: string) {
+  getGalleryEvents(galleryId: string) {
     return this.afStore
-      .collection('users')
-      .doc(uid)
-      .collection('events');
+      .collection('events', ref => ref.where('galleryId', '==', galleryId))
+      .valueChanges({ idField: 'eventId' });
   }
 
-  addEvent(uid: string, event: any) {
-    this.afStore
-      .collection('users')
-      .doc(uid)
-      .collection('events')
-      .add(event)
-      .then(res => console.log('event added successfully'))
-      .catch(e => console.log('error adding event', e));
+  addEvent(event: any) {
+    return this.afStore.collection('events').add(event);
   }
 
 }

@@ -42,6 +42,14 @@ $transition_time: 350ms;
     text-align: center;
 }
 
+.no-drag {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+     -khtml-user-select: none !important;
+       -moz-user-select: none !important;
+        -ms-user-select: none !important;
+            user-select: none !important;
+}
 
 .feature-friday {
     border: 1px solid black;

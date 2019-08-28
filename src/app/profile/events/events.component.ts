@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -12,13 +13,15 @@ export class EventsComponent implements OnInit {
   @Input() user: any;
   @Input() editable: boolean;
 
+  events$: Observable<any>;
+
   eventForm: FormGroup;
   editing: boolean;
   pickerFilter: any;
+  eventImage: any;
+  eventImagePreview: any;
 
-  random: string;
-
-  constructor(public eventService: EventService, private storage: AngularFireStorage) {
+  constructor(private eventService: EventService, private storage: AngularFireStorage) {
     this.pickerFilter = (d: Date): boolean => {
       const today = new Date();
       today.setDate(today.getDate() - 1);
@@ -27,9 +30,11 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user.uid);
-    this.createEventForm();
-    this.random = Math.random().toString().slice(2, 10);
+    if (this.editable) {
+      this.createEventForm();
+    }
+
+    this.events$ = this.eventService.getGalleryEvents(this.user.uid);
   }
 
   createEventForm() {
@@ -39,7 +44,6 @@ export class EventsComponent implements OnInit {
       date: new FormControl(),
       time: new FormControl(),
       description: new FormControl(),
-      picture: new FormControl(),
       link: new FormControl()
     });
   }
@@ -52,26 +56,44 @@ export class EventsComponent implements OnInit {
       return;
     }
 
-    const eventTitle = this.eventForm.value.title.split(' ').join('-');
+    this.eventImage = file;
 
-    const path = `event-pictures/${eventTitle}-${this.random}`;
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      this.eventImagePreview = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  async submitEvent() {
+    this.editing = false;
+
+    const random = Math.random().toString().slice(2, 10);
+
+    const path = `event-pictures/${this.user.uid}-${random}`;
 
     const ref = this.storage.ref(path);
 
-    await this.storage.upload(path, file);
+    await this.storage.upload(path, this.eventImage);
 
-    ref.getDownloadURL().subscribe(url => {
-      this.eventForm.patchValue({ picture: url });
-    });
-  }
+    const url = await ref.getDownloadURL().toPromise();
 
-  submitEvent() {
-    // const formattedDate = new Date(this.eventForm.value.date.seconds * 1000);
-    const event = { ...this.eventForm.value };
-    console.log('new event', event);
-    this.eventService.addEvent(this.user.uid, event);
-    this.editing = false;
-    this.eventForm.reset();
+    const event = {
+      ...this.eventForm.value,
+      galleryId: this.user.uid,
+      imageUrl: url,
+      createdTimestamp: new Date()
+    };
+
+    this.eventService.addEvent(event)
+      .then(res => {
+        this.eventForm.reset();
+        this.eventImage = null;
+        this.eventImagePreview = null;
+      })
+      .catch(e => console.log('error adding event', e));
   }
 
 }

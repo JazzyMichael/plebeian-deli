@@ -13,20 +13,6 @@
     flex-grow: 1;
 }
 
-.event-upload-btn {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.8em 0;
-    opacity: 1;
-    transition: all 200ms ease-out;
-}
-
-.event-upload-btn:hover {
-    opacity: 0.5;
-}
-
 .event-list {
     display: flex;
     flex-direction: row;

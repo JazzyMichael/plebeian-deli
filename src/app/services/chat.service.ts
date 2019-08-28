@@ -10,7 +10,7 @@ export class ChatService {
   userChats$: BehaviorSubject<any>;
 
   constructor(private afStore: AngularFirestore) {
-    this.userChats$ = new BehaviorSubject(null);
+    this.userChats$ = new BehaviorSubject([]);
   }
 
   getUserChats(uid: string) {

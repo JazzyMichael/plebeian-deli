@@ -130,8 +130,8 @@
 
             <!-- CV -->
             <ng-container *ngIf="user.membership === 'artist' && editable; else viewCV">
-                <button *ngIf="user.cv" mat-button>
-                    <a href="{{ user.cv }}" target="_blank">View CV</a>
+                <button *ngIf="user.cv" mat-button style="padding: 0">
+                    <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
                 </button>
                 <button mat-button style="padding: 0">
                     <label for="cv-upload" class="cv-upload-btn">
@@ -148,21 +148,23 @@
             </ng-container>
     
             <ng-template #viewCV>
-                <button *ngIf="user.membership === 'artist' && user.cv" mat-button>
-                    <a href="{{ user.cv }}" target="_blank" style="text-decoration: none">View CV</a>
+                <button *ngIf="user.membership === 'artist' && user.cv" mat-button style="padding: 0">
+                    <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
                 </button>
             </ng-template>
 
             <!-- Galleries -->
             <ng-container *ngIf="user.membership === 'artist'">
-                <p>Galleries</p>
-                <button
-                    mat-button
-                    *ngFor="let gallery of galleries$ | async"
-                    [routerLink]="'/' + gallery.username"
-                    style="display: block">
-                    {{ gallery.username }}
-                </button>
+                <ng-container *ngIf="galleries$ | async as galleries">
+                    <p *ngIf="galleries.length">Galleries</p>
+                    <button
+                        mat-button
+                        *ngFor="let gallery of galleries"
+                        [routerLink]="'/' + gallery.username"
+                        style="display: block">
+                        {{ gallery.username }}
+                    </button>
+                </ng-container>
             </ng-container>
 
         </div>

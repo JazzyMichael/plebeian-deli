@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post',
@@ -11,8 +12,8 @@ import { UserService } from '../services/user.service';
 })
 export class PostComponent implements OnInit {
   post$: Observable<any>;
-  user: any;
   userPosts$: Observable<any>;
+  featuredPosts$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,24 +24,23 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
 
-      const postParam = params.get('id');
+      const postId = params.get('id');
+      console.log('param post id', postId);
 
-      if (!postParam) {
+      if (!postId) {
         return this.router.navigateByUrl('/deli');
       }
 
       document.querySelector('.main-container').scrollTop = 0;
 
-      const split = postParam.split('split');
+      this.post$ = this.postService.getPost(postId)
+        .pipe(
+          tap(post => {
+            this.userPosts$ = this.postService.getUserPosts(post.userId, 3);
+          })
+        );
 
-      const userId = split[0];
-      const postId = split[1];
-
-      this.post$ = this.postService.getPost(userId, postId);
-
-      this.userPosts$ = this.userService.getPosts(userId, 3);
-
-      this.user = await this.userService.getUserById(userId);
+      this.featuredPosts$ = this.postService.featuredPosts$.asObservable();
     });
   }
 

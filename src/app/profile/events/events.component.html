@@ -6,7 +6,7 @@
             mat-raised-button
             *ngIf="editing"
             color="primary"
-            [disabled]="!eventForm.touched || !eventForm.valid"
+            [disabled]="!eventForm.touched || !eventForm.valid || !eventImage"
             style="margin-right: 1em"
             (click)="submitEvent()">
             <mat-icon>done</mat-icon>
@@ -15,7 +15,7 @@
         <button
             mat-raised-button
             *ngIf="editing"
-            (click)="editing = false">
+            (click)="editing = false; eventImagePreview = null; eventImage = null;">
             <mat-icon>close</mat-icon>
             <span>Cancel</span>
         </button>
@@ -89,17 +89,21 @@
 
     <br>
 
-    <div class="responsive-field" style="display: inline-block; border-radius: 6px;" [ngStyle]="{'background': 'linear-gradient(rgb(225, 241, 232), rgb(181, 181, 181))'}" >
-        <label for="event-pic-upload" class="event-upload-btn">
-            <mat-icon>publish</mat-icon>
-            <span style="margin-left: 10px">Upload Picture</span>
-        </label>
+    <div class="responsive-field" style="display: inline-block;">
+        <button *ngIf="!eventImagePreview" mat-button style="padding: 0">
+            <label for="event-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
+                <mat-icon>publish</mat-icon>
+                <span style="margin-left: 10px">Upload</span>
+            </label>
+        </button>
         <input
             id="event-pic-upload"
             type="file"
             accept="image/*"
             style="display: none"
             (change)="uploadEventPic($event)">
+    
+        <img *ngIf="eventImagePreview" [src]="eventImagePreview" alt="Event Image" style="max-width: 150px; max-height: 150px;">
     </div>
 
     <mat-form-field class="responsive-field">
@@ -114,17 +118,17 @@
 </form>
 
 <div class="event-list">
-    <mat-card *ngFor="let event of eventService.events$ | async" class="event-card">
+    <mat-card *ngFor="let event of events$ | async" class="event-card">
 
         <mat-card-header>
-            <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg); margin: 5px;"></div>
+            <!-- <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg); margin: 5px;"></div> -->
             <mat-card-title style="font-size: 16px">{{ event.title }}</mat-card-title>
-            <mat-card-subtitle style="font-size: 12px">{{ event.date.toDate() | date }}</mat-card-subtitle>
+            <mat-card-subtitle style="font-size: 12px">{{ event.date?.toDate() | date }}</mat-card-subtitle>
         </mat-card-header>
 
         <img
             mat-card-image
-            src="assets/images/event-1.webp"
+            [src]="event?.imageUrl"
             alt="Event Image"
             style="width: 100%; margin: 0 auto">
 

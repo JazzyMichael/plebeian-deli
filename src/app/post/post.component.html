@@ -1,13 +1,13 @@
 
-<div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
+<div *ngIf="post$ | async as post" style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
 
-    <div *ngIf="user" style="display: flex; justify-content: start; align-items: center;">
-        <img [src]="user.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + user.username">
-        <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + user.username">{{ user.username }}</p>
-        <!-- <p>Timestamp</p> -->
+    <div style="display: flex; justify-content: start; align-items: center;">
+        <img [src]="post?.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
+        <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
+        <p>{{ post.createdTimestamp.toDate() | date }}</p>
     </div>
 
-    <mat-card *ngIf="post$ | async as post" style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
+    <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
         <quill-view [content]="post.content"></quill-view>
 
@@ -42,15 +42,15 @@
     <!-- recent posts by that artist -->
     <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 *ngIf="user">Recent Posts from {{ user.username }}</h2>
-            <button mat-raised-button>View All</button>
+            <h3 >Recent Posts by {{ post?.user?.username }}</h3>
+            <button mat-raised-button [routerLink]="'/' + post.user.username">View All</button>
         </div>
         <div style="display: flex; justify-content: space-around;">
             <mat-card *ngFor="let post of userPosts$ | async" style="width: 200px; margin: 0.5em; cursor: pointer;">
-                <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image" style="max-height: 200px">
+                <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
                 <mat-card-content>
                     <p>{{ post.title }}</p>
-                    <p>{{ post.createdDate.seconds | date }}</p>
+                    <p>{{ post.createdTimestamp.toDate() | date }}</p>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -59,13 +59,17 @@
     <!-- featured posts from prime cuts -->
     <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>Featured Posts</h2>
-            <button mat-raised-button routerLink="/prime-cuts">View More</button> 
+            <h3>Featured Posts</h3>
+            <button mat-raised-button routerLink="/deli">View More</button> 
         </div>
         <div style="display: flex; justify-content: space-around;">
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
-            <mat-card style="height: 250px; width: 200px; margin: 0.5em;"></mat-card>
+            <mat-card *ngFor="let post of featuredPosts$ | async" style="height: 250px; width: 200px; margin: 0.5em;">
+                <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
+                <mat-card-content>
+                    <p>{{ post.title }}</p>
+                    <p>{{ post.createdTimestamp.toDate() | date }}</p>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 

@@ -16,7 +16,7 @@ export class StudioViewerComponent implements OnInit {
   }
 
   getVideoUrl() {
-    const url = 'https://www.youtube.com/embed/plziHxS7r-4';
+    const url = this.studio.videoUrl;
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }

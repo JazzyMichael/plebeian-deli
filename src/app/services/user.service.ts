@@ -49,29 +49,4 @@ export class UserService {
       .then(() => console.log('updated user'))
       .catch((err) => console.log('error updating user'));
   }
-
-  addPost(userId: string, title: string, category: string, content: any) {
-    const doc = {
-      title,
-      category,
-      content,
-      userId,
-      createdTimestamp: Date.now(),
-      createdDate: new Date()
-    };
-
-    return this.afStore
-      .doc(`users/${userId}`)
-      .collection('posts')
-      .add(doc);
-  }
-
-  getPosts(uid: string, limit: number = 5): Observable<any> {
-    return this.afStore
-      .collection('users')
-      .doc(uid)
-      .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(limit))
-      .valueChanges({ idField: 'postId' });
-  }
-
 }

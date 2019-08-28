@@ -6,12 +6,12 @@
             mat-raised-button
             color="primary"
             style="margin-right: 1em"
-            [disabled]="!postTitle || !postCategory || !postContent"
+            [disabled]="!postTitle || !postCategory || !postContent || !postImage"
             (click)="submitPost()">
             <mat-icon>done</mat-icon>
             Submit
         </button>
-        <button *ngIf="editing" mat-raised-button (click)="editing = false">
+        <button *ngIf="editing" mat-raised-button (click)="editing = false; postImage = null; postImagePreview = null;">
             <mat-icon>close</mat-icon>
             Cancel
         </button>
@@ -33,8 +33,8 @@
     <mat-hint *ngIf="!postTitle">Must have a title</mat-hint>
 </mat-form-field>
 
-<div style="width: 100%; display: flex; justify-content: space-between;">
-    <mat-form-field *ngIf="editing" color="primary" style="flex: 1; margin: 1em;">
+<div *ngIf="editing" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+    <mat-form-field color="primary" style="flex: 1; margin: 1em;">
         <mat-label>Category</mat-label>
         <mat-select [(ngModel)]="postCategory">
             <mat-option *ngFor="let cat of categories" [value]="cat.name">
@@ -43,10 +43,25 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field *ngIf="editing" color="primary" style="flex: 1; margin: 1em;">
+    <button *ngIf="!postImagePreview" mat-button style="padding: 0">
+        <label for="post-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">Upload</span>
+        </label>
+    </button>
+    <input
+        id="post-pic-upload"
+        type="file"
+        accept="image/*"
+        style="display: none"
+        (change)="uploadPostPic($event)">
+
+    <img *ngIf="postImagePreview" [src]="postImagePreview" alt="Post Image" style="max-width: 150px; max-height: 150px;">
+
+    <!-- <mat-form-field *ngIf="editing" color="primary" style="flex: 1; margin: 1em;">
         <mat-icon matPrefix color="primary">attach_money</mat-icon>
         <input matInput type="number" placeholder="Price (optional)" color="primary" min="1" max="10000" autocomplete="off">
-    </mat-form-field>
+    </mat-form-field> -->
 </div>
 
 <quill-editor
@@ -102,12 +117,12 @@
 </quill-editor>
 
 <div class="post-list">
-    <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post)">
-        <img mat-card-image src="assets/jazzy-on-desk.jpg" alt="Post Image">
+    <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
+        <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image">
         <mat-card-content>
             <p>{{ post.title }}</p>
-            <p>{{ post.createdDate.toDate() | date }}</p>
-            <p>Author Username</p>
+            <p>{{ post.createdTimestamp.toDate() | date }}</p>
+            <p>{{ user.username }}</p>
         </mat-card-content>
     </mat-card>
 </div>

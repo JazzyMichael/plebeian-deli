@@ -57,49 +57,7 @@ export class CalendarComponent implements OnInit {
     }
   ];
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'A 3 day event',
-  //     color: colors.red,
-  //     actions: this.actions,
-  //     allDay: true,
-  //     // resizable: {
-  //     //   beforeStart: true,
-  //     //   afterEnd: true
-  //     // },
-  //     // draggable: true
-  //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'An event with no end date',
-  //     color: colors.yellow,
-  //     actions: this.actions
-  //   },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'A long event that spans 2 months',
-  //     color: colors.blue,
-  //     allDay: true
-  //   },
-  //   {
-  //     start: addHours(startOfDay(new Date()), 2),
-  //     end: new Date(),
-  //     title: 'Another Event',
-  //     color: colors.yellow,
-  //     actions: this.actions,
-  //     // resizable: {
-  //     //   beforeStart: true,
-  //     //   afterEnd: true
-  //     // },
-  //     // draggable: true
-  //   }
-  // ];
-  // events: any[];
   events$: any;
-  eventSub: Subscription;
 
   constructor(private eventService: EventService) { }
 
@@ -131,24 +89,6 @@ export class CalendarComponent implements OnInit {
       this.viewDate = date;
     }
   }
-
-  // eventTimesChanged({
-  //   event,
-  //   newStart,
-  //   newEnd
-  // }: CalendarEventTimesChangedEvent): void {
-  //   this.events = this.events.map(iEvent => {
-  //     if (iEvent === event) {
-  //       return {
-  //         ...event,
-  //         start: newStart,
-  //         end: newEnd
-  //       };
-  //     }
-  //     return iEvent;
-  //   });
-  //   this.handleEvent('Dropped or resized', event);
-  // }
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log({ action, event });
