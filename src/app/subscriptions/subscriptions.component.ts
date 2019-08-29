@@ -41,15 +41,14 @@ export class SubscriptionsComponent implements OnInit {
         subtitle: 'Subtitle for Galleries',
         price: 10,
         perks: [
-          'Post Work in the Deli',
           'Share events on the Plebeian Calendar',
-          'Invite and interact with members'
+          'Interact with members'
         ]
       }
     ];
   }
 
-  subscribe() {
+  selectSubscription() {
     console.log('subscribe');
     // try {
     //   fbq('track', 'Subscribe', {

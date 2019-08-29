@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Observable } from 'rxjs';
 import { switchMap, first, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 
@@ -59,7 +59,7 @@ export class AuthService {
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
       await this.createUserDoc({...authData.user, username });
-      return this.router.navigateByUrl('/');
+      // return this.router.navigateByUrl('/');
     } else {
       window.alert('You already have an account!');
       return this.router.navigateByUrl(`/about`);
@@ -83,6 +83,7 @@ export class AuthService {
 
   async logout() {
     await this.afAuth.auth.signOut();
+    this.chatService.userChats$.next([]);
     return this.router.navigateByUrl('/about');
   }
 
@@ -95,7 +96,7 @@ export class AuthService {
       displayName,
       email,
       phoneNumber,
-      membership: 'artist',
+      membership: 'viewer',
       profileUrl: photoURL,
       backgroundUrl: null,
       description: null,
@@ -116,7 +117,7 @@ export class AuthService {
     return this.user$.pipe(first()).toPromise();
   }
 
-  getUser(username: string) {
+  getUser(username: string): Observable<any> {
     return this.afStore
       .collection('users', ref => ref.where('username', '==', username))
       .valueChanges()

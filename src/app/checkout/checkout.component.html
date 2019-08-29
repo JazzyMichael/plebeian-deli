@@ -1,62 +1,74 @@
-<ng-container *ngIf="membership === 'viewer'">
+<!-- VIEWER -->
+<ng-container *ngIf="plan?.name === 'viewer'">
     <div style="text-align: center">
         <p>Choose a unique Username to setup your free account!</p>
-        <!-- <p>Username & Login</p> -->
+        
+        <app-username-form (username)="usernameInput($event)"></app-username-form>
+            
+        <div class="button-container">
+            <button
+                mat-raised-button
+                color="primary"
+                style="color: white"
+                [disabled]="!username"
+                (click)="googleSignUp()">
+                Sign Up With Google
+            </button>
+            <button
+                mat-raised-button
+                style="color: white;"
+                [ngStyle]="{'background-color': username ? '#3f6fff' : 'rgba(0, 0, 0, 0.12)'}"
+                [disabled]="!username"
+                (click)="facebookSignUp()">
+                Sign Up With Facebook
+            </button>
+        </div>
     </div>
 </ng-container>
 
-<ng-container *ngIf="membership === 'artist'">
-    <div style="text-align: center">
-        <p>Become a Plebeian Artist</p>
-    </div>
-    <mat-horizontal-stepper labelPosition="bottom" color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
-        <mat-step label="Payment" editable="false" color="accent">
-            <div>Payment</div>
+<!-- ARTIST -->
+<ng-container *ngIf="plan?.name === 'artist'">
+    <div style="text-align: center; margin: 1em auto;">Plebeian Artist Registration - $1/mo</div>
+
+    <mat-vertical-stepper linear color="accent">
+        <mat-step label="Username & Login" editable="false" color="accent" [completed]="username && loggedIn">
+
+            <ng-container *ngIf="!loggedIn; else loggedInMessage">
+
+                <div>Choose a unique Username to setup your Artist account!</div>
+
+                <app-username-form (username)="usernameInput($event)"></app-username-form>
+            
+                <div class="button-container">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        style="color: white"
+                        [disabled]="!username"
+                        (click)="googleSignUp()">
+                        Sign Up With Google
+                    </button>
+                    <button
+                        mat-raised-button
+                        style="color: white;"
+                        [ngStyle]="{'background-color': username ? '#3f6fff' : 'rgba(0, 0, 0, 0.12)'}"
+                        [disabled]="!username"
+                        (click)="facebookSignUp()">
+                        Sign Up With Facebook
+                    </button>
+                </div>
+            </ng-container>
+
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
         </mat-step>
 
-        <mat-step label="Username & Login" editable="false" color="accent">
-            <div>Username & Auth</div>
-            <!-- <form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
+        <mat-step label="Payment" editable="false" color="accent" [completed]="paymentCompleted">
 
-                    <mat-form-field color="accent" style="width: 100%">
-                        <input
-                            matInput
-                            autocomplete="off"
-                            uniqueUsernameValidator
-                            formControlName="username"
-                            placeholder="Username"
-                            required>
-                        <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
-                        Username already taken
-                        </mat-error>
-                        <mat-error *ngIf="signUpForm.get('username').hasError('required')">
-                        Username is required
-                        </mat-error>
-                    </mat-form-field>
-                
-                
-                    <div style="width: 100%; min-width: 200px; margin: 1em auto; display: flex; justify-content: space-around;">
-                        <button
-                            mat-raised-button
-                            color="primary"
-                            style="color: white"
-                            [disabled]="!signUpForm.valid"
-                            (click)="auth.signUpWithGoogle(signUpForm.get('username').value)">
-                            Sign Up With Google
-                        </button>
-                        <button
-                            mat-raised-button
-                            style="background-color: #3f6fff; color: white;"
-                            [disabled]="!signUpForm.valid">
-                            Sign Up With Facebook
-                        </button>
-                    </div>
-                    
-                </form> -->
+            <app-payment-form (paymentCompleted)="onPayment($event)"></app-payment-form>
+
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
@@ -70,28 +82,63 @@
                 <button mat-button matStepperNext>Next</button>
             </div>
         </mat-step>
-    </mat-horizontal-stepper>
+    </mat-vertical-stepper>
 </ng-container>
 
-<ng-container *ngIf="membership === 'gallery'">
-    <div style="text-align: center">
-        <p>Plebeian Gallery Registration</p>
-    </div>
-    <mat-horizontal-stepper color="accent" style="width: 100%; max-width: 666px; margin: 1em auto;">
-        <mat-step label="Payment" editable="false" color="accent">
-            <div>Payment</div>
+<!-- GALLERY -->
+<ng-container *ngIf="plan?.name === 'gallery'">
+    <div style="text-align: center; margin: 1em auto;">Plebeian Gallery Registration - $10/mo</div>
+
+    <mat-vertical-stepper linear color="accent">
+
+        <mat-step label="Username & Login" editable="false" color="accent" [completed]="username && loggedIn">
+
+            <ng-container *ngIf="!loggedIn; else loggedInMessage">
+
+                <div>Choose a unique Username to setup your Gallery account!</div>
+
+                <app-username-form (username)="usernameInput($event)"></app-username-form>
+            
+                <div class="button-container">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        style="color: white"
+                        [disabled]="!username"
+                        (click)="googleSignUp()">
+                        Sign Up With Google
+                    </button>
+                    <button
+                        mat-raised-button
+                        style="color: white;"
+                        [ngStyle]="{'background-color': username ? '#3f6fff' : 'rgba(0, 0, 0, 0.12)'}"
+                        [disabled]="!username"
+                        (click)="facebookSignUp()">
+                        Sign Up With Facebook
+                    </button>
+                </div>
+            </ng-container>
+
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
         </mat-step>
 
-        <mat-step label="Username & Login" editable="false" color="accent">
-            <div>Username & Auth</div>
+        <mat-step label="Payment" editable="false" color="accent" [completed]="paymentCompleted">
+
+            <app-payment-form (paymentCompleted)="onPayment($event)"></app-payment-form>
+
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
         </mat-step>
-    </mat-horizontal-stepper>
+
+    </mat-vertical-stepper>
 </ng-container>
+
+<!-- Logged In Message -->
+<ng-template #loggedInMessage>
+    <div style="margin-bottom: 2em">{{ username }} is a great username! Now let's go to the next step!</div>
+</ng-template>

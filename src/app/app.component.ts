@@ -27,7 +27,7 @@ export class AppComponent {
     this.authService.user$.subscribe(user => this.signedIn = !!user);
   }
 
-  onSwipeRight(event: any) {
-    console.log(event);
-  }
+  // onSwipeRight(event: any) {
+  //   console.log(event);
+  // }
 }

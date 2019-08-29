@@ -108,9 +108,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    const message = 'yo whats good';
-
-    this.chatService.initiateChat(loggedInUser.uid, userToChat.uid, message);
+    this.chatService.initiateChat(loggedInUser.uid, userToChat.uid);
   }
 
   async uploadProfilePic(event: any) {

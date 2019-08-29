@@ -11,6 +11,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import {
   AngularFireAuthGuard,
   canActivate,
@@ -51,6 +52,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
 import { PrimePostComponent } from './prime-post/prime-post.component';
 import { EventComponent } from './event/event.component';
+import { PaymentFormComponent } from './payment-form/payment-form.component';
+import { UsernameFormComponent } from './username-form/username-form.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -98,7 +101,9 @@ const routes: Routes = [
     CheckoutComponent,
     StudioViewerComponent,
     PrimePostComponent,
-    EventComponent
+    EventComponent,
+    PaymentFormComponent,
+    UsernameFormComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +116,7 @@ const routes: Routes = [
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireFunctionsModule,
     PdfViewerModule,
     NgxHmCarouselModule,
     QuillModule.forRoot(),

@@ -18,9 +18,14 @@ export class ChatComponent implements OnInit {
   constructor(public chatService: ChatService) { }
 
   ngOnInit() {
+    this.newChatMessage = '';
+
     this.chats$ = this.chatService.userChats$.asObservable();
 
-    this.newChatMessage = '';
+    this.chatService.openChatBox$.subscribe(chatToOpen => {
+      this.showChats = true;
+      this.viewingChat = chatToOpen;
+    });
   }
 
   messagesToggle() {

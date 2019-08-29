@@ -60,8 +60,8 @@
 
             <!-- message -->
             <button
+                *ngIf="!editable"
                 mat-raised-button
-                disabled
                 style="margin-bottom: 1em"
                 (click)="initiateChat(user)">
                 Send Message

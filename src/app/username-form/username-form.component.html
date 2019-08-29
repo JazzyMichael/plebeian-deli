@@ -1,0 +1,23 @@
+<form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
+
+    <mat-form-field color="primary" style="width: 100%">
+
+        <input
+            matInput
+            autocomplete="off"
+            uniqueUsernameValidator
+            formControlName="username"
+            placeholder="Username"
+            required>
+
+        <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
+        Username already taken
+        </mat-error>
+
+        <mat-error *ngIf="signUpForm.get('username').hasError('required')">
+        Username is required
+        </mat-error>
+
+    </mat-form-field>
+
+</form>

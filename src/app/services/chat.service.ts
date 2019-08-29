@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   userChats$: BehaviorSubject<any>;
+  openChatBox$: Subject<any>;
 
   constructor(private afStore: AngularFirestore) {
     this.userChats$ = new BehaviorSubject([]);
+    this.openChatBox$ = new Subject();
   }
 
   getUserChats(uid: string) {
@@ -52,16 +54,23 @@ export class ChatService {
       .valueChanges();
   }
 
-  initiateChat(initiatingUserId: string, secondUserId: string, message: string = 'Hello!') {
+  async initiateChat(initiatingUserId: string, secondUserId: string) {
+    const chats = await this.userChats$.pipe(first()).toPromise();
+
+    const existingChat = chats.find(chat => {
+      return chat.users.some(userId => userId === secondUserId);
+    });
+
+    if (existingChat) {
+      // open chat box to that chat
+      console.log('existingChat');
+      this.openChatBox$.next(existingChat);
+      return;
+    }
+
     const chatDoc = {
       users: [initiatingUserId, secondUserId],
-      messages: [
-        {
-          content: message,
-          userId: initiatingUserId,
-          timestamp: Date.now()
-        }
-      ]
+      messages: []
     };
 
     this.afStore

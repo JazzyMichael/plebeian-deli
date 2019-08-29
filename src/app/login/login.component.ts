@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { switchMap, debounceTime, tap } from 'rxjs/operators';
-import { of, Subject, Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
