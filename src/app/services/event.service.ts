@@ -19,6 +19,13 @@ export class EventService {
       });
   }
 
+  getEvent(eventId: string) {
+    return this.afStore
+      .collection('events')
+      .doc(eventId)
+      .valueChanges();
+  }
+
   getGalleryEvents(galleryId: string) {
     return this.afStore
       .collection('events', ref => ref.where('galleryId', '==', galleryId))

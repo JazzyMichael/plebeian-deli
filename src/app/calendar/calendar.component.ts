@@ -18,6 +18,7 @@ import {
 import { Subject, Observable, of, Subscription } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 const colors: any = {
   red: { primary: '#ad2121', secondary: '#FAE3E3' },
@@ -43,12 +44,6 @@ export class CalendarComponent implements OnInit {
 
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         // this.events = this.events.filter(iEvent => iEvent !== event);
@@ -59,7 +54,7 @@ export class CalendarComponent implements OnInit {
 
   events$: any;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     this.events$ = this.eventService.events$.pipe(
@@ -69,7 +64,8 @@ export class CalendarComponent implements OnInit {
             start: startOfDay(new Date(event.date.seconds * 1000)),
             title: event.title,
             color: colors.red,
-            actions: this.actions
+            actions: this.actions,
+            data: event
           };
         }));
       })
@@ -90,8 +86,11 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event: CalendarEvent | any): void {
     console.log({ action, event });
+
+    const eventId = event.data.eventId;
+    this.router.navigateByUrl(`/event/${eventId}`);
   }
 
   setView(view: CalendarView) {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-studio-viewer',
@@ -10,7 +11,7 @@ export class StudioViewerComponent implements OnInit {
   @Input() studio: any;
   @Output() viewAll: EventEmitter<any> = new EventEmitter();
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,7 +27,7 @@ export class StudioViewerComponent implements OnInit {
   }
 
   viewPostClick() {
-    this.viewAll.emit(true);
+    this.router.navigateByUrl(`/prime-cuts/studio-post-id`);
   }
 
 }

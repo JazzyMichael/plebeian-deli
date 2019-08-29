@@ -46,7 +46,7 @@ export class PostsComponent implements OnInit {
     // console.log('onEditorChanged', event);
   }
 
-  async uploadPostPic(event: any) {
+  uploadPostPic(event: any) {
     const file = event.target.files[0];
 
     if (file.type.split('/')[0] !== 'image') {

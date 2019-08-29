@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   admin: boolean;
+  signedIn: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe(x => {
       this.admin = this.router.url === '/admin'
         || this.router.url === '/admin/new-post'
@@ -21,6 +23,8 @@ export class AppComponent {
         || this.router.url === '/admin/more'
         || this.router.url === 'admin';
     });
+
+    this.authService.user$.subscribe(user => this.signedIn = !!user);
   }
 
   onSwipeRight(event: any) {

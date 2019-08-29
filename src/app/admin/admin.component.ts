@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin',
@@ -8,11 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class AdminComponent implements OnInit {
   username: string;
 
-  constructor() {
-    this.username = 'mike';
+  constructor(private authService: AuthService) {}
+
+  async ngOnInit() {
+    const user = await this.authService.user$.pipe(first()).toPromise();
+
+    this.username = user.username;
   }
 
-  ngOnInit() {
+  logout() {
+    this.authService.logout();
   }
 
 }

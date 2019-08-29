@@ -1,0 +1,23 @@
+.gallery-info-card {
+    width: 1000px;
+    max-width: 85%;
+    margin: 1em auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.gallery-image {
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 200px;
+    cursor: pointer;
+}
+
+@media (min-width: 600px) {
+    .gallery-info-card {
+        flex-direction: row;
+    }
+}

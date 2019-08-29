@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,10 @@ export class PostService {
   posts$: BehaviorSubject<any>;
   featuredPosts$: BehaviorSubject<any>;
 
-  constructor(private afStore: AngularFirestore) {
-    const cachedPosts = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
+  constructor(private afStore: AngularFirestore, private router: Router) {
+    // const cachedPosts = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
 
-    this.posts$ = new BehaviorSubject(cachedPosts);
+    this.posts$ = new BehaviorSubject([]);
     this.featuredPosts$ = new BehaviorSubject([]);
 
     this.afStore
@@ -38,53 +39,29 @@ export class PostService {
   }
 
   getUserPosts(uid: string, limit: number = 10): Observable<any> {
-    console.log('getUserPosts uid', uid);
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))
       .valueChanges({ idField: 'postId' });
   }
 
   getPost(id: string): Observable<any> {
-    console.log('getPost id', id);
-
     return this.afStore
       .doc(`posts/${id}`)
       .valueChanges()
       .pipe(
-        // map(action => {
-        //   const data = action.payload.data();
-        //   const postId = action.payload.id;
-        //   console.log('map data', data);
-        //   console.log('map postId', postId);
-        //   return { postId, ...data };
-        // }),
         switchMap((post: any) => {
-          console.log('map post', post);
+          if (!post) {
+            return of(null);
+          }
+
           return this.afStore
             .doc(`users/${post.userId}`)
             .get()
             .pipe(
               map(user => {
-                console.log('pipe map user', user.data());
                 return { ...post, user: user.data() };
               })
             );
-            // .then(userDoc => {
-            //   const userData = userDoc.data();
-
-            //   console.log('userData', userData);
-
-            //   post['postId'] = id;
-            //   post['user'] = userData;
-
-            //   console.log('returning post', post);
-
-            //   return of(post);
-            // })
-            // .catch(e => {
-            //   console.log('error joining user to post', e);
-            //   return of(e);
-            // });
         })
       );
   }

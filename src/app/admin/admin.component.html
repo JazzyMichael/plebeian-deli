@@ -1,7 +1,7 @@
 
 <mat-toolbar style="height: 8vh; display: flex; justify-content: space-around; align-items: center;">
     <span>Admin Dashboard</span>
-    <button mat-button>{{ username }} - Log Out</button>
+    <button mat-button (click)="logout()">{{ username }} - Log Out</button>
 </mat-toolbar>
 
 <mat-drawer-container style="height: 92vh">

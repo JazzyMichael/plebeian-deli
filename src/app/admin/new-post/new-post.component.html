@@ -1,1 +1,97 @@
-<p>Create new posts for the Prime Cuts page and test different text-editor layouts</p>
+<div>
+    <h2>New Prime-Cuts Post</h2>
+
+    <br>
+
+    <button
+        mat-raised-button
+        [disabled]="!postTitle || !postContent || !postImage"
+        (click)="submitPost()">
+        Submit Post
+    </button>
+
+    <br><br>
+
+    <mat-checkbox [(ngModel)]="featureFriday">Feature Friday</mat-checkbox>
+
+    <br><br>
+
+    <input
+        type="text"
+        matInput
+        placeholder="Title"
+        [(ngModel)]="postTitle"
+        autocomplete="off">
+
+    <br><br>
+
+    <button *ngIf="!postImagePreview" mat-raised-button style="padding: 0">
+        <label for="post-image-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">Upload Image</span>
+        </label>
+    </button>
+    <input
+        id="post-image-upload"
+        type="file"
+        accept="image/*"
+        style="display: none"
+        (change)="uploadPostImage($event)">
+
+    <img *ngIf="postImagePreview" [src]="postImagePreview" alt="Post Image" style="max-width: 150px; max-height: 150px;">
+
+    <br><br>
+
+</div>
+
+<br>
+
+<quill-editor
+    [modules]="modules"
+    [(ngModel)]="postContent"
+    [placeholder]="'The...'"
+    [styles]="{'min-height': '200px', 'margin-bottom': '1em'}">
+    <div quill-editor-toolbar>
+        <span class="ql-formats">
+            <select class="ql-font"></select>
+            <select class="ql-size"></select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-bold" [title]="'Bold'"></button>
+            <button class="ql-italic" [title]="'Italic'"></button>
+            <button class="ql-underline" [title]="'Underline'"></button>
+            <button class="ql-strike" [title]="'Strike'"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-blockquote" [title]="'Quote'"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-header" value="1"></button>
+            <button class="ql-header" value="2"></button>
+        </span>
+        <span class="ql-formats">
+            <select class="ql-color"></select>
+        </span>
+        <span class="ql-formats">
+            <select class="ql-align" [title]="'Alignment'">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="right"></option>
+                <option value="justify"></option>
+            </select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-indent" value="-1"></button>
+            <button class="ql-indent" value="+1"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+            <button class="ql-video"></button>
+        </span>
+    </div>
+</quill-editor>

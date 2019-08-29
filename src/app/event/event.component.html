@@ -1,0 +1,22 @@
+<div *ngIf="event$ | async as event" style="text-align: center">
+
+    <h1 style="margin: 1.5em auto">{{ event.date?.toDate() | date }} - {{ event.title }}</h1>
+
+    <img [src]="event.imageUrl" alt="Event Image" style="max-width: 95%; margin: 1em auto;">
+
+    <mat-card>{{ event.description }}</mat-card>
+
+    <mat-card *ngIf="gallery" class="gallery-info-card">
+        <div
+            class="gallery-image"
+            [ngStyle]="{'background-image': 'url(' + gallery.profileUrl + ')'}"
+            (click)="viewGallery()">
+        </div>
+
+        <div style="cursor: pointer" (click)="viewGallery()">
+            <p>{{ gallery.username }}</p>
+            <p>{{ gallery.description }}</p>
+        </div>
+    </mat-card>
+
+</div>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post',
@@ -36,6 +36,10 @@ export class PostComponent implements OnInit {
       this.post$ = this.postService.getPost(postId)
         .pipe(
           tap(post => {
+            if (!post) {
+              return this.router.navigateByUrl('/deli');
+            }
+
             this.userPosts$ = this.postService.getUserPosts(post.userId, 3);
           })
         );

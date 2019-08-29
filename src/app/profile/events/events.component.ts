@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -21,7 +22,11 @@ export class EventsComponent implements OnInit {
   eventImage: any;
   eventImagePreview: any;
 
-  constructor(private eventService: EventService, private storage: AngularFireStorage) {
+  constructor(
+    private eventService: EventService,
+    private storage: AngularFireStorage,
+    private router: Router
+    ) {
     this.pickerFilter = (d: Date): boolean => {
       const today = new Date();
       today.setDate(today.getDate() - 1);
@@ -35,6 +40,10 @@ export class EventsComponent implements OnInit {
     }
 
     this.events$ = this.eventService.getGalleryEvents(this.user.uid);
+  }
+
+  viewEvent(eventId: string) {
+    this.router.navigateByUrl(`/event/${eventId}`);
   }
 
   createEventForm() {

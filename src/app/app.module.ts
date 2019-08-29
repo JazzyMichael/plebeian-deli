@@ -49,6 +49,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
+import { PrimePostComponent } from './prime-post/prime-post.component';
+import { EventComponent } from './event/event.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -62,7 +64,9 @@ const routes: Routes = [
   { path: 'members', component: MembersComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
+  { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
+  { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },
   { path: 'checkout/:membership', component: CheckoutComponent, ...canActivate(redirectLoggedInTo(['/']))},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
@@ -92,7 +96,9 @@ const routes: Routes = [
     ArtistsComponent,
     ChatComponent,
     CheckoutComponent,
-    StudioViewerComponent
+    StudioViewerComponent,
+    PrimePostComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

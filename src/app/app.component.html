@@ -5,6 +5,6 @@
 
 <router-outlet *ngIf="admin"></router-outlet>
 
-<app-chat *ngIf="!admin"></app-chat>
+<app-chat *ngIf="!admin && signedIn"></app-chat>
 
 <!-- </div> -->
