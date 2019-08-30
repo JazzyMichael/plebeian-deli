@@ -14,12 +14,12 @@
 
 .chats-card {
     height: 350px;
-    width: 350px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 500px;
     max-height: 80vh;
     position: absolute;
-    right: 5%;
-    bottom: 5%;
+    right: 0px;
+    bottom: 0px;
     z-index: 100;
     padding: 0 0 1em 0;
 }
@@ -34,7 +34,8 @@
 }
 
 .showing-chats {
-    bottom: 450px;
+    bottom: 330px;
+    z-index: 222;
 }
 
 mat-list {
@@ -82,4 +83,15 @@ mat-list-item:hover {
 
 textarea {
     resize: none !important;
+}
+
+@media (min-width: 550px) {
+    .chats-card {
+        bottom: 5%;
+        right: 5%;
+    }
+
+    .showing-chats {
+        bottom: 450px;
+    }
 }

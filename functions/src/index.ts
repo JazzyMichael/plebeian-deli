@@ -9,6 +9,11 @@ const db = admin.firestore();
 
 import * as Stripe from 'stripe';
 const stripe = new Stripe(functions.config().stripe.secret);
+// const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
+
+
+
+
 
 // when new users are created in firestore,
 // create a stripe customer for that user
@@ -19,13 +24,18 @@ export const createStripeCustomer = functions.auth
         const firebaseEmail: string = userRecord.email;
 
         const customer = await stripe.customers.create({
-            metadata: { firebaseUID, firebaseEmail }
+            email: firebaseEmail,
+            metadata: { firebaseUID }
         });
 
         return db.doc(`users/${firebaseUID}`).update({
             stripeId: customer.id
         });
     });
+
+
+
+
 
 // add payment source (credit card) to stripe customer for user
 // subscribe user to plan
@@ -55,12 +65,13 @@ export const startSubscription = functions.https
         const sub = await stripe.subscriptions.create({
             customer: user.stripeId,
             items: [{ plan: data.planId }],
-            coupon: data.coupon || ''
+            coupon: data.promoCode || ''
         });
 
         return db.doc(`users/${userId}`).update({
             status: sub.status,
             subscriptionId: sub.id,
-            itemId: sub.items.data[0].id
+            itemId: sub.items.data[0].id,
+            membership: data.planName
         });
     });

@@ -29,6 +29,11 @@ export class UsernameFormComponent implements OnInit {
   validateUniqueUsername(control: AbstractControl) {
     return control.valueChanges.pipe(
       debounceTime(777),
+      switchMap(inputText => {
+        const split = inputText.split(' ');
+        const final = split.join('_');
+        return of(final);
+      }),
       switchMap(inputText => this.auth.getUser(inputText)),
       tap(user => user ?
         this.username.emit(null) :

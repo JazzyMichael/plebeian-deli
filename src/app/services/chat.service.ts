@@ -9,15 +9,15 @@ import { map, switchMap, first } from 'rxjs/operators';
 export class ChatService {
   userChats$: BehaviorSubject<any>;
   openChatBox$: Subject<any>;
+  openMessagesBox$: Subject<any>;
 
   constructor(private afStore: AngularFirestore) {
     this.userChats$ = new BehaviorSubject([]);
     this.openChatBox$ = new Subject();
+    this.openMessagesBox$ = new Subject();
   }
 
   getUserChats(uid: string) {
-    console.log('getUserChats', uid);
-
     this.afStore
       .collection('chats', ref => ref.where('users', 'array-contains', uid))
       .valueChanges({ idField: 'id' })
@@ -42,7 +42,6 @@ export class ChatService {
         })
       )
       .subscribe((chats: any[]) => {
-        console.log('chats', chats);
         this.userChats$.next(chats);
       });
   }
@@ -76,7 +75,9 @@ export class ChatService {
     this.afStore
       .collection('chats')
       .add(chatDoc)
-      .then(res => console.log('chat started'))
+      .then(res => {
+        this.openMessagesBox$.next(true);
+      })
       .catch(e => console.log('error starting chat', e));
   }
 

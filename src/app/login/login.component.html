@@ -1,87 +1,28 @@
 
-<h3 style="text-align: center">Already have an account?</h3>
-<div style="width: 100%; min-width: 200px; margin: 2em auto 5em; display: flex; justify-content: center; flex-wrap: wrap;">
+<div style="height: 100%; width: 100%; background-color: black; color: white; display: flex; flex-direction: column; align-items: center;">
+
+    <h2>Sign In</h2>
+
+    <br>
+
     <button
         mat-raised-button
         color="primary"
         style="color: white; margin: 0.5em;"
-        (click)="auth.loginWithGoogle()">
+        (click)="googleLogin()">
         Login With Google
     </button>
+
+    <br>
+
     <button
         mat-raised-button
-        style="background-color: #3f6fff; color: white; margin: 0.5em;">
+        style="background-color: #3f6fff; color: white; margin: 0.5em;"
+        (click)="facebookLogin()">
         Login With Facebook
     </button>
+
 </div>
 
 
-<app-subscriptions></app-subscriptions>
-
-
-
-
-<!-- old login/sign up tabs -->
-
-<!-- <mat-tab-group mat-stretch-tabs dynamicHeight color="accent" style="margin: 1em auto; width: 500px; max-width: 85%;">
-
-    <mat-tab label="Sign Up">
-        <form [formGroup]="signUpForm" style="width: 500px; max-width: 90%; margin: 2em auto">
-
-            <mat-form-field color="accent" style="width: 100%">
-                <input
-                    matInput
-                    autocomplete="off"
-                    uniqueUsernameValidator
-                    formControlName="username"
-                    placeholder="Username"
-                    required>
-                <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
-                Username already taken
-                </mat-error>
-                <mat-error *ngIf="signUpForm.get('username').hasError('required')">
-                Username is required
-                </mat-error>
-            </mat-form-field>
-        
-        
-            <div style="width: 100%; min-width: 200px; margin: 1em auto; display: flex; justify-content: space-around;">
-                <button
-                    mat-raised-button
-                    color="primary"
-                    style="color: white"
-                    [disabled]="!signUpForm.valid"
-                    (click)="auth.signUpWithGoogle(signUpForm.get('username').value)">
-                    Sign Up With Google
-                </button>
-                <button
-                    mat-raised-button
-                    style="background-color: #3f6fff; color: white;"
-                    [disabled]="!signUpForm.valid">
-                    Sign Up With Facebook
-                </button>
-            </div>
-            
-        </form>
-    </mat-tab>
-
-    <mat-tab label="Log In">
-
-        <div style="width: 100%; min-width: 200px; margin: 2em auto; display: flex; justify-content: space-around;">
-            <button
-                mat-raised-button
-                color="primary"
-                style="color: white"
-                (click)="auth.loginWithGoogle()">
-                Login With Google
-            </button>
-            <button
-                mat-raised-button
-                style="background-color: #3f6fff; color: white;">
-                Login With Facebook
-            </button>
-        </div>
-
-    </mat-tab>
-
-</mat-tab-group> -->
+<!-- <app-subscriptions></app-subscriptions> -->

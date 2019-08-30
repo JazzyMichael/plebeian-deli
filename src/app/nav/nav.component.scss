@@ -77,7 +77,6 @@ mat-toolbar-row {
 
 .highlighted-btn:hover {
     color: black;
-    padding: 0 1.15em;
     -ms-transform: rotate(360deg); /* IE 9 */
     -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
     transform: rotate(360deg);
@@ -91,7 +90,7 @@ mat-toolbar-row {
     display: block;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 950px) {
     .menu-button {
         display: none;
     }
@@ -110,8 +109,8 @@ mat-toolbar-row {
     }
 }
 
-@media (min-width: 1000px) {
-    .nav-link {
-        font-size: 1.3em;
-    }
-}
+// @media (min-width: 1000px) {
+//     .nav-link {
+//         font-size: 1.3em;
+//     }
+// }

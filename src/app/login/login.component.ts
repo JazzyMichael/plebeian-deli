@@ -11,17 +11,7 @@ import { of } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  signUpForm = this.fb.group({
-    username: [
-      '',
-      Validators.required,
-      this.validateUniqueUsername.bind(this)
-    ]
-  });
-
-  constructor(
-    private fb: FormBuilder,
-    public auth: AuthService) { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
   }
@@ -35,8 +25,12 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  signInWithGoogle() {
-    console.log('username');
+  googleLogin() {
+    this.auth.loginWithGoogle();
+  }
+
+  facebookLogin() {
+    console.log('no facebook yet');
   }
 
 }

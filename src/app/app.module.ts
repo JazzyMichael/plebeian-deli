@@ -41,6 +41,13 @@ import { InfoComponent } from './info/info.component';
 import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
+import { PrimePostComponent } from './prime-post/prime-post.component';
+import { EventComponent } from './event/event.component';
+import { PaymentFormComponent } from './payment-form/payment-form.component';
+import { UsernameFormComponent } from './username-form/username-form.component';
+import { SellerComponent } from './seller/seller.component';
 
 // 3rd Party Modules
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -48,12 +55,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
-import { PrimePostComponent } from './prime-post/prime-post.component';
-import { EventComponent } from './event/event.component';
-import { PaymentFormComponent } from './payment-form/payment-form.component';
-import { UsernameFormComponent } from './username-form/username-form.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -67,11 +68,13 @@ const routes: Routes = [
   { path: 'members', component: MembersComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
+  { path: 'seller', component: SellerComponent },
+  { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },
-  { path: 'checkout/:membership', component: CheckoutComponent, ...canActivate(redirectLoggedInTo(['/']))},
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/about', pathMatch: 'full' }
@@ -103,7 +106,8 @@ const routes: Routes = [
     PrimePostComponent,
     EventComponent,
     PaymentFormComponent,
-    UsernameFormComponent
+    UsernameFormComponent,
+    SellerComponent
   ],
   imports: [
     BrowserModule,

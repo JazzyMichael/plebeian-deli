@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,8 +16,13 @@ export class ChatComponent implements OnInit {
   newChatMessage: string;
   chats$: Observable<any>;
   singleChat$: Observable<any>;
+  darkTheme: boolean;
 
-  constructor(public chatService: ChatService) { }
+  constructor(
+    public chatService: ChatService,
+    private router: Router,
+    private themeService: ThemeService
+    ) { }
 
   ngOnInit() {
     this.newChatMessage = '';
@@ -25,6 +32,15 @@ export class ChatComponent implements OnInit {
     this.chatService.openChatBox$.subscribe(chatToOpen => {
       this.showChats = true;
       this.viewingChat = chatToOpen;
+    });
+
+    this.chatService.openMessagesBox$.subscribe(bool => {
+      this.showChats = true;
+      this.viewingChat = null;
+    });
+
+    this.themeService.isDarkTheme.subscribe(isDark => {
+      this.darkTheme = isDark;
     });
   }
 
@@ -36,8 +52,6 @@ export class ChatComponent implements OnInit {
   }
 
   viewChat(chat: any) {
-    console.log('viewChat');
-
     this.viewingChat = chat;
 
     this.singleChat$ = this.chatService.watchSingleChat(this.viewingChat.id)
@@ -54,7 +68,17 @@ export class ChatComponent implements OnInit {
     this.viewingChat = null;
   }
 
+  viewUserProfile(username: string) {
+    this.router.navigateByUrl(`/${username}`);
+  }
+
   sendMessage() {
+    if (!this.newChatMessage) {
+      return;
+    }
+
+    this.newChatMessage = this.newChatMessage.trim();
+
     if (!this.newChatMessage) {
       return;
     }

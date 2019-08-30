@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-checkout',
@@ -8,14 +9,21 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  // test
   allPlans: any[] = [
     { name: 'artist', id: 'plan_FiF2bn8nmyo3po' },
     { name: 'gallery', id: 'plan_FiF3rqJJrTSEcd' },
     { name: 'viewer', id: '' }
   ];
-  plan: any;
-  username: string;
-  loggedIn: boolean;
+  // prod
+  // allPlans: any[] = [
+  //   { name: 'artist', id: 'plan_Fh9pZk60eSj9ml' },
+  //   { name: 'gallery', id: 'plan_Fh9p0UaJGtlU7o' },
+  //   { name: 'viewer', id: '' }
+  // ];
+
+  plan: any = { name: 'artist', id: 'plan_FiF2bn8nmyo3po' };
+  membership: string = 'artist';
   paymentCompleted: boolean;
 
   constructor(
@@ -25,35 +33,16 @@ export class CheckoutComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const membership = params.get('membership');
-
-      this.plan = this.allPlans.find(p => p.name === membership);
-
-      if (!membership || !this.plan) {
-        return this.router.navigateByUrl('/login');
-      }
-    });
   }
 
-  usernameInput(username: string) {
-    this.username = username;
+  onMembershipChange() {
+    this.plan = this.allPlans.find(p => p.name === this.membership);
   }
 
-  googleSignUp() {
-    console.log(this.username);
-    this.authService.signUpWithGoogle(this.username);
-    this.loggedIn = true;
-  }
-
-  facebookSignUp() {
-    console.log(this.username);
-    this.loggedIn = true;
-  }
-
-  onPayment(event: any) {
-    console.log(event);
+  async onPayment(event: any) {
     this.paymentCompleted = true;
+    const user = await this.authService.user$.pipe(first()).toPromise();
+    this.router.navigateByUrl(`/${user.username}`);
   }
 
 }

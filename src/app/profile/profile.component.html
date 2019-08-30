@@ -1,3 +1,14 @@
+<button *ngIf="editable && !editing" mat-raised-button (click)="toggleEditing()" style="display: block; margin: 1em auto;">
+    <mat-icon>edit</mat-icon>
+    <span style="margin-left: 10px">Edit Profile</span>
+</button>
+
+<button *ngIf="editable && editing" mat-raised-button (click)="toggleEditing()" style="display: block; margin: 1em auto;">
+    <mat-icon>sports_handball</mat-icon>
+    <span style="margin-left: 10px">Done</span>
+</button>
+
+<br>
 
 <div *ngIf="user$ | async as user" class="cont">
 
@@ -26,7 +37,7 @@
 
             <!-- Medium -->
             <mat-form-field
-                *ngIf="user.membership === 'artist' && editable"
+                *ngIf="user.membership === 'artist' && editable && editing"
                 color="accent"
                 style="margin-top: 1em">
                 <mat-label>Medium</mat-label>
@@ -41,7 +52,7 @@
             <p>{{ user.displayName || user.username }}</p>
 
             <!-- Location -->
-            <mat-form-field *ngIf="editable; else viewLocation" color="accent">
+            <mat-form-field *ngIf="editable && editing; else viewLocation" color="accent">
                 <input
                     matInput
                     [value]="user.location || ''"
@@ -68,7 +79,7 @@
             </button>
 
             <!-- Social Links -->
-            <div *ngIf="editable; else viewSocialLinks" style="width: 90%">
+            <div *ngIf="editable && editing; else viewSocialLinks" style="width: 90%">
                 <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
                     <input
                         matInput
@@ -119,17 +130,17 @@
 
                 <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
                     <img src="assets/images/facebook.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
-                    <span class="social-text">{{ user.facebook }}</span>
+                    <span class="social-text">Facebook</span>
                 </button>
 
-                <button *ngIf="user.otherLink" mat-button>
+                <button *ngIf="user.otherLink" mat-button (click)="openOtherLink(user.otherLink)">
                     <mat-icon style="margin-right: 10px">link</mat-icon>
                     <span class="social-text">{{ user.otherLink }}</span>
                 </button>
             </ng-template>
 
             <!-- CV -->
-            <ng-container *ngIf="user.membership === 'artist' && editable; else viewCV">
+            <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
                 <button *ngIf="user.cv" mat-button style="padding: 0">
                     <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
                 </button>
@@ -174,7 +185,7 @@
     <div class="right-column">
 
         <!-- Username and Medium/Membership -->
-        <div style="display: flex; justify-content: space-around; align-items: center;">
+        <div *ngIf="!editing" style="display: flex; justify-content: space-around; align-items: center;">
             <h1 style="font-weight: 200">{{ user.username }}</h1>
             <h1 *ngIf="user.membership === 'viewer'" style="font-weight: 200">{{ 'Member' }}</h1>
             <h1 *ngIf="user.membership === 'artist' && user.medium" style="font-weight: 200">{{ user.medium | titlecase }}</h1>
@@ -182,8 +193,18 @@
             <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
         </div>
 
+        <app-username-form *ngIf="editing" (username)="onUpdateUsername($event)"></app-username-form>
+        <br *ngIf="editing">
+        <button
+            *ngIf="editing && newUsername"
+            mat-raised-button
+            style="display: block; margin: 0 auto 2em;"
+            (click)="saveNewUsername()">
+            save new username? ({{ newUsername }})
+        </button>
+
         <!-- Bio/Description -->
-        <ng-container *ngIf="editable; else readonlyDescription">
+        <ng-container *ngIf="editable && editing; else readonlyDescription">
             <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>

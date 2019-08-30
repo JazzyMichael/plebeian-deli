@@ -20,14 +20,14 @@
     </mat-icon>
 </button>
 
-<mat-card *ngIf="showChats" class="chats-card" [style.background]="viewingChat ? 'black' : 'white'">
+<mat-card *ngIf="showChats" class="chats-card" [style.background]="!viewingChat ? 'white' : darkTheme ? 'black' : 'white'">
 
     <!-- chat box headers -->
     <div *ngIf="viewingChat" class="chats-card-header">
         <button mat-icon-button (click)="goBack()">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <h3 style="font-weight: 300">{{ viewingChat.otherUser.username }}</h3>
+        <h3 style="font-weight: 300; cursor: pointer;" (click)="viewUserProfile(viewingChat.otherUser.username)">{{ viewingChat.otherUser.username }}</h3>
     </div>
 
     <div *ngIf="!viewingChat" class="chats-card-header">

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { switchMap, tap, debounceTime, first } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
@@ -14,14 +14,20 @@ import { ChatService } from '../services/chat.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   user$: Observable<any>;
+  user: any;
   uid: string;
   editable: boolean;
+  editing: boolean = false;
   doneLoading: boolean;
   categories: any[];
   update$: Subject<any> = new Subject();
   galleries$: Observable<any>;
+  newUsername: string;
+
+  userSub: Subscription;
+  updateSub: Subscription;
 
   constructor(
     private router: Router,
@@ -39,16 +45,23 @@ export class ProfileComponent implements OnInit {
         const username = params.get('username');
         if (!username) return this.router.navigateByUrl('/about');
 
-        return this.auth.getUser(params.get('username')).pipe(
+        return this.auth.getUser(username).pipe(
           tap((user: any) => {
             if (!user) return this.router.navigateByUrl('/about');
             this.editable = user.username === this.auth.username;
+            // this.user = user;
             this.uid = user.uid || null;
             this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );
       })
     );
+
+    this.auth.user$.subscribe(user => {
+      if (user && user.uid === this.uid) {
+        this.editable = true;
+      }
+    });
 
     setTimeout(() => {
       this.doneLoading = true;
@@ -58,9 +71,20 @@ export class ProfileComponent implements OnInit {
 
     this.update$.pipe(debounceTime(1000)).subscribe(userObj => {
       this.userService.updateUser(this.uid, userObj);
-      console.log(userObj);
     });
+  }
 
+  ngOnDestroy() {
+    try {
+      this.userSub.unsubscribe();
+      this.updateSub.unsubscribe();
+    } catch (e) {
+      console.log('unsub', e);
+    }
+  }
+
+  toggleEditing() {
+    this.editing = !this.editing;
   }
 
   updateDescription(description: string) {
@@ -81,15 +105,16 @@ export class ProfileComponent implements OnInit {
   }
 
   openInstagram(instagram: string) {
-    console.log(`instagram.com/${instagram}`);
+    const url = `https://www.instagram.com/${instagram}`;
+    window.open(url, '_blank');
   }
 
   onFacebookInput(facebook: string) {
     this.update$.next({ facebook });
   }
 
-  openFacebook(facebook: string) {
-    console.log(facebook);
+  openFacebook(facebookUrl: string) {
+    window.open(facebookUrl, '_blank');
   }
 
   onOtherLinkInput(otherLink: string) {
@@ -97,7 +122,15 @@ export class ProfileComponent implements OnInit {
   }
 
   openOtherLink(otherLink: string) {
-    console.log(otherLink);
+    window.open(otherLink, '_blank');
+  }
+
+  onUpdateUsername(username: string) {
+    this.newUsername = username;
+  }
+
+  saveNewUsername() {
+    this.update$.next({ username: this.newUsername });
   }
 
   async initiateChat(userToChat: any) {

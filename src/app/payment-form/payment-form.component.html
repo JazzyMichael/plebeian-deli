@@ -1,9 +1,26 @@
-<form action="/charge" method="post" (submit)="handleForm($event)" style="text-align: center">
+<form *ngIf="!complete && !loading" action="/charge" method="post" (submit)="handleForm($event)" style="text-align: center; width: 500px; max-width: 95%; margin: 2em auto;">
 
-    <p>Credit Card deets</p>
+    <mat-card>
+        <div #cardForm></div>
+    </mat-card>
 
-    <div #cardForm></div>
-
-    <button mat-raised-button>Submit Payment</button>
+    <button mat-raised-button color="primary" style="margin: 1em auto; color: white;">Submit Payment</button>
 
 </form>
+
+<div *ngIf="!loading" style="text-align: center">
+
+    <p *ngIf="promoCode && !validCoupon" style="font-size: 0.8em">Not a valid promo code</p>
+
+    <p *ngIf="promoCode && validCoupon" style="font-size: 0.9em">100% off!</p>
+
+    <input
+        type="text"
+        matInput
+        placeholder="Promo Code"
+        [(ngModel)]="promoCode"
+        (ngModelChange)="onPromoCodeChange()">
+
+</div>
+
+<mat-spinner *ngIf="loading" style="margin: auto"></mat-spinner>

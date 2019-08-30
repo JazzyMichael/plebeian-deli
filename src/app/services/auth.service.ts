@@ -4,8 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable } from 'rxjs';
-import { switchMap, first, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { switchMap, first, map } from 'rxjs/operators';
 import { ChatService } from './chat.service';
+import { OldUserService } from './old-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,11 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private chatService: ChatService,
-    private router: Router) {
-      const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-      const cachedUsername = localStorage.getItem('username') ? localStorage.getItem('username') : null;
-
-      this.user$ = new BehaviorSubject(cachedUser);
-      this.username = cachedUsername;
+    private oldUserService: OldUserService,
+    private router: Router
+    ) {
+      this.user$ = new BehaviorSubject(null);
+      this.username = '';
 
       this.afAuth.authState.pipe(
         switchMap((user: any) => user
@@ -50,44 +50,46 @@ export class AuthService {
     return this.router.navigateByUrl('/');
   }
 
-  async signUpWithGoogle(username?: string) {
-    if (!username) {
-      return;
-    }
-
-    const authData = await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-
-    if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-      await this.createUserDoc({...authData.user, username });
-      // return this.router.navigateByUrl('/');
-    } else {
-      window.alert('You already have an account!');
-      return this.router.navigateByUrl(`/about`);
-    }
-  }
-
   async loginWithGoogle() {
     const authData = await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-      window.alert('A username has been automatically generated for your free account');
-      const username = authData.user.displayName.substring(0, 4) + `${Date.now()}`.substring(0, 5);
-      await this.createUserDoc({ ...authData.user, username });
-      return this.router.navigateByUrl(`/${username}`);
-    }
+      console.log('new user');
 
-    setTimeout(() => {
-      return this.router.navigateByUrl(`/${this.username}`);
-    }, 500);
+      const username = authData.user.displayName.substring(0, 4) + `${Date.now()}`.substring(0, 4);
+
+      const email = authData.user.email;
+
+      const isOldUser = this.oldUserService.oldUserEmails.some(e => e === email);
+
+      const membership = isOldUser ? 'artist' : 'viewer';
+
+      await this.createUserDoc({ ...authData.user, username, membership });
+
+      if (!isOldUser) {
+        console.log('not old user, navigate to checkout');
+        return this.router.navigateByUrl('/checkout');
+      } else {
+        console.log('old user');
+        setTimeout(() => {
+          return this.router.navigateByUrl(`/${this.username}`);
+        }, 500);
+      }
+
+    } else {
+      setTimeout(() => {
+        return this.router.navigateByUrl(`/${this.username}`);
+      }, 500);
+    }
   }
 
   async logout() {
     await this.afAuth.auth.signOut();
     this.chatService.userChats$.next([]);
-    return this.router.navigateByUrl('/about');
+    return this.router.navigateByUrl('/prime-cuts');
   }
 
-  createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL }) {
+  createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership }) {
     const userDoc = this.afStore.doc(`users/${uid}`);
 
     const data = {
@@ -96,7 +98,7 @@ export class AuthService {
       displayName,
       email,
       phoneNumber,
-      membership: 'viewer',
+      membership,
       profileUrl: photoURL,
       backgroundUrl: null,
       description: null,
@@ -106,8 +108,8 @@ export class AuthService {
       twitterUrl: null,
       facebookUrl: null,
       medium: null,
-      createdTimestamp: Date.now(),
-      createdDate: new Date()
+      createdTimestamp: new Date(),
+      createdDate: Date.now()
     };
 
     return userDoc.set(data);

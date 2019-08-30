@@ -8,6 +8,10 @@
     margin: 1em auto;
 }
 
+hr {
+    width: 90%;
+}
+
 @media (min-width: 450px) {
     .button-container {
         flex-direction: row;

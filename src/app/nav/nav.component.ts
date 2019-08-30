@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,13 +10,14 @@ import { AuthService } from '../services/auth.service';
 export class NavComponent implements OnInit {
   darkTheme: boolean = true;
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService, private themeService: ThemeService) { }
 
   ngOnInit() {
   }
 
   changeTheme() {
     this.darkTheme = !this.darkTheme;
+    this.themeService.isDarkTheme.next(this.darkTheme);
   }
 
 }

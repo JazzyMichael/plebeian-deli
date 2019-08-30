@@ -24,6 +24,7 @@
         <button mat-button routerLink="/exhibitions" (click)="sidenav.close()">Exhibitions</button>
         <button mat-button routerLink="/calendar" (click)="sidenav.close()">Calendar</button>
         <button mat-button routerLink="/members" (click)="sidenav.close()">Members</button>
+        <button mat-button routerLink="/subscriptions" (click)="sidenav.close()">Subscriptions</button>
         <button mat-button routerLink="/shop" (click)="sidenav.close()">Shop</button>
 
         <ng-container *ngIf="auth.user$ | async as user; else showLogin">
@@ -33,7 +34,7 @@
         </ng-container>
 
         <ng-template #showLogin>
-            <button mat-button routerLink="/login" (click)="sidenav.close()">Sign Up</button>
+            <button mat-button routerLink="/login" (click)="sidenav.close()">Sign In</button>
         </ng-template>
     </mat-sidenav>
 
@@ -73,7 +74,8 @@
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">Exhibitions</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">Calendar</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">Members</span>
-                <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button>
+                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">Subscriptions</button>
+                <!-- <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button> -->
 
                 <!-- logged in menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">
@@ -87,12 +89,20 @@
                             <mat-icon>sentiment_very_satisfied</mat-icon>
                             <span>Profile</span>
                         </button>
-                        <button mat-menu-item routerLink="/info">
+                        <button *ngIf="user.membership === 'viewer'" mat-menu-item routerLink="/checkout">
                             <mat-icon>sentiment_satisfied</mat-icon>
-                            <span>Info</span>
+                            <span>Upgrade</span>
+                        </button>
+                        <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/info">
+                            <mat-icon>local_offer</mat-icon>
+                            <span>Seller Info</span>
+                        </button>
+                        <button mat-menu-item routerLink="/info">
+                            <mat-icon>help_outline</mat-icon>
+                            <span>F.A.Q.</span>
                         </button>
                         <button mat-menu-item (click)="auth.logout()">
-                            <mat-icon>sentiment_dissatisfied</mat-icon>
+                            <mat-icon>sentiment_very_dissatisfied</mat-icon>
                             <span>Log Out</span>
                         </button>
                     </mat-menu>
@@ -103,7 +113,7 @@
                     <button mat-button class="nav-link" routerLink="/login" routerLinkActive="active-link">
                         <mat-icon>face</mat-icon>
                         <span style="display: inline-block; width: 0.5em;"></span>
-                        <span>Sign Up</span>
+                        <span>Sign In</span>
                     </button>
                 </ng-template>
 
