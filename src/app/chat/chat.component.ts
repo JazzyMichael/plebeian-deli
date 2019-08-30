@@ -31,7 +31,7 @@ export class ChatComponent implements OnInit {
 
     this.chatService.openChatBox$.subscribe(chatToOpen => {
       this.showChats = true;
-      this.viewingChat = chatToOpen;
+      this.viewChat(chatToOpen);
     });
 
     this.chatService.openMessagesBox$.subscribe(bool => {

@@ -61,8 +61,6 @@ export class ChatService {
     });
 
     if (existingChat) {
-      // open chat box to that chat
-      console.log('existingChat');
       this.openChatBox$.next(existingChat);
       return;
     }

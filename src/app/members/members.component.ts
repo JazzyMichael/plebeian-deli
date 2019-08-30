@@ -3,6 +3,8 @@ import { UserService } from '../services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CategoriesService } from '../services/categories.service';
+import { AuthService } from '../services/auth.service';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-members',
@@ -20,7 +22,13 @@ export class MembersComponent implements OnInit {
   membership: string;
   radioSelection: string = null;
 
-  constructor(public userService: UserService, private catService: CategoriesService, private ren: Renderer2) { }
+  constructor(
+    public userService: UserService,
+    private catService: CategoriesService,
+    private ren: Renderer2,
+    private authService: AuthService,
+    private chatService: ChatService
+    ) { }
 
   ngOnInit() {
     this.filterUsers();
@@ -76,8 +84,9 @@ export class MembersComponent implements OnInit {
     this.filterUsers();
   }
 
-  follow(member: any) {
-    console.log('follow', member);
+  async sendMessage(memberUid: string) {
+    const user = await this.authService.getCurrentUser();
+    this.chatService.initiateChat(user.uid, memberUid);
   }
 
 }

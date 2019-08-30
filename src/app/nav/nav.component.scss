@@ -76,6 +76,7 @@ mat-toolbar-row {
 }
 
 .highlighted-btn:hover {
+    padding: 1em;
     color: black;
     -ms-transform: rotate(360deg); /* IE 9 */
     -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
