@@ -14,6 +14,7 @@ export class PostComponent implements OnInit {
   post$: Observable<any>;
   userPosts$: Observable<any>;
   featuredPosts$: Observable<any>;
+  alreadyLiked: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +47,16 @@ export class PostComponent implements OnInit {
 
       this.featuredPosts$ = this.postService.featuredPosts$.asObservable();
     });
+  }
+
+  likePost() {
+    if (this.alreadyLiked) {
+      // unlike
+      this.alreadyLiked = false;
+    } else {
+      // like
+      this.alreadyLiked = true;
+    }
   }
 
 }

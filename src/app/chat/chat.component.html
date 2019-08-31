@@ -6,10 +6,14 @@
     (click)="messagesToggle()">
 
     <mat-icon
-        *ngIf="!showChats"
-        matBadge="2"
+        *ngIf="!showChats && newMessages"
+        [matBadge]="newMessages"
         matBadgeOverlap="false"
         matBadgeColor="accent">
+        local_post_office
+    </mat-icon>
+
+    <mat-icon *ngIf="!showChats && !newMessages">
         local_post_office
     </mat-icon>
 
@@ -40,10 +44,10 @@
 
     <!-- chat list -->
     <mat-list *ngIf="!viewingChat">
-        <mat-list-item *ngFor="let chat of chats$ | async" (click)="viewChat(chat)">
+        <mat-list-item *ngFor="let chat of chats" (click)="viewChat(chat)">
             <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
             <h3 matLine>{{ chat.otherUser?.username }}</h3>
-            <!-- <p matLine>Blegh</p> -->
+            <p *ngIf="chat.newMessage" matLine style="font-weight: 700">New Message!</p>
         </mat-list-item>
     </mat-list>
 

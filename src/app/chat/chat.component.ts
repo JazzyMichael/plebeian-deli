@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ChatService } from '../services/chat.service';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
 
@@ -10,15 +10,16 @@ import { ThemeService } from '../services/theme.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   @Input() user: any;
   showChats: boolean;
   viewingChat: any;
   newChatMessage: string;
-  chats$: Observable<any>;
+  chatsSub: Subscription;
+  chats: any[];
   singleChat$: Observable<any>;
   darkTheme: boolean;
-  newMessages: number;
+  newMessages: number = 0;
 
   constructor(
     public chatService: ChatService,
@@ -26,33 +27,61 @@ export class ChatComponent implements OnInit {
     private themeService: ThemeService
     ) { }
 
+  ngOnDestroy() {
+    try {
+      if (this.chatsSub) {
+        this.chatsSub.unsubscribe();
+      }
+    } catch (e) {}
+  }
+
   ngOnInit() {
     this.newChatMessage = '';
 
-    this.chats$ = this.chatService.userChats$.asObservable()
-      // .pipe(
-      //   tap(chats => {
+    this.chatsSub = this.chatService.userChats$.asObservable()
+      .pipe(
+        switchMap(async chats => {
+          console.log('chat sub', [...chats]);
 
-      //     for (let chat of chats) {
+          for await (let chat of chats) {
 
-      //       const userObj = chat.users.find(u => u.uid === this.user.uid);
+            const userObj = chat.users.find(u => u.uid === this.user.uid);
 
-      //       const lastViewedTimestamp = userObj.lastViewedTimestamp;
+            let newMessage = false;
 
-      //       let newMessage = false;
+            let newMessageCount = 0;
 
-      //       for (const message of chat.messages) {
-      //         if (message.timestamp > userObj.lastViewedTimestamp) {
-      //           newMessage = true;
-      //           this.newMessages++;
-      //         }
-      //       }
+            for (const message of chat.messages) {
+              if (message.uid !== userObj.uid && (message.timestamp > userObj.lastViewedTimestamp)) {
+                console.log('new message', message);
+                newMessage = true;
+                this.newMessages++;
+                newMessageCount++;
+                console.log('newMessages', this.newMessages);
+              }
+            }
 
-      //       chat.newMessage = true;
-      //     }
+            chat['newMessage'] = newMessage;
+            chat['newMessageCount'] = newMessageCount;
+          }
 
-      //   })
-      // );
+          return chats;
+
+        }),
+        tap(chats => console.log('chit chats', chats)),
+        tap(chats => {
+          let noNew = true;
+          chats.forEach(chat => {
+            if (chat.newMessage) {
+              noNew = false;
+            }
+          });
+          if (noNew) {
+            this.newMessages = 0;
+          }
+        })
+      )
+      .subscribe(chats => this.chats = chats);
     // pipe
     // loop through all chats
       // find user in user array
@@ -77,14 +106,22 @@ export class ChatComponent implements OnInit {
   messagesToggle() {
     this.showChats = !this.showChats;
     if (!this.showChats) {
+      if (this.viewingChat) {
+        this.updateUserLastViewed({ ...this.viewingChat });
+      }
       this.viewingChat = null;
-
-      // update last viewed for that chat
     }
   }
 
   viewChat(chat: any) {
     this.viewingChat = chat;
+
+    if (chat.newMessageCount) {
+      this.newMessages -= chat.newMessageCount;
+      if (this.newMessages && this.newMessages < 0) {
+        this.newMessages = 0;
+      }
+    }
 
     this.singleChat$ = this.chatService.watchSingleChat(this.viewingChat.id)
       .pipe(tap(newChat => {
@@ -97,15 +134,30 @@ export class ChatComponent implements OnInit {
   }
 
   goBack() {
+    this.updateUserLastViewed({ ...this.viewingChat });
+
     this.viewingChat = null;
-
-    // update chat users array last viewed for logged in user
-
-    // get viewingCha
   }
 
-  updateUserLastViewed() {
-    //
+  updateUserLastViewed(chat: any) {
+    // find user in chat.users
+    let userObj = chat.users.find(u => u.uid === this.user.uid);
+    // update lastViewedTimestamp
+    const newTimestamp = Date.now();
+    userObj.lastViewdTimestamp = newTimestamp;
+    // update chat doc
+    let newUsersArr = chat.users;
+    let index = newUsersArr.findIndex(u => u.uid === this.user.uid);
+    newUsersArr[index].lastViewedTimestamp = Date.now();
+
+    if (chat.messagesCount) {
+      this.newMessages -= chat.newMessageCount;
+      if (this.newMessages && this.newMessages < 0) {
+        this.newMessages = 0;
+      }
+    }
+
+    this.chatService.updateChat(chat.id, { users: newUsersArr });
   }
 
   viewUserProfile(username: string) {
@@ -123,14 +175,14 @@ export class ChatComponent implements OnInit {
       return;
     }
 
-    const userId = this.viewingChat.users.find(uid => {
-      return uid !== this.viewingChat.otherUser.uid;
+    const user = this.viewingChat.users.find(user => {
+      return user.uid !== this.viewingChat.otherUser.uid;
     });
 
     const fullMessage = {
       content: this.newChatMessage,
-      timestamp: new Date(),
-      userId
+      timestamp: Date.now(),
+      userId: user.uid
     };
 
     console.log(fullMessage);

@@ -1,9 +1,9 @@
-<button *ngIf="editable && !editing" mat-raised-button (click)="toggleEditing()" style="display: block; margin: 1em auto;">
+<button *ngIf="editable && !editing" mat-raised-button (click)="toggleEditing()" style="display: block; width: 90%; margin: 1em auto;">
     <mat-icon>edit</mat-icon>
     <span style="margin-left: 10px">Edit Profile</span>
 </button>
 
-<button *ngIf="editable && editing" mat-raised-button (click)="toggleEditing()" style="display: block; margin: 1em auto;">
+<button *ngIf="editable && editing" mat-raised-button (click)="toggleEditing()" style="display: block; width: 90%; margin: 1em auto;">
     <mat-icon>sports_handball</mat-icon>
     <span style="margin-left: 10px">Done</span>
 </button>
@@ -12,7 +12,7 @@
 
 <div *ngIf="user$ | async as user" class="cont">
 
-    <div class="left-column">
+    <div class="left-column" [ngClass]="editing ? 'left-column-editing' : ''">
         
         <div class="header-section-1">
         
@@ -49,7 +49,9 @@
             </mat-form-field>
 
             <!-- Real Name -->
-            <p>{{ user.displayName || user.username }}</p>
+            <p *ngIf="!editing">{{ user.displayName || user.username }}</p>
+
+            <br *ngIf="editing">
 
             <!-- Location -->
             <mat-form-field *ngIf="editable && editing; else viewLocation" color="accent">
@@ -79,7 +81,7 @@
             </button>
 
             <!-- Social Links -->
-            <div *ngIf="editable && editing; else viewSocialLinks" style="width: 90%">
+            <div *ngIf="editable && editing; else viewSocialLinks" style="width: 85%">
                 <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
                     <input
                         matInput
@@ -97,6 +99,8 @@
                     <mat-hint>*link is generated from name</mat-hint>
                 </mat-form-field>
 
+                <br>
+
                 <mat-form-field style="margin-top: 1em">
                     <input
                         matInput
@@ -108,6 +112,8 @@
                         (input)="onFacebookInput($event.target.value)">
                     <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
                 </mat-form-field>
+
+                <br>
 
                 <mat-form-field style="margin-top: 1em">
                     <input
@@ -124,17 +130,17 @@
 
             <ng-template #viewSocialLinks>
                 <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
-                    <img src="assets/images/social/instagram.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                    <mat-icon svgIcon="instagram"></mat-icon>
                     <span class="social-text">{{ user.instagram }}</span>
                 </button>
 
                 <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
-                    <img src="assets/images/social/facebook.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                    <mat-icon svgIcon="facebook"></mat-icon>
                     <span class="social-text">Facebook</span>
                 </button>
 
                 <button *ngIf="user.otherLink" mat-button (click)="openOtherLink(user.otherLink)">
-                    <mat-icon style="margin-right: 10px">link</mat-icon>
+                    <mat-icon>link</mat-icon>
                     <span class="social-text">{{ user.otherLink }}</span>
                 </button>
             </ng-template>
@@ -194,14 +200,14 @@
         </div>
 
         <app-username-form *ngIf="editing" (username)="onUpdateUsername($event)"></app-username-form>
-        <br *ngIf="editing">
+
         <button
             *ngIf="editing"
             mat-raised-button
             [disabled]="!newUsername"
-            style="display: block; margin: -2em auto 2em;"
+            style="display: block; margin: -1.75em auto 2em;"
             (click)="saveNewUsername()">
-            save new username? ({{ newUsername }})
+            Save New Username {{ newUsername ? '(' + newUsername + ')' : '' }}
         </button>
 
         <!-- Bio/Description -->

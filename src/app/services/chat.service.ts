@@ -19,16 +19,16 @@ export class ChatService {
 
   getUserChats(uid: string) {
     this.afStore
-      .collection('chats', ref => ref.where('users', 'array-contains', uid))
+      .collection('chats', ref => ref.where('userIds', 'array-contains', uid))
       .valueChanges({ idField: 'id' })
       .pipe(
         switchMap(async (chats: any) => {
 
           for await (let chat of chats) {
 
-            const otherUserIdIndex = chat.users.findIndex((u: string) => u !== uid);
+            const otherUserIdIndex = chat.users.findIndex((u: any) => u.uid !== uid);
 
-            const otherUserId = chat.users[otherUserIdIndex];
+            const otherUserId = chat.users[otherUserIdIndex].uid;
 
             const otherUserDoc = await this.afStore.collection('users').doc(otherUserId).get().toPromise();
 
@@ -57,17 +57,19 @@ export class ChatService {
     const chats = await this.userChats$.pipe(first()).toPromise();
 
     const existingChat = chats.find(chat => {
-      return chat.users.some(userId => userId === secondUserId);
+      return chat.users.some(user => user.uid === secondUserId);
     });
 
     if (existingChat) {
+      console.log('existing chat', existingChat);
       this.openChatBox$.next(existingChat);
       return;
     }
 
     const chatDoc = {
-      users: [initiatingUserId, secondUserId],
-      messages: []
+      users: [{ uid: initiatingUserId, lastViewedTimestamp: Date.now() }, { uid: secondUserId, lastViewedTimestamp: Date.now() }],
+      messages: [],
+      userIds: [initiatingUserId, secondUserId]
     };
 
     this.afStore
@@ -86,5 +88,14 @@ export class ChatService {
     .update({ messages })
     .then(() => console.log('message sent'))
     .catch(e => console.log('error sending message', e));
+  }
+
+  updateChat(docId: string, chatObj: any) {
+    this.afStore
+      .collection('chats')
+      .doc(docId)
+      .update(chatObj)
+      .then(() => console.log('chat updated'))
+      .catch(e => console.log('error updating chat', e));
   }
 }

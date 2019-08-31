@@ -86,34 +86,6 @@ export class PostsComponent implements OnInit {
 
   priceInput(event: any) {
     this.update$.next();
-    // setTimeout(() => {
-
-    //   console.log('price start', JSON.stringify(this.price));
-    //   console.log('event', event);
-  
-    //   if (
-    //     event.data === '1' ||
-    //     event.data === '2' ||
-    //     event.data === '3' ||
-    //     event.data === '4' ||
-    //     event.data === '5' ||
-    //     event.data === '6' ||
-    //     event.data === '7' ||
-    //     event.data === '8' ||
-    //     event.data === '9' ||
-    //     event.data === '0'
-    //   ) {
-    //     this.price += event.data;
-    //   }
-  
-    //   if (event.inputType === 'deleteContentBackward') {
-    //     this.price = this.price.substring(0, this.price.length - 1);
-    //   }
-  
-    //   console.log('price end', JSON.stringify(this.price));
-
-    // }, 500);
-
   }
 
   uploadPostPic(event: any) {
@@ -154,7 +126,8 @@ export class PostsComponent implements OnInit {
       category: this.postCategory,
       content: this.postContent,
       thumbnailUrl: url,
-      createdTimestamp: new Date()
+      createdTimestamp: new Date(),
+      likes: 0
     };
 
     if (this.user.approvedSeller) {

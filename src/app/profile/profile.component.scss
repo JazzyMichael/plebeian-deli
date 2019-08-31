@@ -6,6 +6,10 @@
     margin: 1em auto;
 }
 
+.mat-form-field {
+    width: 100%;
+}
+
 /* Left Section */
 
 .left-column {
@@ -14,6 +18,11 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
+}
+
+.left-column-editing {
+    flex-direction: column;
+    align-items: center;
 }
 
 .header-section-1 {
@@ -25,10 +34,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .social-text {
     display: none;
+    margin-left: 10px;
 }
 
 .profile-pic {
@@ -88,6 +99,21 @@
     float: right;
     margin-right: 20px;
     cursor: pointer;
+}
+
+@media (min-width: 420px) {
+    .left-column {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-section-2 {
+        text-align: center;
+    }
+
+    .social-text {
+        display: inline-block;
+    }
 }
 
 @media (min-width: 600px) {
