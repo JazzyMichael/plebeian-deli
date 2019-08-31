@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -11,12 +11,14 @@ import { ThemeService } from '../services/theme.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  @Input() user: any;
   showChats: boolean;
   viewingChat: any;
   newChatMessage: string;
   chats$: Observable<any>;
   singleChat$: Observable<any>;
   darkTheme: boolean;
+  newMessages: number;
 
   constructor(
     public chatService: ChatService,
@@ -33,8 +35,20 @@ export class ChatComponent implements OnInit {
 
       //     for (let chat of chats) {
 
-      //       const 
+      //       const userObj = chat.users.find(u => u.uid === this.user.uid);
 
+      //       const lastViewedTimestamp = userObj.lastViewedTimestamp;
+
+      //       let newMessage = false;
+
+      //       for (const message of chat.messages) {
+      //         if (message.timestamp > userObj.lastViewedTimestamp) {
+      //           newMessage = true;
+      //           this.newMessages++;
+      //         }
+      //       }
+
+      //       chat.newMessage = true;
       //     }
 
       //   })
@@ -88,6 +102,10 @@ export class ChatComponent implements OnInit {
     // update chat users array last viewed for logged in user
 
     // get viewingCha
+  }
+
+  updateUserLastViewed() {
+    //
   }
 
   viewUserProfile(username: string) {

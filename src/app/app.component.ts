@@ -10,6 +10,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   admin: boolean;
   signedIn: boolean;
+  user: any;
 
   constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe(x => {
@@ -24,7 +25,10 @@ export class AppComponent {
         || this.router.url === 'admin';
     });
 
-    this.authService.user$.subscribe(user => this.signedIn = !!user);
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.signedIn = !!user;
+    });
   }
 
   // onSwipeRight(event: any) {

@@ -126,6 +126,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   onUpdateUsername(username: string) {
+    console.log('onUpdateUsername', username);
     this.newUsername = username;
   }
 

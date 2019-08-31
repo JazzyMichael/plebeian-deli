@@ -8,14 +8,19 @@
             uniqueUsernameValidator
             formControlName="username"
             placeholder="Username"
+            (input)="onInput()"
             required>
 
+        <mat-error *ngIf="signUpForm.get('username').hasError('hasWhitespace')">
+            Username cannot have spaces
+        </mat-error>
+
         <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
-        Username already taken
+            Username already taken
         </mat-error>
 
         <mat-error *ngIf="signUpForm.get('username').hasError('required')">
-        Username is required
+            Username is required
         </mat-error>
 
     </mat-form-field>

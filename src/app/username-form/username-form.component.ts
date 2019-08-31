@@ -17,7 +17,7 @@ export class UsernameFormComponent implements OnInit {
     username: [
       '',
       Validators.required,
-      this.validateUniqueUsername.bind(this)
+      this.validateUsername.bind(this)
     ]
   });
 
@@ -26,21 +26,40 @@ export class UsernameFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  validateUniqueUsername(control: AbstractControl) {
+  onInput() {
+    if (!this.signUpForm.value.username) {
+      this.username.emit(null);
+    }
+  }
+
+  validateUsername(control: AbstractControl) {
     return control.valueChanges.pipe(
       debounceTime(777),
       switchMap(inputText => {
-        const split = inputText.split(' ');
-        const final = split.join('_');
-        return of(final);
-      }),
-      switchMap(inputText => this.auth.getUser(inputText)),
-      tap(user => user ?
-        this.username.emit(null) :
-        this.username.emit(this.signUpForm.value.username)),
-      switchMap(user => user ?
-        of(control.setErrors({ usernameTaken: true })) :
-        of(control.setErrors(null))),
+        const hasWhitespace = /\s/;
+
+        let errors = hasWhitespace.test(inputText) ? { usernameTaken: false, hasWhitespace: true } : null;
+
+        if (errors) {
+          this.username.emit(null);
+          return of(control.setErrors(errors));
+        } else {
+
+          return this.auth.getUser(inputText).pipe(
+            switchMap(user => {
+              if (user) {
+                errors = { usernameTaken: true, hasWhitespace: false };
+                this.username.emit(null);
+                return of(control.setErrors(errors));
+              } else {
+                errors = { usernameTaken: false, hasWhitespace: false };
+                this.username.emit(this.signUpForm.value.username);
+                return of(control.setErrors(errors));
+              }
+            })
+          );
+        }
+      })
     );
   }
 

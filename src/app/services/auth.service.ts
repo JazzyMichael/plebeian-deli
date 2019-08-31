@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable } from 'rxjs';
-import { switchMap, first, map } from 'rxjs/operators';
+import { switchMap, first, map, tap } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
 
@@ -133,10 +133,12 @@ export class AuthService {
   }
 
   getUser(username: string): Observable<any> {
+    console.log('getUser', username);
     return this.afStore
       .collection('users', ref => ref.where('username', '==', username))
       .valueChanges()
       .pipe(
+        tap(res => console.log('firebase res', res)),
         map(arr => arr[0] ? arr[0] : null)
       );
   }
