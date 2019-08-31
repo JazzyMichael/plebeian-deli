@@ -225,6 +225,33 @@
         </ng-template>
 
         <br><br>
+        
+        <!-- ProfileBackgroundUrl -->
+        <div
+            class="profile-background-pic"
+            [ngStyle]="{'background': user.backgroundUrl ? 'url(' + user.backgroundUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}"
+            [ngClass]="user.backgroundUrl ? 'bg' : ''">
+            <ng-container *ngIf="editable">
+                <label for="background-pic-upload" class="upload-btn" style="border-radius: 10px; opacity: 0.95;">
+                    <mat-icon>publish</mat-icon>
+                    <span style="margin-left: 10px">{{ user.backgroundUrl ? 'Change Background Image' : 'Upload Background Image' }}</span>
+                </label>
+                <input
+                    id="background-pic-upload"
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    (change)="uploadBackgroundPic($event)">
+            </ng-container>
+        </div>
+
+        <img
+            *ngIf="user.backgroundUrl"
+            [src]="user.backgroundUrl"
+            alt="Background Image"
+            style="max-height: 500px; margin: 0 auto; display: block;">
+
+        <br>
 
         <!-- Posts -->
         <app-posts

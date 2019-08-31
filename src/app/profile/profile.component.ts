@@ -165,6 +165,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  async uploadBackgroundPic(event: any) {
+    const file = event.target.files[0];
+
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('images only bro');
+      return;
+    }
+
+    const path = `profile-backgrounds/${this.uid}`;
+
+    const ref = this.storage.ref(path);
+
+    await this.storage.upload(path, file);
+
+    ref.getDownloadURL().subscribe(url => {
+      this.userService.updateUser(this.uid, { backgroundUrl: url });
+    });
+  }
+
   async uploadCv(event: any) {
     const file = event.target.files[0];
 

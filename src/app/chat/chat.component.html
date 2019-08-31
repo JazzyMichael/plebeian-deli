@@ -49,6 +49,10 @@
             <h3 matLine>{{ chat.otherUser?.username }}</h3>
             <p *ngIf="chat.newMessage" matLine style="font-weight: 700">New Message!</p>
         </mat-list-item>
+        <p *ngIf="!chats || !chats.length">
+            This is your hub for interaction, sale, and barter. All your interaction with the vast Plebeian network is through here.
+        </p>
+        <p *ngIf="!chats || !chats.length">Not looking for money? Services to offer? You can trade work, offer services, trade services, and so much more with our powerful chat.</p>
     </mat-list>
 
     <!-- chat messages -->
