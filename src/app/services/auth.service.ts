@@ -45,16 +45,30 @@ export class AuthService {
       });
     }
 
-  async anonymousLogin() {
-    await this.afAuth.auth.signInAnonymously();
-    return this.router.navigateByUrl('/');
+  async loginWithGoogle() {
+    const provider = new auth.GoogleAuthProvider();
+
+    const authData = await this.afAuth.auth.signInWithPopup(provider);
+
+    this.handleAuthData(authData);
   }
 
-  async loginWithGoogle() {
-    const authData = await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  async loginWithFacebook() {
+    const provider = new auth.FacebookAuthProvider();
+
+    provider.addScope('email');
+
+    const authData = await this.afAuth.auth.signInWithPopup(provider);
+
+    this.handleAuthData(authData);
+  }
+
+  async handleAuthData(authData: any) {
+    console.log('handling auth data', authData);
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-      console.log('new user');
+
+      const providerId = authData.additionalUserInfo.providerId;
 
       const username = authData.user.displayName.substring(0, 4) + `${Date.now()}`.substring(0, 4);
 
@@ -64,13 +78,11 @@ export class AuthService {
 
       const membership = isOldUser ? 'artist' : 'viewer';
 
-      await this.createUserDoc({ ...authData.user, username, membership });
+      await this.createUserDoc({ ...authData.user, username, membership, providerId });
 
       if (!isOldUser) {
-        console.log('not old user, navigate to checkout');
         return this.router.navigateByUrl('/checkout');
       } else {
-        console.log('old user');
         setTimeout(() => {
           return this.router.navigateByUrl(`/${this.username}`);
         }, 500);
@@ -89,7 +101,7 @@ export class AuthService {
     return this.router.navigateByUrl('/prime-cuts');
   }
 
-  createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership }) {
+  createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership, providerId }) {
     const userDoc = this.afStore.doc(`users/${uid}`);
 
     const data = {
@@ -99,6 +111,7 @@ export class AuthService {
       email,
       phoneNumber,
       membership,
+      providerId,
       profileUrl: photoURL,
       backgroundUrl: null,
       description: null,

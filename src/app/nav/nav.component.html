@@ -29,7 +29,8 @@
 
         <ng-container *ngIf="auth.user$ | async as user; else showLogin">
             <button mat-button [routerLink]="'/' + user.username" (click)="sidenav.close()">Profile</button>
-            <button mat-button routerLink="/info" (click)="sidenav.close()">Info</button>
+            <!-- <button mat-button routerLink="/info" (click)="sidenav.close()">Info</button> -->
+            <button *ngIf="user.membership === 'artist'" mat-button routerLink="/seller" (click)="sidenav.close()">Seller Info</button>
             <button mat-button (click)="auth.logout(); sidenav.close();">Log Out</button>
         </ng-container>
 
@@ -93,14 +94,14 @@
                             <mat-icon>sentiment_satisfied</mat-icon>
                             <span>Upgrade</span>
                         </button>
-                        <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/info">
+                        <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
                             <mat-icon>local_offer</mat-icon>
                             <span>Seller Info</span>
                         </button>
-                        <button mat-menu-item routerLink="/info">
+                        <!-- <button mat-menu-item routerLink="/info">
                             <mat-icon>help_outline</mat-icon>
                             <span>F.A.Q.</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item (click)="auth.logout()">
                             <mat-icon>sentiment_very_dissatisfied</mat-icon>
                             <span>Log Out</span>

@@ -46,7 +46,7 @@
     <button *ngIf="!postImagePreview" mat-button style="padding: 0">
         <label for="post-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
             <mat-icon>publish</mat-icon>
-            <span style="margin-left: 10px">Upload</span>
+            <span style="margin-left: 10px">Upload Post Preview Image</span>
         </label>
     </button>
     <input
@@ -58,10 +58,32 @@
 
     <img *ngIf="postImagePreview" [src]="postImagePreview" alt="Post Image" style="max-width: 150px; max-height: 150px;">
 
-    <!-- <mat-form-field *ngIf="editing" color="primary" style="flex: 1; margin: 1em;">
+</div>
+
+<div *ngIf="editing && user.approvedSeller" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+    <mat-form-field color="primary" style="width: 120px; margin: 1em;">
         <mat-icon matPrefix color="primary">attach_money</mat-icon>
-        <input matInput type="number" placeholder="Price (optional)" color="primary" min="1" max="10000" autocomplete="off">
-    </mat-form-field> -->
+        <input
+            matInput
+            type="text"
+            placeholder="Price"
+            [(ngModel)]="price"
+            (input)="priceInput($event)"
+            color="primary"
+            maxlength="5"
+            autocomplete="off">
+        <span matSuffix>.00 &nbsp;</span>
+        <mat-hint>Optional</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field color="accent" style="flex: 1; margin: 1em;">
+        <mat-label>Available Quantity</mat-label>
+        <mat-select [(ngModel)]="quantity">
+            <mat-option *ngFor="let quant of quantityArr" [value]="quant">
+                {{ quant }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 
 <quill-editor
@@ -123,6 +145,10 @@
             <p>{{ post.title }}</p>
             <p>{{ post.createdTimestamp.toDate() | date }}</p>
             <p>{{ user.username }}</p>
+            <div *ngIf="post.price" style="float: right; margin-top: -4em;">
+                <p>{{ post.price | currency }}</p>
+                <p>{{ post.quantity }} remaining</p>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

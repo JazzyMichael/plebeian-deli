@@ -48,6 +48,7 @@ import { EventComponent } from './event/event.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { UsernameFormComponent } from './username-form/username-form.component';
 import { SellerComponent } from './seller/seller.component';
+import { ConnectComponent } from './connect/connect.component';
 
 // 3rd Party Modules
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -68,13 +69,14 @@ const routes: Routes = [
   { path: 'members', component: MembersComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
-  { path: 'seller', component: SellerComponent },
+  { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/about', pathMatch: 'full' }
@@ -107,7 +109,8 @@ const routes: Routes = [
     EventComponent,
     PaymentFormComponent,
     UsernameFormComponent,
-    SellerComponent
+    SellerComponent,
+    ConnectComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,11 @@
     </mat-icon>
 </button>
 
-<mat-card *ngIf="showChats" class="chats-card" [style.background]="!viewingChat ? 'white' : darkTheme ? 'black' : 'white'">
+<mat-card
+    *ngIf="showChats"
+    class="chats-card"
+    [style.background]="!viewingChat ? 'white' : darkTheme ? 'black' : 'white'"
+    [ngStyle]="{'bottom': viewingChat ? '27px' : '0px'}">
 
     <!-- chat box headers -->
     <div *ngIf="viewingChat" class="chats-card-header">

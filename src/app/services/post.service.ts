@@ -12,8 +12,6 @@ export class PostService {
   featuredPosts$: BehaviorSubject<any>;
 
   constructor(private afStore: AngularFirestore, private router: Router) {
-    // const cachedPosts = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
-
     this.posts$ = new BehaviorSubject([]);
     this.featuredPosts$ = new BehaviorSubject([]);
 
@@ -21,7 +19,6 @@ export class PostService {
       .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(50))
       .valueChanges({ idField: 'postId' })
       .subscribe(posts => {
-        localStorage.setItem('posts', JSON.stringify(posts));
         this.posts$.next(posts);
       });
 

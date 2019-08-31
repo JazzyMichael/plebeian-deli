@@ -27,7 +27,23 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.newChatMessage = '';
 
-    this.chats$ = this.chatService.userChats$.asObservable();
+    this.chats$ = this.chatService.userChats$.asObservable()
+      // .pipe(
+      //   tap(chats => {
+
+      //     for (let chat of chats) {
+
+      //       const 
+
+      //     }
+
+      //   })
+      // );
+    // pipe
+    // loop through all chats
+      // find user in user array
+      // check lastViewedTimestamp
+      // compare with last index in messages array timestamp
 
     this.chatService.openChatBox$.subscribe(chatToOpen => {
       this.showChats = true;
@@ -48,6 +64,8 @@ export class ChatComponent implements OnInit {
     this.showChats = !this.showChats;
     if (!this.showChats) {
       this.viewingChat = null;
+
+      // update last viewed for that chat
     }
   }
 
@@ -66,6 +84,10 @@ export class ChatComponent implements OnInit {
 
   goBack() {
     this.viewingChat = null;
+
+    // update chat users array last viewed for logged in user
+
+    // get viewingCha
   }
 
   viewUserProfile(username: string) {

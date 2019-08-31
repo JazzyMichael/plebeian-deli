@@ -96,29 +96,18 @@
 
 <div class="tv-bg">
     <div style="width: 80%; height: 55%; overflow-y: scroll;">
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
-        <mat-card>Post</mat-card>
+      <mat-card *ngFor="let post of primePosts$ | async">
+        <mat-card-header>{{ post.title }}</mat-card-header>
+      </mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
+      <mat-card>Post</mat-card>
     </div>
 </div>

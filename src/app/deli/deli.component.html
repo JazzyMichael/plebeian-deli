@@ -61,6 +61,10 @@
             <mat-card-content>
                 <p>{{ post.title }}</p>
                 <p>{{ post.createdTimestamp?.toDate() | date }}</p>
+                <div *ngIf="post.price" style="float: right; margin-top: -3em;">
+                    <p>{{ post.price | currency }}</p>
+                    <p>{{ post.quantity }} remaining</p>
+                </div>
             </mat-card-content>
         </mat-card>
     </ng-container>

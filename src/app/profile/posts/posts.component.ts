@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { PostService } from 'src/app/services/post.service';
 
 import Quill from 'quill';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { debounceTime } from 'rxjs/operators';
 // import ImageResize from 'quill-image-resize-module';
 // Quill.register('modules/imageResize', ImageResize);
 
@@ -30,6 +31,14 @@ export class PostsComponent implements OnInit {
   modules: any = {
     // imageResize: {}
   };
+  quantityArr: number[] = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  ];
+  quantity: number = 1;
+  price: string = '';
+
+  update$: Subject<any> = new Subject();
+  updateSub: Subscription;
 
   constructor(
     private router: Router,
@@ -39,11 +48,72 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.posts$ = this.postService.getUserPosts(this.user.uid);
+
+    this.update$.pipe(debounceTime(777)).subscribe(() => {
+      if (this.price) {
+
+        let chars = this.price.split('');
+
+        chars = chars.filter(c => {
+          if (
+            c === '1' ||
+            c === '2' ||
+            c === '3' ||
+            c === '4' ||
+            c === '5' ||
+            c === '6' ||
+            c === '7' ||
+            c === '8' ||
+            c === '9' ||
+            c === '0'
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        this.price = chars.join('');
+
+      }
+    });
   }
 
   onEditorChanged(event: any) {
     return;
     // console.log('onEditorChanged', event);
+  }
+
+  priceInput(event: any) {
+    this.update$.next();
+    // setTimeout(() => {
+
+    //   console.log('price start', JSON.stringify(this.price));
+    //   console.log('event', event);
+  
+    //   if (
+    //     event.data === '1' ||
+    //     event.data === '2' ||
+    //     event.data === '3' ||
+    //     event.data === '4' ||
+    //     event.data === '5' ||
+    //     event.data === '6' ||
+    //     event.data === '7' ||
+    //     event.data === '8' ||
+    //     event.data === '9' ||
+    //     event.data === '0'
+    //   ) {
+    //     this.price += event.data;
+    //   }
+  
+    //   if (event.inputType === 'deleteContentBackward') {
+    //     this.price = this.price.substring(0, this.price.length - 1);
+    //   }
+  
+    //   console.log('price end', JSON.stringify(this.price));
+
+    // }, 500);
+
   }
 
   uploadPostPic(event: any) {
@@ -78,7 +148,7 @@ export class PostsComponent implements OnInit {
 
     const url = await ref.getDownloadURL().toPromise();
 
-    const post = {
+    let post = {
       userId: this.user.uid,
       title: this.postTitle,
       category: this.postCategory,
@@ -86,6 +156,12 @@ export class PostsComponent implements OnInit {
       thumbnailUrl: url,
       createdTimestamp: new Date()
     };
+
+    if (this.user.approvedSeller) {
+      post['quantity'] = this.quantity;
+      post['startingQuantity'] = this.quantity;
+      post['price'] = this.price ? parseInt(this.price) : undefined;
+    }
 
     this.postService.createPost(post)
       .then(res => {

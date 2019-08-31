@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   facebookLogin() {
-    console.log('no facebook yet');
+    this.auth.loginWithFacebook();
   }
 
 }

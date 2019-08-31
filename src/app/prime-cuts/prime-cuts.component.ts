@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxHmCarouselBreakPointUp } from 'ngx-hm-carousel';
+import { Observable } from 'rxjs';
+import { PrimeCutsService } from '../services/prime-cuts.service';
 
 @Component({
   selector: 'app-prime-cuts',
@@ -27,7 +29,9 @@ export class PrimeCutsComponent implements OnInit {
   carouselData: any[];
   viewingStudio: any;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  primePosts$: Observable<any>;
+
+  constructor(private primeService: PrimeCutsService) { }
 
   ngOnInit() {
     this.carouselData = [
@@ -47,6 +51,8 @@ export class PrimeCutsComponent implements OnInit {
         videoUrl: 'https://www.youtube.com/embed/ao2bFVcdUJ8'
       }
     ];
+
+    this.primePosts$ = this.primeService.primePosts$.asObservable();
   }
 
   click(i: number) {
