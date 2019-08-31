@@ -52,6 +52,8 @@ export class PrimeCutsComponent implements OnInit {
       }
     ];
 
+    document.querySelector('.main-container').scrollTop = 0;
+
     this.primePosts$ = this.primeService.primePosts$.asObservable();
   }
 

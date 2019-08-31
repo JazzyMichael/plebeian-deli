@@ -124,12 +124,12 @@
 
             <ng-template #viewSocialLinks>
                 <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
-                    <img src="assets/images/instagram.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                    <img src="assets/images/social/instagram.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
                     <span class="social-text">{{ user.instagram }}</span>
                 </button>
 
                 <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
-                    <img src="assets/images/facebook.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
+                    <img src="assets/images/social/facebook.svg" alt="Instagram Logo" style="height: 25px; margin-right: 10px;">
                     <span class="social-text">Facebook</span>
                 </button>
 

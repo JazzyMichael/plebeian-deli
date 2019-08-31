@@ -29,9 +29,18 @@
     </div>
 
     <div class="social-icons">
-        <mat-icon>hot_tub</mat-icon>
-        <mat-icon>pregnant_woman</mat-icon>
-        <mat-icon>weekend</mat-icon>
+        <button mat-icon-button>
+            <mat-icon svgIcon="facebook" (click)="openFacebook()"></mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon svgIcon="instagram" (click)="openInstagram()"></mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon svgIcon="twitter" (click)="openTwitter()" style="transform: scale(1.4)"></mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon svgIcon="youtube" (click)="openYoutube()" style="transform: scale(1.4)"></mat-icon>
+        </button>
     </div>
 
 </div>

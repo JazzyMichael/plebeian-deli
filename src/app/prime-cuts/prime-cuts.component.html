@@ -1,6 +1,5 @@
 
-
-<h1 style="text-align: center; font-weight: 400; margin: 1em auto;">Prime Cuts</h1>
+<h1 style="text-align: center; font-weight: 400; margin: 1em auto;">Studio Interviews</h1>
 
 
 <ngx-hm-carousel
@@ -25,7 +24,7 @@
               <mat-card-title>{{ data?.title }}</mat-card-title>
             </mat-card-header>
             <img mat-card-image [src]="data?.thumbnail" alt="Studio Thumbnail" class="no-drag">
-            <mat-card-content>
+            <!-- <mat-card-content>
               <button
                 mat-button
                 color="accent"
@@ -33,7 +32,7 @@
                 (click)="$event.stopPropagation()">
                 Full Post
               </button>
-            </mat-card-content>
+            </mat-card-content> -->
           </mat-card>
         </article>
         <ng-template #infiniteContainer></ng-template>
@@ -46,7 +45,7 @@
               <mat-card-title>{{ data?.title }}</mat-card-title>
             </mat-card-header>
             <img mat-card-image [src]="data?.thumbnail" alt="Studio Thumbnail" class="no-drag">
-            <mat-card-content>
+            <!-- <mat-card-content>
               <button
                 mat-button
                 color="accent"
@@ -54,7 +53,7 @@
                 (click)="$event.stopPropagation()">
                 Full Post
               </button>
-            </mat-card-content>
+            </mat-card-content> -->
           </mat-card>
         </article>
     </ng-template>
