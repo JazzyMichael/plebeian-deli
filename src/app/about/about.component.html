@@ -2,8 +2,11 @@
 
 <div class="parallax-container bg1">
     <div class="welcome-text">
-        Welcome to the Plebeian Deli, a new art media company that’s built around promotion for artists by artists. We’ve set out to build a hub for artists to create, communicate, build community, and from that community build careers. Everything you’ll ever need as an artist is here at Plebeian, we’re here to make the business side of your art easy so that you can just make your art. Say goodbye to the old ways of art, the archaic systems with virtually no success, and join the growing world of Plebeian.
+        Welcome to the Plebeian Deli, a new art media company that’s built around promotion for artists by artists.
     </div>
+    <!-- 
+        We’ve set out to build a hub for artists to create, communicate, build community, and from that community build careers. Everything you’ll ever need as an artist is here at Plebeian, we’re here to make the business side of your art easy so that you can just make your art. Say goodbye to the old ways of art, the archaic systems with virtually no success, and join the growing world of Plebeian.
+    -->
 </div>
 
 
@@ -43,11 +46,19 @@
 <div class="static-container-2">
     <div class="content">
 
-        <h2 style="text-align: center">Meet the Team</h2>
+        <h2 style="text-align: center">The Team</h2>
 
-        <div style="width: 100%; display: flex; justify-content: space-around; align-items: center; margin: 2em auto;">
+        <div style="width: 100%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; margin: 2em auto;">
         
-            <div class="process-graphic">
+            <mat-card *ngFor="let admin of admins$ | async" style="cursor: pointer;" [routerLink]="'/' + admin.username">
+                
+                <mat-card-header>{{ admin.username }}</mat-card-header>
+
+                <img mat-card-image [src]="admin.profileUrl" alt="Profile Image">
+
+            </mat-card>
+    
+            <!-- <div class="process-graphic">
                 <img src="assets/images/person1.svg" class="process-img" />
                 <span>Some guy</span>
             </div>
@@ -60,7 +71,7 @@
             <div class="process-graphic">
                 <img src="assets/images/person3.svg" class="process-img" />
                 <span>A girl</span>
-            </div>
+            </div> -->
 
         </div>
 

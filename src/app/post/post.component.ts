@@ -15,6 +15,7 @@ export class PostComponent implements OnInit {
   userPosts$: Observable<any>;
   featuredPosts$: Observable<any>;
   alreadyLiked: boolean;
+  postId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,8 @@ export class PostComponent implements OnInit {
       if (!postId) {
         return this.router.navigateByUrl('/deli');
       }
+
+      this.postId = postId;
 
       document.querySelector('.main-container').scrollTop = 0;
 
@@ -57,6 +60,10 @@ export class PostComponent implements OnInit {
       // like
       this.alreadyLiked = true;
     }
+  }
+
+  facebookShare() {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=plebeiandeli.art/post/${this.postId}`, '_blank');
   }
 
 }

@@ -9,7 +9,8 @@ import { AuthService } from '../services/auth.service';
 export class SellerComponent implements OnInit {
   connectBaseUrl = 'https://connect.stripe.com/oauth/authorize?';
   responseType = 'response_type=code';
-  clientId = '&client_id=ca_Fh9rJPQapCoKCcWgClCGJtY6pBesglFu';
+  clientId = '&client_id=ca_Fh9rZqqdVbgofzaWlXpPHyNcrno2iXnY';
+  // clientId = '&client_id=ca_Fh9rJPQapCoKCcWgClCGJtY6pBesglFu';
   scope = '&scope=read_write';
 
   user: any;

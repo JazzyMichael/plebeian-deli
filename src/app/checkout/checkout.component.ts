@@ -10,19 +10,19 @@ import { first } from 'rxjs/operators';
 })
 export class CheckoutComponent implements OnInit {
   // test
-  allPlans: any[] = [
-    { name: 'artist', id: 'plan_FiF2bn8nmyo3po' },
-    { name: 'gallery', id: 'plan_FiF3rqJJrTSEcd' },
-    { name: 'viewer', id: '' }
-  ];
-  // prod
   // allPlans: any[] = [
-  //   { name: 'artist', id: 'plan_Fh9pZk60eSj9ml' },
-  //   { name: 'gallery', id: 'plan_Fh9p0UaJGtlU7o' },
+  //   { name: 'artist', id: 'plan_FiF2bn8nmyo3po' },
+  //   { name: 'gallery', id: 'plan_FiF3rqJJrTSEcd' },
   //   { name: 'viewer', id: '' }
   // ];
+  // prod
+  allPlans: any[] = [
+    { name: 'artist', id: 'plan_Fh9pZk60eSj9ml' },
+    { name: 'gallery', id: 'plan_Fh9p0UaJGtlU7o' },
+    { name: 'viewer', id: '' }
+  ];
 
-  plan: any = { name: 'artist', id: 'plan_FiF2bn8nmyo3po' };
+  plan: any = { name: 'artist', id: 'plan_Fh9pZk60eSj9ml' };
   membership: string = 'artist';
   paymentCompleted: boolean;
 

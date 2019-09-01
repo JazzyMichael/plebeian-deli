@@ -51,23 +51,19 @@ $transition_time: 350ms;
             user-select: none !important;
 }
 
-.feature-friday {
-    border: 1px solid black;
-    width: 80%;
+.featured-container {
+    width: 90%;
     height: 350px;
     margin: 3rem auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center center;
-}
-
-.title {
-    background-color: #fdf5a2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .featured {
     height: 100%;
-    width: 100%;
+    width: 50%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     place-items: center center;
@@ -88,12 +84,41 @@ mat-card {
 }
 
 .tv-bg {
-    background-image: url('../../assets/images/tv-bg.webp');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 600px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.masonry-container {
+    width: 80%;
+    height: 75%;
+    overflow-y: auto;
+    display: flex;
+    // flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.masonry-card {
+    cursor: pointer;
+    margin: 0.3rem;
+    flex: 1 0 auto;
+}
+
+@media (min-width: 500px) {
+    .featured-container {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 620px) {
+    .tv-bg {
+        background-image: url('../../assets/images/tv-bg.webp');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 600px;
+    }
 }

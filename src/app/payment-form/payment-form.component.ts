@@ -4,9 +4,9 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 declare var Stripe: any;
 
 // prod
-// const stripe = Stripe('pk_live_9RFFwjYhsrCgEbkm3DBpyOv8');
+const stripe = Stripe('pk_live_9RFFwjYhsrCgEbkm3DBpyOv8');
 // test
-const stripe = Stripe('pk_test_vWeiNQrgSgiNW9fBO2IX0EUT');
+// const stripe = Stripe('pk_test_vWeiNQrgSgiNW9fBO2IX0EUT');
 const elements = stripe.elements();
 
 const card = elements.create('card');
@@ -25,7 +25,7 @@ export class PaymentFormComponent implements AfterViewInit, OnDestroy {
 
   promoCode: string;
 
-  coupons: any[] = ['test-coup-id'];
+  coupons: any[] = ['LOYALTYCLUB'];
 
   validCoupon: any;
 

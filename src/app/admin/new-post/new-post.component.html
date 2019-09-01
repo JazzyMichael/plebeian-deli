@@ -5,7 +5,7 @@
 
     <button
         mat-raised-button
-        [disabled]="!postTitle || !postContent || !postImage"
+        [disabled]="!postTitle || !postContent"
         (click)="submitPost()">
         Submit Post
     </button>
@@ -25,7 +25,15 @@
 
     <br><br>
 
-    <button *ngIf="!postImagePreview" mat-raised-button style="padding: 0">
+    <p>Post as:</p>
+
+    <mat-radio-group [(ngModel)]="posterUid" style="width: 500px; max-width: 95%; margin: 1em auto; display: flex; justify-content: space-around;">
+        <mat-radio-button #radioBtn value="cZAJAT0Th3Qu4M91Jc2MFqMxsls1">jdgard@udel.edu</mat-radio-button>
+        <mat-radio-button #radioBtn2 value="kCmmJ90ZibOW7KrmG27lxYYqnN93">fhines@udel.edu</mat-radio-button>
+        <mat-radio-button #radioBtn2 value="ovOFgCU4xtVl6SQV8symhWkSg5G2">colland@udel.edu</mat-radio-button>
+    </mat-radio-group>
+
+    <!-- <button *ngIf="!postImagePreview" mat-raised-button style="padding: 0">
         <label for="post-image-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
             <mat-icon>publish</mat-icon>
             <span style="margin-left: 10px">Upload Image</span>
@@ -36,9 +44,9 @@
         type="file"
         accept="image/*"
         style="display: none"
-        (change)="uploadPostImage($event)">
+        (change)="uploadPostImage($event)"> -->
 
-    <img *ngIf="postImagePreview" [src]="postImagePreview" alt="Post Image" style="max-width: 150px; max-height: 150px;">
+    <img *ngIf="firstImageUrl" [src]="firstImageUrl" alt="Post Image" style="max-width: 150px; max-height: 150px;">
 
     <br><br>
 
@@ -46,10 +54,13 @@
 
 <br>
 
+<input type="file" style="display: none" id="quillImageField">
+
 <quill-editor
     [modules]="modules"
     [(ngModel)]="postContent"
     [placeholder]="'The...'"
+    (onEditorCreated)="getEditorInstance($event)"
     [styles]="{'min-height': '200px', 'margin-bottom': '1em'}">
     <div quill-editor-toolbar>
         <span class="ql-formats">

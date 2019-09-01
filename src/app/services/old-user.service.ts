@@ -98,6 +98,7 @@ export class OldUserService {
     'jm.nadia@gmail.com',
     'hungerwasgooddiscipline@gmail.com',
     'jeffmc@udel.edu',
+    'mikejodesigns@gmail.com',
     'mikejo@udel.edu',
     'cmfox2014@gmail.com',
     'youngpicaso.jgard@gmail.com',

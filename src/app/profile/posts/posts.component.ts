@@ -39,6 +39,8 @@ export class PostsComponent implements OnInit {
 
   update$: Subject<any> = new Subject();
   updateSub: Subscription;
+  quillEditorRef: any;
+  firstImageUrl;
 
   constructor(
     private router: Router,
@@ -79,9 +81,53 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  onEditorChanged(event: any) {
-    return;
-    // console.log('onEditorChanged', event);
+  imageHandler = (image, callback) => {
+    // console.log('image', image);
+    const input: any = document.getElementById('quillImageField');
+    document.getElementById('quillImageField').onchange = async () => {
+      let file: File;
+      file = input.files[0];
+      // file type is only image.
+      if (/^image\//.test(file.type)) {
+        if (file.size > 10000000) {
+          alert('Image needs to be less than 1MB');
+        } else {
+          // upload to firebase
+          const random = Math.random().toString().slice(2, 10);
+
+          const userId = this.user.uid;
+
+          const path = `post-pictures/${userId}-${random}`;
+
+          const ref = this.storage.ref(path);
+
+          await this.storage.upload(path, file);
+
+          const url = await ref.getDownloadURL().toPromise();
+
+          if (!this.firstImageUrl) {
+            this.firstImageUrl = url;
+          }
+
+          const range = this.quillEditorRef.getSelection();
+
+          const qImg = `<img src="${url}" />`;
+
+          this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
+
+        }
+      } else {
+          alert('You could only upload images.');
+      }
+    };
+
+    input.click();
+  }
+
+  onEditorChanged(inst: any) {
+    this.quillEditorRef = inst;
+    const toolbar = inst.getModule('toolbar');
+    toolbar.addHandler('image', this.imageHandler);
   }
 
   priceInput(event: any) {
@@ -110,30 +156,30 @@ export class PostsComponent implements OnInit {
   async submitPost() {
     this.editing = false;
 
-    const random = Math.random().toString().slice(2, 10);
+    // const random = Math.random().toString().slice(2, 10);
 
-    const path = `post-pictures/${this.user.uid}-${random}`;
+    // const path = `post-pictures/${this.user.uid}-${random}`;
 
-    const ref = this.storage.ref(path);
+    // const ref = this.storage.ref(path);
 
-    await this.storage.upload(path, this.postImage);
+    // await this.storage.upload(path, this.postImage);
 
-    const url = await ref.getDownloadURL().toPromise();
+    // const url = await ref.getDownloadURL().toPromise();
 
     let post = {
       userId: this.user.uid,
       title: this.postTitle,
       category: this.postCategory,
       content: this.postContent,
-      thumbnailUrl: url,
+      thumbnailUrl: this.firstImageUrl || '',
       createdTimestamp: new Date(),
       likes: 0
     };
 
     if (this.user.approvedSeller) {
-      post['quantity'] = this.quantity;
-      post['startingQuantity'] = this.quantity;
-      post['price'] = this.price ? parseInt(this.price) : undefined;
+      if (this.quantity) post['quantity'] = this.quantity;
+      if (this.quantity) post['startingQuantity'] = this.quantity;
+      if (this.price) post['price'] = this.price ? parseInt(this.price) : 0;
     }
 
     this.postService.createPost(post)
@@ -141,6 +187,7 @@ export class PostsComponent implements OnInit {
         this.postTitle = '';
         this.postCategory = null;
         this.postContent = null;
+        this.firstImageUrl = null;
         this.postImage = null;
         this.postImagePreview = null;
       })

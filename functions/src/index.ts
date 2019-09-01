@@ -8,8 +8,8 @@ admin.initializeApp();
 const db = admin.firestore();
 
 import * as Stripe from 'stripe';
-const stripe = new Stripe(functions.config().stripe.secret);
-// const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
+// const stripe = new Stripe(functions.config().stripe.secret);
+const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
 
 import fetch from 'node-fetch';
 
@@ -87,7 +87,7 @@ export const createSellerAccount = functions.https
         const userId = context.auth.uid;
         
         const body = {
-            client_secret: 'sk_test_EivFXuy6nOXJYZ7ScayMi2rK',
+            client_secret: 'sk_live_CawDzzhk3Z7d0qnQNqojJRsU',
             code: data.code,
             grant_type: 'authorization_code'
         };

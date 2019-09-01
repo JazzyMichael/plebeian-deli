@@ -79,34 +79,33 @@
 </app-studio-viewer>
 
 
-<div class="feature-friday">
-    <div class="title">
-        <span>Feature Friday</span>
-    </div>
+<div class="featured-container">
+    <mat-card *ngIf="featureFriday$ | async as post" style="cursor: pointer" [routerLink]="'/prime-cuts/' + post.primePostId">
+        <mat-card-header>
+          <mat-card-title>Feature Friday</mat-card-title>
+        </mat-card-header>
 
-    <div class="featured">
+        <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Thumbnail Image">
+
+        <mat-card-content>
+          <p>{{ post.title }}</p>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- <div class="featured">
         <span>Joey</span>
         <span>Forrest</span>
         <span>Colleen</span>
         <span>Sam</span>
-    </div>
+    </div> -->
 </div>
 
 
 <div class="tv-bg">
-    <div style="width: 80%; height: 55%; overflow-y: scroll;">
-      <mat-card *ngFor="let post of primePosts$ | async">
+    <div class="masonry-container">
+      <mat-card *ngFor="let post of primePosts$ | async" [routerLink]="'/prime-cuts/' + post.primePostId" class="masonry-card">
         <mat-card-header>{{ post.title }}</mat-card-header>
+        <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
       </mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
-      <mat-card>Post</mat-card>
     </div>
 </div>

@@ -5,8 +5,8 @@
             *ngIf="editing"
             mat-raised-button
             color="primary"
-            style="margin-right: 1em"
-            [disabled]="!postTitle || !postCategory || !postContent || !postImage"
+            style="margin-right: 1em; color: white;"
+            [disabled]="!postTitle || !postCategory || !postContent"
             (click)="submitPost()">
             <mat-icon>done</mat-icon>
             Submit
@@ -22,7 +22,11 @@
     </div>
 </div>
 
-<mat-form-field *ngIf="editing" color="primary" style="display: block; width: 100%; margin: 1em auto;">
+<div *ngIf="editing && !user.approvedSeller">
+    <button mat-raised-button routerLink="/seller" style="width: 100%">Connect your account to Stripe to add a price</button>
+</div>
+
+<mat-form-field *ngIf="editing" color="primary" style="display: block; width: 90%; margin: 1em auto;">
     <input
         matInput
         [(ngModel)]="postTitle"
@@ -33,7 +37,7 @@
     <mat-hint *ngIf="!postTitle">Must have a title</mat-hint>
 </mat-form-field>
 
-<div *ngIf="editing" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+<div *ngIf="editing" style="width: 90%; display: flex; justify-content: space-between; align-items: center;">
     <mat-form-field color="primary" style="flex: 1; margin: 1em;">
         <mat-label>Category</mat-label>
         <mat-select [(ngModel)]="postCategory">
@@ -43,7 +47,7 @@
         </mat-select>
     </mat-form-field>
 
-    <button *ngIf="!postImagePreview" mat-button style="padding: 0">
+    <!-- <button *ngIf="!postImagePreview" mat-button style="padding: 0">
         <label for="post-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
             <mat-icon>publish</mat-icon>
             <span style="margin-left: 10px">Upload Post Preview Image</span>
@@ -54,9 +58,9 @@
         type="file"
         accept="image/*"
         style="display: none"
-        (change)="uploadPostPic($event)">
+        (change)="uploadPostPic($event)"> -->
 
-    <img *ngIf="postImagePreview" [src]="postImagePreview" alt="Post Image" style="max-width: 150px; max-height: 150px;">
+    <img *ngIf="firstImageUrl" [src]="firstImageUrl" alt="Post Image" style="max-width: 150px; max-height: 150px;">
 
 </div>
 
@@ -86,14 +90,24 @@
     </mat-form-field>
 </div>
 
+<input type="file" style="display: none" id="quillImageField">
+
 <quill-editor
     *ngIf="editing"
     [modules]="modules"
     [(ngModel)]="postContent"
-    [placeholder]="'The...'"
+    [placeholder]="'Share your work and thoughts here! The first image you include will be the thumbnail for the post. Make sure you have a title and select a category!'"
     [styles]="{'min-height': '200px', 'margin-bottom': '1em'}"
-    (onEditorChanged)="onEditorChanged($event)">
+    (onEditorCreated)="onEditorChanged($event)">
     <div quill-editor-toolbar>
+        <span class="ql-formats">
+            <select class="ql-align" [title]="'Alignment'">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="right"></option>
+                <option value="justify"></option>
+            </select>
+        </span>
         <span class="ql-formats">
             <select class="ql-font"></select>
             <select class="ql-size"></select>
@@ -115,14 +129,6 @@
             <select class="ql-color"></select>
         </span>
         <span class="ql-formats">
-            <select class="ql-align" [title]="'Alignment'">
-                <option selected></option>
-                <option value="center"></option>
-                <option value="right"></option>
-                <option value="justify"></option>
-            </select>
-        </span>
-        <span class="ql-formats">
             <button class="ql-list" value="ordered"></button>
             <button class="ql-list" value="bullet"></button>
         </span>
@@ -140,7 +146,7 @@
 
 <div class="post-list">
     <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
-        <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image">
+        <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
         <mat-card-content>
             <p>{{ post.title }}</p>
             <p>{{ post.createdTimestamp.toDate() | date }}</p>

@@ -38,11 +38,11 @@ export class SubscriptionsComponent implements OnInit {
       {
         membership: 'gallery',
         title: 'Gallery',
-        subtitle: 'Subtitle for Galleries',
+        subtitle: 'Share Events!',
         price: 10,
         perks: [
           'Share events on the Plebeian Calendar',
-          'Interact with members'
+          'Interact with members of the community'
         ]
       }
     ];

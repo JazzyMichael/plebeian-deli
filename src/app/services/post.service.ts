@@ -22,11 +22,11 @@ export class PostService {
         this.posts$.next(posts);
       });
 
-    this.afStore.collection('posts', ref => ref.where('featured', '==', true).limit(3))
-      .valueChanges({ idField: 'postId' })
-      .subscribe(posts => {
-        this.featuredPosts$.next(posts);
-      });
+    // this.afStore.collection('posts', ref => ref.where('featured', '==', true).limit(3))
+    //   .valueChanges({ idField: 'postId' })
+    //   .subscribe(posts => {
+    //     this.featuredPosts$.next(posts);
+    //   });
   }
 
   getPostsByCategory(category: string) {
@@ -56,7 +56,7 @@ export class PostService {
             .get()
             .pipe(
               map(user => {
-                return { ...post, user: user.data() };
+                return { ...post, postId: id, user: user.data() };
               })
             );
         })

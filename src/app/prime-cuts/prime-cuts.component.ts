@@ -30,6 +30,7 @@ export class PrimeCutsComponent implements OnInit {
   viewingStudio: any;
 
   primePosts$: Observable<any>;
+  featureFriday$: Observable<any>;
 
   constructor(private primeService: PrimeCutsService) { }
 
@@ -53,6 +54,8 @@ export class PrimeCutsComponent implements OnInit {
     ];
 
     document.querySelector('.main-container').scrollTop = 0;
+
+    this.featureFriday$ = this.primeService.featureFriday$.asObservable();
 
     this.primePosts$ = this.primeService.primePosts$.asObservable();
   }

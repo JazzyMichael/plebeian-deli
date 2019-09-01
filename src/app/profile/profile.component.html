@@ -215,7 +215,7 @@
             <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
-                <textarea matInput #descriptionInput placeholder="Tell us about yourself..." maxlength="240" rows="5" [value]="user.description"></textarea>
+                <textarea matInput #descriptionInput placeholder="Tell us about yourself, your art, and all that you have to offer!" maxlength="240" rows="5" [value]="user.description"></textarea>
                 <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
             </mat-form-field>
         </ng-container>

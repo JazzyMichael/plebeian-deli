@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { CategoriesService } from '../services/categories.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-deli',
@@ -17,11 +18,14 @@ export class DeliComponent implements OnInit {
   constructor(
     public postService: PostService,
     private catService: CategoriesService,
-    private router: Router) { }
+    private router: Router,
+    private titleService: Title
+    ) { }
 
   ngOnInit() {
     this.cats = this.catService.getCategories();
     this.category = this.cats[0] ? this.cats[0].name : 'sculpture';
+    this.titleService.setTitle('Deli - Plebeian');
   }
 
   categorySelect(index: number) {

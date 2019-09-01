@@ -9,7 +9,8 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 })
 export class ConnectComponent implements OnInit {
   stripeCredentialsUrl = 'https://connect.stripe.com/oauth/token';
-  clientSecret = 'sk_test_EivFXuy6nOXJYZ7ScayMi2rK';
+  // clientSecret = 'sk_test_EivFXuy6nOXJYZ7ScayMi2rK';
+  clientSecret = 'pk_live_9RFFwjYhsrCgEbkm3DBpyOv8';
 
   constructor(
     private route: ActivatedRoute,

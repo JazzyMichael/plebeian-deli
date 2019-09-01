@@ -16,6 +16,10 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
   }
 
+  contactClick() {
+    window.alert('Email plebeiandeli@gmail.com for questions and concerns!');
+  }
+
   openFacebook() {
     window.open(this.facebookUrl, '_blank');
   }

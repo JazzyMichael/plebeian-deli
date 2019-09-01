@@ -27,9 +27,10 @@ export class AuthService {
 
       this.afAuth.authState.pipe(
         switchMap((user: any) => user
-        ? this.afStore.doc<any>(`users/${user.uid}`).valueChanges()
+        ? this.afStore.doc(`users/${user.uid}`).valueChanges()
         : of(null))
       ).subscribe(user => {
+        console.log('auth service user', user);
         if (user) {
           this.chatService.getUserChats(user.uid);
           this.username = user.username;
@@ -70,7 +71,9 @@ export class AuthService {
 
       const providerId = authData.additionalUserInfo.providerId;
 
-      const username = authData.user.displayName.substring(0, 4) + `${Date.now()}`.substring(0, 4);
+      const random = Math.random().toString().slice(2, 10);
+
+      const username = authData.user.displayName.substring(0, 4) + `${random}`;
 
       const email = authData.user.email;
 

@@ -54,9 +54,12 @@ export class MembersComponent implements OnInit {
             validCategory = true;
           }
 
-          const re = new RegExp(this.searchTerm);
+          const lowerCaseSearchTerm = this.searchTerm ? this.searchTerm.toLowerCase() : '';
+          const lowerCaseUsername = user.username ? user.username.toLowerCase() : '';
 
-          const validSearch = this.searchTerm ? re.test(user.username) : true;
+          const re = new RegExp(lowerCaseSearchTerm);
+
+          const validSearch = this.searchTerm ? re.test(lowerCaseUsername) : true;
 
           return validCategory && validSearch;
         });

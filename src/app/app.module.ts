@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -57,11 +57,13 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
+import { BuyPostComponent } from './buy-post/buy-post.component';
+import { TermsComponent } from './terms/terms.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/about', pathMatch: 'full' },
+  { path: '', redirectTo: '/deli', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
@@ -72,11 +74,13 @@ const routes: Routes = [
   { path: 'info', component: InfoComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', component: SubscriptionsComponent },
-  { path: 'prime-cuts/:id', component: PrimePostComponent },
+  { path: 'prime-cuts/:id', component: PrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/'])) },
+  { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/deli'])) },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'purchase/:id', component: BuyPostComponent },
+  { path: 'terms', component: TermsComponent },
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
@@ -111,7 +115,9 @@ const routes: Routes = [
     PaymentFormComponent,
     UsernameFormComponent,
     SellerComponent,
-    ConnectComponent
+    ConnectComponent,
+    BuyPostComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +144,8 @@ const routes: Routes = [
     MaterialModule
   ],
   providers: [
-    AngularFireAuthGuard
+    AngularFireAuthGuard,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -8,15 +8,20 @@ import { map, tap } from 'rxjs/operators';
 })
 export class UserService {
   users$: BehaviorSubject<any>;
+  admins$: BehaviorSubject<any>;
 
   constructor(private afStore: AngularFirestore) {
-    const cachedUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : null;
+    // const cachedUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : null;
 
-    this.users$ = new BehaviorSubject(cachedUsers);
+    this.users$ = new BehaviorSubject([]);
+    this.admins$ = new BehaviorSubject([]);
 
     this.afStore.collection('users').valueChanges().subscribe(users => {
-      localStorage.setItem('users', JSON.stringify(users));
       this.users$.next(users);
+    });
+
+    this.getAdmins().subscribe(admins => {
+      this.admins$.next(admins);
     });
   }
 
@@ -48,5 +53,11 @@ export class UserService {
       .update(obj)
       .then(() => console.log('updated user'))
       .catch((err) => console.log('error updating user'));
+  }
+
+  getAdmins() {
+    return this.afStore
+      .collection('users', ref => ref.where('admin', '==', true).limit(3))
+      .valueChanges({ idField: 'userId' });
   }
 }

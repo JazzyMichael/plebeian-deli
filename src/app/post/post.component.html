@@ -15,7 +15,7 @@
             <hr>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <button mat-icon-button>
+                    <button mat-icon-button (click)="facebookShare()">
                         <mat-icon svgIcon="facebook"></mat-icon>
                     </button>
                     <button mat-icon-button>
@@ -41,7 +41,8 @@
             *ngIf="post.price && post.quantity"
             mat-raised-button
             color="primary"
-            style="margin: 1em auto; color: white;">
+            style="margin: 1em auto; color: white;"
+            [routerLink]="'/purchase/' + post.postId">
             Buy Now! - {{ post.price | currency }}
         </button>
     </mat-card>
@@ -54,7 +55,7 @@
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
             <mat-card *ngFor="let post of userPosts$ | async" style="width: 200px; margin: 0.5em; cursor: pointer;" [routerLink]="'/post/' + post.postId">
-                <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
+                <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
                 <mat-card-content>
                     <p>{{ post.title }}</p>
                     <p>{{ post.createdTimestamp.toDate() | date }}</p>
@@ -64,7 +65,7 @@
     </div>
 
     <!-- featured posts from deli -->
-    <div style="margin: 2em 0">
+    <!-- <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
             <h3>Featured Posts</h3>
             <button mat-raised-button routerLink="/deli">View More</button> 
@@ -78,6 +79,6 @@
                 </mat-card-content>
             </mat-card>
         </div>
-    </div>
+    </div> -->
 
 </div>
