@@ -43,17 +43,19 @@
     </div>
 
     <!-- chat list -->
-    <mat-list *ngIf="!viewingChat" style="overflow: auto">
-        <mat-list-item *ngFor="let chat of chats" (click)="viewChat(chat)">
-            <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
-            <h3 matLine>{{ chat.otherUser?.username }}</h3>
-            <p *ngIf="chat.newMessage" matLine style="font-weight: 700">New Message!</p>
-        </mat-list-item>
-        <p *ngIf="!chats || !chats.length">
-            This is your hub for interaction, sale, and barter. All your interaction with the vast Plebeian network is through here.
-        </p>
-        <p *ngIf="!chats || !chats.length">Not looking for money? Services to offer? You can trade work, offer services, trade services, and so much more with our powerful chat.</p>
-    </mat-list>
+    <div style="overflow: auto; height: 85%;">
+        <mat-list *ngIf="!viewingChat" style="overflow: auto">
+            <mat-list-item *ngFor="let chat of chats" (click)="viewChat(chat)">
+                <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
+                <h3 matLine>{{ chat.otherUser?.username }}</h3>
+                <p *ngIf="chat.newMessage" matLine style="font-weight: 700">New Message!</p>
+            </mat-list-item>
+            <p *ngIf="!chats || !chats.length">
+                This is your hub for interaction, sale, and barter. All your interaction with the vast Plebeian network is through here.
+            </p>
+            <p *ngIf="!chats || !chats.length">Not looking for money? Services to offer? You can trade work, offer services, trade services, and so much more with our powerful chat.</p>
+        </mat-list>
+    </div>
 
     <!-- chat messages -->
     <div *ngIf="this.viewingChat" style="height: 97%; display: grid; grid-template-rows: 3fr 1fr;">

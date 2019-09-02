@@ -110,36 +110,32 @@ export class PostsComponent implements OnInit {
       file = input.files[0];
       // file type is only image.
       if (/^image\//.test(file.type)) {
-        if (file.size > 10000000) {
-          alert('Image needs to be less than 1MB');
-        } else {
-          // upload to firebase
-          const random = Math.random().toString().slice(2, 10);
+        // upload to firebase
+        const random = Math.random().toString().slice(2, 10);
 
-          const userId = this.user.uid;
+        const userId = this.user.uid;
 
-          const path = `post-pictures/${userId}-${random}`;
+        const path = `post-pictures/${userId}-${random}`;
 
-          const ref = this.storage.ref(path);
+        const ref = this.storage.ref(path);
 
-          await this.storage.upload(path, file);
+        await this.storage.upload(path, file);
 
-          const url = await ref.getDownloadURL().toPromise();
+        const url = await ref.getDownloadURL().toPromise();
 
-          if (!this.firstImageUrl) {
-            this.firstImageUrl = url;
-          }
-
-          const range = this.quillEditorRef.getSelection();
-
-          const qImg = `<img src="${url}" style="display: block; margin: auto;" />`;
-
-          this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
-
-          this.postContent = this.quillEditorRef.root.innerHTML;
+        if (!this.firstImageUrl) {
+          this.firstImageUrl = url;
         }
+
+        const range = this.quillEditorRef.getSelection();
+
+        const qImg = `<img src="${url}" style="display: block; margin: auto;" />`;
+
+        this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
+
+        this.postContent = this.quillEditorRef.root.innerHTML;
       } else {
-          alert('You could only upload images.');
+          window.alert('You can only upload images.');
       }
     };
 

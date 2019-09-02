@@ -65,13 +65,12 @@ export class AuthService {
   }
 
   async handleAuthData(authData: any) {
-    console.log('handling auth data', authData);
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
 
       const providerId = authData.additionalUserInfo.providerId;
 
-      const random = Math.random().toString().slice(2, 10);
+      const random = Math.random().toString().slice(2, 8);
 
       const username = authData.user.displayName.substring(0, 4) + `${random}`;
 

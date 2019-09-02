@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 import * as QuillNamespace from 'quill';
 let Quill: any = QuillNamespace;
-import ImageResize from 'quill-image-resize-and-rotate-module';
+import ImageResize from 'quill-image-resize-module';
 Quill.register('modules/imageResize', ImageResize);
 
 @Component({
@@ -31,7 +31,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
         [{ 'color': [] }, { 'background': [] }],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
         [{ 'align': [] }],
-        ['link', 'image']
+        ['link', 'image', 'video']
       ]
     },
     imageResize: true
@@ -62,46 +62,43 @@ export class NewPostComponent implements OnInit, OnDestroy {
 
   getEditorInstance(inst: any) {
     this.quillEditorRef = inst;
-    console.log(this.quillEditorRef);
+    // console.log(this.quillEditorRef);
     const toolbar = inst.getModule('toolbar');
     toolbar.addHandler('image', this.imageHandler);
   }
 
   imageHandler = (image, callback) => {
-    console.log('image', image);
     const input: any = document.getElementById('quillImageField');
     document.getElementById('quillImageField').onchange = async () => {
       let file: File;
       file = input.files[0];
       // file type is only image.
       if (/^image\//.test(file.type)) {
-        if (file.size > 10000000) {
-          alert('Image needs to be less than 1MB');
-        } else {
-          // upload to firebase
-          const random = Math.random().toString().slice(2, 10);
+        // upload to firebase
+        const random = Math.random().toString().slice(2, 10);
 
-          const userId = 'blahblahblah'; // this.user.uid;
+        const userId = this.user.uid; // this.user.uid;
 
-          const path = `prime-cuts-pictures/${userId}-${random}`;
+        const path = `prime-cuts-pictures/${userId}-${random}`;
 
-          const ref = this.storage.ref(path);
+        const ref = this.storage.ref(path);
 
-          await this.storage.upload(path, file);
+        await this.storage.upload(path, file);
 
-          const url = await ref.getDownloadURL().toPromise();
+        const url = await ref.getDownloadURL().toPromise();
 
-          if (!this.firstImageUrl) {
-            this.firstImageUrl = url;
-          }
-
-          const range = this.quillEditorRef.getSelection();
-
-          const qImg = `<img src="${url}" />`;
-
-          this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
-
+        if (!this.firstImageUrl) {
+          this.firstImageUrl = url;
         }
+
+        const range = this.quillEditorRef.getSelection();
+
+        const qImg = `<img src="${url}" />`;
+
+        this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
+
+        this.postContent = this.quillEditorRef.root.innerHTML;
+
       } else {
           alert('You could only upload images.');
       }
