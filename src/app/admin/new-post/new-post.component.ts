@@ -5,6 +5,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
+import * as QuillNamespace from 'quill';
+let Quill: any = QuillNamespace;
+import ImageResize from 'quill-image-resize-and-rotate-module';
+Quill.register('modules/imageResize', ImageResize);
+
 @Component({
   selector: 'app-new-post',
   templateUrl: './new-post.component.html',
@@ -16,7 +21,21 @@ export class NewPostComponent implements OnInit, OnDestroy {
   postImagePreview: any;
   postContent: any;
   featureFriday: boolean = false;
-  modules: any = {};
+  modules: any = {
+    toolbar: {
+      container: [
+        [{ 'font': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'align': [] }],
+        ['link', 'image']
+      ]
+    },
+    imageResize: true
+  };
   user: any;
   quillEditorRef;
   firstImageUrl: string;

@@ -1,6 +1,6 @@
 <mat-sidenav-container>
 
-    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; z-index: 1000; background: white;">
+    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; z-index: 1000; background: white; min-width: 250px;">
         <ng-container *ngIf="auth.user$ | async as user; else justCloseButton">
             <div style="display: flex; justify-content: space-between; margin: 20px 0;">
                 <img [src]="user.profileUrl" alt="Profile Pic" style="width: 200px; margin: 0; padding: 0; border-radius: 15px;" [routerLink]="'/' + user.username" (click)="sidenav.close()">
@@ -11,7 +11,6 @@
             <p style="text-align: center" [routerLink]="'/' + user.username" (click)="sidenav.close()">{{ user.username }}</p>
             <hr style="width: 95%; margin: 0 auto 20px;">
         </ng-container>
-
 
         <ng-template #justCloseButton>
             <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">

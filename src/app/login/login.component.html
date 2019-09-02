@@ -1,26 +1,36 @@
 
-<div style="height: 100%; width: 100%; background-color: black; color: white; display: flex; flex-direction: column; align-items: center;">
+<div class="bg">
 
-    <h2>Sign In</h2>
+    <mat-card class="sign-in-card">
 
-    <br>
+        <h2>Sign In</h2>
 
-    <button
-        mat-raised-button
-        color="primary"
-        style="color: white; margin: 0.5em;"
-        (click)="googleLogin()">
-        Login With Google
-    </button>
+        <br>
 
-    <br>
+        <hr class="accent-line">
 
-    <button
-        mat-raised-button
-        style="background-color: #3f6fff; color: white; margin: 0.5em;"
-        (click)="facebookLogin()">
-        Login With Facebook
-    </button>
+        <br>
+
+        <br>
+    
+        <button
+            mat-raised-button
+            color="primary"
+            style="color: white; margin: 0.5em;"
+            (click)="googleLogin()">
+            Login With Google
+        </button>
+    
+        <br>
+    
+        <button
+            mat-raised-button
+            style="background-color: #3f6fff; color: white; margin: 0.5em;"
+            (click)="facebookLogin()">
+            Login With Facebook
+        </button>
+
+    </mat-card>
 
 </div>
 

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { filter } from 'rxjs/operators';
+
+declare var gtag;
 
 @Component({
   selector: 'app-root',
@@ -47,6 +50,17 @@ export class AppComponent {
       this.authService.user$.subscribe(user => {
         this.user = user;
         this.signedIn = !!user;
+      });
+
+      const navEndEvents = router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      );
+
+      navEndEvents.subscribe((event: NavigationEnd) => {
+        gtag('config', 'UA-130962516-1', {
+          'page_path': event.urlAfterRedirects,
+          'loggedIn': this.signedIn ? true : false
+        });
       });
   }
 

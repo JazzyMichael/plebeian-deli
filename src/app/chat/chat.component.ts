@@ -43,6 +43,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         switchMap(async chats => {
           console.log('chat sub', [...chats]);
 
+          this.newMessages = 0;
+
           for await (let chat of chats) {
 
             const userObj = chat.users.find(u => u.uid === this.user.uid);

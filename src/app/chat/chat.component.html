@@ -43,7 +43,7 @@
     </div>
 
     <!-- chat list -->
-    <mat-list *ngIf="!viewingChat">
+    <mat-list *ngIf="!viewingChat" style="overflow: auto">
         <mat-list-item *ngFor="let chat of chats" (click)="viewChat(chat)">
             <img matListAvatar [src]="chat.otherUser.profileUrl" alt="Profile Pic">
             <h3 matLine>{{ chat.otherUser?.username }}</h3>

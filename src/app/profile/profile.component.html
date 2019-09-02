@@ -83,12 +83,13 @@
             <!-- Social Links -->
             <div *ngIf="editable && editing; else viewSocialLinks" style="width: 85%">
                 <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
+                    <span matPrefix>@ &nbsp;</span>
                     <input
                         matInput
                         #instagramInput
                         [value]="user.instagram || ''"
                         type="text"
-                        placeholder="Instagram Name"
+                        placeholder="Instagram Handle"
                         autocomplete="off"
                         (input)="onInstagramInput($event.target.value)">
                     <mat-icon

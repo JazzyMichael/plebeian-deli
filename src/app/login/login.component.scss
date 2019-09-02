@@ -1,0 +1,24 @@
+.bg {
+    height: 90%;
+    width: 100%;
+    background-color: #1c1b20;
+    padding-top: 2em;
+}
+
+.accent-line {
+    width: 90%;
+    border: 1px solid rgb(133, 202, 145);
+}
+
+.sign-in-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    max-width: 85%;
+    margin: 0 auto;
+    color: white;
+    background: #25262c;
+    padding: 2em 0.5em;
+    box-shadow: 0px 2px 1px -1px rgb(133, 202, 145), 0px 1px 1px 0px rgb(133, 202, 145), 0px 1px 3px 0px rgb(133, 202, 145);
+}
