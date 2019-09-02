@@ -9,6 +9,7 @@
             formControlName="username"
             placeholder="Username"
             (input)="onInput()"
+            maxlength="16"
             required>
 
         <mat-error *ngIf="signUpForm.get('username').hasError('hasWhitespace')">

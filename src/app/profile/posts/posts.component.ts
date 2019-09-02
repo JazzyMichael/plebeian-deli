@@ -40,7 +40,7 @@ export class PostsComponent implements OnInit {
   update$: Subject<any> = new Subject();
   updateSub: Subscription;
   quillEditorRef: any;
-  firstImageUrl;
+  firstImageUrl: string;
 
   constructor(
     private router: Router,
@@ -79,6 +79,27 @@ export class PostsComponent implements OnInit {
 
       }
     });
+
+    // setInterval(() => {
+    //   console.log(this.quillEditorRef);
+    // }, 5000);
+  }
+
+  startNewPost() {
+    this.editing = true;
+    // this.quillForm = new FormGroup({
+    //   editor: new FormControl()
+    // });
+  }
+
+  cancelNewPost() {
+    this.editing = false;
+    this.firstImageUrl = null;
+    this.postTitle = null;
+    this.postContent = null;
+    this.postCategory = null;
+    // console.log(this.quillForm.value);
+    // this.quillForm.reset();
   }
 
   imageHandler = (image, callback) => {
@@ -111,10 +132,11 @@ export class PostsComponent implements OnInit {
 
           const range = this.quillEditorRef.getSelection();
 
-          const qImg = `<img src="${url}" />`;
+          const qImg = `<img src="${url}" style="display: block; margin: auto;" />`;
 
           this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
 
+          this.postContent = this.quillEditorRef.root.innerHTML;
         }
       } else {
           alert('You could only upload images.');
@@ -124,10 +146,19 @@ export class PostsComponent implements OnInit {
     input.click();
   }
 
-  onEditorChanged(inst: any) {
+  onEditorCreated(inst: any) {
+    // created
     this.quillEditorRef = inst;
     const toolbar = inst.getModule('toolbar');
     toolbar.addHandler('image', this.imageHandler);
+  }
+
+  onEditorChanged(event: any) {
+    console.log('onEditorChanged');
+    if (!this.postContent && this.firstImageUrl) {
+      // this.firstImageUrl = null;
+      console.log('no content, yes thumbnail');
+    }
   }
 
   priceInput(event: any) {

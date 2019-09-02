@@ -46,6 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) => {
         const username = params.get('username');
         if (!username) return this.router.navigateByUrl('/about');
+        this.editing = false;
 
         return this.auth.getUser(username).pipe(
           tap((user: any) => {

@@ -11,11 +11,11 @@
             <mat-icon>done</mat-icon>
             Submit
         </button>
-        <button *ngIf="editing" mat-raised-button (click)="editing = false; firstImageUrl = null;">
+        <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
             <mat-icon>close</mat-icon>
             Cancel
         </button>
-        <button *ngIf="!editing" mat-raised-button (click)="editing = true">
+        <button *ngIf="!editing" mat-raised-button (click)="startNewPost()">
             <mat-icon>add</mat-icon>
             New Post
         </button>
@@ -92,13 +92,17 @@
 
 <input type="file" style="display: none" id="quillImageField">
 
+<!-- <form [formGroup]="quillForm"> -->
+
+    <!--  -->
 <quill-editor
     *ngIf="editing"
     [modules]="modules"
     [(ngModel)]="postContent"
     [placeholder]="'Share your work and thoughts here! The first image you include will be the thumbnail for the post. Make sure you have a title and select a category!'"
     [styles]="{'min-height': '200px', 'margin-bottom': '1em'}"
-    (onEditorCreated)="onEditorChanged($event)">
+    (onEditorCreated)="onEditorCreated($event)"
+    (onEditorChanged)="onEditorChanged($event)">
     <div quill-editor-toolbar>
         <span class="ql-formats">
             <select class="ql-align" [title]="'Alignment'">
@@ -143,6 +147,8 @@
         </span>
     </div>
 </quill-editor>
+
+<!-- </form> -->
 
 <div class="post-list">
     <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
