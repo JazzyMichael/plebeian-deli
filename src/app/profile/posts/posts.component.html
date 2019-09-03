@@ -33,69 +33,9 @@
     (save)="submitPost($event)">
 </app-create-post>
 
-<!-- <form [formGroup]="quillForm"> -->
-
-    <!--
-        <input type="file" style="display: none" id="quillImageField">
-    -->
-<!-- <quill-editor
-    *ngIf="editing"
-    [modules]="modules"
-    [(ngModel)]="postContent"
-    [placeholder]="'Share your work and thoughts here! The first image you include will be the thumbnail for the post. Make sure you have a title and select a category!'"
-    [styles]="{'min-height': '200px', 'margin-bottom': '1em'}"
-    (onEditorCreated)="onEditorCreated($event)"
-    (onEditorChanged)="onEditorChanged($event)">
-    <div quill-editor-toolbar>
-        <span class="ql-formats">
-            <select class="ql-align" [title]="'Alignment'">
-                <option selected></option>
-                <option value="center"></option>
-                <option value="right"></option>
-                <option value="justify"></option>
-            </select>
-        </span>
-        <span class="ql-formats">
-            <select class="ql-font"></select>
-            <select class="ql-size"></select>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-bold" [title]="'Bold'"></button>
-            <button class="ql-italic" [title]="'Italic'"></button>
-            <button class="ql-underline" [title]="'Underline'"></button>
-            <button class="ql-strike" [title]="'Strike'"></button>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-blockquote" [title]="'Quote'"></button>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-header" value="1"></button>
-            <button class="ql-header" value="2"></button>
-        </span>
-        <span class="ql-formats">
-            <select class="ql-color"></select>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-list" value="ordered"></button>
-            <button class="ql-list" value="bullet"></button>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-indent" value="-1"></button>
-            <button class="ql-indent" value="+1"></button>
-        </span>
-        <span class="ql-formats">
-            <button class="ql-link"></button>
-            <button class="ql-image"></button>
-            <button class="ql-video"></button>
-        </span>
-    </div>
-</quill-editor> -->
-
-<!-- </form> -->
-
 <div class="post-list">
     <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
-        <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
+        <img mat-card-image *ngIf="post.thumbnailImageUrl" [src]="post.thumbnailImageUrl" alt="Post Image">
         <mat-card-content>
             <p>{{ post.title }}</p>
             <p>{{ post.createdTimestamp.toDate() | date }}</p>

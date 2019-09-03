@@ -32,10 +32,7 @@ export class CreatePostComponent implements OnInit {
 
   validatePrice$: Subject<any> = new Subject();
 
-  img = {
-    url: '',
-    ref: ''
-  };
+  uploading: boolean;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -131,6 +128,13 @@ export class CreatePostComponent implements OnInit {
   }
 
   async submit() {
+
+    this.uploading = true;
+
+    const postImages = [];
+
+    const thumbnailIndex = this.images.findIndex(i => i.url === this.thumbnailImgUrl);
+
     for await (let img of this.images) {
 
       const random = Math.random().toString().slice(0, 10);
@@ -139,26 +143,19 @@ export class CreatePostComponent implements OnInit {
 
       const ref = this.storage.ref(path);
 
-      this.storage.upload(path, img.file)
-        .then(async () => {
-          const url = await ref.getDownloadURL().toPromise();
+      await this.storage.upload(path, img.file);
 
-          img = { url };
+      const url = await ref.getDownloadURL().toPromise();
 
-          console.log('upload done');
-        })
-        .catch(e => console.log('error uploading image', e));
-
-      console.log('loop done');
+      postImages.push({ url });
     }
-
 
     const post = {
       title: this.title,
       category: this.category,
       description: this.description,
-      images: this.images,
-      thumbnailImgUrl: this.thumbnailImgUrl,
+      images: postImages,
+      thumbnailImgUrl: postImages[thumbnailIndex].url,
       link: this.link,
       price: this.approvedSeller && this.price ? parseInt(this.price) : 0,
       quantity: this.approvedSeller && this.quantity ? this.quantity : 0,
@@ -166,6 +163,8 @@ export class CreatePostComponent implements OnInit {
       createdTimestamp: new Date(),
       likes: 0
     };
+
+    this.uploading = false;
 
     this.save.emit(post);
   }

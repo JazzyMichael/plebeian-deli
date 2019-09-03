@@ -229,6 +229,7 @@
         
         <!-- ProfileBackgroundUrl -->
         <div
+            *ngIf="editable && editing"
             class="profile-background-pic"
             [ngStyle]="{'background': user.backgroundUrl ? 'url(' + user.backgroundUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}"
             [ngClass]="user.backgroundUrl ? 'bg' : ''">

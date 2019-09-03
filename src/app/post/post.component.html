@@ -9,7 +9,13 @@
 
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
-        <quill-view [content]="post.content"></quill-view>
+        <!-- <quill-view [content]="post.content"></quill-view> -->
+
+        <p>{{ post.description }}</p>
+
+
+        <img *ngFor="let img of post.images" style="display: block; margin: 1em auto; width: 90%;" [src]="img.url" alt="Post Image" />
+
 
         <div>
             <hr>
@@ -55,7 +61,7 @@
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
             <mat-card *ngFor="let post of userPosts$ | async" style="width: 200px; margin: 0.5em; cursor: pointer;" [routerLink]="'/post/' + post.postId">
-                <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
+                <img mat-card-image *ngIf="post.thumbnailImageUrl" [src]="post.thumbnailImageUrl" alt="Post Image" style="max-height: 200px">
                 <mat-card-content>
                     <p>{{ post.title }}</p>
                     <p>{{ post.createdTimestamp.toDate() | date }}</p>

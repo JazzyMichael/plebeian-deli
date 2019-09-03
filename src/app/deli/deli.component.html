@@ -57,7 +57,7 @@
 <div class="post-list">
     <ng-container *ngFor="let post of postService.posts$ | async">
         <mat-card *ngIf="post.category && post.category.toLowerCase() === category" class="post-thumbnail" (click)="postClick(post.postId)">
-            <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
+            <img mat-card-image *ngIf="post.thumbnailImageUrl" [src]="post.thumbnailImageUrl" alt="Post Image">
             <mat-card-content>
                 <p>{{ post.title }}</p>
                 <p>{{ post.createdTimestamp?.toDate() | date }}</p>

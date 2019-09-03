@@ -56,18 +56,23 @@ export class PostsComponent implements OnInit {
   }
 
   async submitPost(event: any) {
-    console.log('submitPost', event);
 
     const post = { ...event, userId: this.user.uid };
 
+    console.log('submitPost', post);
+
     if (this.editingPost) {
+      console.log('update');
       this.postService
         .updatePost(this.editingPost.postId, post)
-        .then(res => console.log('update post', res));
+        .then(res => console.log('update post', res))
+        .catch(e => console.log('error updating post', e));
     } else {
+      console.log('create');
       this.postService
         .createPost(post)
-        .then(res => console.log('create post', res));
+        .then(res => console.log('create post', res))
+        .catch(e => console.log('error creating post', e));
     }
 
     this.editing = false;
