@@ -1,5 +1,10 @@
 
-<div style="margin-bottom: 5em">
+<p *ngIf="uploading" style="text-align: center">Uploading Post...</p>
+
+<mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
+
+
+<div *ngIf="!uploading" style="margin-bottom: 5em">
 
 
     <!-- Title -->

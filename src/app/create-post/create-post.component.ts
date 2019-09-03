@@ -135,19 +135,27 @@ export class CreatePostComponent implements OnInit {
 
     const thumbnailIndex = this.images.findIndex(i => i.url === this.thumbnailImgUrl);
 
+    console.log('thumb index', thumbnailIndex);
+
     for await (let img of this.images) {
 
-      const random = Math.random().toString().slice(0, 10);
+      if (!img.file && img.url) {
+        console.log('just url', img);
+        postImages.push(img);
+      } else {
+        console.log('uploading img', img);
+        const random = Math.random().toString().slice(0, 10);
 
-      const path = `deli-pictures/${random}`;
+        const path = `deli-pictures/${random}`;
 
-      const ref = this.storage.ref(path);
+        const ref = this.storage.ref(path);
 
-      await this.storage.upload(path, img.file);
+        await this.storage.upload(path, img.file);
 
-      const url = await ref.getDownloadURL().toPromise();
+        const url = await ref.getDownloadURL().toPromise();
 
-      postImages.push({ url });
+        postImages.push({ url });
+      }
     }
 
     const post = {

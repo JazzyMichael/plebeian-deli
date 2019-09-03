@@ -38,7 +38,8 @@ export class PostService {
   getUserPosts(uid: string, limit: number = 10): Observable<any> {
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))
-      .valueChanges({ idField: 'postId' });
+      .valueChanges({ idField: 'postId' })
+      .pipe(tap(console.log));
   }
 
   getPost(id: string): Observable<any> {
@@ -74,6 +75,13 @@ export class PostService {
       .collection('posts')
       .doc(doc)
       .update(post);
+  }
+
+  deletePost(doc: string) {
+    return this.afStore
+      .collection('posts')
+      .doc(doc)
+      .delete();
   }
 
   likePost(postId: string, currentLikes: number) {

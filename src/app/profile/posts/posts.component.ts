@@ -52,26 +52,28 @@ export class PostsComponent implements OnInit {
   editPost(post: any) {
     this.editing = true;
     this.editingPost = post;
-    console.log(post);
+  }
+
+  deletePost(post: any) {
+    this.postService.deletePost(post.postId)
+      .then(() => console.log('deleted'))
+      .catch(e => console.log('error deleting', e));
   }
 
   async submitPost(event: any) {
 
     const post = { ...event, userId: this.user.uid };
 
-    console.log('submitPost', post);
-
     if (this.editingPost) {
       console.log('update');
       this.postService
         .updatePost(this.editingPost.postId, post)
-        .then(res => console.log('update post', res))
+        .then(res => console.log('updated post', res))
         .catch(e => console.log('error updating post', e));
     } else {
-      console.log('create');
       this.postService
         .createPost(post)
-        .then(res => console.log('create post', res))
+        .then(res => console.log('created post', res))
         .catch(e => console.log('error creating post', e));
     }
 

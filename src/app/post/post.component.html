@@ -61,7 +61,7 @@
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
             <mat-card *ngFor="let post of userPosts$ | async" style="width: 200px; margin: 0.5em; cursor: pointer;" [routerLink]="'/post/' + post.postId">
-                <img mat-card-image *ngIf="post.thumbnailImageUrl" [src]="post.thumbnailImageUrl" alt="Post Image" style="max-height: 200px">
+                <img mat-card-image *ngIf="post.thumbnailImgUrl" [src]="post.thumbnailImgUrl" alt="Post Image" style="max-height: 200px">
                 <mat-card-content>
                     <p>{{ post.title }}</p>
                     <p>{{ post.createdTimestamp.toDate() | date }}</p>
