@@ -18,6 +18,10 @@ export class ChatService {
   }
 
   getUserChats(uid: string) {
+    if (!uid) {
+      return;
+    }
+
     this.afStore
       .collection('chats', ref => ref.where('userIds', 'array-contains', uid))
       .valueChanges({ idField: 'id' })

@@ -1,7 +1,7 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
     <h2 style="font-weight: 300; margin-left: 10px;">Posts</h2>
     <div *ngIf="editable">
-        <button
+        <!-- <button
             *ngIf="editing"
             mat-raised-button
             color="primary"
@@ -10,7 +10,7 @@
             (click)="submitPost()">
             <mat-icon>done</mat-icon>
             Submit
-        </button>
+        </button> -->
         <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
             <mat-icon>close</mat-icon>
             Cancel
@@ -26,76 +26,19 @@
     <button mat-raised-button routerLink="/seller" style="width: 100%">Connect your account to Stripe to add a price</button>
 </div>
 
-<mat-form-field *ngIf="editing" color="primary" style="display: block; width: 90%; margin: 1em auto;">
-    <input
-        matInput
-        [(ngModel)]="postTitle"
-        placeholder="Title"
-        maxlength="120"
-        minlength="1"
-        autocomplete="off">
-    <mat-hint *ngIf="!postTitle">Must have a title</mat-hint>
-</mat-form-field>
-
-<div *ngIf="editing" style="width: 90%; display: flex; justify-content: space-between; align-items: center;">
-    <mat-form-field color="primary" style="flex: 1; margin: 1em;">
-        <mat-label>Category</mat-label>
-        <mat-select [(ngModel)]="postCategory">
-            <mat-option *ngFor="let cat of categories" [value]="cat.name">
-                {{ cat.name | titlecase }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <!-- <button *ngIf="!postImagePreview" mat-button style="padding: 0">
-        <label for="post-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
-            <mat-icon>publish</mat-icon>
-            <span style="margin-left: 10px">Upload Post Preview Image</span>
-        </label>
-    </button>
-    <input
-        id="post-pic-upload"
-        type="file"
-        accept="image/*"
-        style="display: none"
-        (change)="uploadPostPic($event)"> -->
-
-    <img *ngIf="firstImageUrl" [src]="firstImageUrl" alt="Post Image" style="max-width: 150px; max-height: 150px;">
-
-</div>
-
-<div *ngIf="editing && user.approvedSeller" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-    <mat-form-field color="primary" style="width: 120px; margin: 1em;">
-        <mat-icon matPrefix color="primary">attach_money</mat-icon>
-        <input
-            matInput
-            type="text"
-            placeholder="Price"
-            [(ngModel)]="price"
-            (input)="priceInput($event)"
-            color="primary"
-            maxlength="5"
-            autocomplete="off">
-        <span matSuffix>.00 &nbsp;</span>
-        <mat-hint>Optional</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field color="accent" style="flex: 1; margin: 1em;">
-        <mat-label>Available Quantity</mat-label>
-        <mat-select [(ngModel)]="quantity">
-            <mat-option *ngFor="let quant of quantityArr" [value]="quant">
-                {{ quant }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>
-
-<input type="file" style="display: none" id="quillImageField">
+<app-create-post
+    *ngIf="editing"
+    [post]="editingPost"
+    [approvedSeller]="user.approvedSeller"
+    (save)="submitPost($event)">
+</app-create-post>
 
 <!-- <form [formGroup]="quillForm"> -->
 
-    <!--  -->
-<quill-editor
+    <!--
+        <input type="file" style="display: none" id="quillImageField">
+    -->
+<!-- <quill-editor
     *ngIf="editing"
     [modules]="modules"
     [(ngModel)]="postContent"
@@ -146,7 +89,7 @@
             <button class="ql-video"></button>
         </span>
     </div>
-</quill-editor>
+</quill-editor> -->
 
 <!-- </form> -->
 

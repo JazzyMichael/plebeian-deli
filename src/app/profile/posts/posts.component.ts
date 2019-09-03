@@ -22,20 +22,7 @@ export class PostsComponent implements OnInit {
 
   posts$: Observable<any>;
   editing: boolean;
-  postTitle: string;
-  postContent: any;
-  postCategory: string;
-  postImage: any;
-  postImagePreview: any;
-  content: any;
-  modules: any = {
-    // imageResize: {}
-  };
-  quantityArr: number[] = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-  ];
-  quantity: number = 1;
-  price: string = '';
+  editingPost: any;
 
   update$: Subject<any> = new Subject();
   updateSub: Subscription;
@@ -50,175 +37,40 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.posts$ = this.postService.getUserPosts(this.user.uid);
-
-    this.update$.pipe(debounceTime(777)).subscribe(() => {
-      if (this.price) {
-
-        let chars = this.price.split('');
-
-        chars = chars.filter(c => {
-          if (
-            c === '1' ||
-            c === '2' ||
-            c === '3' ||
-            c === '4' ||
-            c === '5' ||
-            c === '6' ||
-            c === '7' ||
-            c === '8' ||
-            c === '9' ||
-            c === '0'
-          ) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-
-        this.price = chars.join('');
-
-      }
-    });
-
-    // setInterval(() => {
-    //   console.log(this.quillEditorRef);
-    // }, 5000);
   }
 
   startNewPost() {
     this.editing = true;
-    // this.quillForm = new FormGroup({
-    //   editor: new FormControl()
-    // });
+    this.editingPost = null;
   }
 
   cancelNewPost() {
     this.editing = false;
-    this.firstImageUrl = null;
-    this.postTitle = null;
-    this.postContent = null;
-    this.postCategory = null;
-    // console.log(this.quillForm.value);
-    // this.quillForm.reset();
+    this.editingPost = null;
   }
 
-  imageHandler = (image, callback) => {
-    // console.log('image', image);
-    const input: any = document.getElementById('quillImageField');
-    document.getElementById('quillImageField').onchange = async () => {
-      let file: File;
-      file = input.files[0];
-      // file type is only image.
-      if (/^image\//.test(file.type)) {
-        // upload to firebase
-        const random = Math.random().toString().slice(2, 10);
-
-        const userId = this.user.uid;
-
-        const path = `post-pictures/${userId}-${random}`;
-
-        const ref = this.storage.ref(path);
-
-        await this.storage.upload(path, file);
-
-        const url = await ref.getDownloadURL().toPromise();
-
-        if (!this.firstImageUrl) {
-          this.firstImageUrl = url;
-        }
-
-        const range = this.quillEditorRef.getSelection();
-
-        const qImg = `<img src="${url}" style="display: block; margin: auto;" />`;
-
-        this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
-
-        this.postContent = this.quillEditorRef.root.innerHTML;
-      } else {
-          window.alert('You can only upload images.');
-      }
-    };
-
-    input.click();
+  editPost(post: any) {
+    this.editing = true;
+    this.editingPost = post;
+    console.log(post);
   }
 
-  onEditorCreated(inst: any) {
-    // created
-    this.quillEditorRef = inst;
-    const toolbar = inst.getModule('toolbar');
-    toolbar.addHandler('image', this.imageHandler);
-  }
+  async submitPost(event: any) {
+    console.log('submitPost', event);
 
-  onEditorChanged(event: any) {
-    console.log('onEditorChanged');
-    if (!this.postContent && this.firstImageUrl) {
-      // this.firstImageUrl = null;
-      console.log('no content, yes thumbnail');
-    }
-  }
+    const post = { ...event, userId: this.user.uid };
 
-  priceInput(event: any) {
-    this.update$.next();
-  }
-
-  uploadPostPic(event: any) {
-    const file = event.target.files[0];
-
-    if (file.type.split('/')[0] !== 'image') {
-      console.log('Only Images are allowed for profile picture');
-      return;
+    if (this.editingPost) {
+      this.postService
+        .updatePost(this.editingPost.postId, post)
+        .then(res => console.log('update post', res));
+    } else {
+      this.postService
+        .createPost(post)
+        .then(res => console.log('create post', res));
     }
 
-    this.postImage = file;
-
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      this.postImagePreview = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  async submitPost() {
     this.editing = false;
-
-    // const random = Math.random().toString().slice(2, 10);
-
-    // const path = `post-pictures/${this.user.uid}-${random}`;
-
-    // const ref = this.storage.ref(path);
-
-    // await this.storage.upload(path, this.postImage);
-
-    // const url = await ref.getDownloadURL().toPromise();
-
-    let post = {
-      userId: this.user.uid,
-      title: this.postTitle,
-      category: this.postCategory,
-      content: this.postContent,
-      thumbnailUrl: this.firstImageUrl || '',
-      createdTimestamp: new Date(),
-      likes: 0
-    };
-
-    if (this.user.approvedSeller) {
-      if (this.quantity) post['quantity'] = this.quantity;
-      if (this.quantity) post['startingQuantity'] = this.quantity;
-      if (this.price) post['price'] = this.price ? parseInt(this.price) : 0;
-    }
-
-    this.postService.createPost(post)
-      .then(res => {
-        this.postTitle = '';
-        this.postCategory = null;
-        this.postContent = null;
-        this.firstImageUrl = null;
-        this.postImage = null;
-        this.postImagePreview = null;
-      })
-      .catch(e => console.log('error adding post', e));
   }
 
   viewPost(postId: string) {

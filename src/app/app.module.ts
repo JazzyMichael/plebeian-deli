@@ -59,6 +59,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
 import { BuyPostComponent } from './buy-post/buy-post.component';
 import { TermsComponent } from './terms/terms.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -74,10 +75,10 @@ const routes: Routes = [
   { path: 'info', component: InfoComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', component: SubscriptionsComponent },
-  { path: 'prime-cuts/:id', component: PrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInTo(['/deli'])) },
+  { path: 'login', component: LoginComponent }, // , ...canActivate(redirectLoggedInTo(['/deli']))
   { path: 'checkout', component: CheckoutComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'terms', component: TermsComponent },
@@ -117,7 +118,8 @@ const routes: Routes = [
     SellerComponent,
     ConnectComponent,
     BuyPostComponent,
-    TermsComponent
+    TermsComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

@@ -25,11 +25,27 @@ export class AuthService {
       this.user$ = new BehaviorSubject(null);
       this.username = '';
 
+      this.afAuth.auth.getRedirectResult()
+        .then(res => {
+          console.log('redirect res', res);
+          if (res && res.user) {
+            this.handleAuthData(res);
+          }
+        })
+        .catch(e => {
+          console.log('redirect err', e);
+        });
+
       this.afAuth.authState.pipe(
-        switchMap((user: any) => user
-        ? this.afStore.doc(`users/${user.uid}`).valueChanges()
-        : of(null))
-      ).subscribe(user => {
+        switchMap((user: any) => {
+          console.log('auth user', user);
+          if (user && user.uid) {
+            return this.afStore.doc(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      ).subscribe((user: any) => {
         console.log('auth service user', user);
         if (user) {
           this.chatService.getUserChats(user.uid);
@@ -39,9 +55,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(user));
         } else {
           this.username = null;
-          localStorage.removeItem('username');
           this.user$.next(null);
-          localStorage.removeItem('user');
         }
       });
     }
@@ -49,9 +63,13 @@ export class AuthService {
   async loginWithGoogle() {
     const provider = new auth.GoogleAuthProvider();
 
-    const authData = await this.afAuth.auth.signInWithPopup(provider);
+    const authData = await this.afAuth.auth.signInWithRedirect(provider);
 
-    this.handleAuthData(authData);
+    // const realAuthData = await this.afAuth.auth.getRedirectResult();
+
+    // console.log('google authData', realAuthData);
+
+    // this.handleAuthData(realAuthData);
   }
 
   async loginWithFacebook() {
@@ -59,12 +77,17 @@ export class AuthService {
 
     provider.addScope('email');
 
-    const authData = await this.afAuth.auth.signInWithPopup(provider);
+    const authData = await this.afAuth.auth.signInWithRedirect(provider);
 
-    this.handleAuthData(authData);
+    // const realAuthData = await this.afAuth.auth.getRedirectResult();
+
+    // console.log('facebook authData', realAuthData);
+
+    // this.handleAuthData(realAuthData);
   }
 
   async handleAuthData(authData: any) {
+    console.log('handleAuthData', authData);
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
 
@@ -86,24 +109,27 @@ export class AuthService {
         return this.router.navigateByUrl('/checkout');
       } else {
         setTimeout(() => {
-          return this.router.navigateByUrl(`/${this.username}`);
+          return this.router.navigateByUrl(`/deli`);
         }, 500);
       }
 
     } else {
       setTimeout(() => {
-        return this.router.navigateByUrl(`/${this.username}`);
+        return this.router.navigateByUrl(`/deli`);
       }, 500);
     }
   }
 
   async logout() {
-    await this.afAuth.auth.signOut();
-    this.chatService.userChats$.next([]);
+    console.log('logout');
+    const res = await this.afAuth.auth.signOut();
+    console.log('signout res', res);
+    // this.chatService.userChats$.next([]);
     return this.router.navigateByUrl('/prime-cuts');
   }
 
   createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership, providerId }) {
+    console.log('createUserDoc');
     const userDoc = this.afStore.doc(`users/${uid}`);
 
     const data = {
@@ -127,10 +153,11 @@ export class AuthService {
       createdDate: Date.now()
     };
 
-    return userDoc.set(data);
+    return userDoc.set(data, { merge: true });
   }
 
   getCurrentUser() {
+    console.log('getCurrentUser');
     return this.user$.pipe(first()).toPromise();
   }
 

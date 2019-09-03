@@ -28,9 +28,9 @@ export const createStripeCustomer = functions.auth
             metadata: { firebaseUID }
         });
 
-        return db.doc(`users/${firebaseUID}`).update({
+        return db.doc(`users/${firebaseUID}`).set({
             stripeId: customer.id
-        });
+        }, { merge: true });
     });
 
 
@@ -68,7 +68,7 @@ export const startSubscription = functions.https
             coupon: data.promoCode || ''
         });
 
-        return db.doc(`users/${userId}`).update({
+        return db.doc(`users/${userId}`).set({
             status: sub.status,
             subscriptionId: sub.id,
             itemId: sub.items.data[0].id,

@@ -146,7 +146,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     let userObj = chat.users.find(u => u.uid === this.user.uid);
     // update lastViewedTimestamp
     const newTimestamp = Date.now();
-    userObj.lastViewdTimestamp = newTimestamp;
+    userObj.lastViewedTimestamp = newTimestamp;
     // update chat doc
     let newUsersArr = chat.users;
     let index = newUsersArr.findIndex(u => u.uid === this.user.uid);

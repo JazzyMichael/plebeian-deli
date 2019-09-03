@@ -64,10 +64,20 @@ export class PostService {
   }
 
   createPost(post: any) {
-    return this.afStore.collection('posts').add(post);
+    return this.afStore
+      .collection('posts')
+      .add(post);
+  }
+
+  updatePost(doc: string, post: any) {
+    return this.afStore
+      .collection('posts')
+      .doc(doc)
+      .update(post);
   }
 
   likePost(postId: string, currentLikes: number) {
+    // update post likes and add to user likes array
     this.afStore.collection('posts').doc(postId).update({ likes: currentLikes + 1})
       .then(() => console.log('liked successfully'))
       .catch(e => console.log('error liking post', e));
