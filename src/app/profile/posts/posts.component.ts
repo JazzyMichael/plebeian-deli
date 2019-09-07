@@ -84,4 +84,8 @@ export class PostsComponent implements OnInit {
     this.router.navigateByUrl(`/post/${postId}`);
   }
 
+  layoutComplete(event: any) {
+    console.log('layoutComplete', event);
+  }
+
 }

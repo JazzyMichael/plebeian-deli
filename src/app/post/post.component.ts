@@ -16,6 +16,7 @@ export class PostComponent implements OnInit {
   featuredPosts$: Observable<any>;
   alreadyLiked: boolean;
   postId: string;
+  carouselIndex = 0;
 
   constructor(
     private route: ActivatedRoute,

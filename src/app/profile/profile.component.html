@@ -10,7 +10,8 @@
 
 <br>
 
-<div *ngIf="user$ | async as user" class="cont">
+<ng-container *ngIf="user$ | async as user">
+<div class="cont">
 
     <div class="left-column" [ngClass]="editing ? 'left-column-editing' : ''">
         
@@ -192,7 +193,7 @@
     <div class="right-column">
 
         <!-- Username and Medium/Membership -->
-        <div *ngIf="!editing" style="display: flex; justify-content: space-around; align-items: center;">
+        <div *ngIf="!editing" class="name-and-medium">
             <h1 style="font-weight: 200">{{ user.username }}</h1>
             <h1 *ngIf="user.membership === 'viewer'" style="font-weight: 200">{{ 'Member' }}</h1>
             <h1 *ngIf="user.membership === 'artist' && user.medium" style="font-weight: 200">{{ user.medium | titlecase }}</h1>
@@ -200,7 +201,10 @@
             <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
         </div>
 
-        <app-username-form *ngIf="editing" (username)="onUpdateUsername($event)"></app-username-form>
+        <app-username-form
+            *ngIf="editing"
+            (username)="onUpdateUsername($event)">
+        </app-username-form>
 
         <button
             *ngIf="editing"
@@ -216,17 +220,17 @@
             <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
                 <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
-                <textarea matInput #descriptionInput placeholder="Tell us about yourself, your art, and all that you have to offer!" maxlength="240" rows="5" [value]="user.description"></textarea>
+                <textarea matInput #descriptionInput placeholder="{{ 'Tell us about yourself,\nyour art,\nand all that you have to offer!' }}" maxlength="240" rows="5" [value]="user.description"></textarea>
                 <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
             </mat-form-field>
         </ng-container>
 
         <ng-template #readonlyDescription>
-            <div>{{ user.description }}</div>
+            <div style="width: 95%; margin: 1em auto; display: block;">{{ user.description }}</div>
         </ng-template>
 
         <br><br>
-        
+
         <!-- ProfileBackgroundUrl -->
         <div
             *ngIf="editable && editing"
@@ -251,17 +255,18 @@
             *ngIf="user.backgroundUrl"
             [src]="user.backgroundUrl"
             alt="Background Image"
-            style="max-height: 500px; margin: 0 auto; display: block;">
+            style="max-height: 500px; max-width: 95%; margin: 0 auto; display: block;">
 
         <br>
 
-        <!-- Posts -->
-        <app-posts
-            *ngIf="user.membership === 'artist'"
+        <!-- Services -->
+        <app-services
+            *ngIf="user.membership === 'artist' && user.approvedSeller"
             [user]="user"
-            [editable]="editable"
-            [categories]="categories">
-        </app-posts>
+            [editable]="editable">
+        </app-services>
+
+        <br>
 
         <!-- Events -->
         <app-events
@@ -269,6 +274,8 @@
             [user]="user"
             [editable]="editable">
         </app-events>
+
+        <br>
 
         <!-- Artists -->
         <app-artists
@@ -280,3 +287,13 @@
     </div>
 
 </div>
+
+<!-- Posts -->
+<app-posts
+    *ngIf="user.membership === 'artist'"
+    [user]="user"
+    [editable]="editable"
+    [categories]="categories">
+</app-posts>
+
+</ng-container>

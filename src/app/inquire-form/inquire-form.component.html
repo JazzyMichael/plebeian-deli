@@ -1,0 +1,74 @@
+<button mat-icon-button color="warn" (click)="close()" style="display: block; margin-left: auto; margin-top: -1.2em;">
+    <mat-icon>close</mat-icon>
+</button>
+
+<div mat-dialog-content>
+
+    <h3 style="margin-top: 0">{{ data.serviceTitle }}</h3>
+
+    <mat-form-field style="width: 100%">
+        <textarea
+            matInput
+            [(ngModel)]="description"
+            placeholder="Detailed Specifications..."
+            rows="5"
+            minlength="1">
+        </textarea>
+    </mat-form-field>
+
+    <br><br>
+
+    <p>Add Images to help describe your request</p>
+
+    <!-- Image Upload -->
+    <button
+        mat-raised-button
+        [disabled]="images?.length > 9"
+        style="padding: 0; width: 90%; margin: auto; display: block;">
+        <label for="image-upload" style="cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0 1em;">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">{{ images?.length > 9 ? 'Max amount of Images' : 'Upload Image' }}</span>
+        </label>
+    </button>
+    <input
+        id="image-upload"
+        type="file"
+        accept="image/*"
+        style="display: none"
+        (change)="addImage($event)">
+
+    <br>
+
+    <!-- Images Preview-->
+    <div class="image-preview-container">
+        <div *ngFor="let image of images; index as i;">
+            <button
+                mat-button
+                color="warn"
+                style="width: 100%; display: block;"
+                (click)="removeImage(i)">
+                <mat-icon>close</mat-icon>
+                Remove
+            </button>
+            <img
+                class="image-preview"
+                [src]="image.url"
+                alt="No Preview for SVG's">
+        </div>
+    </div>
+
+    <br><br>
+
+    <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!description"
+        style="width: 100%; color: white;">
+        Send Work Request
+    </button>
+
+    <br>
+
+    <p>*The artist will approve or deny your request and provide more details after the work order is placed.</p>
+
+</div>

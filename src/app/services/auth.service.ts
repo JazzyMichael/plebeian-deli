@@ -27,7 +27,6 @@ export class AuthService {
 
       this.afAuth.auth.getRedirectResult()
         .then(res => {
-          console.log('redirect res', res);
           if (res && res.user) {
             this.handleAuthData(res);
           }
@@ -38,7 +37,6 @@ export class AuthService {
 
       this.afAuth.authState.pipe(
         switchMap((user: any) => {
-          console.log('auth user', user);
           if (user && user.uid) {
             return this.afStore.doc(`users/${user.uid}`).valueChanges();
           } else {
@@ -46,7 +44,6 @@ export class AuthService {
           }
         })
       ).subscribe((user: any) => {
-        console.log('auth service user', user);
         if (user) {
           this.chatService.getUserChats(user.uid);
           this.username = user.username;
@@ -63,13 +60,7 @@ export class AuthService {
   async loginWithGoogle() {
     const provider = new auth.GoogleAuthProvider();
 
-    const authData = await this.afAuth.auth.signInWithRedirect(provider);
-
-    // const realAuthData = await this.afAuth.auth.getRedirectResult();
-
-    // console.log('google authData', realAuthData);
-
-    // this.handleAuthData(realAuthData);
+    await this.afAuth.auth.signInWithRedirect(provider);
   }
 
   async loginWithFacebook() {
@@ -77,17 +68,10 @@ export class AuthService {
 
     provider.addScope('email');
 
-    const authData = await this.afAuth.auth.signInWithRedirect(provider);
-
-    // const realAuthData = await this.afAuth.auth.getRedirectResult();
-
-    // console.log('facebook authData', realAuthData);
-
-    // this.handleAuthData(realAuthData);
+    await this.afAuth.auth.signInWithRedirect(provider);
   }
 
   async handleAuthData(authData: any) {
-    console.log('handleAuthData', authData);
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
 
@@ -115,21 +99,19 @@ export class AuthService {
 
     } else {
       setTimeout(() => {
-        return this.router.navigateByUrl(`/deli`);
-      }, 500);
+        const route = this.username ? `/${this.username}` : '/deli';
+        return this.router.navigateByUrl(route);
+      }, 200);
     }
   }
 
   async logout() {
-    console.log('logout');
     const res = await this.afAuth.auth.signOut();
-    console.log('signout res', res);
     // this.chatService.userChats$.next([]);
     return this.router.navigateByUrl('/prime-cuts');
   }
 
   createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership, providerId }) {
-    console.log('createUserDoc');
     const userDoc = this.afStore.doc(`users/${uid}`);
 
     const data = {
@@ -157,12 +139,10 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    console.log('getCurrentUser');
     return this.user$.pipe(first()).toPromise();
   }
 
   getUser(username: string): Observable<any> {
-    console.log('getUser', username);
     return this.afStore
       .collection('users', ref => ref.where('username', '==', username))
       .valueChanges()

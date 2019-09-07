@@ -29,6 +29,7 @@
     "hammerjs": "^2.0.8",
     "ng2-pdf-viewer": "^5.3.3",
     "ngx-hm-carousel": "^1.7.2",
+    "ngx-masonry": "^1.1.4",
     "ngx-quill": "^7.1.2",
     "quill": "^1.3.6",
     "quill-image-resize-module": "^3.0.0",

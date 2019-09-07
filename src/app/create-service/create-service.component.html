@@ -1,0 +1,31 @@
+<div style="width: 100%; margin: 0.5em auto 5em;">
+
+    <mat-form-field style="width: 90%; margin: 1em auto; display: block;">
+        <input
+            matInput
+            [(ngModel)]="title"
+            placeholder="Title"
+            maxlength="240">
+    </mat-form-field>
+
+    <mat-form-field style="width: 90%; margin: 1em auto; display: block;">
+        <textarea
+            matInput
+            [(ngModel)]="description"
+            placeholder="Description of your service or commission"
+            maxlength="240"
+            rows="3">
+        </textarea>
+    </mat-form-field>
+
+    <button
+        mat-raised-button
+        color="primary"
+        style="color: white; display: block; margin: 1em auto; width: 77%;"
+        [disabled]="!title || !description"
+        (click)="saveService()">
+        <mat-icon>done</mat-icon>
+        <span style="margin-left: 10px">{{ service ? 'Save' : 'Serve it up!' }}</span>
+    </button>
+
+</div>

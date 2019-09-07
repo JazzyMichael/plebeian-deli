@@ -3,6 +3,27 @@
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.post-card {
+    transition: 250ms all ease-out;
+    text-align: center;
+    margin: 0.5em;
+    cursor: pointer;
+}
+
+.post-card:hover {
+    -webkit-box-shadow: 1px 2px 4px 4px #3e463e;
+    -moz-box-shadow: 1px 2px 4px 4px #3e463e;
+    box-shadow: 1px 2px 4px 4px #3e463e;
+}
+
+.post-img {
+    height: 200px;
+    width: 300px;
+    background-size: cover;
+    background-position: center;
 }
 
 .post-thumbnail {
@@ -10,6 +31,7 @@
     cursor: pointer;
     max-width: 300px;
     transition: all 200ms ease-out;
+    padding-top: 0;
 }
 
 .post-thumbnail:hover {

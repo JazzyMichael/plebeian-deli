@@ -95,6 +95,13 @@
     margin: 1rem auto;
 }
 
+.name-and-medium {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .description-btn {
     float: right;
     margin-right: 20px;
@@ -141,6 +148,10 @@
 
     .social-text {
         display: inline-block;
+    }
+
+    .name-and-medium {
+        flex-direction: row;
     }
 
     .header-section-2 {

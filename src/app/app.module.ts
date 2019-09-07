@@ -50,6 +50,14 @@ import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { UsernameFormComponent } from './username-form/username-form.component';
 import { SellerComponent } from './seller/seller.component';
 import { ConnectComponent } from './connect/connect.component';
+import { BuyPostComponent } from './buy-post/buy-post.component';
+import { TermsComponent } from './terms/terms.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { HomeComponent } from './home/home.component';
+import { ServicesComponent } from './profile/services/services.component';
+import { CreateServiceComponent } from './create-service/create-service.component';
+import { InquireFormComponent } from './inquire-form/inquire-form.component';
+import { OrdersComponent } from './orders/orders.component';
 
 // 3rd Party Modules
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -57,14 +65,13 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
-import { BuyPostComponent } from './buy-post/buy-post.component';
-import { TermsComponent } from './terms/terms.component';
-import { CreatePostComponent } from './create-post/create-post.component';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
 const routes: Routes = [
   { path: '', redirectTo: '/deli', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
@@ -81,6 +88,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // , ...canActivate(redirectLoggedInTo(['/deli']))
   { path: 'checkout', component: CheckoutComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
+  { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
@@ -119,7 +127,12 @@ const routes: Routes = [
     ConnectComponent,
     BuyPostComponent,
     TermsComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    HomeComponent,
+    ServicesComponent,
+    CreateServiceComponent,
+    InquireFormComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +149,7 @@ const routes: Routes = [
     AngularFireFunctionsModule,
     PdfViewerModule,
     NgxHmCarouselModule,
+    NgxMasonryModule,
     QuillModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -144,6 +158,9 @@ const routes: Routes = [
   ],
   exports: [
     MaterialModule
+  ],
+  entryComponents: [
+    InquireFormComponent
   ],
   providers: [
     AngularFireAuthGuard,

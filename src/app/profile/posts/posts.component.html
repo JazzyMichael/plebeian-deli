@@ -40,7 +40,34 @@
 <br><br><br>
 
 <div class="post-list">
-    <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
+
+    <div *ngFor="let post of posts$ | async" (click)="viewPost(post.postId)" class="post-card">
+        <ng-container *ngIf="editable">
+            <button
+                mat-button
+                [matMenuTriggerFor]="postActions"
+                color="accent"
+                style="float: right"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #postActions="matMenu">
+                <button mat-menu-item (click)="editPost(post)">
+                    <mat-icon>edit</mat-icon>
+                    <span style="margin-left: 5px">Edit</span>
+                </button>
+                <button mat-menu-item color="warn" (click)="deletePost(post)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                </button>
+            </mat-menu>
+        </ng-container>
+        <div *ngIf="post.thumbnailImgUrl" [ngStyle]="{'background-image': 'url(' + post.thumbnailImgUrl + ')'}" class="post-img"></div>
+        <!-- <img style="width: 300px" [src]="post.thumbnailImgUrl" alt="Post Thumbnail"> -->
+        <p style="font-family: 'Open Sans Condensed', sans-serif; letter-spacing: 1px;">{{ post.title }}</p>
+    </div>
+
+    <!-- <mat-card *ngFor="let post of posts$ | async" class="post-thumbnail" (click)="viewPost(post.postId)">
         <ng-container *ngIf="editable">
             <button
                 mat-button
@@ -72,6 +99,6 @@
                 <p>{{ post.quantity }} remaining</p>
             </div>
         </mat-card-content>
-    </mat-card>
+    </mat-card> -->
 </div>
 

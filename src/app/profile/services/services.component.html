@@ -1,0 +1,57 @@
+<div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: 1em auto;">
+    <h2 style="font-weight: 300; margin-left: 10px;">Services & Commissions</h2>
+    <button *ngIf="!editable && user.approvedSeller" mat-raised-button (click)="inquire()">
+        <mat-icon>storefront</mat-icon>
+        <span style="margin-left: 10px">Inquire</span>
+    </button>
+    <div *ngIf="editable">
+        <button *ngIf="editing" mat-raised-button (click)="cancelNewService()">
+            <mat-icon>close</mat-icon>
+            Cancel
+        </button>
+        <button *ngIf="!editing" mat-raised-button (click)="startNewService()">
+            <mat-icon>add</mat-icon>
+            New Service
+        </button>
+    </div>
+</div>
+
+
+<app-create-service
+    *ngIf="editable && editing"
+    [service]="editingService"
+    [approvedSeller]="user.approvedSeller"
+    (save)="saveService($event)">
+</app-create-service>
+
+
+<div style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
+
+    <mat-card *ngFor="let service of services$ | async" style="width: 200px; cursor: pointer;" (click)="inquire(service.title)">
+        <ng-container *ngIf="editable">
+            <button
+                mat-button
+                [matMenuTriggerFor]="postActions"
+                color="accent"
+                style="float: right"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #postActions="matMenu">
+                <button mat-menu-item (click)="editService(service)">
+                    <mat-icon>edit</mat-icon>
+                    <span style="margin-left: 5px">Edit</span>
+                </button>
+                <button mat-menu-item color="warn" (click)="deleteService(service)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                </button>
+            </mat-menu>
+        </ng-container>
+
+        <mat-card-header>{{ service.title }}</mat-card-header>
+
+        <mat-card-content>{{ service.description }}</mat-card-content>
+    </mat-card>
+
+</div>

@@ -1,5 +1,5 @@
 
-<div *ngIf="post$ | async as post" style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
+<div *ngIf="post$ | async as post" class="container">
 
     <div style="display: flex; justify-content: start; align-items: center;">
         <img [src]="post?.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
@@ -14,7 +14,51 @@
         <p>{{ post.description }}</p>
 
 
-        <img *ngFor="let img of post.images" style="display: block; margin: 1em auto; width: 90%;" [src]="img.url" alt="Post Image" />
+        <!-- <img *ngFor="let img of post.images" style="display: block; margin: 1em auto; width: 90%;" [src]="img.url" alt="Post Image" /> -->
+
+
+        <ngx-hm-carousel
+            #carousel
+            [(ngModel)]="carouselIndex"
+            [data]="post.images"
+            class="carousel">
+        
+            <section ngx-hm-carousel-container class="content">
+                <article ngx-hm-carousel-item *ngFor="let img of post.images" class="item">
+                    <img [src]="img.url" alt="Post Image" draggable="false" class="post-img">
+                </article>
+                <!-- <ng-template #infiniteContainer></ng-template> -->
+            </section>
+        
+            <ng-template #carouselContent let-img let-i="index">
+                <article class="item">
+                    <img [src]="img.url" alt="Post Image" draggable="false" class="post-img">
+                </article>
+            </ng-template>
+        
+            <ng-template #carouselPrev>
+                <div *ngIf="post.images?.length > 1" style="text-align: center; margin-bottom: auto;">
+                    <mat-icon style="font-size: 2em">keyboard_arrow_left</mat-icon>
+                </div>
+            </ng-template>
+        
+            <ng-template #carouselNext>
+                <div *ngIf="post.images?.length > 1" style="text-align: center; margin-bottom: auto;">
+                    <mat-icon style="font-size: 2em">keyboard_arrow_right</mat-icon>
+                </div>
+            </ng-template>
+        
+        </ngx-hm-carousel>
+
+
+
+
+
+
+
+
+
+
 
 
         <div>

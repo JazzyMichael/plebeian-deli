@@ -99,6 +99,10 @@
                             <mat-icon>sentiment_satisfied</mat-icon>
                             <span>Upgrade</span>
                         </button>
+                        <button mat-menu-item routerLink="/orders">
+                            <mat-icon>storefront</mat-icon>
+                            <span>Orders</span>
+                        </button>
                         <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
                             <mat-icon>local_offer</mat-icon>
                             <span>Seller Info</span>

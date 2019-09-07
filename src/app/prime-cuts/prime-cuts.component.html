@@ -102,10 +102,20 @@
 
 
 <div class="tv-bg">
-    <div class="masonry-container">
-      <mat-card *ngFor="let post of primePosts$ | async" [routerLink]="'/prime-cuts/' + post.primePostId" class="masonry-card">
+    <!-- <div class="masonry-container"> -->
+    <ngx-masonry
+      [options]="masonryOptions"
+      [useImagesLoaded]="true"
+      [updateLayout]="true"
+      (layoutComplete)="layoutComplete($event)">
+      <mat-card
+        ngxMasonryItem
+        *ngFor="let post of primePosts$ | async"
+        [routerLink]="'/prime-cuts/' + post.primePostId"
+        style="cursor: pointer; padding-bottom: 0;">
         <mat-card-header>{{ post.title }}</mat-card-header>
         <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
       </mat-card>
-    </div>
+    </ngx-masonry>
+    <!-- </div> -->
 </div>

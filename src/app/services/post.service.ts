@@ -21,12 +21,6 @@ export class PostService {
       .subscribe(posts => {
         this.posts$.next(posts);
       });
-
-    // this.afStore.collection('posts', ref => ref.where('featured', '==', true).limit(3))
-    //   .valueChanges({ idField: 'postId' })
-    //   .subscribe(posts => {
-    //     this.featuredPosts$.next(posts);
-    //   });
   }
 
   getPostsByCategory(category: string) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { NgxMasonryOptions } from 'ngx-masonry';
 import { NgxHmCarouselBreakPointUp } from 'ngx-hm-carousel';
 import { Observable } from 'rxjs';
 import { PrimeCutsService } from '../services/prime-cuts.service';
@@ -32,7 +32,19 @@ export class PrimeCutsComponent implements OnInit {
   primePosts$: Observable<any>;
   featureFriday$: Observable<any>;
 
+  masonryOptions: NgxMasonryOptions = {
+    transitionDuration: '0.2s',
+    gutter: 20,
+    resize: true,
+    initLayout: true,
+    fitWidth: true
+  };
+
   constructor(private primeService: PrimeCutsService) { }
+
+  layoutComplete(event: any) {
+    console.log('layoutComplete', event);
+  }
 
   ngOnInit() {
     this.carouselData = [
