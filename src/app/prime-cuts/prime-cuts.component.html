@@ -1,4 +1,12 @@
 
+<div
+  class="prime-cuts-container"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="777"
+  [scrollWindow]="false"
+  (scrolled)="onScroll()">
+
 <h1 style="text-align: center; font-weight: 400; margin: 1em auto;">Studio Interviews</h1>
 
 
@@ -112,10 +120,20 @@
         ngxMasonryItem
         *ngFor="let post of primePosts$ | async"
         [routerLink]="'/prime-cuts/' + post.primePostId"
-        style="cursor: pointer; padding-bottom: 0;">
-        <mat-card-header>{{ post.title }}</mat-card-header>
+        class="prime-card">
+        <p>{{ post.title }}</p>
         <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Post Image">
       </mat-card>
     </ngx-masonry>
     <!-- </div> -->
+    <!-- <div
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="777"
+      [scrollWindow]="false"
+      (scrolled)="onScroll()">
+    </div> -->
+</div>
+
+
 </div>

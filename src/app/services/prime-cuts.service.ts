@@ -9,6 +9,7 @@ import { switchMap, map } from 'rxjs/operators';
 export class PrimeCutsService {
   primePosts$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   featureFriday$: BehaviorSubject<any> = new BehaviorSubject(null);
+  noMorePrimePosts: boolean;
 
   constructor(
     private afStore: AngularFirestore
@@ -29,6 +30,33 @@ export class PrimeCutsService {
         } else {
           this.featureFriday$.next(post);
         }
+      });
+  }
+
+  getMorePrimeCuts() {
+    if (this.noMorePrimePosts) {
+      return;
+    }
+
+    const currentCuts = this.primePosts$.getValue();
+
+    const lastVisible = currentCuts[currentCuts.length - 1].createdTimestamp;
+
+    this.afStore
+      .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(10))
+      .get()
+      .pipe(
+        map(cuts => {
+          const docs = [];
+          cuts.forEach(cut => {
+            docs.push({ ...cut.data(), primePostId: cut.id });
+          });
+          return docs;
+        })
+      )
+      .subscribe(cuts => {
+        console.log('cuts', cuts);
+        this.primePosts$.next([ ...currentCuts, ...cuts ]);
       });
   }
 

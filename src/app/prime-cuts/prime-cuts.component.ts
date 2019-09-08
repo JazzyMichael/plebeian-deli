@@ -43,7 +43,12 @@ export class PrimeCutsComponent implements OnInit {
   constructor(private primeService: PrimeCutsService) { }
 
   layoutComplete(event: any) {
-    console.log('layoutComplete', event);
+    // console.log('layoutComplete', event);
+  }
+
+  onScroll() {
+    console.log('onScroll');
+    this.primeService.getMorePrimeCuts();
   }
 
   ngOnInit() {

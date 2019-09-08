@@ -66,6 +66,7 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -150,6 +151,7 @@ const routes: Routes = [
     PdfViewerModule,
     NgxHmCarouselModule,
     NgxMasonryModule,
+    InfiniteScrollModule,
     QuillModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
