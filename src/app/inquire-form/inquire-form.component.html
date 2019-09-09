@@ -2,7 +2,9 @@
     <mat-icon>close</mat-icon>
 </button>
 
-<div mat-dialog-content>
+<mat-spinner *ngIf="loading" style="margin: 2em auto"></mat-spinner>
+
+<div *ngIf="!loading" mat-dialog-content>
 
     <h3 style="margin-top: 0">{{ data.serviceTitle }}</h3>
 
@@ -63,7 +65,8 @@
         mat-raised-button
         color="primary"
         [disabled]="!description"
-        style="width: 100%; color: white;">
+        style="width: 100%; color: white;"
+        (click)="submit()">
         Send Work Request
     </button>
 

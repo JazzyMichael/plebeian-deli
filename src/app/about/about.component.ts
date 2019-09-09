@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -8,12 +6,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-  admins$: Observable<any>;
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.admins$ = this.userService.admins$.asObservable();
+
   }
 
 }

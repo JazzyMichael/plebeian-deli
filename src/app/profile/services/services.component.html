@@ -27,7 +27,7 @@
 
 <div style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
 
-    <mat-card *ngFor="let service of services$ | async" style="width: 200px; cursor: pointer;" (click)="inquire(service.title)">
+    <mat-card *ngFor="let service of services$ | async" style="width: 200px; cursor: pointer;" (click)="inquire(service.title, service.description)">
         <ng-container *ngIf="editable">
             <button
                 mat-button

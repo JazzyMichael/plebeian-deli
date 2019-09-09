@@ -32,8 +32,7 @@ export class PostService {
   getUserPosts(uid: string, limit: number = 10): Observable<any> {
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))
-      .valueChanges({ idField: 'postId' })
-      .pipe(tap(console.log));
+      .valueChanges({ idField: 'postId' });
   }
 
   getPost(id: string): Observable<any> {

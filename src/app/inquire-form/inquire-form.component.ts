@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-inquire-form',
@@ -9,8 +10,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class InquireFormComponent implements OnInit {
   description: string;
   images: any[] = [];
+  loading: boolean;
 
   constructor(
+    private storage: AngularFireStorage,
     public dialogRef: MatDialogRef<InquireFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) { }
@@ -39,8 +42,31 @@ export class InquireFormComponent implements OnInit {
     this.images.splice(index, 1);
   }
 
-  submit() {
-    //
+  async submit() {
+    this.loading = true;
+
+    const images = [];
+
+    for await (const img of this.images) {
+      const random = Math.random().toString().slice(0, 10);
+
+      const path = `service-images/${random}`;
+
+      const ref = this.storage.ref(path);
+
+      await this.storage.upload(path, img.file);
+
+      const url = await ref.getDownloadURL().toPromise();
+
+      images.push({ url });
+    }
+
+    this.loading = false;
+
+    this.dialogRef.close({
+      orderDescription: this.description,
+      orderImages: images
+    });
   }
 
   close() {

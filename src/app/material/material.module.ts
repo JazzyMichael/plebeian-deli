@@ -20,6 +20,7 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatStepperModule,
+  MatTableModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -45,6 +46,7 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatStepperModule,
+    MatTableModule,
     MatTabsModule,
     MatToolbarModule
   ],
@@ -67,6 +69,7 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatStepperModule,
+    MatTableModule,
     MatTabsModule,
     MatToolbarModule
   ]

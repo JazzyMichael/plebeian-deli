@@ -1,91 +1,47 @@
 
+<div class="background">
 
-<div class="parallax-container bg1">
-    <div class="welcome-text">
-        Welcome to the Plebeian Deli, a new art media company that’s built around promotion for artists by artists.
-    </div>
-    <!-- 
-        We’ve set out to build a hub for artists to create, communicate, build community, and from that community build careers. Everything you’ll ever need as an artist is here at Plebeian, we’re here to make the business side of your art easy so that you can just make your art. Say goodbye to the old ways of art, the archaic systems with virtually no success, and join the growing world of Plebeian.
-    -->
-</div>
+    <mat-card class="video-card">
+        <p style="text-align: center">Welcome to Plebeian Deli</p>
+        <video
+            src="assets/SampleVideo_1280x720_2mb.mp4"
+            style="width: 100%; max-width: 1000px; margin: auto; display: block;"
+            controls>
+        </video>
+    </mat-card>
 
+    <mat-card class="right-card">
+        <p>We are a new art media company that’s built around promotion for artists by artists. We’ve set out to build a hub for artists to create, communicate, build community, and from that community build careers. We’re here to make the business side of your art easy so that you can just make your art. Say goodbye to the old ways of art, the archaic systems with virtually no success, and join the growing world of Plebeian.</p>
+    </mat-card>
 
-<div class="static-container">
-    <div class="content">
-        <button mat-raised-button color="accent" class="signup-btn-top" routerLink="/login">Sign Up!</button>
-        <div class="process">
-        
+    <mat-card class="left-card">
+        <div class="steps-section">
             <div class="process-graphic">
                 <span>Create</span>
                 <img src="assets/images/create.svg" class="process-img" />
+                <span style="font-size: 12px">Make your art!</span>
             </div>
-
-            <mat-icon class="process-arrow">arrow_right_alt</mat-icon>
-
+        
+            <!-- <mat-icon class="process-arrow">arrow_right_alt</mat-icon> -->
+        
             <div class="process-graphic">
                 <span>Post</span>
                 <img src="assets/images/upload.svg" class="process-img" />
+                <span style="font-size: 12px">Snap a pic, post your art!</span>
             </div>
-
-            <mat-icon class="process-arrow">arrow_right_alt</mat-icon>
-
+        
+            <!-- <mat-icon class="process-arrow">arrow_right_alt</mat-icon> -->
+        
             <div class="process-graphic">
                 <span>Sell</span>
                 <img src="assets/images/sell.svg" class="process-img" />
+                <span style="font-size: 12px">Sell your art!</span>
             </div>
         </div>
-    </div>
+    </mat-card>
+
+    <!-- <mat-card class="right-card"></mat-card>
+
+    <mat-card class="left-card"></mat-card> -->
+
 </div>
-
-
-<div class="parallax-container bg3">
-    <!-- <p class="visibility-txt">In landscape of modern art, visibility is key.</p> -->
-</div>
-
-
-<div class="static-container-2">
-    <div class="content">
-
-        <h2 style="text-align: center">The Team</h2>
-
-        <div style="width: 100%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; margin: 2em auto;">
-        
-            <mat-card *ngFor="let admin of admins$ | async" style="cursor: pointer;" [routerLink]="'/' + admin.username">
-                
-                <mat-card-header>{{ admin.username }}</mat-card-header>
-
-                <img mat-card-image [src]="admin.profileUrl" alt="Profile Image">
-
-            </mat-card>
-    
-            <!-- <div class="process-graphic">
-                <img src="assets/images/person1.svg" class="process-img" />
-                <span>Some guy</span>
-            </div>
-
-            <div class="process-graphic">
-                <img src="assets/images/person2.svg" class="process-img" />
-                <span>Another guy</span>
-            </div>
-
-            <div class="process-graphic">
-                <img src="assets/images/person3.svg" class="process-img" />
-                <span>A girl</span>
-            </div> -->
-
-        </div>
-
-        <button
-            mat-raised-button
-            color="primary"
-            class="signup-btn-bottom"
-            routerLink="/login">Sign Up!</button>
-    </div>
-</div>
-
-
-<!-- <div class="parallax-container bg2">
-    <h2 class="bg2-txt" style="text-align: left; margin-left: 0; padding-left: 3em;">With a Plebeian subscription, you are made able to share your work on our deli.</h2>
-    <h2 class="bg2-txt" style="text-align: right; margin-right: 0; padding-right: 3em;">It is then eligible for features in our Blogs, collaborative projects, contests, and curated digital exhibitions.</h2>
-</div> -->
-

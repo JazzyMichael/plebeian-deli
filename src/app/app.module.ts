@@ -53,7 +53,6 @@ import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
 import { TermsComponent } from './terms/terms.component';
 import { CreatePostComponent } from './create-post/create-post.component';
-import { HomeComponent } from './home/home.component';
 import { ServicesComponent } from './profile/services/services.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { InquireFormComponent } from './inquire-form/inquire-form.component';
@@ -67,12 +66,12 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { QuillModule } from 'ngx-quill';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/deli', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
@@ -129,11 +128,11 @@ const routes: Routes = [
     BuyPostComponent,
     TermsComponent,
     CreatePostComponent,
-    HomeComponent,
     ServicesComponent,
     CreateServiceComponent,
     InquireFormComponent,
-    OrdersComponent
+    OrdersComponent,
+    ViewingServiceComponent
   ],
   imports: [
     BrowserModule,
