@@ -143,7 +143,7 @@
 
                 <button *ngIf="user.otherLink" mat-button (click)="openOtherLink(user.otherLink)">
                     <mat-icon>link</mat-icon>
-                    <span class="social-text">{{ user.otherLink }}</span>
+                    <span class="social-text">{{ user.otherLink.substring(0, 8) }}...</span>
                 </button>
             </ng-template>
 

@@ -29,8 +29,9 @@ export class PrimeCutsComponent implements OnInit {
   carouselData: any[];
   viewingStudio: any;
 
-  primePosts$: Observable<any>;
+  primePosts$: Observable<any[]>;
   featureFriday$: Observable<any>;
+  featured$: Observable<any[]>;
 
   masonryOptions: NgxMasonryOptions = {
     transitionDuration: '0.2s',
@@ -54,19 +55,22 @@ export class PrimeCutsComponent implements OnInit {
   ngOnInit() {
     this.carouselData = [
       {
+        title: 'Alexis Nutini',
+        thumbnail: 'assets/images/alexis-nutini-thumbnail.jpg',
+        videoUrl: 'https://www.youtube.com/embed/ao2bFVcdUJ8',
+        primePostId: 'Lo5fXc8Bsihz9LnJzamF'
+      },
+      {
         title: 'Phil McGaughy',
         thumbnail: 'assets/images/phil-mcgaughy-thumbnail.jpg',
-        videoUrl: 'https://www.youtube.com/embed/plziHxS7r-4'
+        videoUrl: 'https://www.youtube.com/embed/plziHxS7r-4',
+        primePostId: 'EoHD7zlIwOs9XnxjgLeS'
       },
       {
         title: 'Lindsay Keating',
         thumbnail: 'assets/images/lindsey-keating-thumbnail.jpg',
-        videoUrl: 'https://www.youtube.com/embed/tOXZ4rWu5go'
-      },
-      {
-        title: 'Alexis Nutini',
-        thumbnail: 'assets/images/alexis-nutini-thumbnail.jpg',
-        videoUrl: 'https://www.youtube.com/embed/ao2bFVcdUJ8'
+        videoUrl: 'https://www.youtube.com/embed/tOXZ4rWu5go',
+        primePostId: 'oVoyrYxW3dilZq9zo7SR'
       }
     ];
 
@@ -75,6 +79,8 @@ export class PrimeCutsComponent implements OnInit {
     this.featureFriday$ = this.primeService.featureFriday$.asObservable();
 
     this.primePosts$ = this.primeService.primePosts$.asObservable();
+
+    this.featured$ = this.primeService.featuredFour$.asObservable();
   }
 
   click(i: number) {

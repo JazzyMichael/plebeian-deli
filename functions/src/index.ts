@@ -73,7 +73,7 @@ export const startSubscription = functions.https
             subscriptionId: sub.id,
             itemId: sub.items.data[0].id,
             membership: data.planName
-        });
+        }, { merge: true });
     });
 
 

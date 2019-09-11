@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 declare const fbq: any;
 
@@ -10,7 +12,7 @@ declare const fbq: any;
 export class SubscriptionsComponent implements OnInit {
   plans: any[];
 
-  constructor() { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.plans = [
@@ -48,8 +50,18 @@ export class SubscriptionsComponent implements OnInit {
     ];
   }
 
-  selectSubscription() {
+  async selectSubscription() {
     console.log('subscribe');
+
+    const user = await this.auth.getCurrentUser();
+
+    if (!user) {
+      window.alert('Sign In to get started!');
+      this.router.navigateByUrl('/login');
+    } else {
+      this.router.navigateByUrl('/checkout');
+    }
+
     // try {
     //   fbq('track', 'Subscribe', {
     //     value: '1.00',

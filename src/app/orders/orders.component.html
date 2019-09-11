@@ -1,207 +1,25 @@
-<ng-container *ngIf="user && user.approvedSeller">
-<div style="max-width: 1000px; margin: 1em auto;">
-    <h3>Sold Orders</h3>
-    <p>Things others purchased from you</p>
-</div>
 
-<mat-tab-group mat-align-tabs="center">
 
-    <mat-tab label="Deli Orders" (click)="expandedElement = null">
+<mat-tab-group mat-align-tabs="center" *ngIf="user">
 
-        <!-- <table mat-table
-            [dataSource]="dataSource" multiTemplateDataRows
-            class="mat-elevation-z8">
-            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-            </ng-container>
-            
-             Expanded Content Column - The detail row is made up of this one column that spans across all columns
-            <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                    <div class="example-element-diagram">
-                    <div class="example-element-position"> {{element.position}} </div>
-                    <div class="example-element-symbol"> {{element.symbol}} </div>
-                    <div class="example-element-name"> {{element.name}} </div>
-                    <div class="example-element-weight"> {{element.weight}} </div>
-                    </div>
-                    <div class="example-element-description">
-                    {{element.description}}
-                    <span class="example-element-description-attribution"> -- Wikipedia </span>
-                    </div>
-                </div>
-                </td>
-            </ng-container>
-            
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                class="example-element-row"
-                [class.example-expanded-row]="expandedElement === element"
-                (click)="expandedElement = expandedElement === element ? null : element">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-        </table> -->
-
+    <mat-tab label="Sold Posts" *ngIf="user.membership === 'artist'">
+        <p *ngIf="!user.approvedSeller" style="text-align: center; margin-top: 2em;">Link your Plebeian account to a Stripe account to start selling posts.</p>
+        
+        <app-sold-posts *ngIf="user.approvedSeller"></app-sold-posts>
     </mat-tab>
 
-    <mat-tab label="Services">
-        <ng-container *ngIf="!viewingService && serviceOrders$ !== undefined">
-            <div *ngFor="let service of serviceOrders$ | async" class="service-thumbnail" (click)="viewService(service)">
-                {{ service.serviceTitle }} - {{ service.inquiredTimestamp.toDate() | date }} - 
-                <span *ngIf="!service.accepted">Inquired</span>
-                <span *ngIf="service.accepted && !service.purchased">Accepted</span>
-                <span *ngIf="service.purchased && !service.shipped">Purchased</span>
-                <span *ngIf="service.shipped">Shipped</span>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="viewingService">
-            <div style="padding-bottom: 2em">
-                <button mat-raised-button (click)="this.viewingService = null">
-                    <mat-icon>arrow_back</mat-icon>
-                    View All
-                </button>
-
-                <div class="initial-order">
-                    <h3>Original Service Order</h3>
-                    <p>{{ viewingService.serviceTitle }} - {{ viewingService.inquiredTimestamp.toDate() | date }}</p>
-                    <p>{{ viewingService.serviceDescription }}</p>
-                    <p>{{ viewingService.orderDescription }}</p>
-                    <img *ngFor="let img of viewingService.orderImages" style="max-width: 100px" [src]="img.url" alt="Service Image">
-                </div>
-
-                <div *ngFor="let msg of viewingService.messages" [ngClass]="msg.uid === user.uid ? 'user-msg' : 'other-user-msg'">
-                    <p *ngIf="msg.timestamp?.toDate" style="color: gray">{{ msg.timestamp.toDate() | date:'medium' }}</p>
-                    <p *ngIf="!msg.timestamp.toDate" style="color: gray">{{ msg.timestamp | date:'medium' }}</p>
-                    <p>{{ msg.text }}</p>
-                </div>
-
-                <mat-form-field style="width: 90%; max-width: 800px; margin: 2em auto 0; display: block;">
-                    <textarea
-                        matInput
-                        rows="5"
-                        placeholder="Send Message..."
-                        [(ngModel)]="newMessageText">
-                    </textarea>
-                </mat-form-field>
-                <button
-                    mat-raised-button
-                    (click)="sendMessage()"
-                    [disabled]="!newMessageText"
-                    style="display: block; margin: auto;">
-                    Send Message
-                </button>
-
-
-                <!-- price and approve button -->
-                <mat-form-field *ngIf="!viewingService.purchased" color="primary" style="display: block; margin: 1em auto; width: 120px;">
-                    <mat-icon matPrefix color="primary">attach_money</mat-icon>
-                    <input
-                        matInput
-                        [(ngModel)]="newServicePrice"
-                        placeholder="Price"
-                        (input)="priceInput()"
-                        maxlength="5"
-                        autocomplete="off">
-                    <span matSuffix>.00 &nbsp;</span>
-                    <mat-hint>Required</mat-hint>
-                </mat-form-field>
-
-                <button
-                    *ngIf="!viewingService.purchased"
-                    mat-raised-button
-                    [disabled]="!newServicePrice"
-                    color="primary"
-                    style="display: block; width: 90%; margin: 0.5em auto; color: white;"
-                    (click)="acceptService()">
-                    {{ viewingService.accepted ? 'Update Price' : 'Approve Service' }}
-                </button>
-
-                <!-- Ship button -->
-                <button
-                    *ngIf="viewingService.purchased && !viewingService.shipped"
-                    mat-raised-button
-                    color="primary"
-                    style="display: block; width: 90%; margin: 0.5em auto; color: white;"
-                    (click)="shipService()">
-                    Mark as Finished & Shipped
-                </button>
-            </div>
-        </ng-container>
+    <mat-tab label="Bought Posts">
+        <app-bought-posts></app-bought-posts>
     </mat-tab>
-</mat-tab-group>
-</ng-container>
 
-<div style="max-width: 1000px; margin: 1em auto;">
-    <h3>Placed Orders</h3>
-    <p>Things you purchased</p>
-</div>
-<mat-tab-group mat-align-tabs="center">
-    <mat-tab label="Deli Orders">No Deli Orders</mat-tab>
-    <mat-tab label="Services">
-
-        <ng-container *ngIf="!viewingService">
-            <div *ngFor="let service of placedServices$ | async" class="service-thumbnail" (click)="viewService(service)">
-                {{ service.serviceTitle }} - {{ service.inquiredTimestamp.toDate() | date }} - 
-                <span *ngIf="!service.accepted">Inquired</span>
-                <span *ngIf="service.accepted && !service.purchased">Accepted</span>
-                <span *ngIf="service.purchased && !service.shipped">Purchased</span>
-                <span *ngIf="service.shipped">Shipped</span>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="viewingService">
-            <div style="padding-bottom: 2em">
-                <button mat-raised-button (click)="this.viewingService = null">
-                    <mat-icon>arrow_back</mat-icon>
-                    View All
-                </button>
-
-                <div class="initial-order">
-                    <h3>Original Service Order</h3>
-                    <p>{{ viewingService.serviceTitle }} - {{ viewingService.inquiredTimestamp.toDate() | date }}</p>
-                    <p>{{ viewingService.serviceDescription }}</p>
-                    <p>{{ viewingService.orderDescription }}</p>
-                    <img *ngFor="let img of viewingService.orderImages" style="max-width: 100px" [src]="img.url" alt="Service Image">
-                </div>
-
-                <div *ngFor="let msg of viewingService.messages" [ngClass]="msg.uid === user.uid ? 'user-msg' : 'other-user-msg'">
-                    <p *ngIf="msg.timestamp?.toDate" style="color: gray">{{ msg.timestamp.toDate() | date:'medium' }}</p>
-                    <p *ngIf="!msg.timestamp.toDate" style="color: gray">{{ msg.timestamp | date:'medium' }}</p>
-                    <p>{{ msg.text }}</p>
-                </div>
-
-                <mat-form-field style="width: 90%; max-width: 800px; margin: 2em auto 0; display: block;">
-                    <textarea
-                        matInput
-                        rows="5"
-                        placeholder="Send Message..."
-                        [(ngModel)]="newMessageText">
-                    </textarea>
-                </mat-form-field>
-                <button
-                    mat-raised-button
-                    (click)="sendMessage()"
-                    [disabled]="!newMessageText"
-                    style="display: block; margin: auto;">
-                    Send Message
-                </button>
-
-
-                <!-- if accepted show purchase button -->
-                <button
-                    *ngIf="viewingService.accepted && !viewingService.purchased"
-                    mat-raised-button
-                    color="primary"
-                    (click)="purchaseService()"
-                    style="display: block; width: 90%; margin: 1em auto; color: white;">
-                    {{ viewingService.price | currency }} Purchase
-                </button>
-
-                <!-- if purchased show purchase timestamp as message -->
-            </div>
-        </ng-container>
-
+    <mat-tab label="Sold Services" *ngIf="user.membership === 'artist'">
+        <p *ngIf="!user.approvedSeller" style="text-align: center; margin-top: 2em;">Link your Plebeian account to a Stripe account to start selling services.</p>
+        
+        <app-sold-services *ngIf="user.approvedSeller" [user]="user"></app-sold-services>
     </mat-tab>
+
+    <mat-tab label="Bought Services">
+        <app-bought-services [user]="user"></app-bought-services>
+    </mat-tab>
+
 </mat-tab-group>

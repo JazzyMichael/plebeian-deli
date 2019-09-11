@@ -67,12 +67,17 @@ import { QuillModule } from 'ngx-quill';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
+import { ServicePaymentComponent } from './orders/service-payment/service-payment.component';
+import { BoughtServicesComponent } from './orders/bought-services/bought-services.component';
+import { SoldServicesComponent } from './orders/sold-services/sold-services.component';
+import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
+import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/about', pathMatch: 'full' },
-  { path: 'about', component: AboutComponent },
+  { path: '', redirectTo: '/prime-cuts', pathMatch: 'full' },
+  { path: 'about', redirectTo: '/prime-cuts', pathMatch: 'full' }, // component: AboutComponent
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', component: ExhibitionsComponent },
@@ -93,7 +98,7 @@ const routes: Routes = [
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
-  { path: '**', redirectTo: '/about', pathMatch: 'full' }
+  { path: '**', redirectTo: '/prime-cuts', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -132,7 +137,12 @@ const routes: Routes = [
     CreateServiceComponent,
     InquireFormComponent,
     OrdersComponent,
-    ViewingServiceComponent
+    ViewingServiceComponent,
+    ServicePaymentComponent,
+    BoughtServicesComponent,
+    SoldServicesComponent,
+    SoldPostsComponent,
+    BoughtPostsComponent
   ],
   imports: [
     BrowserModule,

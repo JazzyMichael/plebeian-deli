@@ -6,4 +6,12 @@ import { Injectable } from '@angular/core';
 export class AnalyticsService {
 
   constructor() { }
+
+  pageView() {
+    //
+  }
+
+  startSubscription() {
+    //
+  }
 }

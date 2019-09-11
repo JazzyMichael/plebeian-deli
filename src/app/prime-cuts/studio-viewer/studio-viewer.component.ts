@@ -27,7 +27,7 @@ export class StudioViewerComponent implements OnInit {
   }
 
   viewPostClick() {
-    this.router.navigateByUrl(`/prime-cuts/studio-post-id`);
+    this.router.navigateByUrl(`/prime-cuts/${this.studio.primePostId}`);
   }
 
 }

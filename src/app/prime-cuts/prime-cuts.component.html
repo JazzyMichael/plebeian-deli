@@ -88,24 +88,28 @@
 
 
 <div class="featured-container">
-    <mat-card *ngIf="featureFriday$ | async as post" style="cursor: pointer" [routerLink]="'/prime-cuts/' + post.primePostId">
+    <mat-card *ngIf="featureFriday$ | async as post" style="cursor: pointer; width: 100%;" [routerLink]="'/prime-cuts/' + post.primePostId">
         <mat-card-header>
-          <mat-card-title>Feature Friday</mat-card-title>
+          <mat-card-title>{{ post.title }}</mat-card-title>
         </mat-card-header>
 
         <img mat-card-image *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Thumbnail Image">
 
-        <mat-card-content>
-          <p>{{ post.title }}</p>
-        </mat-card-content>
+        <!-- <mat-card-content>
+          do something to show preview
+          <quill-view [content]="post.content"></quill-view>
+        </mat-card-content> -->
     </mat-card>
 
-    <!-- <div class="featured">
-        <span>Joey</span>
-        <span>Forrest</span>
-        <span>Colleen</span>
-        <span>Sam</span>
-    </div> -->
+    <div *ngIf="featured$ | async as featured" class="feature-four">
+      <mat-card *ngFor="let post of featured" class="featured-card">
+        <mat-card-header>
+          <mat-card-title>{{ post.title }}</mat-card-title>
+        </mat-card-header>
+
+        <img style="margin-bottom: 0; width: 100%;" *ngIf="post.thumbnailUrl" [src]="post.thumbnailUrl" alt="Thumbnail Image">
+      </mat-card>
+    </div>
 </div>
 
 

@@ -93,8 +93,9 @@ export class AuthService {
         return this.router.navigateByUrl('/checkout');
       } else {
         setTimeout(() => {
-          return this.router.navigateByUrl(`/deli`);
-        }, 500);
+          const route = username ? `/${username}` : '/deli';
+          return this.router.navigateByUrl(route);
+        }, 200);
       }
 
     } else {

@@ -25,7 +25,7 @@ export class PaymentFormComponent implements AfterViewInit, OnDestroy {
 
   promoCode: string;
 
-  coupons: any[] = ['LOYALTYCLUB'];
+  coupons: any[] = ['LOYALTYCLUB', 'UD2020'];
 
   validCoupon: any;
 

@@ -1,16 +1,6 @@
 <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: 0.5em auto;">
     <h2 style="font-weight: 300; margin-left: 10px;">Posts</h2>
     <div *ngIf="editable">
-        <!-- <button
-            *ngIf="editing"
-            mat-raised-button
-            color="primary"
-            style="margin-right: 1em; color: white;"
-            [disabled]="!postTitle || !postCategory || !postContent"
-            (click)="submitPost()">
-            <mat-icon>done</mat-icon>
-            Submit
-        </button> -->
         <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
             <mat-icon>close</mat-icon>
             Cancel

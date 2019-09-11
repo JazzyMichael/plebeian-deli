@@ -75,6 +75,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.update$.pipe(debounceTime(1000)).subscribe(userObj => {
       this.userService.updateUser(this.uid, userObj);
+      if (userObj.username) {
+        this.router.navigateByUrl(`/${userObj.username}`);
+      }
     });
   }
 
@@ -131,9 +134,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   onUpdateUsername(username: string) {
-    console.log('onUpdateUsername', username);
     this.newUsername = username;
-    return this.router.navigateByUrl(`/${username}`);
   }
 
   saveNewUsername() {
