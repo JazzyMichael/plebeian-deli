@@ -1,0 +1,30 @@
+.service-thumbnail {
+    padding: 2em 1em;
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+  }
+  
+  .service-thumbnail:hover {
+    background: #e7e7e7;
+  }
+  
+  .initial-order {
+    padding: 2em;
+    background: #f5f5f5;
+  }
+  
+  .user-msg {
+    background: #b5ffc2;
+    max-width: 555px;
+    width: 85%;
+    margin: 1em 1em 1em auto;
+    padding: 2em;
+  }
+  
+  .other-user-msg {
+    background: #ffb5f6;
+    max-width: 555px;
+    width: 85%;
+    margin: 1em auto 1em 1em;
+    padding: 2em;
+  }

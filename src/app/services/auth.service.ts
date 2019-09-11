@@ -7,6 +7,7 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import { switchMap, first, map, tap } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
+import { AnalyticsService } from './analytics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthService {
     private afStore: AngularFirestore,
     private chatService: ChatService,
     private oldUserService: OldUserService,
-    private router: Router
+    private router: Router,
+    private analyticsService: AnalyticsService
     ) {
       this.user$ = new BehaviorSubject(null);
       this.username = '';
@@ -88,6 +90,8 @@ export class AuthService {
       const membership = isOldUser ? 'artist' : 'viewer';
 
       await this.createUserDoc({ ...authData.user, username, membership, providerId });
+
+      this.analyticsService.login();
 
       if (!isOldUser) {
         return this.router.navigateByUrl('/checkout');

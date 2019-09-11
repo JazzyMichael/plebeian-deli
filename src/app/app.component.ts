@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs/operators';
 
 declare var gtag;
+// declare var fbq;
 
 @Component({
   selector: 'app-root',
@@ -57,10 +58,20 @@ export class AppComponent {
       );
 
       navEndEvents.subscribe((event: NavigationEnd) => {
-        gtag('config', 'UA-130962516-1', {
-          'page_path': event.urlAfterRedirects,
-          'loggedIn': this.signedIn ? true : false
-        });
+        try {
+          gtag('config', 'UA-130962516-1', {
+            'page_path': event.urlAfterRedirects,
+            'loggedIn': this.signedIn ? true : false
+          });
+        } catch (e) {
+          console.log('Google Analytics PageView Error', e);
+        }
+
+        // try {
+        //   fbq('track', 'PageView');
+        // } catch (e) {
+        //   console.log('Pixel PageView Error', e);
+        // }
       });
   }
 

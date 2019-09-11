@@ -48,27 +48,32 @@ export class PrimeCutsComponent implements OnInit {
   }
 
   onScroll() {
-    console.log('onScroll');
     this.primeService.getMorePrimeCuts();
   }
 
   ngOnInit() {
     this.carouselData = [
       {
+        title: 'Brian Booth Craig',
+        thumbnail: 'https://img.youtube.com/vi/Wk2Ab-gHr5g/maxresdefault.jpg',
+        videoUrl: 'https://www.youtube.com/embed/Wk2Ab-gHr5g',
+        primePostId: '6OmX6k5X1MMOsw90kUIO'
+      },
+      {
         title: 'Alexis Nutini',
-        thumbnail: 'assets/images/alexis-nutini-thumbnail.jpg',
+        thumbnail: 'https://img.youtube.com/vi/ao2bFVcdUJ8/maxresdefault.jpg',
         videoUrl: 'https://www.youtube.com/embed/ao2bFVcdUJ8',
         primePostId: 'Lo5fXc8Bsihz9LnJzamF'
       },
       {
         title: 'Phil McGaughy',
-        thumbnail: 'assets/images/phil-mcgaughy-thumbnail.jpg',
+        thumbnail: 'https://img.youtube.com/vi/plziHxS7r-4/maxresdefault.jpg',
         videoUrl: 'https://www.youtube.com/embed/plziHxS7r-4',
         primePostId: 'EoHD7zlIwOs9XnxjgLeS'
       },
       {
         title: 'Lindsay Keating',
-        thumbnail: 'assets/images/lindsey-keating-thumbnail.jpg',
+        thumbnail: 'https://img.youtube.com/vi/tOXZ4rWu5go/maxresdefault.jpg',
         videoUrl: 'https://www.youtube.com/embed/tOXZ4rWu5go',
         primePostId: 'oVoyrYxW3dilZq9zo7SR'
       }
