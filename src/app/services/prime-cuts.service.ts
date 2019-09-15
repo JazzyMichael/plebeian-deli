@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,18 @@ export class PrimeCutsService {
     // first round of prime cuts
     this.afStore
       .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').limit(10))
-      .valueChanges({ idField: 'primePostId' })
+      .get()
+      .pipe(
+        map(posts => {
+          const newPosts = [];
+
+          posts.forEach(post => {
+            newPosts.push({ ...post.data(), primePostId: post.id });
+          });
+
+          return newPosts;
+        })
+      )
       .subscribe(posts => {
         this.primePosts$.next(posts);
       });
@@ -40,6 +51,9 @@ export class PrimeCutsService {
       .collection('featured')
       .doc('prime-cuts')
       .valueChanges()
+      .pipe(
+        tap(x => console.log('tap'))
+      )
       .subscribe((featured: any) => {
         if (featured && featured.postIds) {
           const ids = featured.postIds.splice(0, 4);
@@ -80,6 +94,7 @@ export class PrimeCutsService {
       .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(10))
       .get()
       .pipe(
+        tap(x => console.log('tap')),
         map(cuts => {
           const docs = [];
           cuts.forEach(cut => {
@@ -104,12 +119,14 @@ export class PrimeCutsService {
     return this.afStore
       .collection('prime-cuts')
       .doc(id)
-      .valueChanges()
+      .get()
       .pipe(
-        switchMap((post: any) => {
-          if (!post) {
+        switchMap((posty: any) => {
+          if (!posty) {
             return of(null);
           }
+
+          const post = posty.data();
 
           return this.afStore
             .doc(`users/${post.userId}`)

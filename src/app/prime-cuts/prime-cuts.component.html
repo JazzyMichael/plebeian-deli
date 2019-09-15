@@ -102,7 +102,7 @@
     </mat-card>
 
     <div *ngIf="featured$ | async as featured" class="feature-four">
-      <mat-card *ngFor="let post of featured" class="featured-card">
+      <mat-card *ngFor="let post of featured" class="featured-card" [routerLink]="'/prime-cuts/' + post.primePostId">
         <mat-card-header>
           <mat-card-title>{{ post.title }}</mat-card-title>
         </mat-card-header>

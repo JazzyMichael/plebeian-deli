@@ -1,3 +1,10 @@
+<div
+    class="cont"
+infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="777"
+  [scrollWindow]="false"
+  (scrolled)="onScroll()">
 <div class="options-container">
     <h1 style="text-align: center; font-weight: 400; margin: 0 auto 1em; letter-spacing: 1px;">Artists & Galleries</h1>
 
@@ -62,3 +69,6 @@
 
 </div>
 
+<app-footer></app-footer>
+
+</div>

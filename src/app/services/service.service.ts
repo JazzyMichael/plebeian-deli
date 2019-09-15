@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
-  services$: BehaviorSubject<any> = new BehaviorSubject([]);
+  // services$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(private afStore: AngularFirestore) {
     // this.afStore
@@ -20,7 +21,10 @@ export class ServiceService {
   getUserServices(uid: string) {
     return this.afStore
       .collection('services', ref => ref.where('userId', '==', uid))
-      .valueChanges({ idField: 'serviceId' });
+      .valueChanges({ idField: 'serviceId' })
+      .pipe(
+        tap(x => console.log('tap'))
+      );
   }
 
   addService(serviceObj: any) {

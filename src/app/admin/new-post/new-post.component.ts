@@ -129,10 +129,15 @@ export class NewPostComponent implements OnInit, OnDestroy {
   async submitPost() {
     // const random = Math.random().toString().slice(2, 10);
 
-    const userId = this.user ? this.user.uid : 'potato';
+    const userId = this.user ? this.user.uid : null;
+
+    if (!userId) {
+      window.alert('No user id');
+      return;
+    }
 
     const post = {
-      userId: this.posterUid,
+      userId,
       title: this.postTitle,
       content: this.postContent,
       featureFriday: this.featureFriday,
