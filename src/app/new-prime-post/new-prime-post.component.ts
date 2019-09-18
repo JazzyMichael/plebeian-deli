@@ -27,7 +27,7 @@ export class NewPrimePostComponent implements OnInit, OnDestroy {
   user: any;
 
   categoryOptions: any[] = [
-    { displayName: 'Monday Mood', propName: 'monday-mood' },
+    { displayName: 'Mood', propName: 'mood' },
     { displayName: 'Case Study', propName: 'case-study' },
     { displayName: 'Rant', propName: 'rant' },
     { displayName: 'Inverview', propName: 'interview' },

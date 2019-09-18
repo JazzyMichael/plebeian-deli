@@ -73,6 +73,7 @@ import { SoldServicesComponent } from './orders/sold-services/sold-services.comp
 import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
 import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
 import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
+import { PostLayoutComponent } from './prime-cuts/post-layout/post-layout.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -145,7 +146,8 @@ const routes: Routes = [
     SoldServicesComponent,
     SoldPostsComponent,
     BoughtPostsComponent,
-    NewPrimePostComponent
+    NewPrimePostComponent,
+    PostLayoutComponent
   ],
   imports: [
     BrowserModule,
