@@ -36,7 +36,9 @@ export class PostComponent implements OnInit {
 
       this.postId = postId;
 
-      document.querySelector('.main-container').scrollTop = 0;
+      document.querySelector('.mat-drawer-content').scrollTop = 0;
+
+      document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
       this.post$ = this.postService.getPost(postId)
         .pipe(

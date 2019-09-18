@@ -118,26 +118,68 @@ export const createSellerAccount = functions.https
     });
 
 
-
 // create connect charge
-// export const createConnectCharge = functions.https
-//     .onCall(async (data, context) => {
-//         //
+export const createConnectCharge = functions.https
+    .onCall(async (data, context) => {
+        if (!context || !context.auth || !context.auth.uid) {
+            throw new Error('No Context Auth');
+        }
 
+        if (!data.orderType) {
+            throw new Error('No Order Type');
+        }
 
-//         stripe.charges.create({
-//             amount: data.amount,
-//             currency: 'usd',
-//             source: data.source
-//         }, {
-//             stripe_account: 'seller stripe account id'
-//         })
-//         .then(charge => {
-//             console.log(charge);
-//             return charge;
-//         })
-//         .catch(error => {
-//             console.log(error);
-//             throw new Error('charge error');
-//         });
-//     });
+        if (!data.postId || !data.postQuantity || !data.price || !data.sellerId || !data.sellerAccountId) {
+            throw new Error('Missing post data or seller account id');
+        }
+
+        if (!data.source) {
+            throw new Error('No payment source');
+        }
+
+        const userId = context.auth.uid;
+
+        const orderType = data.orderType;
+
+        stripe.charges.create({
+            amount: data.price,
+            currency: 'usd',
+            source: data.source
+        }, {
+            stripe_account: data.sellerAccountId
+        })
+        .then(charge => {
+            console.log(charge);
+
+            if (orderType === 'post') {
+                const orderObj = {
+                    buyerId: userId,
+                    sellerId: data.sellerId,
+                    postId: data.postId,
+                    postPrice: data.price,
+                    purchasedTimestamp: new Date(),
+                    paymentRes: charge,
+                    shipped: false,
+                    messages: []
+                };
+
+                // update post quantity
+                const postUpdateObj = {
+                    quantity: data.postQuantity - 1
+                };
+            } else if (orderType === 'service') {
+                // update service obj
+                const serviceObj = {
+
+                };
+            } else {
+                console.log('WEIRD ORDER TYPE', orderType);
+            }
+
+            return charge;
+        })
+        .catch(error => {
+            console.log(error);
+            throw new Error('charge error');
+        });
+    });

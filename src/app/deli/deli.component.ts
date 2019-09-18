@@ -35,36 +35,36 @@ export class DeliComponent implements OnInit {
     this.category = this.cats[0] ? this.cats[0].name : 'sculpture';
     this.titleService.setTitle('Deli - Plebeian');
 
-    this.debounceSub = this.noUserDebouncer.pipe(debounceTime(2000)).subscribe(bool => {
-      this.unSub();
-      if (bool) {
-        // no user
-        window.alert('Login to view posts in the Deli!');
+    // this.debounceSub = this.noUserDebouncer.pipe(debounceTime(2000)).subscribe(bool => {
+    //   this.unSub();
+    //   if (bool) {
+    //     // no user
+    //     window.alert('Login to view posts in the Deli!');
 
-        return this.router.navigateByUrl('/login');
-      }
-    });
+    //     return this.router.navigateByUrl('/login');
+    //   }
+    // });
 
-    this.userCheck();
+    // this.userCheck();
   }
 
-  userCheck() {
-    this.userSub = this.authService.user$.subscribe(user => {
-      if (!user) {
-        this.noUserDebouncer.next(true);
-      } else {
-        this.noUserDebouncer.next(false);
-      }
-    });
-  }
+  // userCheck() {
+  //   this.userSub = this.authService.user$.subscribe(user => {
+  //     if (!user) {
+  //       this.noUserDebouncer.next(true);
+  //     } else {
+  //       this.noUserDebouncer.next(false);
+  //     }
+  //   });
+  // }
 
   unSub() {
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
-    if (this.debounceSub) {
-      this.debounceSub.unsubscribe();
-    }
+    // if (this.debounceSub) {
+    //   this.debounceSub.unsubscribe();
+    // }
   }
 
   categorySelect(index: number) {

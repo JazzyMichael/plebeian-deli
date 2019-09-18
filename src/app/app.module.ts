@@ -77,7 +77,7 @@ import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.compone
 
 const routes: Routes = [
   { path: '', redirectTo: '/prime-cuts', pathMatch: 'full' },
-  { path: 'about', redirectTo: '/prime-cuts', pathMatch: 'full' }, // component: AboutComponent
+  { path: 'about', component: AboutComponent }, // component: AboutComponent
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', component: ExhibitionsComponent },

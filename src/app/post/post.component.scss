@@ -1,14 +1,26 @@
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 3em 0.5em 4em;
+    padding: 1em 0.5em 3em;
     background-color: #e7e7e7;
 }
 
 @media (min-width: 500px) {
     .container {
-        padding: 3em 2em 4em;
+        padding: 1em 2em 3em;
     }
+}
+
+.author-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    transition: 200ms all ease-out;
+}
+
+.author-info:hover {
+    opacity: 0.6;
 }
 
 /* Carousel */

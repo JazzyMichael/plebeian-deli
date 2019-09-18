@@ -79,7 +79,9 @@ export class PrimeCutsComponent implements OnInit {
       }
     ];
 
-    document.querySelector('.main-container').scrollTop = 0;
+    document.querySelector('.mat-drawer-content').scrollTop = 0;
+
+    document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
     this.featureFriday$ = this.primeService.featureFriday$.asObservable();
 

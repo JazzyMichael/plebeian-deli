@@ -47,14 +47,18 @@ export class ExhibitionsComponent implements OnInit {
   nextPage() {
     this.page++;
     setTimeout(() => {
-      document.querySelector('.main-container').scrollTop = 0;
+      document.querySelector('.mat-drawer-content').scrollTop = 0;
+
+      document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }, 100);
   }
 
   previousPage() {
     this.page--;
     setTimeout(() => {
-      document.querySelector('.main-container').scrollTop = 0;
+      document.querySelector('.mat-drawer-content').scrollTop = 0;
+
+      document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }, 100);
   }
 

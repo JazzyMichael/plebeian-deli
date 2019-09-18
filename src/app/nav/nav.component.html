@@ -1,16 +1,30 @@
 <mat-sidenav-container>
 
-    <mat-sidenav #sidenav position="end" style="display: flex; flex-direction: column; height: 100vh; z-index: 1000; background: white; min-width: 250px; overflow-y: auto; overflow-x: hidden;">
+    <mat-sidenav #sidenav position="end">
         <ng-container *ngIf="auth.user$ | async as user; else justCloseButton">
-            <div style="display: flex; justify-content: space-between; margin: 20px 0;">
-                <img [src]="user.profileUrl" alt="Profile Pic" style="width: 200px; margin: 0; padding: 0; border-radius: 15px;" [routerLink]="'/' + user.username" (click)="sidenav.close()">
+            <div class="profile-pic-header">
+                <img
+                    [src]="user.profileUrl"
+                    alt="Profile Pic"
+                    class="profile-pic"
+                    [routerLink]="'/' + user.username"
+                    (click)="sidenav.close()">
+    
                 <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <p style="text-align: center" [routerLink]="'/' + user.username" (click)="sidenav.close()">{{ user.username }}</p>
+    
+            <p
+                style="text-align: center"
+                [routerLink]="'/' + user.username"
+                (click)="sidenav.close()">
+                {{ user.username }}
+            </p>
+    
             <hr style="width: 95%; margin: 0 auto 20px;">
         </ng-container>
+
 
         <ng-template #justCloseButton>
             <button mat-icon-button (click)="sidenav.close()" style="margin-left: auto">
@@ -18,37 +32,32 @@
             </button>
         </ng-template>
 
-        <button mat-button routerLink="/prime-cuts" (click)="sidenav.close()">Prime Cuts</button>
-        <button mat-button routerLink="/deli" (click)="sidenav.close()">Deli</button>
-        <button mat-button routerLink="/exhibitions" (click)="sidenav.close()">Exhibitions</button>
-        <button mat-button routerLink="/calendar" (click)="sidenav.close()">Calendar</button>
-        <button mat-button routerLink="/members" (click)="sidenav.close()">Members</button>
-        <button mat-button routerLink="/subscriptions" (click)="sidenav.close()">Subscriptions</button>
-        <button mat-button routerLink="/shop" (click)="sidenav.close()">Shop</button>
+        <button mat-button routerLink="/prime-cuts" class="sidenav-button" (click)="sidenav.close()">Prime Cuts</button>
+        <button mat-button routerLink="/deli" class="sidenav-button" (click)="sidenav.close()">Deli</button>
+        <button mat-button routerLink="/exhibitions" class="sidenav-button" (click)="sidenav.close()">Exhibitions</button>
+        <button mat-button routerLink="/calendar" class="sidenav-button" (click)="sidenav.close()">Calendar</button>
+        <button mat-button routerLink="/members" class="sidenav-button" (click)="sidenav.close()">Members</button>
+        <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">Subscriptions</button>
+        <button mat-button routerLink="/shop" class="sidenav-button" (click)="sidenav.close()">Shop</button>
 
         <ng-container *ngIf="auth.user$ | async as user; else showLogin">
-            <button mat-button [routerLink]="'/' + user.username" (click)="sidenav.close()">Profile</button>
-            <!-- <button mat-button routerLink="/info" (click)="sidenav.close()">Info</button> -->
-            <button *ngIf="user.membership === 'artist'" mat-button routerLink="/seller" (click)="sidenav.close()">Seller Info</button>
-            <button mat-button (click)="auth.logout(); sidenav.close();">Log Out</button>
+            <button mat-button [routerLink]="'/' + user.username" class="sidenav-button" (click)="sidenav.close()">Profile</button>
+            <button mat-button routerLink="/orders" class="sidenav-button" (click)="sidenav.close()">Orders</button>
+            <button *ngIf="user.membership === 'artist'" mat-button routerLink="/seller" class="sidenav-button" (click)="sidenav.close()">Seller Info</button>
+            <button mat-button class="sidenav-button" (click)="auth.logout(); sidenav.close();">Log Out</button>
         </ng-container>
 
         <ng-template #showLogin>
-            <button mat-button routerLink="/login" (click)="sidenav.close()">Sign In</button>
+            <button mat-button routerLink="/login" class="sidenav-button" (click)="sidenav.close()">Sign In</button>
         </ng-template>
 
-        <br><br>
-        <br><br>
-        <br><br>
-        <br><br>
-        <br><br>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <div class="main-container">
-        <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'">
+        <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'" style="border-bottom: 5px solid #ff4081; height: 80px;">
             <mat-toolbar-row>
 
+                <!-- Logo & Flashlight -->
                 <div style="display: flex; align-items: center;">
                     <mat-icon [ngStyle]="{'color' : darkTheme ? '#fdf5a2' : 'black'}" class="flashlight" (click)="changeTheme()">highlight</mat-icon>
           
@@ -83,13 +92,15 @@
                 <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">Subscriptions</button>
                 <!-- <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button> -->
 
-                <!-- logged in menu -->
+
+                <!-- logged-in button & menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">
                     <button mat-button class="nav-link" [matMenuTriggerFor]="menu">
                         <mat-icon>accessibility_new</mat-icon>
                         <span style="display: inline-block; width: 0.5em;"></span>
                         <span>{{ user.username }}</span>
                     </button>
+
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item [routerLink]="'/' + user.username">
                             <mat-icon>sentiment_very_satisfied</mat-icon>
@@ -107,10 +118,6 @@
                             <mat-icon>local_offer</mat-icon>
                             <span>Seller Info</span>
                         </button>
-                        <!-- <button mat-menu-item routerLink="/info">
-                            <mat-icon>help_outline</mat-icon>
-                            <span>F.A.Q.</span>
-                        </button> -->
                         <button mat-menu-item (click)="auth.logout()">
                             <mat-icon>sentiment_very_dissatisfied</mat-icon>
                             <span>Log Out</span>
@@ -133,14 +140,16 @@
             </mat-toolbar-row>
         </mat-toolbar>
 
+        <!-- <app-chat *ngIf="auth.user$ | async as user" [user]="user"></app-chat> -->
 
         <router-outlet></router-outlet>
+
+        
 
         <!-- <br><br><br><br>
 
         <app-footer></app-footer> -->
 
-    </div>
     </mat-sidenav-content>
 
 </mat-sidenav-container>

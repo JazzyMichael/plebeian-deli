@@ -1,21 +1,33 @@
 
 <div *ngIf="post$ | async as post" class="container">
 
-    <div style="display: flex; justify-content: start; align-items: center;">
+    <!-- <div class="author-info">
         <img [src]="post?.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
-        <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
-        <p>{{ post.createdTimestamp.toDate() | date }}</p>
-    </div>
+        <div>
+            <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
+            <p style="color: #777">{{ post.createdTimestamp.toDate() | date }}</p>
+        </div>
+    </div> -->
 
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
-        <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
+        <div style="display: flex; align-items: center;">
+
+            <div class="author-info">
+                <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
+                <div>
+                    <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
+                    <p style="color: #777">{{ post.createdTimestamp.toDate() | date }}</p>
+                </div>
+            </div>
+
+            <h1 style="margin-left: 88px">{{ post.title }}</h1>
+
+        </div>
+
+        <hr style="width: 100%; margin: 1em auto;">
+        
         <!-- <quill-view [content]="post.content"></quill-view> -->
-
-        <p>{{ post.description }}</p>
-
-
         <!-- <img *ngFor="let img of post.images" style="display: block; margin: 1em auto; width: 90%;" [src]="img.url" alt="Post Image" /> -->
-
 
         <ngx-hm-carousel
             #carousel
@@ -51,7 +63,9 @@
         </ngx-hm-carousel>
 
 
+        <p style="text-align: center; margin-top: 1.2em;">{{ post.description }}</p>
 
+        <br>
 
 
 

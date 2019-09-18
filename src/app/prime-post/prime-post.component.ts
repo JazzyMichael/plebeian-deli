@@ -32,7 +32,9 @@ export class PrimePostComponent implements OnInit {
         return this.router.navigateByUrl('/prime-cuts');
       }
 
-      document.querySelector('.main-container').scrollTop = 0;
+      document.querySelector('.mat-drawer-content').scrollTop = 0;
+
+      document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
       this.primePost$ = this.primeCutsService.getPrimePost(postId)
         .pipe(
