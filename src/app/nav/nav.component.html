@@ -41,6 +41,7 @@
         <button mat-button routerLink="/shop" class="sidenav-button" (click)="sidenav.close()">Shop</button>
 
         <ng-container *ngIf="auth.user$ | async as user; else showLogin">
+            <button *ngIf="user.writer" mat-button routerLink="/new-prime-post" class="sidenav-button" (click)="sidenav.close()">New Prime Cut</button>
             <button mat-button [routerLink]="'/' + user.username" class="sidenav-button" (click)="sidenav.close()">Profile</button>
             <button mat-button routerLink="/orders" class="sidenav-button" (click)="sidenav.close()">Orders</button>
             <button *ngIf="user.membership === 'artist'" mat-button routerLink="/seller" class="sidenav-button" (click)="sidenav.close()">Seller Info</button>
@@ -53,7 +54,7 @@
 
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content style="position: static">
         <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'" style="border-bottom: 5px solid #ff4081; height: 80px;">
             <mat-toolbar-row>
 
@@ -84,11 +85,11 @@
                     </svg>
                 </div>
           
-                <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">Prime Cuts</span>
-                <span routerLink="/deli" routerLinkActive="active-link" class="nav-link perm-nav-link">Deli</span>
-                <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">Exhibitions</span>
-                <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">Calendar</span>
-                <span routerLink="/members" routerLinkActive="active-link" class="nav-link">Members</span>
+                <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">PRIME CUTS</span>
+                <span routerLink="/deli" routerLinkActive="active-link" class="nav-link perm-nav-link">DELI</span>
+                <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
+                <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
+                <span routerLink="/members" routerLinkActive="active-link" class="nav-link">MEMBERS</span>
                 <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">Subscriptions</button>
                 <!-- <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button> -->
 
@@ -113,6 +114,10 @@
                         <button mat-menu-item routerLink="/orders">
                             <mat-icon>storefront</mat-icon>
                             <span>Orders</span>
+                        </button>
+                        <button *ngIf="user.writer" mat-menu-item routerLink="/new-prime-post">
+                            <mat-icon>post_add</mat-icon>
+                            <span>New Prime Post</span>
                         </button>
                         <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
                             <mat-icon>local_offer</mat-icon>
@@ -140,7 +145,6 @@
             </mat-toolbar-row>
         </mat-toolbar>
 
-        <!-- <app-chat *ngIf="auth.user$ | async as user" [user]="user"></app-chat> -->
 
         <router-outlet></router-outlet>
 

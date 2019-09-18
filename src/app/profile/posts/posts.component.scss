@@ -7,16 +7,16 @@
 }
 
 .post-card {
-    transition: 250ms all ease-out;
+    transition: 200ms all ease-out;
     text-align: center;
     margin: 0.5em;
     cursor: pointer;
 }
 
 .post-card:hover {
-    -webkit-box-shadow: 1px 2px 4px 4px #3e463e8c;
-    -moz-box-shadow: 1px 2px 4px 4px #3e463e8c;
-    box-shadow: 1px 2px 4px 4px #3e463e8c;
+    -webkit-box-shadow: 0px 3px 25px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 25px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 25px 1px rgba(0,0,0,0.75);
 }
 
 .post-img {

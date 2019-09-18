@@ -16,23 +16,7 @@ export class PrimeCutsService {
     private afStore: AngularFirestore
   ) {
     // first round of prime cuts
-    this.afStore
-      .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').limit(10))
-      .get()
-      .pipe(
-        map(posts => {
-          const newPosts = [];
-
-          posts.forEach(post => {
-            newPosts.push({ ...post.data(), primePostId: post.id });
-          });
-
-          return newPosts;
-        })
-      )
-      .subscribe(posts => {
-        this.primePosts$.next(posts);
-      });
+    this.getInitialPrimeCuts();
 
     // feature friday
     this.afStore
@@ -78,6 +62,27 @@ export class PrimeCutsService {
               console.log('Error getting featured prime-cuts posts', e);
             });
         }
+      });
+  }
+
+  getInitialPrimeCuts() {
+    this.afStore
+      .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').limit(10))
+      .get()
+      .pipe(
+        map(posts => {
+          const newPosts = [];
+
+          posts.forEach(post => {
+            newPosts.push({ ...post.data(), primePostId: post.id });
+          });
+
+          return newPosts;
+        })
+      )
+      .subscribe(posts => {
+        this.noMorePrimePosts = false;
+        this.primePosts$.next(posts);
       });
   }
 
@@ -138,6 +143,14 @@ export class PrimeCutsService {
             );
         })
       );
+  }
+
+  createPrimeCut(postObj: any) {
+    return this.afStore
+      .collection('prime-cuts')
+      .add(postObj)
+      .then(() => console.log('Prime post added successfully'))
+      .catch(e => console.log('Error adding Prime post', e));
   }
 
 }

@@ -1,0 +1,128 @@
+
+<h2 style="text-align: center; margin: 2em auto;">New Prime Cuts Post <span *ngIf="user" style="font-size: 0.8em; font-weight: 300; color: #777;">- {{ user.displayName }}</span></h2>
+
+<p *ngIf="user" style="text-align: center">Only Plebeian Writers like yourself have access to this page!</p>
+<p *ngIf="user" style="text-align: center">These posts show up on the Prime Cuts page and will soon appear on your profile.</p>
+
+<p *ngIf="!user" style="text-align: center">No User</p>
+
+<div *ngIf="user" class="container">
+
+    <!-- Feature Friday Checkbox -->
+    <!-- <mat-checkbox color="primary" [(ngModel)]="featureFriday">Is this post a "Feature Friday"?</mat-checkbox> -->
+
+
+    <div class="category-ticket-number">
+
+
+        <!-- Category Input Field -->
+        <mat-form-field color="accent">
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="category">
+                <mat-option *ngFor="let cat of categoryOptions" [value]="cat.propName">
+                    {{ cat.displayName }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Optional for Now</mat-hint>
+        </mat-form-field>
+
+        <!-- Ticket Number Input Field with unique validation maxlength 4 -->
+        <mat-form-field color="accent">
+            <input
+                matInput
+                #ticketInput
+                [(ngModel)]="ticketNumber"
+                placeholder="Ticket Number"
+                maxlength="4"
+                minlength="0"
+                autocomplete="off">
+            <mat-hint align="start">Optional for Now</mat-hint>
+            <mat-hint align="end">{{ ticketInput.value.length }} / 4</mat-hint>
+        </mat-form-field>
+
+    </div>
+
+
+    <!-- Title Input Field -->
+    <mat-form-field color="accent">
+        <input
+            matInput
+            #titleInput
+            [(ngModel)]="title"
+            placeholder="Title"
+            maxlength="120"
+            minlength="1"
+            autocomplete="off">
+        <mat-hint align="end">{{ titleInput.value.length }} / 120</mat-hint>
+    </mat-form-field>
+
+
+    <!-- Preview Text -->
+    <p>One or two sentences describing your post!</p>
+    <mat-form-field>
+        <textarea
+            matInput
+            #textPreviewInput
+            [(ngModel)]="textPreview"
+            placeholder="Describe your post"
+            rows="3"
+            maxlength="200"
+            autocomplete="off">
+        </textarea>
+        <mat-hint align="end">{{ textPreviewInput.value.length }} / 120</mat-hint>
+    </mat-form-field>
+
+
+    <!-- Image Text -->
+    <div *ngIf="!postImages.length" style="max-width: 80%; margin: 1em auto;">
+        <p>*Use the text editor to write your post.</p>
+        <p>*Images that you upload will appear here for you to select the thumbnail.</p>
+    </div>
+
+
+    <!-- Images Preview-->
+    <p *ngIf="postImages.length" style="text-align: center">Select Thumbnail Image</p>
+    <div *ngIf="postImages.length" class="image-preview-container">
+        <div *ngFor="let image of postImages; index as i;">
+            <button
+                mat-mini-fab
+                color="warn"
+                style="position: absolute; margin-top: -15px; margin-left: -5px;"
+                (click)="removeImage(i)">
+                <mat-icon>close</mat-icon>
+            </button>
+            <img
+                class="image-preview"
+                [ngClass]="thumbnailImage === image ? 'selected-thumbnail' : ''"
+                [src]="image"
+                (click)="selectThumbnail(image)"
+                alt="No Preview for SVG's">
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Text Editor -->
+    <input type="file" style="display: none" id="quillImageInput">
+
+    <quill-editor
+        [modules]="quillModules"
+        [(ngModel)]="content"
+        [placeholder]="'Type & format your masterpeice...'"
+        (onEditorCreated)="onEditorCreated($event)"
+        [styles]="{'min-height': '500px'}">
+    </quill-editor>
+
+    <!-- Post to Prime-Cuts Button-->
+    <button
+        mat-raised-button
+        color="primary"
+        (click)="submitPost()"
+        [disabled]="!title || !content"
+        style="color: white; display: block; margin: 2em auto; width: 100%; max-width: 777px;">
+        Post to Prime-Cuts
+    </button>
+
+
+</div>
+

@@ -72,6 +72,7 @@ import { BoughtServicesComponent } from './orders/bought-services/bought-service
 import { SoldServicesComponent } from './orders/sold-services/sold-services.component';
 import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
 import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
+import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -88,6 +89,7 @@ const routes: Routes = [
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
+  { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent }, // , ...canActivate(redirectLoggedInTo(['/deli']))
@@ -142,7 +144,8 @@ const routes: Routes = [
     BoughtServicesComponent,
     SoldServicesComponent,
     SoldPostsComponent,
-    BoughtPostsComponent
+    BoughtPostsComponent,
+    NewPrimePostComponent
   ],
   imports: [
     BrowserModule,
