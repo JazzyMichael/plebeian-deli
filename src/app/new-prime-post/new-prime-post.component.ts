@@ -109,7 +109,7 @@ export class NewPrimePostComponent implements OnInit, OnDestroy {
 
         const range = this.quillEditorRef.getSelection();
 
-        const qImg = `<img src="${url}" style="display: block; margin: auto;" />`;
+        const qImg = `<img src="${url}" class="ql-align-center" />`;
 
         this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, qImg);
 

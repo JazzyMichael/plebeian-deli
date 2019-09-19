@@ -10,7 +10,7 @@
     </div> -->
 
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div style="display: flex; align-items: center;">
+        <div class="post-header">
 
             <div class="author-info">
                 <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <h1 style="margin-left: 88px">{{ post.title }}</h1>
+            <h1 class="post-title">{{ post.title }}</h1>
 
         </div>
 

@@ -153,4 +153,13 @@ export class PrimeCutsService {
       .catch(e => console.log('Error adding Prime post', e));
   }
 
+  // deletePrimeCut(id: string) {
+  //   this.afStore
+  //     .collection('prime-cuts')
+  //     .doc(id)
+  //     .delete()
+  //     .then(() => console.log('Deleted'))
+  //     .catch(e => console.log('error deleting', e));
+  // }
+
 }

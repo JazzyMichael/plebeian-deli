@@ -88,7 +88,7 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
-  { path: 'subscriptions', component: SubscriptionsComponent },
+  { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
