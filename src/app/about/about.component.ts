@@ -12,7 +12,7 @@ export class AboutComponent implements OnInit {
     {
       name: 'Prime Cuts',
       icon: 'assets/images/ham-250.png',
-      color: 'accent',
+      color: '#f09091',
       bigText: 'I\'m a dreamer. I have to dream and reach for the stars, and if I miss a star then I grab a handful of clouds.',
       author: 'Mike Tyson',
       firstBlob: 'This is our blog section where we produce daily content all about what’s going on in art. Interviews, features, what’s going on in art, some history, anything and everything art we cover it here!',
@@ -22,7 +22,7 @@ export class AboutComponent implements OnInit {
     {
       name: 'Deli',
       icon: 'assets/images/tv-250.png',
-      color: 'primary',
+      color: '#90d0ae',
       bigText: 'I don\’t understand why people would want to get rid of pigeons. They don\’t bother no one.',
       author: 'Mike Tyson',
       firstBlob: 'The center for all of your work to be seen, talked about, and sold (if you choose). The Deli is where you can interact with others, find new work, and build a life changing community.',
@@ -32,7 +32,7 @@ export class AboutComponent implements OnInit {
     {
       name: 'Calendar',
       icon: 'assets/images/calendar-250.png',
-      color: 'light',
+      color: '#8aaaf4',
       bigText: 'Everyone has a plan \’till they get punched in the mouth.',
       author: 'Mike Tyson',
       firstBlob: 'Our calendar is where you can find absolutely every event that we’re a part of or supporting. Shows and events featuring our friends, the schools and galleries we work with all have a space here.',

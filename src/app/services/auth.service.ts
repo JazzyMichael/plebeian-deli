@@ -24,7 +24,8 @@ export class AuthService {
     private router: Router,
     private analyticsService: AnalyticsService
     ) {
-      this.user$ = new BehaviorSubject(null);
+      const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+      this.user$ = new BehaviorSubject(cachedUser);
       this.username = '';
 
       this.afAuth.auth.getRedirectResult()
@@ -49,10 +50,11 @@ export class AuthService {
         if (user) {
           this.chatService.getUserChats(user.uid);
           this.username = user.username;
-          localStorage.setItem('username', user.username);
+          // localStorage.setItem('username', user.username);
           this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));
         } else {
+          localStorage.removeItem('user');
           this.username = null;
           this.user$.next(null);
         }

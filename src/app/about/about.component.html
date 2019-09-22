@@ -1,6 +1,13 @@
 <div class="page">
   
     <div class="page-top">
+        <iframe
+          src="https://www.youtube.com/embed/8GFp_nSfcfs?autoplay=1"
+          style="width: 100%; height: 300px;"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
     </div>
     
     <div class="page-section">
@@ -29,69 +36,54 @@
       </div>
     </div>
     
-    <hr class="h-rule">
-    
-    <div class="page-section">
-      <div class="container">
-        <div class="process-container">
-          <div class="section">
-            <h3 style="color: black">The Process</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.</p>
-          </div>
-          <div class="section">
-            <div class="process-graphic">
-                <span>Create</span>
-                <img src="assets/images/create.svg" class="process-img" />
-            </div>
-          </div>
-          <div class="section">
-            <div class="process-graphic">
-                <span>Post</span>
-                <img src="assets/images/upload.svg" class="process-img" />
-            </div>
-          </div>
-          <div class="section">
-            <div class="process-graphic">
-                <span>Sell</span>
-                <img src="assets/images/sell.svg" class="process-img" />
-            </div>
-          </div>
+    <div class="page-section accent-section">
+      <div class="process-container">
+        <div class="process-graphic">
+            <span style="margin-bottom: 10px">Create</span>
+            <img src="assets/images/create.svg" class="process-img" />
+        </div>
+        <div class="process-graphic">
+            <span style="margin-bottom: 10px">Post</span>
+            <img src="assets/images/upload.svg" class="process-img" />
+        </div>
+        <div class="process-graphic">
+            <span style="margin-bottom: 10px">Sell</span>
+            <img src="assets/images/sell.svg" class="process-img" />
         </div>
       </div>
-    </div>
-    
-    <div class="page-section accent-section">
-      Accent
     </div>
 
     <div class="page-section">
         <div class="container">
-            <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 4em;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 4em;">
                 <div *ngFor="let feature of features; index as i" class="process-graphic feature-icon" [ngClass]="feature.name === selectedFeature.name ? 'selected-feature' : ''" (click)="selectFeature(i)">
                     <img [src]="feature.icon" class="feature-img" />
-                    <!-- <mat-icon>date_range</mat-icon> -->
-                    <span>{{ feature.name }}</span>
+                    <span [ngStyle]="{ 'color': feature.color }">{{ feature.name }}</span>
                 </div>
             </div>
 
             <div class="feature-container">
-                <div>
+                <div class="large-screens">
                   <p style="line-height: 1.3"><i>{{ selectedFeature.bigText }}</i></p>
-                  <p style="text-align: right; color: #777;">- {{ selectedFeature.author }}</p>
+                  <p style="text-align: right; color: #777;"><span [ngStyle]="{ 'color': selectedFeature.color }">- </span> {{ selectedFeature.author }}</p>
                 </div>
 
-                <div class="section">{{ selectedFeature.firstBlob }}</div>
+                <div class="large-screens section">{{ selectedFeature.firstBlob }}</div>
 
-                <div class="section">{{ selectedFeature.secondBlob }}</div>
+                <div class="large-screens section">{{ selectedFeature.secondBlob }}</div>
             </div>
+
+            <div class="small-screens section">{{ selectedFeature.firstBlob }}</div>
+
+            <div class="small-screens section">{{ selectedFeature.secondBlob }}</div>
 
             <button
                 mat-button
-                [color]="selectedFeature.color"
                 style="display: block; margin: 4em auto 1em;"
+                [ngStyle]="{ 'color': selectedFeature.color }"
                 [routerLink]="selectedFeature.link">
                 View {{ selectedFeature.name }}
-                <mat-icon>arrow_forward</mat-icon>
+                <mat-icon style="margin-left: 10px; margin-bottom: 3px;">arrow_forward</mat-icon>
             </button>
 
         </div>
@@ -99,61 +91,13 @@
 
     <hr class="h-rule">
     
-    <div class="page-section">
+    <!-- <div class="page-section">
       <div class="container">
         <h2 style="text-align: center">Our Story</h2>
       </div>
-    </div>
+    </div> -->
   
   
 </div>
 
 <app-footer></app-footer>
-
-
-
-
-<!-- OLD -->
-
-<!-- <div class="background"> -->
-
-    <!-- <mat-card class="video-card">
-        <p style="text-align: center">Welcome to Plebeian Deli</p>
-        <video
-            src="assets/SampleVideo_1280x720_2mb.mp4"
-            style="width: 100%; max-width: 1000px; margin: auto; display: block;"
-            controls>
-        </video>
-    </mat-card> -->
-
-    <!-- <mat-card class="right-card">
-        <p>We are a new art media company that’s built around promotion for artists by artists. We’ve set out to build a hub for artists to create, communicate, build community, and from that community build careers. We’re here to make the business side of your art easy so that you can just make your art. Say goodbye to the old ways of art, the archaic systems with virtually no success, and join the growing world of Plebeian.</p>
-    </mat-card> -->
-
-    <!-- <mat-card class="left-card">
-        <div class="steps-section">
-            <div class="process-graphic">
-                <span>Create</span>
-                <img src="assets/images/create.svg" class="process-img" />
-                <span style="font-size: 12px">Make your art!</span>
-            </div>
-        
-            <div class="process-graphic">
-                <span>Post</span>
-                <img src="assets/images/upload.svg" class="process-img" />
-                <span style="font-size: 12px">Snap a pic, post your art!</span>
-            </div>
-        
-            <div class="process-graphic">
-                <span>Sell</span>
-                <img src="assets/images/sell.svg" class="process-img" />
-                <span style="font-size: 12px">Sell your art!</span>
-            </div>
-        </div>
-    </mat-card> -->
-
-    <!-- <mat-card class="right-card"></mat-card>
-
-    <mat-card class="left-card"></mat-card> -->
-
-<!-- </div> -->

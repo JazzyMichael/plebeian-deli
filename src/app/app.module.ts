@@ -74,11 +74,12 @@ import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
 import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
 import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
 import { PostLayoutComponent } from './prime-cuts/post-layout/post-layout.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
 const routes: Routes = [
-  { path: '', redirectTo: '/prime-cuts', pathMatch: 'full' },
+  { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: 'about', component: AboutComponent }, // component: AboutComponent
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
@@ -147,7 +148,8 @@ const routes: Routes = [
     SoldPostsComponent,
     BoughtPostsComponent,
     NewPrimePostComponent,
-    PostLayoutComponent
+    PostLayoutComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

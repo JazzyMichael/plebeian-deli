@@ -86,7 +86,7 @@
                 </div>
           
                 <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">PRIME CUTS</span>
-                <span routerLink="/deli" routerLinkActive="active-link" class="nav-link perm-nav-link">DELI</span>
+                <span routerLink="/deli" routerLinkActive="active-link" class="nav-link">DELI</span>
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">MEMBERS</span>
@@ -96,6 +96,10 @@
 
                 <!-- logged-in button & menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">
+                    <!-- <button mat-icon-button class="nav-link perm-nav-link" style="padding-right: 0">
+                        <mat-icon>notifications</mat-icon>
+                    </button> -->
+
                     <button mat-button class="nav-link" [matMenuTriggerFor]="menu">
                         <mat-icon>accessibility_new</mat-icon>
                         <span style="display: inline-block; width: 0.5em;"></span>
@@ -103,6 +107,15 @@
                     </button>
 
                     <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <span>Line one</span>
+                            <span>two line</span>
+                            <span>thrid</span>
+                        </button>
+                        <!-- <div mat-menu-item>
+                            <p>Joey commented on your post</p>
+                            <p>Another line</p>
+                        </div> -->
                         <button mat-menu-item [routerLink]="'/' + user.username">
                             <mat-icon>sentiment_very_satisfied</mat-icon>
                             <span>Profile</span>

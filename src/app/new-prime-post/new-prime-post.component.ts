@@ -141,11 +141,11 @@ export class NewPrimePostComponent implements OnInit, OnDestroy {
 
   submitPost() {
     const primePostObj = {
-      category: this.category,
+      category: this.category || '',
       ticketNumber: this.ticketNumber ? this.ticketNumber : '',
       title: this.title,
-      textPreview: this.textPreview,
-      thumbnailUrl: this.thumbnailImage,
+      textPreview: this.textPreview || '',
+      thumbnailUrl: this.thumbnailImage || '',
       content: this.content,
       author: this.user.displayName,
       userId: this.user.uid,
@@ -165,8 +165,8 @@ export class NewPrimePostComponent implements OnInit, OnDestroy {
     this.category = '';
     this.ticketNumber = '';
     this.title = '';
-    this.textPreview = null;
-    this.thumbnailImage = null;
+    this.textPreview = '';
+    this.thumbnailImage = '';
     this.content = '';
     this.postImages = [];
   }

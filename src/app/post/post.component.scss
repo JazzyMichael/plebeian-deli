@@ -76,6 +76,13 @@
     margin-left: 0;
 }
 
+.arrows {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
+
 @media (min-width: 666px) {
     .post-header {
         flex-direction: row;

@@ -55,8 +55,8 @@ export class PrimePostComponent implements OnInit {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=plebeiandeli.art/post/${this.postId}`, '_blank');
   }
 
-  // deletePost() {
-  //   this.primeCutsService.deletePrimeCut(this.postId);
-  // }
+  deletePost() {
+    this.primeCutsService.deletePrimeCut(this.postId);
+  }
 
 }
