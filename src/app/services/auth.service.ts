@@ -50,7 +50,6 @@ export class AuthService {
         if (user) {
           this.chatService.getUserChats(user.uid);
           this.username = user.username;
-          // localStorage.setItem('username', user.username);
           this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));
         } else {
@@ -101,14 +100,14 @@ export class AuthService {
         setTimeout(() => {
           const route = username ? `/${username}` : '/deli';
           return this.router.navigateByUrl(route);
-        }, 200);
+        }, 100);
       }
 
     } else {
       setTimeout(() => {
         const route = this.username ? `/${this.username}` : '/deli';
         return this.router.navigateByUrl(route);
-      }, 200);
+      }, 100);
     }
   }
 

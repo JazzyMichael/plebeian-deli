@@ -121,7 +121,6 @@
     <mat-card *ngFor="let event of events$ | async" class="event-card" (click)="viewEvent(event.eventId)">
 
         <mat-card-header>
-            <!-- <div mat-card-avatar style="background-size: cover; background-image: url(../../../assets/images/person1.svg); margin: 5px;"></div> -->
             <mat-card-title style="font-size: 16px">{{ event.title }}</mat-card-title>
             <mat-card-subtitle style="font-size: 12px">{{ event.date?.toDate() | date }}</mat-card-subtitle>
         </mat-card-header>

@@ -2,14 +2,14 @@
 <div *ngIf="primePost$ | async as post" style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
 
     <div style="display: flex; justify-content: start; align-items: center;">
-        <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
-        <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post.user?.username }}</p>
+        <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px;cursor: pointer;" [routerLink]="'/' + post.user.username">
+        <p style="font-size: 1.75em; margin: 0 1em 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post.user?.username }}</p>
         <p>{{ post.createdTimestamp.toDate() | date }}</p>
     </div>
     
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
-        <quill-view [content]="post.content"></quill-view>
+        <quill-view [content]="post.content" style="text-align: center"></quill-view>
 
         <div>
             <hr>
@@ -18,8 +18,8 @@
                     <button mat-icon-button (click)="facebookShare()">
                         <mat-icon svgIcon="facebook"></mat-icon>
                     </button>
-                    <button mat-icon-button>
-                        <mat-icon svgIcon="twitter" style="transform: scale(1.4)"></mat-icon>
+                    <button mat-icon-button (click)="twitterShare()">
+                        <mat-icon svgIcon="twitter"></mat-icon>
                     </button>
                     <button mat-button>
                         <mat-icon>link</mat-icon>
@@ -27,17 +27,19 @@
                     </button>
                 </div>
                 <div>
-                    <span *ngIf="post.likes">{{ post.likes }}</span>
                     <button mat-icon-button (click)="likePost()" color="warn">
                         <mat-icon *ngIf="!alreadyLiked" color="warn">favorite_border</mat-icon>
                         <mat-icon *ngIf="alreadyLiked" color="warn">favorite</mat-icon>
                     </button>
+                    <span *ngIf="likeCount">{{ likeCount }} {{ likeCount == 1 ? 'like' : 'likes' }}</span>
                 </div>
             </div>
             <hr>
         </div>
     </mat-card>
 
-    <button mat-raised-button (click)="deletePost()">Delete</button>
+    <app-comments [primePostId]="postId" [postUserId]="postUserId"></app-comments>
+
+    <!-- <button mat-raised-button (click)="deletePost()">Delete</button> -->
     
 </div>

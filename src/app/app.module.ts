@@ -75,6 +75,9 @@ import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.compone
 import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
 import { PostLayoutComponent } from './prime-cuts/post-layout/post-layout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentListComponent } from './comments/comment-list/comment-list.component';
+import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -149,7 +152,10 @@ const routes: Routes = [
     BoughtPostsComponent,
     NewPrimePostComponent,
     PostLayoutComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    CommentsComponent,
+    CommentListComponent,
+    CommentFormComponent
   ],
   imports: [
     BrowserModule,

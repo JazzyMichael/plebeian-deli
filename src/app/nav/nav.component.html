@@ -37,7 +37,7 @@
         <button mat-button routerLink="/exhibitions" class="sidenav-button" (click)="sidenav.close()">Exhibitions</button>
         <button mat-button routerLink="/calendar" class="sidenav-button" (click)="sidenav.close()">Calendar</button>
         <button mat-button routerLink="/members" class="sidenav-button" (click)="sidenav.close()">Members</button>
-        <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">Subscriptions</button>
+        <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">SELL YOUR WORK</button>
         <button mat-button routerLink="/shop" class="sidenav-button" (click)="sidenav.close()">Shop</button>
 
         <ng-container *ngIf="auth.user$ | async as user; else showLogin">
@@ -90,7 +90,7 @@
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">MEMBERS</span>
-                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">Subscriptions</button>
+                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">SELL YOUR WORK</button>
                 <!-- <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button> -->
 
 
@@ -107,15 +107,6 @@
                     </button>
 
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
-                            <span>Line one</span>
-                            <span>two line</span>
-                            <span>thrid</span>
-                        </button>
-                        <!-- <div mat-menu-item>
-                            <p>Joey commented on your post</p>
-                            <p>Another line</p>
-                        </div> -->
                         <button mat-menu-item [routerLink]="'/' + user.username">
                             <mat-icon>sentiment_very_satisfied</mat-icon>
                             <span>Profile</span>
@@ -153,7 +144,7 @@
                 </ng-template>
 
                 <button mat-icon-button class="menu-button" (click)="sidenav.open()">
-                    <mat-icon>waves</mat-icon>
+                    <mat-icon svgIcon="custommenu" style="transform: scale(1.5)"></mat-icon>
                 </button>
             </mat-toolbar-row>
         </mat-toolbar>

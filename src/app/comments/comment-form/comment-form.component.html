@@ -1,0 +1,42 @@
+
+<div *ngIf="authService.user$ | async as user; else notLoggedIn" class="new-comment-form">
+
+    <h3>Leave a comment</h3>
+
+    <mat-form-field color="accent" style="width: 100%">
+        <textarea
+            matInput
+            #commentInput
+            [(ngModel)]="newComment"
+            placeholder="Share your thoughts"
+            maxlength="240"
+            rows="4">
+        </textarea>
+        <mat-hint align="end">{{ commentInput.value?.length || 0 }}/240</mat-hint>
+    </mat-form-field>
+
+    <br>
+
+    <button
+        mat-raised-button
+        color="accent"
+        [disabled]="!newComment"
+        (click)="submitComment(user.uid, user.username)"
+        style="display: block; padding-left: 2em; padding-right: 2em;">
+        Submit
+    </button>
+
+</div>
+
+
+<ng-template #notLoggedIn>
+    <div style="background-color: #f5f5f5; padding: 2em; border-radius: 5px; display: flex; justify-content: center; align-items: center;">
+        <button
+            mat-raised-button
+            color="accent"
+            routerLink="/login"
+            style="padding: 1em 2em; font-size: 1em;">
+            Log In to Comment!
+        </button>
+    </div>
+</ng-template>

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../services/auth.service';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-deli',
@@ -33,38 +32,13 @@ export class DeliComponent implements OnInit {
   async ngOnInit() {
     this.cats = this.catService.getCategories();
     this.category = this.cats[0] ? this.cats[0].name : 'sculpture';
-    this.titleService.setTitle('Deli - Plebeian');
-
-    // this.debounceSub = this.noUserDebouncer.pipe(debounceTime(2000)).subscribe(bool => {
-    //   this.unSub();
-    //   if (bool) {
-    //     // no user
-    //     window.alert('Login to view posts in the Deli!');
-
-    //     return this.router.navigateByUrl('/login');
-    //   }
-    // });
-
-    // this.userCheck();
+    this.titleService.setTitle('Deli');
   }
-
-  // userCheck() {
-  //   this.userSub = this.authService.user$.subscribe(user => {
-  //     if (!user) {
-  //       this.noUserDebouncer.next(true);
-  //     } else {
-  //       this.noUserDebouncer.next(false);
-  //     }
-  //   });
-  // }
 
   unSub() {
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
-    // if (this.debounceSub) {
-    //   this.debounceSub.unsubscribe();
-    // }
   }
 
   categorySelect(index: number) {

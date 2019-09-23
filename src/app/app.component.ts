@@ -26,6 +26,9 @@ export class AppComponent {
     ) {
 
       // add custom material icons from svg files
+      this.matIconRegistry.addSvgIcon('custommenu',
+        this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/menu-icon.svg'));
+
       this.matIconRegistry.addSvgIcon('facebook',
         this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/social/facebook.svg'));
       this.matIconRegistry.addSvgIcon('instagram',

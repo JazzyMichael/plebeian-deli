@@ -2,9 +2,9 @@
 <div class="container">
 
     <div class="link-buttons">
-        <button mat-button routerLink="/about" color="warn">About</button>
-        <button mat-button routerLink="/terms" color="primary">Terms Of Service</button>
-        <button mat-button color="accent" (click)="contactClick()">Contact</button>
+        <button mat-stroked-button routerLink="/about" class="about-btn">About</button>
+        <button mat-stroked-button routerLink="/terms" class="terms-btn">Terms</button>
+        <button mat-stroked-button (click)="contactClick()" class="contact-btn">Contact</button>
     </div>
 
     <div class="logo">

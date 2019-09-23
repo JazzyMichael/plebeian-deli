@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { CategoriesService } from '../services/categories.service';
 import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-members',
@@ -27,13 +28,16 @@ export class MembersComponent implements OnInit {
     private catService: CategoriesService,
     private ren: Renderer2,
     private authService: AuthService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private titleService: Title
     ) { }
 
   ngOnInit() {
     this.filterUsers();
 
     this.categories = this.catService.getCategories().map(c => c.name);
+
+    this.titleService.setTitle('Members');
   }
 
   onScroll() {

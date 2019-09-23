@@ -3,6 +3,7 @@ import { NgxMasonryOptions } from 'ngx-masonry';
 import { NgxHmCarouselBreakPointUp } from 'ngx-hm-carousel';
 import { Observable } from 'rxjs';
 import { PrimeCutsService } from '../services/prime-cuts.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-prime-cuts',
@@ -41,7 +42,10 @@ export class PrimeCutsComponent implements OnInit {
     fitWidth: true
   };
 
-  constructor(private primeService: PrimeCutsService) { }
+  constructor(
+    private primeService: PrimeCutsService,
+    private titleService: Title
+  ) { }
 
   layoutComplete(event: any) {
     // console.log('layoutComplete', event);
@@ -52,6 +56,8 @@ export class PrimeCutsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Prime Cuts');
+
     this.carouselData = [
       {
         title: 'Brian Booth Craig',

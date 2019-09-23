@@ -76,11 +76,4 @@ export class PostService {
       .doc(doc)
       .delete();
   }
-
-  likePost(postId: string, currentLikes: number) {
-    // update post likes and add to user likes array
-    this.afStore.collection('posts').doc(postId).update({ likes: currentLikes + 1})
-      .then(() => console.log('liked successfully'))
-      .catch(e => console.log('error liking post', e));
-  }
 }

@@ -101,7 +101,7 @@ export class PostComponent implements OnInit, OnDestroy {
             createdTimestamp: new Date(),
             new: true,
             type: 'like',
-            postThumnailUrl: ''
+            postThumbnailUrl: ''
           };
           this.notificationService.addNotification(this.postUserId, obj);
         } else {

@@ -124,14 +124,12 @@ export class PrimeCutsService {
     return this.afStore
       .collection('prime-cuts')
       .doc(id)
-      .get()
+      .valueChanges()
       .pipe(
-        switchMap((posty: any) => {
-          if (!posty) {
+        switchMap((post: any) => {
+          if (!post) {
             return of(null);
           }
-
-          const post = posty.data();
 
           return this.afStore
             .doc(`users/${post.userId}`)
@@ -151,6 +149,13 @@ export class PrimeCutsService {
       .add(postObj)
       .then(() => console.log('Prime post added successfully'))
       .catch(e => console.log('Error adding Prime post', e));
+  }
+
+  updatePrimeCut(doc: string, post: any) {
+    return this.afStore
+      .collection('prime-cuts')
+      .doc(doc)
+      .update(post);
   }
 
   deletePrimeCut(id: string) {

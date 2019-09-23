@@ -1,0 +1,14 @@
+
+<!-- Comments (commentCount) heading -->
+<div style="display: flex; align-items: center;">
+    <h2 style="margin: 0 20px">Comments <span *ngIf="commentCount"> ({{ commentCount }})</span></h2>
+    <hr style="border: 1px solid #777; flex-grow: 1;">
+</div>
+
+<!-- View all Comments -->
+<app-comment-list *ngIf="comments$ | async as comments" [comments]="comments"></app-comment-list>
+
+<br>
+
+<!-- Leave a Comment -->
+<app-comment-form [deliPostId]="deliPostId" [primePostId]="primePostId"></app-comment-form>
