@@ -98,6 +98,7 @@ export class PostComponent implements OnInit, OnDestroy {
           const obj = {
             userId: this.user.uid,
             username: this.user.username,
+            postId: this.postId,
             createdTimestamp: new Date(),
             new: true,
             type: 'like',

@@ -6,8 +6,15 @@
     padding: 0.5em;
     background-color: white;
     border-radius: 5px;
-    margin: 15px auto;
+    margin: 15px auto 15px 0;
+    width: 95%;
     border-left: 5px solid #7fcaa2;
+    transition: 300ms all ease-out;
+}
+
+.comment:hover {
+    width: 88%;
+    border-radius: 5px 40px 40px 5px;
 }
 
 .comment-date {

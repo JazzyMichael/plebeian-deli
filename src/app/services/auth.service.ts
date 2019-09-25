@@ -8,6 +8,7 @@ import { switchMap, first, map, tap } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
 import { AnalyticsService } from './analytics.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthService {
     private chatService: ChatService,
     private oldUserService: OldUserService,
     private router: Router,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private notificiationService: NotificationService
     ) {
       const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
       this.user$ = new BehaviorSubject(cachedUser);
@@ -52,10 +54,12 @@ export class AuthService {
           this.username = user.username;
           this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));
+          this.notificiationService.getNew(user.uid);
         } else {
           localStorage.removeItem('user');
           this.username = null;
           this.user$.next(null);
+          this.notificiationService.reset();
         }
       });
     }

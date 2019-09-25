@@ -98,6 +98,7 @@ export class PrimePostComponent implements OnInit {
             userId: this.user.uid,
             username: this.user.username,
             createdTimestamp: new Date(),
+            primePostId: this.postId,
             new: true,
             type: 'like',
             postThumnailUrl: ''

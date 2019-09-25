@@ -7,20 +7,30 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class NotificationService {
   notifications$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  newCount$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private afStore: AngularFirestore) { }
 
   getNew(uid: string) {
+    console.log('getNew');
     this.afStore
       .collection('users')
       .doc(uid)
-      .collection('notifications', ref => ref.where('new', '==', true).orderBy('createdTimestamp'))
+      .collection('notifications', ref => ref.where('new', '==', true).orderBy('createdTimestamp', 'desc'))
       .valueChanges({ idField: 'notificationId' })
       .subscribe(x => {
+        console.log('notifications', x);
+        const count = x && x.length ? x.length : 0;
+        this.newCount$.next(count);
         if (x) {
           this.notifications$.next(x);
         }
       });
+  }
+
+  reset() {
+    this.notifications$.next([]);
+    this.newCount$.next(0);
   }
 
   getOld(uid: string, startAfterDoc?: any): Observable<any[]> {

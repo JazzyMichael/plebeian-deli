@@ -5,7 +5,14 @@
     margin: 0 auto;
     background: white;
     box-sizing: border-box;
-    -webkit-box-shadow: 0px 2px 25px 5px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 2px 25px 5px rgba(0,0,0,0.5);
-    box-shadow: 0px 2px 25px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 1px 20px 1px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 1px 20px 1px rgba(0,0,0,0.5);
+    box-shadow: 0px 1px 20px 1px rgba(0,0,0,0.5);
+    transition: 200ms all ease-out;
+}
+
+.new-comment-form:hover, .new-comment-form:focus {
+    -webkit-box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5);
+    box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5);
 }

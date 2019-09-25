@@ -1,0 +1,31 @@
+.notification-container {
+    width: 90%;
+    max-width: 666px;
+    margin: auto;
+    padding: 1em 0.5em 2em;
+    border-bottom: 2px solid #777;
+}
+
+.notification {
+    cursor: pointer;
+    padding: 0.25em;
+    margin-bottom: 10px;
+    transition: 150ms background-color ease-out;
+    border-left: 5px solid #fdf5a2;
+    box-sizing: border-box;
+}
+
+.notification:hover {
+    background-color: #d8e7df;
+    border-bottom: 1px solid #fdf5a2;
+    margin-bottom: 9px;
+
+    .heart-icon {
+        color: #f44336;
+    }
+}
+
+.heart-icon {
+    padding: 0.5em;
+    border-right: 2px solid #ccc;
+}

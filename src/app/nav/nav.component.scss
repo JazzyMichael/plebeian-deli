@@ -28,9 +28,15 @@ mat-sidenav-content {
     border-radius: 15px;
 }
 
-// .sidenav-button {
-    
-// }
+.sidenav-button {
+    padding: 0.75em;
+    color: #222222;
+}
+
+.mobile-notification-button {
+    display: flex;
+    margin-left: auto;
+}
 
 
 
@@ -148,6 +154,15 @@ mat-toolbar-row {
 
 .perm-nav-link {
     display: block;
+    color: #fdf5a2;
+}
+
+// .menu-button {
+//     color: #fdf5a2;
+// }
+
+.menu-button:hover {
+    color: #80caa2;
 }
 
 @media (min-width: 950px) {
@@ -166,5 +181,9 @@ mat-toolbar-row {
 
     mat-toolbar-row {
         justify-content: space-around;
+    }
+
+    .mobile-notification-button {
+        margin-left: 0;
     }
 }

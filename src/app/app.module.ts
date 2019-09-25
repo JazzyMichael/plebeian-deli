@@ -102,6 +102,7 @@ const routes: Routes = [
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
+  { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
