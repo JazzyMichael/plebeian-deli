@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NotificationService } from '../services/notification.service';
 import { tap } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-notifications',
@@ -13,7 +14,8 @@ export class NotificationsComponent implements OnInit {
   newCount: number;
 
   constructor(
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -25,8 +27,21 @@ export class NotificationsComponent implements OnInit {
       }));
   }
 
-  viewNotification(n: any) {
+  async viewNotification(n: any) {
     console.log(n);
+
+    const user = await this.authService.getCurrentUser();
+
+    if (!user || !n.notificationId) {
+      return;
+    }
+
+    const userId = user.uid;
+    const notificationId = n.notificationId;
+    const obj = { new: false };
+
+    this.notificationService
+      .updateNotification(userId, notificationId, obj);
   }
 
 }

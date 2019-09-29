@@ -9,6 +9,7 @@ import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
 import { AnalyticsService } from './analytics.service';
 import { NotificationService } from './notification.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,13 @@ export class AuthService {
     private afStore: AngularFirestore,
     private chatService: ChatService,
     private oldUserService: OldUserService,
+    private userService: UserService,
     private router: Router,
     private analyticsService: AnalyticsService,
     private notificiationService: NotificationService
     ) {
-      const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-      this.user$ = new BehaviorSubject(cachedUser);
+      // const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+      this.user$ = new BehaviorSubject(null);
       this.username = '';
 
       this.afAuth.auth.getRedirectResult()
@@ -43,6 +45,8 @@ export class AuthService {
       this.afAuth.authState.pipe(
         switchMap((user: any) => {
           if (user && user.uid) {
+            this.notificiationService.getNew(user.uid);
+            this.chatService.getUserChats(user.uid);
             return this.afStore.doc(`users/${user.uid}`).valueChanges();
           } else {
             return of(null);
@@ -50,11 +54,10 @@ export class AuthService {
         })
       ).subscribe((user: any) => {
         if (user) {
-          this.chatService.getUserChats(user.uid);
+          user['thumbnail'] = this.userService.getUserThumbnail(user);
           this.username = user.username;
           this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));
-          this.notificiationService.getNew(user.uid);
         } else {
           localStorage.removeItem('user');
           this.username = null;
@@ -132,6 +135,7 @@ export class AuthService {
       phoneNumber,
       membership,
       providerId,
+      photoURL,
       profileUrl: photoURL,
       backgroundUrl: null,
       description: null,
@@ -157,8 +161,14 @@ export class AuthService {
       .collection('users', ref => ref.where('username', '==', username))
       .valueChanges()
       .pipe(
-        tap(res => console.log('firebase res', res)),
-        map(arr => arr[0] ? arr[0] : null)
+        map(arr => arr[0] ? arr[0] : null),
+        map(user => {
+          return {
+            ...user,
+            smallThumbnail: this.userService.getUserThumbnail(user, 100),
+            mediumThumbnail: this.userService.getUserThumbnail(user, 200)
+          };
+        })
       );
   }
 }

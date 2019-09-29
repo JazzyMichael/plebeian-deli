@@ -46,15 +46,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) => {
         const username = params.get('username');
         if (!username) return this.router.navigateByUrl('/about');
-        this.editing = false;
+        // this.editing = false;
 
         return this.auth.getUser(username).pipe(
           tap((user: any) => {
             if (!user) return this.router.navigateByUrl('/about');
-            this.editable = user.username === this.auth.username;
+            // this.editable = user.username === this.auth.username;
             this.titleService.setTitle(user.username);
-            // this.user = user;
+            this.user = user;
+            console.log(user.profileUrl);
             this.uid = user.uid || null;
+            console.log(this.uid);
             this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );
@@ -66,6 +68,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.editable = true;
       }
     });
+
+    this.editable = true;
 
     setTimeout(() => {
       this.doneLoading = true;
@@ -160,14 +164,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const path = `profile-pictures/${this.uid}`;
+    if (!this.uid || !file.type.split('/')[1]) {
+      console.log('NO UID');
+      return;
+    }
+
+    console.log('file type: ', file.type);
+    // return;
+
+    // if (this.user.profileUrl) {
+    //   // delete old image
+    //   const deleteRef = this.storage.ref(`profile-pictures/${this.uid}`);
+    // }
+
+    // create new image
+    const path = `profile-pictures/${this.uid}.${file.type.split('/')[1]}`;
 
     const ref = this.storage.ref(path);
 
-    await this.storage.upload(path, file);
+    await ref.put(file, { customMetadata: { username: this.user.username } });
 
     ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { profileUrl: url });
+      this.userService.updateUser(this.uid, { profileUrl: url, profileType: file.type.split('/')[1] });
     });
   }
 

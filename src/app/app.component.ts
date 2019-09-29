@@ -61,14 +61,14 @@ export class AppComponent {
       );
 
       navEndEvents.subscribe((event: NavigationEnd) => {
-        try {
-          gtag('config', 'UA-130962516-1', {
-            'page_path': event.urlAfterRedirects,
-            'loggedIn': this.signedIn ? true : false
-          });
-        } catch (e) {
-          console.log('Google Analytics PageView Error', e);
-        }
+        // try {
+        //   gtag('config', 'UA-130962516-1', {
+        //     'page_path': event.urlAfterRedirects,
+        //     'loggedIn': this.signedIn ? true : false
+        //   });
+        // } catch (e) {
+        //   console.log('Google Analytics PageView Error', e);
+        // }
 
         // try {
         //   fbq('track', 'PageView');

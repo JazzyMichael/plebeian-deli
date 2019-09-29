@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, pipe } from 'rxjs';
+import { Observable, BehaviorSubject, pipe, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class UserService {
 
   noMoreNewUsers: boolean;
 
-  constructor(private afStore: AngularFirestore) {
+  constructor(
+    private afStore: AngularFirestore,
+    private storage: AngularFireStorage
+    ) {
     // const cachedUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : null;
 
     this.users$ = new BehaviorSubject([]);
@@ -26,7 +30,8 @@ export class UserService {
           const newUsers = [];
 
           users.forEach(user => {
-            newUsers.push({ ...user.data() });
+            const userData = user.data();
+            newUsers.push({ ...userData, thumbnail: this.getUserThumbnail(userData) });
           });
 
           return newUsers;
@@ -59,8 +64,10 @@ export class UserService {
         tap(x => console.log('tap')),
         map(users => {
           const newUsers = [];
+
           users.forEach(user => {
-            newUsers.push({ ...user.data() });
+            const userData = user.data();
+            newUsers.push({ ...userData, thumbnail: this.getUserThumbnail(userData) });
           });
 
           if (!newUsers.length) {
@@ -71,6 +78,7 @@ export class UserService {
         })
       )
       .subscribe(users => {
+        console.log('users', users);
         this.users$.next([ ...currentUsers, ...users ]);
       });
   }
@@ -109,6 +117,24 @@ export class UserService {
       .update(obj)
       .then(() => console.log('updated user'))
       .catch((err) => console.log('error updating user'));
+  }
+
+  getUserThumbnail(user: any, size: number = 100): Observable<any> {
+    const uid = user.uid;
+    const type = user.profileType;
+
+    if (!type) {
+      console.log('no type', user);
+      return of(user.profileUrl);
+    }
+
+    const path = `profile-pictures/thumbnails/${uid}_${size}x${size}.${type}`;
+
+    console.log('path', path);
+
+    const ref = this.storage.ref(path);
+
+    return ref.getDownloadURL();
   }
 
   // getAdmins() {

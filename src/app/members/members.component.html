@@ -35,6 +35,8 @@ infiniteScroll
     </div>
 </div>
 
+
+<!-- Member List -->
 <div class="member-container">
 
     <ng-container *ngFor="let member of users$ | async">
@@ -47,21 +49,20 @@ infiniteScroll
 
             <div class="member-info">
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: auto;">
-                    <img *ngIf="member.profileUrl" [src]="member.profileUrl" alt="Profile Pic" class="member-pic">
-                    <img *ngIf="!member.profileUrl" src="assets/jazzy-on-desk.jpg" alt="Profile Pic" class="member-pic">
+                    <img *ngIf="member.thumbnail" [src]="member.thumbnail | async" alt="Profile Pic" class="member-pic">
                     <span>{{ member.username }}</span>
                 </div>
                 <p *ngIf="member.membership === 'artist'" class="member-description">{{ member.medium }}</p>
                 <p *ngIf="member.membership === 'gallery'" class="member-description">Gallery</p>
                 <p class="member-description">{{ member.description }}</p>
-                <button
+                <!-- <button
                     mat-raised-button
                     color="accent"
                     class="member-description"
                     style="width: 80%; margin: auto;"
                     (click)="sendMessage(member.uid); $event.stopPropagation();">
                     Send Message
-                </button>
+                </button> -->
             </div>
 
         </div>

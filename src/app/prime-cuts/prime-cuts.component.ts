@@ -60,6 +60,12 @@ export class PrimeCutsComponent implements OnInit {
 
     this.carouselData = [
       {
+        title: 'Dino Tomic',
+        thumbnail: 'https://img.youtube.com/vi/wlQ3PdR83Nk/maxresdefault.jpg',
+        videoUrl: 'https://www.youtube.com/embed/wlQ3PdR83Nk',
+        primePostId: 'hpcYC4SE0Gzf5gMnua0e'
+      },
+      {
         title: 'Brian Booth Craig',
         thumbnail: 'https://img.youtube.com/vi/Wk2Ab-gHr5g/maxresdefault.jpg',
         videoUrl: 'https://www.youtube.com/embed/Wk2Ab-gHr5g',

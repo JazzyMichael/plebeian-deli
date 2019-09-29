@@ -25,7 +25,11 @@ export class PaymentFormComponent implements AfterViewInit, OnDestroy {
 
   promoCode: string;
 
-  coupons: any[] = ['LOYALTYCLUB', 'UD2020'];
+  coupons: any[] = [
+    { code: 'LOYALTYCLUB', value: '100% off!' },
+    { code: 'UD2020', value: '100% off!' },
+    { code: 'FREEMONTH', value: 'First Month FREE!' }
+  ];
 
   validCoupon: any;
 
@@ -75,7 +79,7 @@ export class PaymentFormComponent implements AfterViewInit, OnDestroy {
   }
 
   onPromoCodeChange() {
-    this.validCoupon = this.coupons.find(coup => coup === this.promoCode);
+    this.validCoupon = this.coupons.find(coup => coup.code === this.promoCode);
   }
 
 }

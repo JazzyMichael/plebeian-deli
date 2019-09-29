@@ -65,11 +65,11 @@
 }
 
 .member-pic {
-    height: 75px;
-    width: 75px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
+    max-height: 100px;
+    max-width: 100px;
+    border-radius: 50px;
+    // background-size: cover;
+    // background-position: center;
 }
 
 .cont {

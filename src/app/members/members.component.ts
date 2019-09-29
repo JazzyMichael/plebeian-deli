@@ -41,14 +41,12 @@ export class MembersComponent implements OnInit {
   }
 
   onScroll() {
-    console.log('onScroll');
     this.userService.getMoreUsers();
   }
 
   filterUsers() {
     this.users$ = this.userService.users$.pipe(
       switchMap(users => {
-        console.log('component', users);
         if (!this.searchTerm && (!this.selectedCategories || !this.selectedCategories.length)) {
           return of(users);
         }

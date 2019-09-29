@@ -74,6 +74,17 @@ export class NotificationService {
       .catch(e => console.log('error adding notification', e));
   }
 
+  updateNotification(uid: string, notificationId: string, obj: any) {
+    this.afStore
+      .collection('users')
+      .doc(uid)
+      .collection('notifications')
+      .doc(notificationId)
+      .update(obj)
+      .then(() => console.log('notification updated'))
+      .catch(e => console.log('error updating notification', e));
+  }
+
   addCommenterNotifications(commenters: any[]) {
     const promises = [];
 

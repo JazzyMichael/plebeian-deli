@@ -16,7 +16,7 @@
 
     <p *ngIf="promoCode && !validCoupon" style="font-size: 0.8em">Not a valid promo code</p>
 
-    <p *ngIf="promoCode && validCoupon" style="font-size: 0.9em">100% off!</p>
+    <p *ngIf="promoCode && validCoupon" style="font-size: 0.9em">{{ validCoupon.value }}</p>
 
     <input
         type="text"
