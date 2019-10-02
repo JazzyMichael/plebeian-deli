@@ -93,7 +93,7 @@ export class PostComponent implements OnInit, OnDestroy {
           // update post userLikes array with uid
           this.likedUids.push(this.user.uid);
           this.postService.updatePost(this.postId, { likedUids: this.likedUids })
-            .then(res => console.log('post likes updated', res));
+            .then(res => console.log(res));
           // update post user notifications
           const obj = {
             userId: this.user.uid,
@@ -117,7 +117,7 @@ export class PostComponent implements OnInit, OnDestroy {
           console.log('unliked');
 
           this.postService.updatePost(this.postId, { likedUids })
-            .then(res => console.log('post likes updated', res));
+            .then(res => console.log(res));
         }
       });
   }

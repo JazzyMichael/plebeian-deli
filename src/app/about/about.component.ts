@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { SignupDialogComponent } from 'src/app/signup-dialog/signup-dialog.component';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedFeature: any;
   features: any[] = [
     {
@@ -43,7 +48,13 @@ export class AboutComponent implements OnInit {
 
   goToSubscriptions: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  userSub: Subscription;
+
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private auth: AuthService
+    ) {
     this.route.queryParams.subscribe(params => {
       this.goToSubscriptions = !!params.subscriptions;
     });
@@ -57,10 +68,33 @@ export class AboutComponent implements OnInit {
     if (this.goToSubscriptions) {
       document.getElementById('subscriptions-section').scrollIntoView();
     }
+
+    this.userSub = this.auth.user$.pipe(debounceTime(1777)).subscribe(user => {
+      if (!user) {
+        this.showSignupDialog();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
   }
 
   selectFeature(index: number) {
     this.selectedFeature = this.features[index];
+  }
+
+  showSignupDialog() {
+    const dialogRef = this.dialog.open(SignupDialogComponent, {
+      data: { },
+      width: '80vw'
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      console.log('dialog closed res', res);
+    });
   }
 
 }

@@ -2,7 +2,7 @@
 <div *ngIf="primePost$ | async as post" style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
 
     <div style="display: flex; justify-content: start; align-items: center;">
-        <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px;cursor: pointer;" [routerLink]="'/' + post.user.username">
+        <img [src]="post.user.thumbnail | async" alt="Profile Picture" style="height: 75px;cursor: pointer;" [routerLink]="'/' + post.user.username">
         <p style="font-size: 1.75em; margin: 0 1em 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post.user?.username }}</p>
         <p>{{ post.createdTimestamp.toDate() | date }}</p>
     </div>

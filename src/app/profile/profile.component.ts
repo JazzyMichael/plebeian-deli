@@ -54,9 +54,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             // this.editable = user.username === this.auth.username;
             this.titleService.setTitle(user.username);
             this.user = user;
-            console.log(user.profileUrl);
+            console.log(user);
             this.uid = user.uid || null;
-            console.log(this.uid);
             this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );
@@ -68,8 +67,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.editable = true;
       }
     });
-
-    this.editable = true;
 
     setTimeout(() => {
       this.doneLoading = true;
@@ -165,27 +162,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     if (!this.uid || !file.type.split('/')[1]) {
-      console.log('NO UID');
+      console.log('NO UID or file type');
       return;
     }
 
     console.log('file type: ', file.type);
-    // return;
 
-    // if (this.user.profileUrl) {
-    //   // delete old image
-    //   const deleteRef = this.storage.ref(`profile-pictures/${this.uid}`);
-    // }
+    const fileType = file.type.split('/')[1];
 
-    // create new image
-    const path = `profile-pictures/${this.uid}.${file.type.split('/')[1]}`;
+    const path = `profile-pictures/${this.uid}.${fileType}`;
 
     const ref = this.storage.ref(path);
 
     await ref.put(file, { customMetadata: { username: this.user.username } });
 
     ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { profileUrl: url, profileType: file.type.split('/')[1] });
+      this.userService.updateUser(this.uid, { profileUrl: url, profileType: fileType });
     });
   }
 
@@ -197,14 +189,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const path = `profile-backgrounds/${this.uid}`;
+    if (!this.uid || !file.type.split('/')[1]) {
+      console.log('NO UID or file type');
+      return;
+    }
+
+    const fileType = file.type.split('/')[1];
+
+    const path = `profile-backgrounds/${this.uid}.${fileType}`;
 
     const ref = this.storage.ref(path);
 
-    await this.storage.upload(path, file);
+    await ref.put(file);
 
     ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { backgroundUrl: url });
+      this.userService.updateUser(this.uid, { backgroundUrl: url, backgroundType: fileType });
     });
   }
 

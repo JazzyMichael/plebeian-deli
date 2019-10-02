@@ -48,6 +48,7 @@ export class MembersComponent implements OnInit {
     this.users$ = this.userService.users$.pipe(
       switchMap(users => {
         if (!this.searchTerm && (!this.selectedCategories || !this.selectedCategories.length)) {
+          console.log('members page users', users);
           return of(users);
         }
 
@@ -72,6 +73,7 @@ export class MembersComponent implements OnInit {
           return validCategory && validSearch;
         });
 
+        console.log('members page users', filtered);
         return of(filtered);
       })
     );

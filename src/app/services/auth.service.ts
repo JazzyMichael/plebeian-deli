@@ -166,8 +166,11 @@ export class AuthService {
           return {
             ...user,
             smallThumbnail: this.userService.getUserThumbnail(user, 100),
-            mediumThumbnail: this.userService.getUserThumbnail(user, 200)
+            mediumThumbnail: this.userService.getUserThumbnail(user, 250),
+            backgroundThumbnail: this.userService.getUserBackground(user, 500)
           };
+          // mediumBackground: '',
+          // largeBackground: ''
         })
       );
   }

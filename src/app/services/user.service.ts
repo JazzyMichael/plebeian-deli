@@ -23,7 +23,7 @@ export class UserService {
     this.admins$ = new BehaviorSubject([]);
 
     this.afStore
-      .collection('users', ref => ref.orderBy('createdTimestamp', 'asc').limit(10))
+      .collection('users', ref => ref.orderBy('createdTimestamp', 'asc').limit(20))
       .get()
       .pipe(
         map(users => {
@@ -31,20 +31,20 @@ export class UserService {
 
           users.forEach(user => {
             const userData = user.data();
-            newUsers.push({ ...userData, thumbnail: this.getUserThumbnail(userData) });
+
+            newUsers.push({
+              ...userData,
+              thumbnail: this.getUserThumbnail(userData),
+              backgroundThumbnail: this.getUserBackground(userData)
+            });
           });
 
           return newUsers;
         })
       )
       .subscribe(users => {
-        console.log('first users', users);
         this.users$.next(users);
       });
-
-    // this.getAdmins().subscribe(admins => {
-    //   this.admins$.next(admins);
-    // });
   }
 
   getMoreUsers() {
@@ -61,13 +61,17 @@ export class UserService {
       .collection('users', ref => ref.orderBy('createdTimestamp', 'asc').startAfter(lastVisible).limit(10))
       .get()
       .pipe(
-        tap(x => console.log('tap')),
         map(users => {
           const newUsers = [];
 
           users.forEach(user => {
             const userData = user.data();
-            newUsers.push({ ...userData, thumbnail: this.getUserThumbnail(userData) });
+
+            newUsers.push({
+              ...userData,
+              thumbnail: this.getUserThumbnail(userData),
+              backgroundThumbnail: this.getUserBackground(userData)
+            });
           });
 
           if (!newUsers.length) {
@@ -78,7 +82,6 @@ export class UserService {
         })
       )
       .subscribe(users => {
-        console.log('users', users);
         this.users$.next([ ...currentUsers, ...users ]);
       });
   }
@@ -86,10 +89,7 @@ export class UserService {
   getArtists() {
     return this.afStore
       .collection('users', ref => ref.where('membership', '==', 'artist'))
-      .valueChanges({ idField: 'idField' })
-      .pipe(
-        tap(x => console.log('tap'))
-      );
+      .valueChanges({ idField: 'idField' });
   }
 
   getUserById(uid: string) {
@@ -102,13 +102,9 @@ export class UserService {
   }
 
   getUserGalleries(uid: string) {
-    console.log('getUserGalleries uid', uid);
     return this.afStore
       .collection('users', ref => ref.where('membership', '==', 'gallery').where('artists', 'array-contains', uid))
-      .valueChanges()
-      .pipe(
-        tap(x => console.log('tap'))
-      );
+      .valueChanges();
   }
 
   updateUser(uid: string, obj: any) {
@@ -116,7 +112,7 @@ export class UserService {
       .doc(`users/${uid}`)
       .update(obj)
       .then(() => console.log('updated user'))
-      .catch((err) => console.log('error updating user'));
+      .catch(e => console.log('error updating user', e));
   }
 
   getUserThumbnail(user: any, size: number = 100): Observable<any> {
@@ -124,13 +120,27 @@ export class UserService {
     const type = user.profileType;
 
     if (!type) {
-      console.log('no type', user);
+      // console.log('no profile type', user);
       return of(user.profileUrl);
     }
 
     const path = `profile-pictures/thumbnails/${uid}_${size}x${size}.${type}`;
 
-    console.log('path', path);
+    const ref = this.storage.ref(path);
+
+    return ref.getDownloadURL();
+  }
+
+  getUserBackground(user: any, size: number = 500): Observable<any> {
+    const uid = user.uid;
+    const type = user.backgroundType;
+
+    if (!type) {
+      // console.log('no bg type', user);
+      return of('');
+    }
+
+    const path = `profile-backgrounds/thumbnails/${uid}_${size}x${size}.${type}`;
 
     const ref = this.storage.ref(path);
 

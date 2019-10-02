@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { switchMap, map, tap } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class PrimeCutsService {
   noMorePrimePosts: boolean;
 
   constructor(
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private userService: UserService
   ) {
     // first round of prime cuts
     this.getInitialPrimeCuts();
@@ -135,8 +137,18 @@ export class PrimeCutsService {
             .doc(`users/${post.userId}`)
             .get()
             .pipe(
+              map(user => user.data()),
               map(user => {
-                return { ...post, primePostId: id, user: user.data() };
+                const thumbnail = this.userService.getUserThumbnail(user, 100);
+
+                return { ...user, thumbnail };
+              }),
+              switchMap(user => {
+                return of({
+                  ...post,
+                  primePostId: id,
+                  user
+                });
               })
             );
         })

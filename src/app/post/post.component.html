@@ -13,7 +13,8 @@
         <div class="post-header">
 
             <div class="author-info">
-                <img [src]="post.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
+                <img [src]="post.user.thumbnail | async" alt="Profile Picture" class="profile-pic" [routerLink]="'/' + post.user.username">
+
                 <div>
                     <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
                     <p style="color: #777">{{ post.createdTimestamp.toDate() | date }}</p>

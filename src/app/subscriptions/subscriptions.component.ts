@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { AnalyticsService } from '../services/analytics.service';
 
 declare const fbq: any;
 
@@ -12,7 +13,11 @@ declare const fbq: any;
 export class SubscriptionsComponent implements OnInit {
   plans: any[];
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private analytics: AnalyticsService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.plans = [
@@ -51,7 +56,7 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   async selectSubscription() {
-    console.log('subscribe');
+    console.log('selectSubscription');
 
     const user = await this.auth.getCurrentUser();
 
@@ -62,15 +67,7 @@ export class SubscriptionsComponent implements OnInit {
       this.router.navigateByUrl('/checkout');
     }
 
-    // try {
-    //   fbq('track', 'Subscribe', {
-    //     value: '1.00',
-    //     currency: 'USD',
-    //     predicted_ltv: '20'
-    //   });
-    // } catch (e) {
-    //   console.log('fbq Subscribe error', e);
-    // }
+    this.analytics.addToCart();
   }
 
 }

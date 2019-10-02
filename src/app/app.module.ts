@@ -78,6 +78,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
+import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -156,7 +157,8 @@ const routes: Routes = [
     NotificationsComponent,
     CommentsComponent,
     CommentListComponent,
-    CommentFormComponent
+    CommentFormComponent,
+    SignupDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -185,7 +187,8 @@ const routes: Routes = [
     MaterialModule
   ],
   entryComponents: [
-    InquireFormComponent
+    InquireFormComponent,
+    SignupDialogComponent
   ],
   providers: [
     AngularFireAuthGuard,

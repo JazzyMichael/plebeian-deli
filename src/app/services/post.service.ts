@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,11 @@ export class PostService {
   posts$: BehaviorSubject<any>;
   featuredPosts$: BehaviorSubject<any>;
 
-  constructor(private afStore: AngularFirestore, private router: Router) {
+  constructor(
+    private afStore: AngularFirestore,
+    private userService: UserService,
+    private router: Router
+    ) {
     this.posts$ = new BehaviorSubject([]);
     this.featuredPosts$ = new BehaviorSubject([]);
 
@@ -49,8 +54,18 @@ export class PostService {
             .doc(`users/${post.userId}`)
             .get()
             .pipe(
+              map(user => user.data()),
               map(user => {
-                return { ...post, postId: id, user: user.data() };
+                const thumbnail = this.userService.getUserThumbnail(user, 100);
+
+                return { ...user, thumbnail };
+              }),
+              switchMap(user => {
+                return of({
+                  ...post,
+                  postId: id,
+                  user
+                });
               })
             );
         })

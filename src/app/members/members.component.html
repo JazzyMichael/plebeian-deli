@@ -40,32 +40,56 @@ infiniteScroll
 <div class="member-container">
 
     <ng-container *ngFor="let member of users$ | async">
-        <div
-            *ngIf="member.membership !== 'viewer' && ( !membership || (member.membership === membership) )"
-            class="member-card"
-            [ngStyle]="{'background': member.backgroundUrl ? 'url(' + member.backgroundUrl + ')' : 'linear-gradient(#add87d, #80caa2)'}"
-            [ngClass]="member.backgroundUrl ? 'bg' : ''"
-            [routerLink]="'/' + member.username">
+        <ng-container *ngIf="member.membership !== 'viewer' && ( !membership || (member.membership === membership) )">
+            <div
+                *ngIf="member.backgroundThumbnail | async as bgThumbnail else noBgThumbnail"
+                class="member-card"
+                [ngStyle]="{'background': bgThumbnail.length ? 'url(' + bgThumbnail + ')' : 'linear-gradient(#add87d, #80caa2)'}"
+                [ngClass]="bgThumbnail.length ? 'bg' : ''"
+                [routerLink]="'/' + member.username">
 
-            <div class="member-info">
-                <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: auto;">
-                    <img *ngIf="member.thumbnail" [src]="member.thumbnail | async" alt="Profile Pic" class="member-pic">
-                    <span>{{ member.username }}</span>
+                <div class="member-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: auto;">
+                        <img *ngIf="member.thumbnail" [src]="member.thumbnail | async" alt="Profile Pic" class="member-pic">
+                        <span>{{ member.username }}</span>
+                    </div>
+                    <!-- <p *ngIf="member.membership === 'artist'" class="member-description">{{ member.medium }}</p>
+                    <p *ngIf="member.membership === 'gallery'" class="member-description">Gallery</p> -->
+                    <p class="member-description">{{ member.description }}</p>
+                    <!-- <button
+                        mat-raised-button
+                        color="accent"
+                        class="member-description"
+                        style="width: 80%; margin: auto;"
+                        (click)="sendMessage(member.uid); $event.stopPropagation();">
+                        Send Message
+                    </button> -->
                 </div>
-                <p *ngIf="member.membership === 'artist'" class="member-description">{{ member.medium }}</p>
-                <p *ngIf="member.membership === 'gallery'" class="member-description">Gallery</p>
-                <p class="member-description">{{ member.description }}</p>
-                <!-- <button
-                    mat-raised-button
-                    color="accent"
-                    class="member-description"
-                    style="width: 80%; margin: auto;"
-                    (click)="sendMessage(member.uid); $event.stopPropagation();">
-                    Send Message
-                </button> -->
+
             </div>
 
-        </div>
+            <ng-template #noBgThumbnail>
+                <div class="member-card" style="background: linear-gradient(#add87d, #80caa2)" [routerLink]="'/' + member.username">
+                    <div class="member-info">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: auto;">
+                            <img *ngIf="member.thumbnail" [src]="member.thumbnail | async" alt="Profile Pic" class="member-pic">
+                            <span>{{ member.username }}</span>
+                        </div>
+                        <!-- <p *ngIf="member.membership === 'artist'" class="member-description">{{ member.medium }}</p>
+                        <p *ngIf="member.membership === 'gallery'" class="member-description">Gallery</p> -->
+                        <p class="member-description">{{ member.description }}</p>
+                        <!-- <button
+                            mat-raised-button
+                            color="accent"
+                            class="member-description"
+                            style="width: 80%; margin: auto;"
+                            (click)="sendMessage(member.uid); $event.stopPropagation();">
+                            Send Message
+                        </button> -->
+                    </div>
+                </div>
+            </ng-template>
+        </ng-container>
     </ng-container>
 
 </div>

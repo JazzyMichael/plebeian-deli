@@ -11,7 +11,8 @@ export const environment = {
     projectId: "plebeian-deli",
     storageBucket: "plebeian-deli.appspot.com",
     messagingSenderId: "55802400478",
-    appId: "1:55802400478:web:8cde991e1809fe3f"
+    appId: "1:55802400478:web:8cde991e1809fe3f",
+    measurementId: 'G-H77J3RNNXE'
   }
 };
 

@@ -19,9 +19,10 @@
         
             <!-- Profile Pic-->
             <div
+                *ngIf="user.mediumThumbnail | async as thumbnail"
                 class="profile-pic"
-                [ngStyle]="{'background': user.profileUrl ? 'url(' + user.profileUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}"
-                [ngClass]="user.profileUrl ? 'bg' : ''">
+                [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}"
+                [ngClass]="thumbnail ? 'bg' : ''">
                 <ng-container *ngIf="editable">
                     <label for="profile-pic-upload" class="upload-btn">
                         <mat-icon>publish</mat-icon>
@@ -234,9 +235,7 @@
         <!-- ProfileBackgroundUrl -->
         <div
             *ngIf="editable && editing"
-            class="profile-background-pic"
-            [ngStyle]="{'background': user.backgroundUrl ? 'url(' + user.backgroundUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}"
-            [ngClass]="user.backgroundUrl ? 'bg' : ''">
+            class="profile-background-pic">
             <ng-container *ngIf="editable">
                 <label for="background-pic-upload" class="upload-btn" style="border-radius: 10px; opacity: 0.95;">
                     <mat-icon>publish</mat-icon>
@@ -251,11 +250,13 @@
             </ng-container>
         </div>
 
-        <img
-            *ngIf="user.backgroundUrl"
-            [src]="user.backgroundUrl"
-            alt="Background Image"
-            style="max-height: 500px; max-width: 95%; margin: 0 auto; display: block;">
+        <ng-container *ngIf="user.backgroundThumbnail | async as bg">
+            <img
+                *ngIf="bg.length"
+                [src]="bg"
+                alt="Background Image"
+                style="max-height: 500px; max-width: 95%; margin: 0 auto; display: block;">
+        </ng-container>
 
         <br>
 
