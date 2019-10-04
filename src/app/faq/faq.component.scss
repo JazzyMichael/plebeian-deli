@@ -1,0 +1,27 @@
+mat-expansion-panel-header {
+    padding: 2em;
+}
+
+mat-expansion-panel {
+    width: 90%;
+    max-width: 777px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top-border {
+    border: 2px solid #7fcaa2;
+}
+
+.header {
+    padding: 3em 0.5em;
+    margin: 0 auto 100px;
+    text-align: center;
+    background-color: #fdf5a2
+}
+
+.sub-title {
+    font-style: italic;
+    font-family: cursive;
+    color: #666666;
+}

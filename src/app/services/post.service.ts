@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,31 @@ export class PostService {
   constructor(
     private afStore: AngularFirestore,
     private userService: UserService,
+    private storage: AngularFireStorage,
     private router: Router
     ) {
+
     this.posts$ = new BehaviorSubject([]);
     this.featuredPosts$ = new BehaviorSubject([]);
 
     this.afStore
       .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(50))
       .valueChanges({ idField: 'postId' })
+      .pipe(
+        map(posts => {
+          return posts.map((post: any) => {
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath) : undefined;
+            return { ...post, thumbnail };
+          });
+        })
+      )
       .subscribe(posts => {
         this.posts$.next(posts);
       });
+  }
+
+  getPostThumbnail(path: string): Observable<any> {
+    return this.storage.ref(path).getDownloadURL();
   }
 
   getPostsByCategory(category: string) {
@@ -37,7 +52,15 @@ export class PostService {
   getUserPosts(uid: string, limit: number = 10): Observable<any> {
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))
-      .valueChanges({ idField: 'postId' });
+      .valueChanges({ idField: 'postId' })
+      .pipe(
+        map(posts => {
+          return posts.map((post: any) => {
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath) : undefined;
+            return { ...post, thumbnail };
+          });
+        })
+      );
   }
 
   getPost(id: string): Observable<any> {

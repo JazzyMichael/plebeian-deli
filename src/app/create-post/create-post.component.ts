@@ -144,7 +144,9 @@ export class CreatePostComponent implements OnInit {
         postImages.push(img);
       } else {
         console.log('uploading img', img);
-        const random = Math.random().toString().slice(0, 10);
+        const random = Math.random().toString().slice(0, 8);
+
+        const fileType = img.file.type.split('/')[1];
 
         const path = `deli-pictures/${random}`;
 
@@ -154,7 +156,9 @@ export class CreatePostComponent implements OnInit {
 
         const url = await ref.getDownloadURL().toPromise();
 
-        postImages.push({ url });
+        const thumbPath = `deli-pictures/thumbnails/0_500x500.${random.substring(2)}`;
+
+        postImages.push({ url, thumbPath });
       }
     }
 
@@ -163,12 +167,12 @@ export class CreatePostComponent implements OnInit {
       category: this.category,
       description: this.description,
       images: postImages,
+      thumbnailPath: postImages[thumbnailIndex].thumbPath,
       thumbnailImgUrl: postImages[thumbnailIndex].url,
       link: this.link,
       price: this.approvedSeller && this.price ? parseInt(this.price) : 0,
       quantity: this.approvedSeller && this.quantity ? this.quantity : 0,
       startingQuantity: this.approvedSeller && this.quantity ? this.quantity : 0,
-      createdTimestamp: new Date(),
       likes: 0
     };
 

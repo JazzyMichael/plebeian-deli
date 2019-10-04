@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         return this.auth.getUser(username).pipe(
           tap((user: any) => {
             if (!user) return this.router.navigateByUrl('/about');
-            // this.editable = user.username === this.auth.username;
+            this.editable = user.username === this.auth.username;
             this.titleService.setTitle(user.username);
             this.user = user;
             console.log(user);

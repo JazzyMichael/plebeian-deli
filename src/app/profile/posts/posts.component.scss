@@ -1,3 +1,12 @@
+.heading-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    margin: 0.5em auto;
+}
+
 .post-list {
     display: flex;
     justify-content: space-around;

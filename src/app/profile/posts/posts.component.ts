@@ -1,21 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, Subject } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import { PostService } from 'src/app/services/post.service';
-
-import Quill from 'quill';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { debounceTime } from 'rxjs/operators';
-// import ImageResize from 'quill-image-resize-module';
-// Quill.register('modules/imageResize', ImageResize);
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnChanges {
   @Input() user: any;
   @Input() editable: boolean;
   @Input() categories: any[];
@@ -31,11 +24,14 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private storage: AngularFireStorage,
-    private postService: PostService,
-    private userService: UserService) { }
+    private postService: PostService
+  ) { }
 
   ngOnInit() {
+    this.posts$ = this.postService.getUserPosts(this.user.uid);
+  }
+
+  ngOnChanges() {
     this.posts$ = this.postService.getUserPosts(this.user.uid);
   }
 
@@ -52,6 +48,10 @@ export class PostsComponent implements OnInit {
   editPost(post: any) {
     this.editing = true;
     this.editingPost = post;
+
+    setTimeout(() => {
+      document.getElementById('edit-view').scrollIntoView();
+    }, 444);
   }
 
   deletePost(post: any) {
@@ -62,7 +62,7 @@ export class PostsComponent implements OnInit {
 
   async submitPost(event: any) {
 
-    const post = { ...event, userId: this.user.uid };
+    const post = this.editingPost ? { ...event, userId: this.user.uid } : { ...event, userId: this.user.uid, createdTimestamp: new Date() };
 
     if (this.editingPost) {
       console.log('update');

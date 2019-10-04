@@ -79,6 +79,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
+import { FaqComponent } from './faq/faq.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -92,6 +93,7 @@ const routes: Routes = [
   { path: 'members', component: MembersComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
@@ -158,7 +160,8 @@ const routes: Routes = [
     CommentsComponent,
     CommentListComponent,
     CommentFormComponent,
-    SignupDialogComponent
+    SignupDialogComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

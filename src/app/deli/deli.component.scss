@@ -53,25 +53,67 @@
 /* Posts */
 
 .post-list {
-    width: 100%;
-    padding: 10px 0;
-    background: linear-gradient(white, #f5f5f5);
-    display: flex;
-    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto 3em;
+    padding-bottom: 50px;
+    column-count: 2;
+}
+
+@media (min-width: 500px) {
+    .post-list {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 750px) {
+    .post-list {
+        column-count: 4;
+    }
 }
 
 .post-thumbnail {
-    width: 95%;
-    max-width: 200px;
-    margin: 1rem auto;
+    width: 100%;
     cursor: pointer;
-    padding-top: 0;
-    transition: all 200ms ease-out;
+    padding: 0;
+    margin-bottom: 1em;
+    transition: 200ms all ease-out;
+    -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+               break-inside: avoid;
 }
 
 .post-thumbnail:hover {
-    width: 800px;
+    -webkit-box-shadow: 0px 2px 25px 1px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 2px 25px 1px rgba(0,0,0,0.4);
+    box-shadow: 0px 2px 25px 1px rgba(0,0,0,0.4);
 }
+
+@keyframes imageLoad {
+    0% {
+        opacity: 0;
+        transform: translateY(-30%);
+        width: 50%;
+        border-radius: 50%;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+.thumbnail-img {
+    margin: auto;
+    width: 100%;
+    display: block;
+    animation: 300ms ease-out 0s 1 imageLoad;
+}
+
+// .post-thumbnail:hover {
+//     width: 800px;
+// }
 
 @media (min-width: 777px) {
     .item {

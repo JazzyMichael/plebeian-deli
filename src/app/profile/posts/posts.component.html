@@ -1,5 +1,4 @@
-<div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin: 0.5em auto;">
-    <h2 style="font-weight: 300; margin-left: 10px;">Posts</h2>
+<div class="heading-row" id="edit-view">
     <div *ngIf="editable">
         <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
             <mat-icon>close</mat-icon>
@@ -15,7 +14,12 @@
 <br>
 
 <div *ngIf="editing && !user.approvedSeller">
-    <button mat-raised-button routerLink="/seller" style="width: 100%">Connect your account to Stripe to add a price</button>
+    <button
+        mat-raised-button
+        routerLink="/seller"
+        style="width: 100%">
+        Connect your account to Stripe to add a price
+    </button>
 </div>
 
 <br>
@@ -31,7 +35,12 @@
 
 <div class="post-list">
 
-    <div *ngFor="let post of posts$ | async" (click)="viewPost(post.postId)" class="post-card">
+    <div
+        *ngFor="let post of posts$ | async"
+        (click)="viewPost(post.postId)"
+        class="post-card">
+
+        <!-- Menu -->
         <ng-container *ngIf="editable">
             <button
                 mat-button
@@ -52,9 +61,15 @@
                 </button>
             </mat-menu>
         </ng-container>
-        <div *ngIf="post.thumbnailImgUrl" [ngStyle]="{'background-image': 'url(' + post.thumbnailImgUrl + ')'}" class="post-img"></div>
-        <!-- <img style="width: 300px" [src]="post.thumbnailImgUrl" alt="Post Thumbnail"> -->
-        <p style="font-family: 'Open Sans Condensed', sans-serif; letter-spacing: 1px;">{{ post.title }}</p>
+
+        <!-- Thumbnail Image -->
+        <!-- <div *ngIf="post.thumbnailImgUrl" [ngStyle]="{'background-image': 'url(' + post.thumbnailImgUrl + ')'}" class="post-img"></div> -->
+        <ng-container *ngIf="post.thumbnail | async as thumbnailURL">
+            <div [ngStyle]="{'background-image': 'url(' + thumbnailURL + ')'}" class="post-img"></div>
+        </ng-container>
+        
+        <!-- Title -->
+        <p style="font-weight: 300; letter-spacing: 1.1px;">{{ post.title }}</p>
     </div>
 </div>
 

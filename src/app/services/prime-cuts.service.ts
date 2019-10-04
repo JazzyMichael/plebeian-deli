@@ -17,6 +17,7 @@ export class PrimeCutsService {
     private afStore: AngularFirestore,
     private userService: UserService
   ) {
+
     // first round of prime cuts
     this.getInitialPrimeCuts();
 
@@ -101,7 +102,6 @@ export class PrimeCutsService {
       .collection('prime-cuts', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(10))
       .get()
       .pipe(
-        tap(x => console.log('tap')),
         map(cuts => {
           const docs = [];
           cuts.forEach(cut => {

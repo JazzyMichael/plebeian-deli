@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 
-declare var gtag;
+// declare var gtag;
 declare var fbq;
 
 @Injectable({
@@ -15,15 +15,15 @@ export class AnalyticsService {
   constructor(private router: Router) { }
 
   startPageTracking() {
-    const navEndEvents = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    );
+    // const navEndEvents = this.router.events.pipe(
+    //   filter(event => event instanceof NavigationEnd)
+    // );
 
-    navEndEvents.subscribe((event: NavigationEnd) => {
-      gtag('config', 'UA-130962516-1', {
-        'page_path': event.urlAfterRedirects
-      });
-    });
+    // navEndEvents.subscribe((event: NavigationEnd) => {
+    //   gtag('config', 'UA-130962516-1', {
+    //     'page_path': event.urlAfterRedirects
+    //   });
+    // });
 
     if (firebase) {
       console.log('yes firebase');
@@ -31,14 +31,31 @@ export class AnalyticsService {
     } else {
       console.log('no firebase');
     }
+
+    try {
+      firebase.analytics();
+      console.log('analytics success');
+    } catch (e) {
+      console.log('.analytics() err', e);
+    }
   }
 
   viewSignUpPopup() {
-    //
+    try {
+      firebase.analytics().logEvent('view_signup-popup', { });
+      console.log('event success');
+    } catch (e) {
+      console.log('event err', e);
+    }
   }
 
   closeSignUpPopup() {
-    //
+    try {
+      firebase.analytics().logEvent('close_signup_popup', { });
+      console.log('event success');
+    } catch (e) {
+      console.log('event err', e);
+    }
   }
 
   loginFromSignUpPopup() {

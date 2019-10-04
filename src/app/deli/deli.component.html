@@ -57,10 +57,11 @@
 <div class="post-list">
     <ng-container *ngFor="let post of postService.posts$ | async">
         <mat-card *ngIf="post.category && post.category.toLowerCase() === category" class="post-thumbnail" (click)="postClick(post.postId)">
-            <img mat-card-image *ngIf="post.thumbnailImgUrl" [src]="post.thumbnailImgUrl" alt="Post Image">
-            <mat-card-content>
+            <img *ngIf="post.thumbnail | async as thumbnail" [src]="thumbnail" class="thumbnail-img" alt="Post Image">
+            <!-- <img *ngIf="!post.thumbnail && post.thumbnailImgUrl" [src]="post.thumbnailImgUrl" class="thumbnail-img" alt="Post Image"> -->
+            <mat-card-content style="padding: 1em">
                 <p>{{ post.title }}</p>
-                <p>{{ post.createdTimestamp?.toDate() | date }}</p>
+                <!-- <p>{{ post.createdTimestamp?.toDate() | date }}</p> -->
                 <div *ngIf="post.price" style="float: right; margin-top: -3em;">
                     <p>{{ post.price | currency }}</p>
                     <p>{{ post.quantity }} remaining</p>
@@ -68,5 +69,9 @@
             </mat-card-content>
         </mat-card>
     </ng-container>
+    <br><br><br><br>
 </div>
 
+<br><br><br><br>
+
+<app-footer></app-footer>

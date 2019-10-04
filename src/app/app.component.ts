@@ -6,7 +6,7 @@ import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs/operators';
 import { AnalyticsService } from './services/analytics.service';
 
-declare var gtag;
+// declare var gtag;
 // declare var fbq;
 
 @Component({
