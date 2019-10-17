@@ -183,3 +183,120 @@ export const createConnectCharge = functions.https
             throw new Error('charge error');
         });
     });
+
+
+export const signupCheckoutSession = functions.https
+    .onCall(async (data, context) => {
+
+        if (!data || !context || !context.auth) {
+            throw new Error('Invalid Request');
+        }
+
+        const membership = data.membership;
+
+        const userId = context.auth.uid;
+
+        const customerId = data.customerId || '';
+
+        let sessionObj: any;
+
+        // create payment session
+        if (data.paymentCheckout && data.item) {
+            sessionObj = {
+                mode: 'payment',
+                payment_method_types: ['card'],
+                success_url: `https://plebeiandeli.art/signup-success?membership=${membership}&session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: 'https://plebeiandeli.art/about',
+                customer: customerId,
+                client_reference_id: userId,
+                line_items: [
+                    {
+                        name: data.item.name,
+                        amount: data.item.amount,
+                        quantity: 1,
+                        currency: 'usd',
+                        description: data.item.description,
+                        images: ['https://www.plebeiandeli.art/assets/images/b35-ticket-logo.png']
+                    }
+                ]
+            };
+        }
+
+        // create subscription session
+        if (data.subscriptionCheckout && data.planId) {
+            sessionObj = {
+                mode: 'subscription',
+                payment_method_types: ['card'],
+                success_url: `https://plebeiandeli.art/signup-success?membership=${membership}&session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: 'https://plebeiandeli.art/about',
+                customer: customerId,
+                client_reference_id: userId,
+                subscription_data: {
+                    items: [{ plan: data.planId }],
+                    trial_period_days: 30,
+                    metadata: { membership }
+                }
+            };
+        }
+
+        if (!sessionObj) {
+            console.log('NO SESSION!');
+            return;
+        }
+
+        const session = await stripe.checkout.sessions.create(sessionObj);
+
+        console.log('SESSION ID', session.id);
+
+        await db
+            .doc(`users/${userId}`)
+            .update({ signupSessionId: session.id });
+
+        return session.id;
+    });
+
+export const stripeCheckoutWebhook = functions.https
+    .onRequest(async (req, res) => {
+        const sig = req.headers['stripe-signature'];
+
+        let event: any;
+
+        const endpointSecret = 'Dashboards webhook settings';
+
+        try {
+            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        } catch (err) {
+            const msg = `Webhook Error ${err.message}`;
+            return res.status(400).send(msg);
+        }
+
+        if (event.type === 'checkout.session.completed') {
+            const session = event.data.object;
+
+            const artistRegex = new RegExp('membership=artist');
+
+            const galleryRegex = new RegExp('membership=gallery');
+
+            const membership = artistRegex.test(session.success_url) ? 'artist' : galleryRegex.test(session.success_url) ? 'gallery' : '';
+
+            const userId = session.client_reference_id;
+
+            const timestamp = new Date();
+
+            if (membership) {
+                // update user membership
+                await db
+                    .doc(`users/${userId}`)
+                    .update({ membership });
+            } else {
+                // update orders
+            }
+
+            // save session
+            await db
+                .doc(`checkout-sessions/${session.id}`)
+                .set({ ...session, timestamp, userId }, { merge: true });
+        }
+
+        return res.json({ received: true });
+    })

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -29,7 +29,7 @@ export class PostService {
       .pipe(
         map(posts => {
           return posts.map((post: any) => {
-            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath) : undefined;
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
             return { ...post, thumbnail };
           });
         })
@@ -39,8 +39,16 @@ export class PostService {
       });
   }
 
-  getPostThumbnail(path: string): Observable<any> {
-    return this.storage.ref(path).getDownloadURL();
+  getPostThumbnail(path: string, backupUrl: string): Observable<any> {
+    return this.storage
+      .ref(path)
+      .getDownloadURL()
+      .pipe(
+        catchError(e => {
+          console.log('postThumbnail not found', e);
+          return of(backupUrl);
+        })
+      );
   }
 
   getPostsByCategory(category: string) {
@@ -49,14 +57,14 @@ export class PostService {
       .valueChanges({ idField: 'postId' });
   }
 
-  getUserPosts(uid: string, limit: number = 10): Observable<any> {
+  getUserPosts(uid: string, limit: number = 20): Observable<any> {
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {
           return posts.map((post: any) => {
-            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath) : undefined;
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
             return { ...post, thumbnail };
           });
         })

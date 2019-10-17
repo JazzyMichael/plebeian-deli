@@ -80,6 +80,9 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
 import { FaqComponent } from './faq/faq.component';
+import { CollectPaymentComponent } from './collect-payment/collect-payment.component';
+import { SignupSuccessComponent } from './signup-success/signup-success.component';
+import { ChoosePlanComponent } from './choose-plan/choose-plan.component';
 
 // const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
 
@@ -161,7 +164,10 @@ const routes: Routes = [
     CommentListComponent,
     CommentFormComponent,
     SignupDialogComponent,
-    FaqComponent
+    FaqComponent,
+    CollectPaymentComponent,
+    SignupSuccessComponent,
+    ChoosePlanComponent
   ],
   imports: [
     BrowserModule,

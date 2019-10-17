@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AuthService } from '../services/auth.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'app-signup-dialog',
@@ -11,6 +12,7 @@ export class SignupDialogComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
+    private analytics: AnalyticsService,
     public dialogRef: MatDialogRef<SignupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) { }
@@ -23,6 +25,7 @@ export class SignupDialogComponent implements OnInit {
   }
 
   googleLogin() {
+    this.analytics.loginFromPopupClick();
     this.auth.loginWithGoogle();
     this.dialogRef.close({
       googleLogin: true
@@ -30,6 +33,7 @@ export class SignupDialogComponent implements OnInit {
   }
 
   facebookLogin() {
+    this.analytics.loginFromPopupClick();
     this.auth.loginWithFacebook();
     this.dialogRef.close({
       facebookLogin: true

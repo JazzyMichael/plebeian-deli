@@ -27,7 +27,7 @@ export class AnalyticsService {
 
     if (firebase) {
       console.log('yes firebase');
-      console.log(firebase);
+      // console.log(firebase);
     } else {
       console.log('no firebase');
     }
@@ -42,7 +42,7 @@ export class AnalyticsService {
 
   viewSignUpPopup() {
     try {
-      firebase.analytics().logEvent('view_signup-popup', { });
+      firebase.analytics().logEvent('view_signup-popup', { testProp: 'ayo testo' });
       console.log('event success');
     } catch (e) {
       console.log('event err', e);
@@ -51,15 +51,20 @@ export class AnalyticsService {
 
   closeSignUpPopup() {
     try {
-      firebase.analytics().logEvent('close_signup_popup', { });
+      firebase.analytics().logEvent('close_signup_popup', { testProp: 'yomayo tomato' });
       console.log('event success');
     } catch (e) {
       console.log('event err', e);
     }
   }
 
-  loginFromSignUpPopup() {
-    //
+  loginFromPopupClick() {
+    try {
+      firebase.analytics().logEvent('popup_login_click', { testProp: 'pleb alato' });
+      console.log('event success');
+    } catch (e) {
+      console.log('event err', e);
+    }
   }
 
   addToCart() {

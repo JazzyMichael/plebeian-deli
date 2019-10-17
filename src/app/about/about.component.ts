@@ -5,6 +5,7 @@ import { SignupDialogComponent } from 'src/app/signup-dialog/signup-dialog.compo
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'app-about',
@@ -53,7 +54,8 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    private analyticsService: AnalyticsService
     ) {
     this.route.queryParams.subscribe(params => {
       this.goToSubscriptions = !!params.subscriptions;
@@ -88,12 +90,15 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showSignupDialog() {
     const dialogRef = this.dialog.open(SignupDialogComponent, {
-      data: { },
-      width: '80vw'
+      data: { }
     });
 
+    dialogRef.afterOpened().subscribe(
+      () => this.analyticsService.viewSignUpPopup()
+    );
+
     dialogRef.afterClosed().subscribe(res => {
-      console.log('dialog closed res', res);
+      this.analyticsService.closeSignUpPopup();
     });
   }
 
