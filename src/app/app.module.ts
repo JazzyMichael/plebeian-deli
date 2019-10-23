@@ -84,11 +84,9 @@ import { CollectPaymentComponent } from './collect-payment/collect-payment.compo
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { ChoosePlanComponent } from './choose-plan/choose-plan.component';
 
-// const adminOnly = map((user: any) => user ? ['admin'] : ['deli']);
-
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
-  { path: 'about', component: AboutComponent }, // component: AboutComponent
+  { path: 'about', component: AboutComponent },
   { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', component: ExhibitionsComponent },
@@ -103,14 +101,13 @@ const routes: Routes = [
   { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'login', component: LoginComponent }, // , ...canActivate(redirectLoggedInTo(['/deli']))
+  { path: 'login', component: LoginComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/prime-cuts', pathMatch: 'full' }
 ];

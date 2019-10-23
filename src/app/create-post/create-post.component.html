@@ -4,7 +4,7 @@
 <mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
 
 
-<div *ngIf="!uploading" style="margin-bottom: 5em">
+<div *ngIf="!uploading" style="margin: 0.5em auto 5em; max-width: 700px;">
 
 
     <!-- Title -->
@@ -117,6 +117,21 @@
             placeholder="Add a link"
             autocomplete="off">
         <mat-hint>Optional</mat-hint>
+    </mat-form-field>
+
+
+    <!-- Tags -->
+    <mat-form-field>
+        <mat-chip-list #chipList aria-label="Tags">
+          <mat-chip *ngFor="let tag of tags" removable="true" (removed)="removeTag(tag)">
+            {{ tag }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Tags..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="addTag($event)">
+        </mat-chip-list>
     </mat-form-field>
 
 

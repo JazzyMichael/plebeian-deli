@@ -42,14 +42,12 @@
 </ngx-hm-carousel>
 
 <div class="icon-container">
-
     <mat-icon
         *ngFor="let cat of cats; let i = index"
         (click)="categorySelect(i)"
         [ngClass]="{'selected': i == carouselIndex}">
         {{ cat.icon }}
     </mat-icon>
-
 </div>
 
 <br><br><br><br>

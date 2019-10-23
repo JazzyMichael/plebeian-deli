@@ -57,6 +57,12 @@ export class PostService {
       .valueChanges({ idField: 'postId' });
   }
 
+  filterPostsByTag(tag: string) {
+    return this.afStore
+      .collection('posts', ref => ref.where('tags', 'array-contains', tag).limit(100))
+      .valueChanges({ idField: 'postId' });
+  }
+
   getUserPosts(uid: string, limit: number = 20): Observable<any> {
     return this.afStore
       .collection('posts', ref => ref.where('userId', '==', uid).orderBy('createdTimestamp', 'desc').limit(limit))

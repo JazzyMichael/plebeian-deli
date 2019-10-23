@@ -78,6 +78,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.userService.updateUser(this.uid, userObj);
       if (userObj.username) {
         this.router.navigateByUrl(`/${userObj.username}`);
+        this.newUsername = '';
       }
     });
   }

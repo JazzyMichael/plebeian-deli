@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Subject } from 'rxjs';
@@ -33,6 +35,9 @@ export class CreatePostComponent implements OnInit {
   validatePrice$: Subject<any> = new Subject();
 
   uploading: boolean;
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  tags: any[] = [];
 
   constructor(
     private categoriesService: CategoriesService,
@@ -127,6 +132,30 @@ export class CreatePostComponent implements OnInit {
     this.validatePrice$.next();
   }
 
+  addTag(event: MatChipInputEvent): void {
+    const { input, value } = event;
+
+    if ((value || '').trim()) {
+      this.tags.push(value);
+
+      if (this.tags.length > 20) {
+        this.tags = this.tags.slice(this.tags.length - 20);
+      }
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeTag(tag: string) {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
   async submit() {
 
     this.uploading = true;
@@ -173,7 +202,8 @@ export class CreatePostComponent implements OnInit {
       price: this.approvedSeller && this.price ? parseInt(this.price) : 0,
       quantity: this.approvedSeller && this.quantity ? this.quantity : 0,
       startingQuantity: this.approvedSeller && this.quantity ? this.quantity : 0,
-      likes: 0
+      likes: 0,
+      tags: this.tags || []
     };
 
     this.uploading = false;

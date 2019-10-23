@@ -28,7 +28,6 @@ export class AuthService {
     private analyticsService: AnalyticsService,
     private notificiationService: NotificationService
     ) {
-      // const cachedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
       this.user$ = new BehaviorSubject(null);
       this.username = '';
 
@@ -163,14 +162,16 @@ export class AuthService {
       .pipe(
         map(arr => arr[0] ? arr[0] : null),
         map(user => {
+          if (!user) {
+            return null;
+          }
+
           return {
             ...user,
             smallThumbnail: this.userService.getUserThumbnail(user, 100),
             mediumThumbnail: this.userService.getUserThumbnail(user, 250),
             backgroundThumbnail: this.userService.getUserBackground(user, 500)
           };
-          // mediumBackground: '',
-          // largeBackground: ''
         })
       );
   }
