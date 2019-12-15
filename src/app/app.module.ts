@@ -83,6 +83,7 @@ import { FaqComponent } from './faq/faq.component';
 import { CollectPaymentComponent } from './collect-payment/collect-payment.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { ChoosePlanComponent } from './choose-plan/choose-plan.component';
+import { AddressFormComponent } from './address-form/address-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
@@ -164,7 +165,8 @@ const routes: Routes = [
     FaqComponent,
     CollectPaymentComponent,
     SignupSuccessComponent,
-    ChoosePlanComponent
+    ChoosePlanComponent,
+    AddressFormComponent
   ],
   imports: [
     BrowserModule,

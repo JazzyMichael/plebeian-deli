@@ -1,0 +1,16 @@
+.form-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-row > mat-form-field {
+    width: 100%;
+}
+
+mat-form-field {
+    display: block;
+    margin: 1em 10px;
+    flex-grow: 1;
+}

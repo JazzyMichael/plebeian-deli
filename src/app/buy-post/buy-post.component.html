@@ -12,9 +12,13 @@
 
             <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
 
-            <quill-view [content]="post.content"></quill-view>
+            <img *ngIf="post.thumbnail | async as thumbnail" [src]="thumbnail" class="thumbnail-img" alt="Post Image">
 
         </mat-card>
+
+        <br>
+
+        <app-address-form></app-address-form>
 
         <mat-card style="width: 400px; max-width: 90%; margin: 1em auto;">
             <p>Art Price: {{ post.price | currency }}</p>

@@ -30,7 +30,8 @@ export class DeliComponent implements OnInit {
     ) { }
 
   async ngOnInit() {
-    this.cats = this.catService.getCategories();
+    const allCategory = { name: 'all', icon: 'all_inclusive' };
+    this.cats = [ allCategory, ...this.catService.getCategories()];
     this.category = this.cats[0] ? this.cats[0].name : 'sculpture';
     this.titleService.setTitle('Deli');
   }

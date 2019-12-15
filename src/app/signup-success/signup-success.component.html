@@ -1,1 +1,8 @@
-<p>signup-success works!</p>
+
+<p>You're all signed up!</p>
+
+<p *ngIf="membership">{{ membership }}</p>
+
+<div *ngIf="user$ | async as user">
+    <p>username: {{ user.username }}</p>
+</div>

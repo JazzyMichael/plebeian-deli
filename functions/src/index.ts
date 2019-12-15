@@ -37,6 +37,21 @@ export const createStripeCustomer = functions.auth
 
 
 
+// listen to new comments
+
+export const newComment = functions.firestore
+    .document('posts/{postId}/comments/{commentId}')
+    .onCreate((snap, context) => {
+        const newValue = snap.data();
+        return;
+
+        // add notification to poster & 
+    });
+
+
+
+
+
 // add payment source (credit card) to stripe customer for user
 // subscribe user to plan
 // update user document
