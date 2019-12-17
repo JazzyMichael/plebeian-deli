@@ -33,6 +33,7 @@ export class AuthService {
 
       this.afAuth.auth.getRedirectResult()
         .then(res => {
+          console.log('redirect res', res)
           if (res && res.user) {
             this.handleAuthData(res);
           }
@@ -69,7 +70,13 @@ export class AuthService {
   async loginWithGoogle() {
     const provider = new auth.GoogleAuthProvider();
 
-    await this.afAuth.auth.signInWithRedirect(provider);
+    try {
+      await this.afAuth.auth.signInWithPopup(provider);
+      this.analyticsService.login();
+    } catch (e) {
+      console.log('error signing in with popup, trying redirect', e);
+      await this.afAuth.auth.signInWithRedirect(provider);
+    }
   }
 
   async loginWithFacebook() {
@@ -77,26 +84,22 @@ export class AuthService {
 
     provider.addScope('email');
 
-    await this.afAuth.auth.signInWithRedirect(provider);
+    try {
+      await this.afAuth.auth.signInWithPopup(provider);
+      this.analyticsService.login();
+    } catch (e) {
+      console.log('error signing in with popup, trying redirect', e);
+      await this.afAuth.auth.signInWithRedirect(provider);
+    }
   }
 
   async handleAuthData(authData: any) {
 
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
 
-      const providerId = authData.additionalUserInfo.providerId;
-
-      const random = Math.random().toString().slice(2, 8);
-
-      const username = authData.user.displayName.substring(0, 4) + `${random}`;
-
       const email = authData.user.email;
 
       const isOldUser = this.oldUserService.oldUserEmails.some(e => e === email);
-
-      const membership = isOldUser ? 'artist' : 'viewer';
-
-      await this.createUserDoc({ ...authData.user, username, membership, providerId });
 
       this.analyticsService.login();
 
@@ -104,7 +107,7 @@ export class AuthService {
         return this.router.navigateByUrl('/checkout');
       } else {
         setTimeout(() => {
-          const route = username ? `/${username}` : '/deli';
+          const route = '/deli';
           return this.router.navigateByUrl(route);
         }, 100);
       }
@@ -123,34 +126,6 @@ export class AuthService {
     return this.router.navigateByUrl('/prime-cuts');
   }
 
-  createUserDoc({ uid, username, displayName, email, phoneNumber, photoURL, membership, providerId }) {
-    const userDoc = this.afStore.doc(`users/${uid}`);
-
-    const data = {
-      uid,
-      username,
-      displayName,
-      email,
-      phoneNumber,
-      membership,
-      providerId,
-      photoURL,
-      profileUrl: photoURL,
-      backgroundUrl: null,
-      description: null,
-      cv: null,
-      followers: 0,
-      instagramUrl: null,
-      twitterUrl: null,
-      facebookUrl: null,
-      medium: null,
-      createdTimestamp: new Date(),
-      createdDate: Date.now()
-    };
-
-    return userDoc.set(data, { merge: true });
-  }
-
   getCurrentUser() {
     return this.user$.pipe(first()).toPromise();
   }
@@ -161,7 +136,7 @@ export class AuthService {
       .valueChanges()
       .pipe(
         map(arr => arr[0] ? arr[0] : null),
-        map(user => {
+        map((user: any) => {
           if (!user) {
             return null;
           }
