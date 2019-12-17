@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-icon>face</mat-icon>
+
+    <div>DELI</div>
+
+    <div class="icons">
+        <mat-icon class="pointer-cursor">search</mat-icon>
+        <span style="width: 20px"> </span>
+        <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">
+            <mat-icon>tune</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-menu #sortMenu="matMenu">
+    <button mat-menu-item [disabled]="sort === 'recent'" (click)="changeSort('recent')" class="pointer-cursor">
+        <mat-icon [ngClass]="{ 'active': sort === 'recent' }">av_timer</mat-icon>
+        <span [ngClass]="{ 'active': sort === 'recent' }">Recent</span>
+    </button>
+    <button mat-menu-item [disabled]="sort === 'popular'" (click)="changeSort('popular')" class="pointer-cursor">
+        <mat-icon [ngClass]="{ 'active': sort === 'popular' }">favorite_border</mat-icon>
+        <span [ngClass]="{ 'active': sort === 'popular' }">Popular</span>
+    </button>
+    <button mat-menu-item [disabled]="sort === 'price'" (click)="changeSort('price')" class="pointer-cursor">
+        <mat-icon [ngClass]="{ 'active': sort === 'price' }">attach_money</mat-icon>
+        <span [ngClass]="{ 'active': sort === 'price' }">Price</span>
+    </button>
+</mat-menu>

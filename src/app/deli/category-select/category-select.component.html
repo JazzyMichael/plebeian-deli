@@ -1,0 +1,58 @@
+<mat-chip-list class="mobile-cat-select">
+    <mat-chip
+        *ngFor="let cat of categories"
+        class="category-item"
+        [ngClass]="{ 'selected-item': selected === cat }"
+        (click)="onSelect(cat)">
+        {{ cat }}
+    </mat-chip>
+</mat-chip-list>
+
+
+<ngx-hm-carousel
+    #carousel
+    [(ngModel)]="carouselIndex"
+    (ngModelChange)="carouselIndexChanged($event)"
+    [infinite]="infinite"
+    [data]="fullCategories"
+    class="carousel desktop-cat-select">
+
+    <section ngx-hm-carousel-container class="content">
+        <article ngx-hm-carousel-item *ngFor="let cat of fullCategories" class="item">
+            <span>{{ cat.name | titlecase }}</span>
+            <mat-icon style="font-size: 30px">{{ cat.icon }}</mat-icon>
+        </article>
+        <ng-template #infiniteContainer></ng-template>
+    </section>
+
+    <ng-template #carouselContent let-cat let-i="index">
+        <article class="item">
+            <span>{{ cat.name | titlecase }}</span>
+            <mat-icon style="font-size: 30px">{{ cat.icon }}</mat-icon>
+        </article>
+    </ng-template>
+
+    <ng-template #carouselPrev>
+        <div style="text-align: center">
+            <mat-icon style="font-size: 2em">keyboard_arrow_left</mat-icon>
+        </div>
+    </ng-template>
+
+    <ng-template #carouselNext>
+        <div style="text-align: center">
+            <mat-icon style="font-size: 2em">keyboard_arrow_right</mat-icon>
+        </div>
+    </ng-template>
+
+</ngx-hm-carousel>
+
+<div class="icon-container">
+    <mat-icon
+        *ngFor="let cat of fullCategories; let i = index"
+        (click)="categorySelect(i)"
+        [ngClass]="{'selected': i == carouselIndex}">
+        {{ cat.icon }}
+    </mat-icon>
+</div>
+
+<br><br>

@@ -53,8 +53,16 @@ export class PostService {
 
   getPostsByCategory(category: string) {
     return this.afStore
-      .collection('posts', ref => ref.where('category', '==', category).limit(10))
-      .valueChanges({ idField: 'postId' });
+      .collection('posts', ref => ref.where('category', '==', category).orderBy('createdTimestamp', 'desc').limit(10))
+      .valueChanges({ idField: 'postId' })
+      .pipe(
+        map(posts => {
+          return posts.map((post: any) => {
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
+            return { ...post, thumbnail };
+          });
+        })
+      );
   }
 
   filterPostsByTag(tag: string) {

@@ -1,0 +1,7 @@
+<div class="post-layout">
+
+    <app-post-thumbnail *ngFor="let post of posts" [post]="post"></app-post-thumbnail>
+
+</div>
+
+<div *ngIf="!posts?.length" style="text-align: center">No posts</div>

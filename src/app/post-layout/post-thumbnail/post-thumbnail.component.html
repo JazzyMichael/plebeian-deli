@@ -1,0 +1,16 @@
+<mat-card *ngIf="post" class="post-thumbnail" (click)="postClick(post.postId)">
+    <img
+        *ngIf="post.thumbnail | async as thumbnail"
+        [src]="thumbnail"
+        class="thumbnail-img"
+        alt="Post Image" >
+
+    <mat-card-content style="padding: 1em">
+        <p>{{ post.title }}</p>
+
+        <div *ngIf="post.price" style="text-align: right">
+            <p>{{ post.price | currency }}</p>
+            <p>{{ post.quantity }} remaining</p>
+        </div>
+    </mat-card-content>
+</mat-card>

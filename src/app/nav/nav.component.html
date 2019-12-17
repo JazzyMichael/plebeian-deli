@@ -29,7 +29,7 @@
             <button mat-button routerLink="/login" class="sidenav-button" (click)="sidenav.close()">SIGN IN</button>
         </ng-template>
 
-        <button mat-button routerLink="/prime-cuts" class="sidenav-button" (click)="sidenav.close()">PRIME CUTS</button>
+        <!-- <button mat-button routerLink="/prime-cuts" class="sidenav-button" (click)="sidenav.close()">PRIME CUTS</button> -->
         <button mat-button routerLink="/deli" class="sidenav-button" (click)="sidenav.close()">DELI</button>
         <button mat-button routerLink="/exhibitions" class="sidenav-button" (click)="sidenav.close()">EXHIBITIONS</button>
         <button mat-button routerLink="/calendar" class="sidenav-button" (click)="sidenav.close()">CALENDAR</button>
@@ -78,7 +78,7 @@
                     </svg>
                 </div>
           
-                <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">PRIME CUTS</span>
+                <!-- <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">PRIME CUTS</span> -->
                 <span routerLink="/deli" routerLinkActive="active-link" class="nav-link">DELI</span>
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
@@ -123,10 +123,10 @@
                             <mat-icon>help_outline</mat-icon>
                             <span>F.A.Q.</span>
                         </button>
-                        <button *ngIf="user.writer" mat-menu-item routerLink="/new-prime-post">
+                        <!-- <button *ngIf="user.writer" mat-menu-item routerLink="/new-prime-post">
                             <mat-icon>post_add</mat-icon>
                             <span>New Prime Post</span>
-                        </button>
+                        </button> -->
                         <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
                             <mat-icon>local_offer</mat-icon>
                             <span>Seller Info</span>

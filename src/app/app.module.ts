@@ -73,7 +73,6 @@ import { SoldServicesComponent } from './orders/sold-services/sold-services.comp
 import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
 import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
 import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
-import { PostLayoutComponent } from './prime-cuts/post-layout/post-layout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
@@ -84,11 +83,15 @@ import { CollectPaymentComponent } from './collect-payment/collect-payment.compo
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { ChoosePlanComponent } from './choose-plan/choose-plan.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { CategorySelectComponent } from './deli/category-select/category-select.component';
+import { PostLayoutComponent } from './post-layout/post-layout.component';
+import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
+import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
-  { path: 'prime-cuts', component: PrimeCutsComponent },
+  // { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
@@ -99,7 +102,7 @@ const routes: Routes = [
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
-  { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  // { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent },
@@ -166,7 +169,10 @@ const routes: Routes = [
     CollectPaymentComponent,
     SignupSuccessComponent,
     ChoosePlanComponent,
-    AddressFormComponent
+    AddressFormComponent,
+    CategorySelectComponent,
+    PostThumbnailComponent,
+    DeliHeaderComponent
   ],
   imports: [
     BrowserModule,
