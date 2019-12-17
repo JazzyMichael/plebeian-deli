@@ -13,25 +13,28 @@ const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
 
 import fetch from 'node-fetch';
 
+import { createUser } from './createUser';
 
+
+export const userCreate = functions.auth.user().onCreate(createUser)
 
 // when new users are created in firestore,
 // create a stripe customer for that user
-export const createStripeCustomer = functions.auth
-    .user()
-    .onCreate(async (userRecord, context) => {
-        const firebaseUID: string = userRecord.uid;
-        const firebaseEmail: string = userRecord.email;
+// export const createStripeCustomer = functions.auth
+//     .user()
+//     .onCreate(async (userRecord, context) => {
+//         const firebaseUID: string = userRecord.uid;
+//         const firebaseEmail: string = userRecord.email;
 
-        const customer = await stripe.customers.create({
-            email: firebaseEmail,
-            metadata: { firebaseUID }
-        });
+//         const customer = await stripe.customers.create({
+//             email: firebaseEmail,
+//             metadata: { firebaseUID }
+//         });
 
-        return db.doc(`users/${firebaseUID}`).set({
-            stripeId: customer.id
-        }, { merge: true });
-    });
+//         return db.doc(`users/${firebaseUID}`).set({
+//             stripeId: customer.id
+//         }, { merge: true });
+//     });
 
 
 
