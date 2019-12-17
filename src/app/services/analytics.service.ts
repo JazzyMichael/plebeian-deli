@@ -84,6 +84,13 @@ export class AnalyticsService {
     }
   }
 
-
+  selectCategory(category: string) {
+    try {
+      firebase.analytics().logEvent('select_category', { category });
+      console.log('event success');
+    } catch (e) {
+      console.log('event err', e);
+    }
+  }
 
 }

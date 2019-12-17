@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
   selector: 'app-category-select',
@@ -12,10 +13,11 @@ export class CategorySelectComponent implements OnInit {
 
   fullCategories: any[];
   carouselIndex: number = 0;
+  infinite: boolean = true;
 
   @Output() selectedCategory: EventEmitter<string> = new EventEmitter();
 
-  constructor(private catService: CategoriesService) { }
+  constructor(private catService: CategoriesService, private analytics: AnalyticsService) { }
 
   ngOnInit() {
     this.fullCategories = [ { name: 'all', icon: 'all_inclusive' }, ...this.catService.getCategories() ];
@@ -26,18 +28,21 @@ export class CategorySelectComponent implements OnInit {
   onSelect(category: string) {
     this.selected = this.selected === category ? 'all' : category;
     this.selectedCategory.emit(this.selected);
+    this.analytics.selectCategory(this.selected);
   }
 
   categorySelect(index: number) {
     this.carouselIndex = index;
     this.selected = this.fullCategories[index].name;
     this.selectedCategory.emit(this.selected);
+    this.analytics.selectCategory(this.selected);
   }
 
   carouselIndexChanged(index: number) {
     this.carouselIndex = index;
     this.selected = this.fullCategories[index].name;
     this.selectedCategory.emit(this.selected);
+    this.analytics.selectCategory(this.selected);
   }
 
 }
