@@ -11,6 +11,8 @@
         <div class="sub-header__date">{{ post.createdTimestamp.toDate() | date }}</div>
     </div>
 
+    <div class="mobile-title">{{ post.title }}</div>
+
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="post-header">
 
@@ -65,11 +67,6 @@
         
         </ngx-hm-carousel>
 
-
-        <p style="text-align: center; margin-top: 1.2em;">{{ post.description }}</p>
-
-        <br>
-
         <div>
             <hr>
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -106,6 +103,16 @@
         </button>
     </mat-card>
 
+
+    <!-- description -->
+    <app-description-box [description]="post.description"></app-description-box>
+
+
+    <!-- Comments -->
+    <br>
+    <app-comments [deliPostId]="postId" [postUserId]="postUserId"></app-comments>
+
+
     <!-- recent posts by that artist -->
     <div style="margin: 2em 0">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -122,26 +129,6 @@
             </mat-card>
         </div>
     </div>
-
-    <!-- Comments -->
-    <app-comments [deliPostId]="postId" [postUserId]="postUserId"></app-comments>
-
-    <!-- featured posts from deli -->
-    <!-- <div style="margin: 2em 0">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-            <h3>Featured Posts</h3>
-            <button mat-raised-button routerLink="/deli">View More</button> 
-        </div>
-        <div style="display: flex; justify-content: space-around;">
-            <mat-card *ngFor="let post of featuredPosts$ | async" style="height: 250px; width: 200px; margin: 0.5em; cursor: pointer;" [routerLink]="'/post/' + post.postId">
-                <img mat-card-image [src]="post.thumbnailUrl" alt="Post Image" style="max-height: 200px">
-                <mat-card-content>
-                    <p>{{ post.title }}</p>
-                    <p>{{ post.createdTimestamp.toDate() | date }}</p>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div> -->
 
 </div>
 

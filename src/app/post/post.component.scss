@@ -36,6 +36,14 @@
     font-size: 1.25em;
 }
 
+.mobile-title {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+}
+
 @media (min-width: 777px) {
     .sub-header {
         display: none;
@@ -115,6 +123,7 @@
 }
 
 .post-title {
+    display: none;
     margin-left: 0;
 }
 
@@ -131,6 +140,11 @@
     }
 
     .post-title {
+        display: block;
         margin-left: 2em;
+    }
+
+    .mobile-title {
+        display: none;
     }
 }
