@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 export class DeliComponent implements OnInit {
 
   posts$: Observable<any>;
-
   category: string;
   sort: string;
 
@@ -33,7 +32,7 @@ export class DeliComponent implements OnInit {
     this.category = category;
     this.posts$ = category && category !== 'all'
                 ? this.postService.getPostsByCategory(this.category, this.sort)
-                : this.postService.posts$;
+                : this.postService.getAllPostsBySort(this.sort);
   }
 
   sortChange(sort: string) {
@@ -42,8 +41,8 @@ export class DeliComponent implements OnInit {
     }
     this.sort = sort;
     this.posts$ = this.category && this.category !== 'all'
-    ? this.postService.getPostsByCategory(this.category, this.sort)
-    : this.postService.posts$;
+                ? this.postService.getPostsByCategory(this.category, this.sort)
+                : this.postService.getAllPostsBySort(this.sort);
   }
 
 }

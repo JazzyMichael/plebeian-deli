@@ -138,8 +138,8 @@ export class CreatePostComponent implements OnInit {
     if ((value || '').trim()) {
       this.tags.push(value);
 
-      if (this.tags.length > 20) {
-        this.tags = this.tags.slice(this.tags.length - 20);
+      if (this.tags.length > 10) {
+        this.tags = this.tags.slice(this.tags.length - 10);
       }
     }
 

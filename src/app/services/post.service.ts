@@ -51,12 +51,29 @@ export class PostService {
       );
   }
 
+  getAllPostsBySort(sort: string = 'recent') {
+    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
+    const sortField = opts[sort];
+
+    return this.afStore
+      .collection('posts', ref => ref.orderBy(sortField, 'desc').limit(20))
+      .valueChanges({ idField: 'postId' })
+      .pipe(
+        map(posts => {
+          return posts.map((post: any) => {
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
+            return { ...post, thumbnail };
+          });
+        })
+      );
+  }
+
   getPostsByCategory(category: string, sort: string = 'recent') {
     const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
     const sortField = opts[sort];
 
     return this.afStore
-      .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(10))
+      .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(20))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {
