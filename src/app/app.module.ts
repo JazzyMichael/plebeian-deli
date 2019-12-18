@@ -86,6 +86,7 @@ import { CategorySelectComponent } from './deli/category-select/category-select.
 import { PostLayoutComponent } from './post-layout/post-layout.component';
 import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
 import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
+import { PostHeaderComponent } from './post/post-header/post-header.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
@@ -169,7 +170,8 @@ const routes: Routes = [
     AddressFormComponent,
     CategorySelectComponent,
     PostThumbnailComponent,
-    DeliHeaderComponent
+    DeliHeaderComponent,
+    PostHeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,43 @@
     }
 }
 
-.author-info {
+// mobile sub-header
+
+.sub-header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-header__user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sub-header__image {
+    max-height: 50px;
+    max-width: 50px;
+    margin-right: 0.5em;
+}
+
+.sub-header__username {
+    font-size: 1.25em;
+}
+
+@media (min-width: 777px) {
+    .sub-header {
+        display: none;
+    }
+
+    .author-info {
+        display: flex;
+    }
+}
+
+.author-info {
+    display: none;
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;

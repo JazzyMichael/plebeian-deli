@@ -78,14 +78,12 @@
                     </svg>
                 </div>
           
-                <!-- <span routerLink="/prime-cuts" routerLinkActive="active-link" class="nav-link">PRIME CUTS</span> -->
+                <!-- Desktop top navbar links -->
                 <span routerLink="/deli" routerLinkActive="active-link" class="nav-link">DELI</span>
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">MEMBERS</span>
                 <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">SELL YOUR WORK</button>
-                <!-- <button mat-raised-button routerLink="/shop" color="accent" class="nav-link highlighted-btn">Shop</button> -->
-
 
                 <!-- logged-in button & menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">

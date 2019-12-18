@@ -1,13 +1,15 @@
+<app-post-header></app-post-header>
 
 <div *ngIf="post$ | async as post" class="container">
 
-    <!-- <div class="author-info">
-        <img [src]="post?.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
-        <div>
-            <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
-            <p style="color: #777">{{ post.createdTimestamp.toDate() | date }}</p>
+    <div class="sub-header">
+        <div class="sub-header__user" [routerLink]="'/' + post.user.username">
+            <img class="sub-header__image" [src]="post.user.thumbnail | async" alt="Profile Picture">
+            <div class="sub-header__username">{{ post?.user?.username }}</div>
         </div>
-    </div> -->
+
+        <div class="sub-header__date">{{ post.createdTimestamp.toDate() | date }}</div>
+    </div>
 
     <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="post-header">
