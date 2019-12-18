@@ -13,7 +13,9 @@
 
     <div class="mobile-title">{{ post.title }}</div>
 
-    <mat-card style="margin: 2em auto; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between;">
+    <app-post-images class="mobile-images" [images]="post.images"></app-post-images>
+
+    <mat-card style="margin: 2em auto; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="post-header">
 
             <div class="author-info">
@@ -29,45 +31,7 @@
 
         </div>
 
-        <hr style="width: 100%; margin: 1em auto;">
-        
-        <!-- <quill-view [content]="post.content"></quill-view> -->
-        <!-- <img *ngFor="let img of post.images" style="display: block; margin: 1em auto; width: 90%;" [src]="img.url" alt="Post Image" /> -->
-
-        <ngx-hm-carousel
-            #carousel
-            [(ngModel)]="carouselIndex"
-            [data]="post.images"
-            class="carousel">
-        
-            <section ngx-hm-carousel-container class="content">
-                <article ngx-hm-carousel-item *ngFor="let img of post.images" class="item">
-                    <img [src]="img.url" alt="Post Image" draggable="false" class="post-img">
-                </article>
-                <!-- <ng-template #infiniteContainer></ng-template> -->
-            </section>
-        
-            <ng-template #carouselContent let-img let-i="index">
-                <article class="item">
-                    <img [src]="img.url" alt="Post Image" draggable="false" class="post-img">
-                </article>
-            </ng-template>
-        
-            <ng-template #carouselPrev>
-                <div *ngIf="post.images?.length > 1" class="arrows">
-                    <mat-icon style="font-size: 2em">keyboard_arrow_left</mat-icon>
-                </div>
-            </ng-template>
-        
-            <ng-template #carouselNext>
-                <div *ngIf="post.images?.length > 1" class="arrows">
-                    <mat-icon style="font-size: 2em">keyboard_arrow_right</mat-icon>
-                </div>
-            </ng-template>
-        
-        </ngx-hm-carousel>
-
-        <div>
+        <div class="desktop-post-info">
             <hr>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -76,10 +40,6 @@
                     </button>
                     <button mat-icon-button (click)="twitterShare()">
                         <mat-icon svgIcon="twitter"></mat-icon>
-                    </button>
-                    <button mat-button>
-                        <mat-icon>link</mat-icon>
-                        <span style="margin-left: 5px">Copy Link</span>
                     </button>
                 </div>
                 <div>
