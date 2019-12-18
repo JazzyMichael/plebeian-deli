@@ -17,3 +17,12 @@
 .pointer-cursor {
     cursor: pointer;
 }
+
+::ng-deep .mat-form-field-infix {
+    border: none !important;
+}
+
+.search-box {
+    margin-bottom: -17px !important;
+    width: 70% !important;
+}

@@ -12,6 +12,9 @@ export class DeliComponent implements OnInit {
 
   posts$: Observable<any>;
 
+  category: string;
+  sort: string;
+
   constructor(
     public postService: PostService,
     private titleService: Title
@@ -24,9 +27,23 @@ export class DeliComponent implements OnInit {
   }
 
   getPostsByCategory(category: string) {
+    if (this.category === category) {
+      return;
+    }
+    this.category = category;
     this.posts$ = category && category !== 'all'
-                ? this.postService.getPostsByCategory(category)
+                ? this.postService.getPostsByCategory(this.category, this.sort)
                 : this.postService.posts$;
+  }
+
+  sortChange(sort: string) {
+    if (this.sort === sort) {
+      return;
+    }
+    this.sort = sort;
+    this.posts$ = this.category && this.category !== 'all'
+    ? this.postService.getPostsByCategory(this.category, this.sort)
+    : this.postService.posts$;
   }
 
 }

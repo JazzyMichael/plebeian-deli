@@ -28,7 +28,6 @@ import { AboutComponent } from './about/about.component';
 import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MembersComponent } from './members/members.component';
-import { ShopComponent } from './shop/shop.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PrimeCutsComponent } from './prime-cuts/prime-cuts.component';
 import { DeliComponent } from './deli/deli.component';
@@ -96,7 +95,6 @@ const routes: Routes = [
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
-  { path: 'shop', component: ShopComponent },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
@@ -123,7 +121,6 @@ const routes: Routes = [
     ExhibitionsComponent,
     CalendarComponent,
     MembersComponent,
-    ShopComponent,
     SubscriptionsComponent,
     PrimeCutsComponent,
     DeliComponent,

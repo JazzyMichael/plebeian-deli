@@ -1,15 +1,14 @@
 <div class="container">
     <mat-icon>face</mat-icon>
 
-    <div>DELI</div>
+    <mat-form-field class="search-box" floatLabel="never">
+        <input matInput placeholder="Search the Deli" autocomplete="off">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
 
-    <div class="icons">
-        <mat-icon class="pointer-cursor">search</mat-icon>
-        <span style="width: 20px"> </span>
-        <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">
-            <mat-icon>tune</mat-icon>
-        </button>
-    </div>
+    <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">
+        <mat-icon>tune</mat-icon>
+    </button>
 </div>
 
 <mat-menu #sortMenu="matMenu">

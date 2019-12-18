@@ -51,9 +51,12 @@ export class PostService {
       );
   }
 
-  getPostsByCategory(category: string) {
+  getPostsByCategory(category: string, sort: string = 'recent') {
+    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
+    const sortField = opts[sort];
+
     return this.afStore
-      .collection('posts', ref => ref.where('category', '==', category).orderBy('createdTimestamp', 'desc').limit(10))
+      .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(10))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {

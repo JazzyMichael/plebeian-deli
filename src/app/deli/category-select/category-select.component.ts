@@ -21,7 +21,7 @@ export class CategorySelectComponent implements OnInit {
 
   ngOnInit() {
     this.fullCategories = [ { name: 'all', icon: 'all_inclusive' }, ...this.catService.getCategories() ];
-    this.categories = [ 'all', ...this.fullCategories.map(c => c.name) ];
+    this.categories = this.fullCategories.map(c => c.name);
     this.selected = 'all';
   }
 

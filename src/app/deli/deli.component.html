@@ -1,5 +1,5 @@
 
-<app-deli-header class="desktop-only"></app-deli-header>
+<app-deli-header (sortChange)="sortChange($event)" class="desktop-only"></app-deli-header>
 
 <app-category-select (selectedCategory)="getPostsByCategory($event)"></app-category-select>
 
