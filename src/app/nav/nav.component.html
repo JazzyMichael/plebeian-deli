@@ -34,11 +34,10 @@
         <button mat-button routerLink="/exhibitions" class="sidenav-button" (click)="sidenav.close()">EXHIBITIONS</button>
         <button mat-button routerLink="/calendar" class="sidenav-button" (click)="sidenav.close()">CALENDAR</button>
         <button mat-button routerLink="/members" class="sidenav-button" (click)="sidenav.close()">MEMBERS</button>
-        <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">SELL YOUR WORK</button>
+        <!-- <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">SELL YOUR WORK</button> -->
         <!-- <button mat-button routerLink="/shop" class="sidenav-button" (click)="sidenav.close()">Shop</button> -->
 
         <ng-container *ngIf="auth.user$ | async as user">
-            <button *ngIf="user.writer" mat-button routerLink="/new-prime-post" class="sidenav-button" (click)="sidenav.close()">New Prime Cut</button>
             <button mat-button [routerLink]="'/' + user.username" class="sidenav-button" (click)="sidenav.close()">PROFILE</button>
             <button mat-button routerLink="/orders" class="sidenav-button" (click)="sidenav.close()">ORDERS</button>
             <button *ngIf="user.membership === 'artist'" mat-button routerLink="/seller" class="sidenav-button" (click)="sidenav.close()">SELLER INFO</button>
@@ -83,7 +82,7 @@
                 <span routerLink="/exhibitions" routerLinkActive="active-link" class="nav-link">EXHIBITIONS</span>
                 <span routerLink="/calendar" routerLinkActive="active-link" class="nav-link">CALENDAR</span>
                 <span routerLink="/members" routerLinkActive="active-link" class="nav-link">MEMBERS</span>
-                <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">SELL YOUR WORK</button>
+                <!-- <button mat-raised-button routerLink="/subscriptions" color="accent" class="nav-link highlighted-btn">SELL YOUR WORK</button> -->
 
                 <!-- logged-in button & menu -->
                 <ng-container *ngIf="auth.user$ | async as user; else noUser">
