@@ -5,6 +5,7 @@ import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-create-post',
@@ -41,7 +42,8 @@ export class CreatePostComponent implements OnInit {
 
   constructor(
     private categoriesService: CategoriesService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -146,6 +148,8 @@ export class CreatePostComponent implements OnInit {
     if (input) {
       input.value = '';
     }
+
+    this.snackBar.open('Tag added!', 'Ok', { duration: 3000 });
   }
 
   removeTag(tag: string) {

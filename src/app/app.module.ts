@@ -91,6 +91,7 @@ import { DescriptionBoxComponent } from './post/description-box/description-box.
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
@@ -100,12 +101,12 @@ const routes: Routes = [
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
+  { path: 'new-post', component: CreatePostComponent },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
-  // { path: 'new-prime-post', component: NewPrimePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent },
@@ -115,8 +116,9 @@ const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  { path: 'edit-profile', component: EditProfileComponent },
   { path: ':username', component: ProfileComponent },
-  { path: '**', redirectTo: '/prime-cuts', pathMatch: 'full' }
+  { path: '**', redirectTo: '/deli', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -179,7 +181,8 @@ const routes: Routes = [
     DescriptionBoxComponent,
     CommentBoxComponent,
     PostImagesComponent,
-    FooterBarComponent
+    FooterBarComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

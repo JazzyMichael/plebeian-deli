@@ -23,6 +23,10 @@
     left: calc(50% - 26px);
 }
 
+.active-fab {
+    background-color: lightgray !important;
+}
+
 @media (min-width: 777px) {
     .container {
         display: none;

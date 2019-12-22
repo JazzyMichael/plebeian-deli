@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-footer-bar',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public location: Location) {
+  }
 
   ngOnInit() {
   }

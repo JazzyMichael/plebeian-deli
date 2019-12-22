@@ -11,7 +11,7 @@
         <mat-icon>games</mat-icon>
     </button>
 
-    <button mat-fab aria-label="New Post" class="fab-btn">
+    <button mat-fab routerLink="/new-post" routerLinkActive="active-fab" [disabled]="location.path() === '/new-post'" aria-label="New Post" class="fab-btn">
         <mat-icon>edit</mat-icon>
     </button>
 
