@@ -22,3 +22,9 @@
     bottom: 30px;
     left: calc(50% - 26px);
 }
+
+@media (min-width: 777px) {
+    .container {
+        display: none;
+    }
+}

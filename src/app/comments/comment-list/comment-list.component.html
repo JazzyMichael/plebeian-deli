@@ -3,7 +3,7 @@
 
 
     <div *ngFor="let comment of comments" class="comment">
-        <h4 style="margin-top: 0">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
+        <h4 style="margin: 0">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
         <p style="padding: 1em; color: #777; margin: 0;">{{ comment.message }}</p>
     </div>
 
