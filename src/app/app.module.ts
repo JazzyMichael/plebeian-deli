@@ -90,6 +90,7 @@ import { PostHeaderComponent } from './post/post-header/post-header.component';
 import { DescriptionBoxComponent } from './post/description-box/description-box.component';
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
+import { FooterBarComponent } from './footer-bar/footer-bar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
@@ -177,7 +178,8 @@ const routes: Routes = [
     PostHeaderComponent,
     DescriptionBoxComponent,
     CommentBoxComponent,
-    PostImagesComponent
+    PostImagesComponent,
+    FooterBarComponent
   ],
   imports: [
     BrowserModule,

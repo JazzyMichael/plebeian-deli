@@ -1,0 +1,24 @@
+.container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 0;
+    background-color: #292929;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mat-icon-button {
+    color: #afafaf;
+}
+
+.active-tab {
+    color: white;
+}
+
+.fab-btn {
+    position: fixed;
+    bottom: 24px;
+    left: calc(50% - 26px);
+}
