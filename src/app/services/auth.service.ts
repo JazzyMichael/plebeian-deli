@@ -130,6 +130,11 @@ export class AuthService {
     return this.user$.pipe(first()).toPromise();
   }
 
+  navigateToProfile() {
+    const url = this.username ? `/${this.username}` : '/login';
+    this.router.navigateByUrl(url);
+  }
+
   getUser(username: string): Observable<any> {
     return this.afStore
       .collection('users', ref => ref.where('username', '==', username))

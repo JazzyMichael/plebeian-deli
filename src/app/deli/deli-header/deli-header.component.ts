@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-deli-header',
@@ -11,10 +12,14 @@ export class DeliHeaderComponent implements OnInit {
 
   @Output() sortChange: EventEmitter<string> = new EventEmitter();
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.sort = 'recent';
+  }
+
+  profileClick() {
+    this.auth.navigateToProfile();
   }
 
   changeSort(sortString: string) {

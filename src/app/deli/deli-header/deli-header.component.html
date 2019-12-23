@@ -1,11 +1,11 @@
 <div class="container">
-    <button mat-icon-button>
+    <button mat-icon-button (click)="profileClick()">
         <mat-icon>face</mat-icon>
     </button>
 
     <mat-form-field class="search-box" floatLabel="never">
         <input matInput placeholder="" autocomplete="off">
-        <mat-icon matSuffix>search</mat-icon>
+        <mat-icon matSuffix style="cursor: pointer">search</mat-icon>
     </mat-form-field>
 
     <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">

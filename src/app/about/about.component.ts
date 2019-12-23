@@ -71,11 +71,11 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
       document.getElementById('subscriptions-section').scrollIntoView();
     }
 
-    this.userSub = this.auth.user$.pipe(debounceTime(1234)).subscribe(user => {
-      if (!user) {
-        this.showSignupDialog();
-      }
-    });
+    // this.userSub = this.auth.user$.pipe(debounceTime(1234)).subscribe(user => {
+    //   if (!user) {
+    //     this.showSignupDialog();
+    //   }
+    // });
   }
 
   ngOnDestroy() {

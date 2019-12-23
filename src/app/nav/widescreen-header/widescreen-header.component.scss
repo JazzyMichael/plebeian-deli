@@ -1,0 +1,75 @@
+.dark-toolbar {
+    border-bottom: 5px solid #ff4081;
+    height: 80px;
+    background-color: black;
+    color: white;
+    width: 100%;
+}
+
+mat-toolbar-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100px;
+}
+
+.active-link {
+    color: #ff4081;
+}
+
+.perm-nav-link {
+    display: block;
+    color: #fdf5a2;
+}
+
+.logo {
+    height: 50px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.logo:focus {
+    outline: none;
+}
+
+.nav-link {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.nav-link:hover {
+    color: #80caa2;
+}
+
+.mobile-notification-button {
+    display: flex;
+}
+
+button {
+    font-size: 0.85em;
+    display: block;
+    min-width: 0;
+    padding: 0 8px;
+}
+
+.mat-button {
+    flex-shrink: 0;
+}
+
+.mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+.mat-drawer-container {
+    background: none;
+}
+
+::ng-deep.mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+}

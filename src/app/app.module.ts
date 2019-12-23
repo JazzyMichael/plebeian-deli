@@ -18,7 +18,8 @@ import {
   canActivate,
   redirectLoggedInTo,
   redirectUnauthorizedTo,
-  hasCustomClaim
+  hasCustomClaim,
+  AngularFireAuthGuardModule
 } from '@angular/fire/auth-guard';
 import { map } from 'rxjs/operators';
 
@@ -29,7 +30,6 @@ import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MembersComponent } from './members/members.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
-import { PrimeCutsComponent } from './prime-cuts/prime-cuts.component';
 import { DeliComponent } from './deli/deli.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -42,7 +42,6 @@ import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { StudioViewerComponent } from './prime-cuts/studio-viewer/studio-viewer.component';
 import { PrimePostComponent } from './prime-post/prime-post.component';
 import { EventComponent } from './event/event.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
@@ -95,6 +94,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+
 const routes: Routes = [
   { path: '', redirectTo: '/deli', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
@@ -102,10 +103,10 @@ const routes: Routes = [
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
-  { path: 'new-post', component: CreatePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
   { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
@@ -116,7 +117,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
-  { path: 'connect', component: ConnectComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
+  { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
   { path: 'edit-profile', component: EditProfileComponent },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/deli', pathMatch: 'full' }
@@ -130,7 +131,6 @@ const routes: Routes = [
     CalendarComponent,
     MembersComponent,
     SubscriptionsComponent,
-    PrimeCutsComponent,
     DeliComponent,
     NavComponent,
     FooterComponent,
@@ -143,7 +143,6 @@ const routes: Routes = [
     ArtistsComponent,
     ChatComponent,
     CheckoutComponent,
-    StudioViewerComponent,
     PrimePostComponent,
     EventComponent,
     PaymentFormComponent,
@@ -197,6 +196,7 @@ const routes: Routes = [
     MaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireAuthGuardModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
