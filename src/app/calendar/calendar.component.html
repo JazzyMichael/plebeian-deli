@@ -1,5 +1,5 @@
 
-<div style="font-size: 2rem; width: 100%; max-width: 400px; margin: 3rem auto; display: flex; justify-content: space-between; align-items: center;">
+<div style="font-size: 2rem; width: 100%; max-width: 400px; margin: 3rem auto; display: flex; justify-content: space-around; align-items: center;">
     <mat-icon
         style="cursor: pointer"
         mwlCalendarPreviousView
@@ -23,6 +23,7 @@
 
 <div *ngIf="events$ | async; let events" style="width: 1000px; max-width: 90%; margin: 1em auto 3rem;">
     <mwl-calendar-month-view
+        class="dark-theme"
         [viewDate]="viewDate"
         [events]="events"
         [refresh]="refresh"

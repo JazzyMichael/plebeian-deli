@@ -61,7 +61,6 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { QuillModule } from 'ngx-quill';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
@@ -70,7 +69,6 @@ import { BoughtServicesComponent } from './orders/bought-services/bought-service
 import { SoldServicesComponent } from './orders/sold-services/sold-services.component';
 import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
 import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
-import { NewPrimePostComponent } from './new-prime-post/new-prime-post.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
@@ -163,7 +161,6 @@ const routes: Routes = [
     SoldServicesComponent,
     SoldPostsComponent,
     BoughtPostsComponent,
-    NewPrimePostComponent,
     PostLayoutComponent,
     NotificationsComponent,
     CommentsComponent,
@@ -204,7 +201,6 @@ const routes: Routes = [
     NgxHmCarouselModule,
     NgxMasonryModule,
     InfiniteScrollModule,
-    QuillModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory

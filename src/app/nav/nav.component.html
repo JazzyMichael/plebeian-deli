@@ -29,13 +29,12 @@
             <button mat-button routerLink="/login" class="sidenav-button" (click)="sidenav.close()">SIGN IN</button>
         </ng-template>
 
-        <!-- <button mat-button routerLink="/prime-cuts" class="sidenav-button" (click)="sidenav.close()">PRIME CUTS</button> -->
+
+
         <button mat-button routerLink="/deli" class="sidenav-button" (click)="sidenav.close()">DELI</button>
         <button mat-button routerLink="/exhibitions" class="sidenav-button" (click)="sidenav.close()">EXHIBITIONS</button>
         <button mat-button routerLink="/calendar" class="sidenav-button" (click)="sidenav.close()">CALENDAR</button>
         <button mat-button routerLink="/members" class="sidenav-button" (click)="sidenav.close()">MEMBERS</button>
-        <!-- <button mat-button routerLink="/subscriptions" class="sidenav-button" (click)="sidenav.close()">SELL YOUR WORK</button> -->
-        <!-- <button mat-button routerLink="/shop" class="sidenav-button" (click)="sidenav.close()">Shop</button> -->
 
         <ng-container *ngIf="auth.user$ | async as user">
             <button mat-button [routerLink]="'/' + user.username" class="sidenav-button" (click)="sidenav.close()">PROFILE</button>
@@ -46,7 +45,7 @@
 
     </mat-sidenav>
 
-    <mat-sidenav-content style="position: static">
+    <mat-sidenav-content style="position: static; background-color: black;">
 
         <app-widescreen-header class="widescreen-header"></app-widescreen-header>
 

@@ -6,7 +6,7 @@ infiniteScroll
   [scrollWindow]="false"
   (scrolled)="onScroll()">
 <div class="options-container">
-    <h1 style="text-align: center; font-weight: 400; margin: 0 auto 1em; letter-spacing: 1px;">Artists & Galleries</h1>
+    <h1 class="header-text">Artists & Galleries</h1>
 
     <mat-radio-group [(ngModel)]="membership" style="width: 500px; max-width: 95%; margin: 1em auto; display: flex; justify-content: space-around;">
         <mat-radio-button #radioBtn value="artist" (click)="radioClick(radioBtn)">Artists Only</mat-radio-button>
@@ -93,7 +93,5 @@ infiniteScroll
     </ng-container>
 
 </div>
-
-<app-footer></app-footer>
 
 </div>
