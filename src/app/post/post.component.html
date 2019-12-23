@@ -1,5 +1,3 @@
-<app-post-header></app-post-header>
-
 <div *ngIf="post$ | async as post" class="container">
 
     <div class="sub-header">
@@ -65,7 +63,7 @@
 
 
     <!-- description -->
-    <app-description-box [description]="post.description"></app-description-box>
+    <app-description-box *ngIf="post.description" [description]="post.description"></app-description-box>
 
 
     <!-- Comments -->

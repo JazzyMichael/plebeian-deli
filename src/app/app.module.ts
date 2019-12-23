@@ -85,7 +85,6 @@ import { CategorySelectComponent } from './deli/category-select/category-select.
 import { PostLayoutComponent } from './post-layout/post-layout.component';
 import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
 import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
-import { PostHeaderComponent } from './post/post-header/post-header.component';
 import { DescriptionBoxComponent } from './post/description-box/description-box.component';
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
@@ -96,6 +95,8 @@ import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.compone
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
+const redirectLoggedInToDeli = () => redirectLoggedInTo(['deli']);
+
 const routes: Routes = [
   { path: '', redirectTo: '/deli', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
@@ -103,22 +104,22 @@ const routes: Routes = [
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
-  { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
+  { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
+  { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
   { path: 'prime-cuts/:id', component: PrimePostComponent },
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
-  { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
-  { path: 'edit-profile', component: EditProfileComponent },
+  { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'edit-profile', component: EditProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/deli', pathMatch: 'full' }
 ];
@@ -177,7 +178,6 @@ const routes: Routes = [
     CategorySelectComponent,
     PostThumbnailComponent,
     DeliHeaderComponent,
-    PostHeaderComponent,
     DescriptionBoxComponent,
     CommentBoxComponent,
     PostImagesComponent,

@@ -1,4 +1,38 @@
 
 <div class="container">
-    <h1>Edit Profile</h1>
+
+    <div class="edit-header">
+        <div>img</div>
+
+        <div>
+            <div>username</div>
+            <div>medium</div>
+        </div>
+    </div>
+
+    <mat-form-field hintLabel="Max 240 Characters" color="accent">
+        <mat-icon *ngIf="descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
+        <mat-icon *ngIf="descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation();">done</mat-icon>
+        <textarea matInput #descriptionInput placeholder="Bio" maxlength="240" rows="5" [value]="user.description"></textarea>
+        <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
+    </mat-form-field>
+
+
+    <!-- 
+        instagram
+        facebook
+        twitter
+        other
+     -->
+
+    <br><br>
+
+    <!-- location -->
+    <mat-form-field color="accent">
+        <input
+            matInput
+            placeholder="Location"
+            autocomplete="off">
+    </mat-form-field>
+
 </div>

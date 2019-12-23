@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+  user: any = { description: '' };
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  updateDescription(description: string) {
+    console.log('update description', description);
   }
 
 }
