@@ -92,16 +92,17 @@ import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
+import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/about', pathMatch: 'full' },
+  { path: '', redirectTo: '/deli', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
-  // { path: 'prime-cuts', component: PrimeCutsComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', component: ExhibitionsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
-  { path: 'new-post', component: CreatePostComponent },
+  { path: 'new-post', component: CreatePostComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'seller', component: SellerComponent, ...canActivate(redirectUnauthorizedTo(['/login'])) },
@@ -182,7 +183,9 @@ const routes: Routes = [
     CommentBoxComponent,
     PostImagesComponent,
     FooterBarComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    WidescreenHeaderComponent,
+    MobileHeaderComponent
   ],
   imports: [
     BrowserModule,

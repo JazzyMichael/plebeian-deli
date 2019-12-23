@@ -127,7 +127,8 @@
             {{ tag }}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
-          <input placeholder="Tags..."
+          <input placeholder="Tags"
+                 autocomplete="off"
                  [matChipInputFor]="chipList"
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                  (matChipInputTokenEnd)="addTag($event)">

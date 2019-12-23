@@ -1,6 +1,6 @@
 <mat-sidenav-container>
 
-    <mat-sidenav #sidenav position="end">
+    <mat-sidenav #sidenav>
 
         <!-- Logged in Side Nav header-->
         <div *ngIf="auth.user$ | async as user; else justCloseButton">
@@ -47,7 +47,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content style="position: static">
-        <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'" style="border-bottom: 5px solid #ff4081; height: 80px;">
+        <mat-toolbar [ngClass]="darkTheme ? 'dark' : 'light'" class="widescreen-header">
             <mat-toolbar-row>
 
                 <!-- Logo & Flashlight -->
@@ -149,6 +149,9 @@
                 </button>
             </mat-toolbar-row>
         </mat-toolbar>
+
+
+        <app-mobile-header class="mobile-header" (openSidenav)="sidenav.open()"></app-mobile-header>
 
 
         <router-outlet></router-outlet>

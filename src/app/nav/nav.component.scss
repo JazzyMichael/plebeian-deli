@@ -185,3 +185,19 @@ mat-toolbar-row {
         margin-left: 0;
     }
 }
+
+.widescreen-header {
+    display: none;
+    border-bottom: 5px solid #ff4081;
+    height: 80px;
+}
+
+@media (min-width: 777px) {
+    .mobile-header {
+        display: none;
+    }
+
+    .widescreen-header {
+        display: flex;
+    }
+}
