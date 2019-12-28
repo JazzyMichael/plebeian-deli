@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f3f3;
+    min-width: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+button {
+    color: #292929;
+}
+
+.nav-link {
+    display: flex;
+    padding-left: 2.5em;
+}
+
+.nav-link-icon {
+    margin-right: 1em;
+}
+
+.profile-pic {
+    max-height: 100px;
+    max-width: 100px;
+    margin: 0 auto;
+    border-radius: 10px;
+}

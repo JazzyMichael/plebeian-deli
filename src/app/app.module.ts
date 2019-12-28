@@ -90,6 +90,7 @@ import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
+import { SidenavComponent } from './nav/sidenav/sidenav.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -181,7 +182,8 @@ const routes: Routes = [
     FooterBarComponent,
     EditProfileComponent,
     WidescreenHeaderComponent,
-    MobileHeaderComponent
+    MobileHeaderComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

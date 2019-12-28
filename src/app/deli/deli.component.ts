@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-deli',
@@ -16,13 +17,18 @@ export class DeliComponent implements OnInit {
 
   constructor(
     public postService: PostService,
-    private titleService: Title
+    private titleService: Title,
+    private auth: AuthService
     ) { }
 
   async ngOnInit() {
     this.titleService.setTitle('Deli');
 
     this.getPostsByCategory('all');
+  }
+
+  openSidenav() {
+    this.auth.toggleSidenav.next(true);
   }
 
   getPostsByCategory(category: string) {

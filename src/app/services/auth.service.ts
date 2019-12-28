@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import { switchMap, first, map, tap } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
@@ -17,6 +17,8 @@ import { UserService } from './user.service';
 export class AuthService {
   user$: BehaviorSubject<any>;
   username: string;
+
+  toggleSidenav: Subject<boolean> = new Subject();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -122,8 +124,10 @@ export class AuthService {
 
   async logout() {
     const res = await this.afAuth.auth.signOut();
-    // this.chatService.userChats$.next([]);
-    return this.router.navigateByUrl('/prime-cuts');
+
+    console.log('logout', res);
+
+    return this.router.navigateByUrl('/deli');
   }
 
   getCurrentUser() {

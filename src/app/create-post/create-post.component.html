@@ -4,7 +4,7 @@
 <mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
 
 
-<div *ngIf="!uploading" style="margin: 0.5em auto 5em; max-width: 700px;">
+<mat-card *ngIf="!uploading" style="margin: 0.5em auto 5em; width: 85%; max-width: 700px;">
 
 
     <!-- Title -->
@@ -155,4 +155,4 @@
         <li *ngIf="!thumbnailImgUrl">Need at least 1 image</li>
     </ul>
 
-</div>
+</mat-card>

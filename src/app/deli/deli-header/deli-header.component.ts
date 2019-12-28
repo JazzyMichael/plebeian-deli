@@ -18,8 +18,8 @@ export class DeliHeaderComponent implements OnInit {
     this.sort = 'recent';
   }
 
-  profileClick() {
-    this.auth.navigateToProfile();
+  openSidenav() {
+    this.auth.toggleSidenav.next(true);
   }
 
   changeSort(sortString: string) {
