@@ -51,4 +51,10 @@ export class DeliComponent implements OnInit {
                 : this.postService.getAllPostsBySort(this.sort);
   }
 
+  search(term: string) {
+    this.posts$ = term
+      ? this.postService.filterPostsByTag(term, this.sort)
+      : this.postService.getAllPostsBySort(this.sort);
+  }
+
 }

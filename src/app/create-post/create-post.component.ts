@@ -61,6 +61,22 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     this.post = this.postService.editingPost || {};
 
+    if (this.post.title) {
+      this.postForm.setValue({
+        title: this.post.title,
+        category: this.post.category,
+        description: this.post.description,
+        link: this.post.link,
+        thumbnailImgUrl: this.post.thumbnailImgUrl,
+        price: this.post.price,
+        shipping: this.post.shipping,
+        quantity: this.post.quantity
+      });
+      this.images = this.post.images;
+      this.thumbnailImgUrl = this.post.thumbnailImgUrl;
+      this.tags = this.post.tags;
+    }
+
     // this.validatePrice$
     //   .pipe(debounceTime(777))
     //   .subscribe(() => {
@@ -196,7 +212,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     const postImages = [];
 
-    const thumbnailIndex = this.images.findIndex(i => i.url === this.thumbnailImgUrl);
+    let thumbnailIndex = this.images.findIndex(i => i.url === this.thumbnailImgUrl);
+
+    if (!thumbnailIndex || thumbnailIndex < 0) {
+      thumbnailIndex = 0;
+    }
 
     for await (let img of this.images) {
 
@@ -227,7 +247,6 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       thumbnailPath: postImages[thumbnailIndex].thumbPath,
       thumbnailImgUrl: postImages[thumbnailIndex].url,
       startingQuantity: this.postForm.value.quantity,
-      likes: 0,
       tags: this.tags || [],
       userId: this.user.uid
     };
@@ -242,6 +261,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         this.snackBar.open('Post Updated!', 'Ok', { duration: 3000 });
       } else {
         postObj.createdTimestamp = new Date();
+        postObj.likes = 0;
         docRef = await this.postService.createPost(postObj);
         this.snackBar.open('Posted!', 'Ok', { duration: 3000 });
       }

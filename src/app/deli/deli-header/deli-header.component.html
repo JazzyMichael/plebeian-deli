@@ -6,7 +6,7 @@
         (click)="openSidenav()">
 
     <mat-form-field class="search-box" floatLabel="never">
-        <input matInput placeholder="" autocomplete="off">
+        <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">
         <mat-icon matSuffix style="cursor: pointer; margin-top: 5px;">search</mat-icon>
     </mat-form-field>
 

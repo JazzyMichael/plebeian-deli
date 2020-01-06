@@ -38,6 +38,7 @@ export class PostsComponent implements OnInit, OnChanges {
 
   editPost(post: any) {
     this.postService.editingPost = post;
+    this.router.navigateByUrl('/new-post');
   }
 
   deletePost(post: any) {

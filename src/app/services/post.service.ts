@@ -13,7 +13,7 @@ export class PostService {
   posts$: BehaviorSubject<any>;
   featuredPosts$: BehaviorSubject<any>;
 
-  editingPost: any = null;
+  editingPost: any;
 
   constructor(
     private afStore: AngularFirestore,
@@ -87,10 +87,21 @@ export class PostService {
       );
   }
 
-  filterPostsByTag(tag: string) {
+  filterPostsByTag(tag: string, sort: string = 'recent') {
+    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
+    const sortField = opts[sort];
+
     return this.afStore
-      .collection('posts', ref => ref.where('tags', 'array-contains', tag).limit(100))
-      .valueChanges({ idField: 'postId' });
+      .collection('posts', ref => ref.where('tags', 'array-contains', tag).orderBy(sortField).limit(100))
+      .valueChanges({ idField: 'postId' })
+      .pipe(
+        map(posts => {
+          return posts.map((post: any) => {
+            const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
+            return { ...post, thumbnail };
+          });
+        })
+      );
   }
 
   getUserPosts(uid: string, limit: number = 20): Observable<any> {

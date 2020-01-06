@@ -60,6 +60,8 @@ export class PostComponent implements OnInit, OnDestroy {
               return this.router.navigateByUrl('/deli');
             }
 
+            console.log('tags:', post.tags);
+
             this.postUserId = post.userId;
             this.likedUids = post.likedUids && post.likedUids.length ?
               post.likedUids :

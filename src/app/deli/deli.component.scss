@@ -1,9 +1,9 @@
-.desktop-only {
+.mobile-only {
     display: block !important;
 }
 
 @media (min-width: 777px) {
-    .desktop-only {
+    .mobile-only {
         display: none !important;
     }
 }
