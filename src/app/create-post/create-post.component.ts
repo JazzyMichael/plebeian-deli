@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { CategoriesService } from '../services/categories.service';
@@ -6,27 +6,25 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
+import { PostService } from '../services/post.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss']
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
 
-  @Input() post: any;
-  @Input() approvedSeller: boolean;
+  post: any;
 
-  @Output() save: EventEmitter<any> = new EventEmitter();
+  approvedSeller: boolean;
 
-  title: string;
-  category: string;
-  description: string = '';
-  price: string = '';
-  quantity: number = 1;
+  postForm: FormGroup;
   images: any[] = [];
   thumbnailImgUrl: string;
-  link: string = '';
 
   categoryOptions: string[];
   quantityOptions: number[] = [
@@ -40,56 +38,74 @@ export class CreatePostComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tags: any[] = [];
 
+  editingPost: any;
+
+  user: any;
+
   constructor(
     private categoriesService: CategoriesService,
     private storage: AngularFireStorage,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder,
+    private postService: PostService,
+    private auth: AuthService,
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    this.categoryOptions = this.categoriesService
-      .getCategories()
-      .map(cat => cat.name);
+  async ngOnInit() {
+    this.categoryOptions = this.categoriesService.getCategories().map(cat => cat.name);
 
-    this.validatePrice$
-      .pipe(debounceTime(777))
-      .subscribe(() => {
-        if (this.price) {
-          let chars = this.price.split('');
+    this.createPostForm();
 
-          chars = chars.filter(c => {
-            if (
-              c === '1' ||
-              c === '2' ||
-              c === '3' ||
-              c === '4' ||
-              c === '5' ||
-              c === '6' ||
-              c === '7' ||
-              c === '8' ||
-              c === '9' ||
-              c === '0'
-            ) {
-              return true;
-            } else {
-              return false;
-            }
-          });
+    this.user = await this.auth.getCurrentUser();
 
-          this.price = chars.join('');
-        }
-      });
+    this.post = this.postService.editingPost || {};
 
-    if (this.post) {
-      this.title = this.post.title;
-      this.category = this.post.category;
-      this.description = this.post.description;
-      this.images = this.post.images;
-      this.thumbnailImgUrl = this.post.thumbnailImgUrl;
-      this.link = this.post.link;
-      this.price = `${this.post.price}`;
-      this.quantity = this.post.quantity;
-    }
+    // this.validatePrice$
+    //   .pipe(debounceTime(777))
+    //   .subscribe(() => {
+    //     if (this.price) {
+    //       let chars = this.price.split('');
+
+    //       chars = chars.filter(c => {
+    //         if (
+    //           c === '1' ||
+    //           c === '2' ||
+    //           c === '3' ||
+    //           c === '4' ||
+    //           c === '5' ||
+    //           c === '6' ||
+    //           c === '7' ||
+    //           c === '8' ||
+    //           c === '9' ||
+    //           c === '0'
+    //         ) {
+    //           return true;
+    //         } else {
+    //           return false;
+    //         }
+    //       });
+
+    //       this.price = chars.join('');
+    //     }
+    //   });
+  }
+
+  ngOnDestroy() {
+    this.postService.editingPost = null;
+  }
+
+  createPostForm() {
+    this.postForm = this.fb.group({
+      title: [this.post ? this.post.title : '', Validators.required],
+      category: [this.post ? this.post.category : '', Validators.required],
+      description: [this.post ? this.post.category : ''],
+      link: [this.post ? this.post.link : ''],
+      thumbnailImgUrl: [this.post ? this.post.thumbnailImgUrl : '', Validators.required],
+      price: [this.post ? this.post.price : ''],
+      shipping: [this.post ? this.post.shipping : ''],
+      quantity: [this.post ? this.post.quantity : '']
+    });
   }
 
   addImage(event: any) {
@@ -106,6 +122,7 @@ export class CreatePostComponent implements OnInit {
       this.images.push({ file, url: e.target.result });
       if (this.images.length === 1) {
         this.thumbnailImgUrl = this.images[0].url;
+        this.postForm.patchValue({ thumbnailImgUrl: this.thumbnailImgUrl });
       }
     };
 
@@ -124,6 +141,11 @@ export class CreatePostComponent implements OnInit {
     if (flag) {
       this.thumbnailImgUrl = this.images.length ? this.images[0].url : null;
     }
+
+    if (!this.images.length) {
+      this.thumbnailImgUrl = null;
+      this.postForm.patchValue({ thumbnailImgUrl: this.thumbnailImgUrl });
+    }
   }
 
   setThumbnail(imgUrl: string) {
@@ -131,7 +153,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   priceInput() {
-    this.validatePrice$.next();
+    // this.validatePrice$.next();
   }
 
   addTag(event: MatChipInputEvent): void {
@@ -149,7 +171,7 @@ export class CreatePostComponent implements OnInit {
       input.value = '';
     }
 
-    this.snackBar.open('Tag added!', 'Ok', { duration: 3000 });
+    this.snackBar.open('Tag added!', 'Ok', { duration: 2000 });
   }
 
   removeTag(tag: string) {
@@ -157,10 +179,18 @@ export class CreatePostComponent implements OnInit {
 
     if (index >= 0) {
       this.tags.splice(index, 1);
+      this.snackBar.open('Tag removed!', 'Ok', { duration: 2000 });
     }
   }
 
   async submit() {
+
+    if (!this.user) {
+      this.user = await this.auth.getCurrentUser();
+      if (!this.user) {
+        return;
+      }
+    }
 
     this.uploading = true;
 
@@ -168,15 +198,11 @@ export class CreatePostComponent implements OnInit {
 
     const thumbnailIndex = this.images.findIndex(i => i.url === this.thumbnailImgUrl);
 
-    console.log('thumb index', thumbnailIndex);
-
     for await (let img of this.images) {
 
       if (!img.file && img.url) {
-        console.log('just url', img);
         postImages.push(img);
       } else {
-        console.log('uploading img', img);
         const random = Math.random().toString().slice(0, 8);
 
         const fileType = img.file.type.split('/')[1];
@@ -195,24 +221,45 @@ export class CreatePostComponent implements OnInit {
       }
     }
 
-    const post = {
-      title: this.title,
-      category: this.category,
-      description: this.description,
+    const postObj = {
+      ...this.postForm.value,
       images: postImages,
       thumbnailPath: postImages[thumbnailIndex].thumbPath,
       thumbnailImgUrl: postImages[thumbnailIndex].url,
-      link: this.link,
-      price: this.approvedSeller && this.price ? parseInt(this.price) : 0,
-      quantity: this.approvedSeller && this.quantity ? this.quantity : 0,
-      startingQuantity: this.approvedSeller && this.quantity ? this.quantity : 0,
+      startingQuantity: this.postForm.value.quantity,
       likes: 0,
-      tags: this.tags || []
+      tags: this.tags || [],
+      userId: this.user.uid
     };
 
-    this.uploading = false;
+    try {
+      let docRef;
 
-    this.save.emit(post);
+      if (this.postService.editingPost) {
+        const editingPostId = this.postService.editingPost.postId;
+        await this.postService.updatePost(editingPostId, postObj);
+        docRef = { id: editingPostId };
+        this.snackBar.open('Post Updated!', 'Ok', { duration: 3000 });
+      } else {
+        postObj.createdTimestamp = new Date();
+        docRef = await this.postService.createPost(postObj);
+        this.snackBar.open('Posted!', 'Ok', { duration: 3000 });
+      }
+
+      this.uploading = false;
+
+      this.postForm.reset();
+
+      this.router.navigateByUrl(`/post/${docRef.id}`);
+
+    } catch (e) {
+      console.log(e);
+      this.snackBar.open('Oops! Something went wrong, try again later.', 'Ok');
+
+      this.uploading = false;
+
+      this.postForm.reset();
+    }
   }
 
 }

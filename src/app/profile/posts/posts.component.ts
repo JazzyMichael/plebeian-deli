@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-posts',
@@ -24,68 +25,35 @@ export class PostsComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private postService: PostService
+    private postService: PostService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    this.posts$ = this.postService.getUserPosts(this.user.uid);
   }
 
   ngOnChanges() {
     this.posts$ = this.postService.getUserPosts(this.user.uid);
   }
 
-  startNewPost() {
-    this.editing = true;
-    this.editingPost = null;
-  }
-
-  cancelNewPost() {
-    this.editing = false;
-    this.editingPost = null;
-  }
-
   editPost(post: any) {
-    this.editing = true;
-    this.editingPost = post;
-
-    setTimeout(() => {
-      document.getElementById('edit-view').scrollIntoView();
-    }, 444);
+    this.postService.editingPost = post;
   }
 
   deletePost(post: any) {
     this.postService.deletePost(post.postId)
-      .then(() => console.log('deleted'))
-      .catch(e => console.log('error deleting', e));
-  }
-
-  async submitPost(event: any) {
-
-    const post = this.editingPost ? { ...event, userId: this.user.uid } : { ...event, userId: this.user.uid, createdTimestamp: new Date() };
-
-    if (this.editingPost) {
-      console.log('update');
-      this.postService
-        .updatePost(this.editingPost.postId, post)
-        .then(res => console.log('updated post', res))
-        .catch(e => console.log('error updating post', e));
-    } else {
-      this.postService
-        .createPost(post)
-        .then(res => console.log('created post', res))
-        .catch(e => console.log('error creating post', e));
-    }
-
-    this.editing = false;
+      .then(() => {
+        this.snackBar.open('Post deleted!', 'Ok', { duration: 3000 });
+      })
+      .catch(error => {
+        console.log('error deleting post');
+        console.log({ post, error });
+        this.snackBar.open('There was an error deleting your post, try again later', 'Ok', { duration: 3000 });
+      });
   }
 
   viewPost(postId: string) {
     this.router.navigateByUrl(`/post/${postId}`);
-  }
-
-  layoutComplete(event: any) {
-    console.log('layoutComplete', event);
   }
 
 }

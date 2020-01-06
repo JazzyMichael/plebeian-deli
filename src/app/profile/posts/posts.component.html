@@ -1,4 +1,4 @@
-<div class="heading-row" id="edit-view">
+<!-- <div class="heading-row" id="edit-view">
     <div *ngIf="editable">
         <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
             <mat-icon>close</mat-icon>
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<br>
+<br> -->
 
 <div *ngIf="editing && !user.approvedSeller">
     <button
@@ -21,15 +21,6 @@
         Connect your account to Stripe to add a price
     </button>
 </div>
-
-<br>
-
-<app-create-post
-    *ngIf="editing"
-    [post]="editingPost"
-    [approvedSeller]="user.approvedSeller"
-    (save)="submitPost($event)">
-</app-create-post>
 
 <br><br><br>
 

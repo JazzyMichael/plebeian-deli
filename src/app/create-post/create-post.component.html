@@ -3,156 +3,187 @@
 
 <mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
 
+<h2 style="text-align: center;">New Post</h2>
 
-<mat-card *ngIf="!uploading" style="margin: 0.5em auto 5em; width: 85%; max-width: 700px;">
+<mat-card *ngIf="!uploading && postForm" style="margin: 0.5em auto 5em; width: 85%; max-width: 700px;">
 
 
-    <!-- Title -->
-    <mat-form-field>
+    <form [formGroup]="postForm" (submit)="submit()">
+
+        <mat-form-field>
+            <input
+                matInput
+                formControlName="title"
+                placeholder="Title"
+                maxlength="120"
+                minlength="1"
+                autocomplete="off">
+            <mat-hint>Required</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field color="primary">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let cat of categoryOptions" [value]="cat">
+                    {{ cat | titlecase }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <textarea
+                matInput
+                formControlName="description"
+                placeholder="Describe your work!"
+                rows="4"
+                autocomplete="off">
+            </textarea>
+            <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <input
+                matInput
+                formControlName="link"
+                placeholder="Add a link"
+                autocomplete="off">
+            <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <mat-chip-list #chipList aria-label="Tags">
+                <mat-chip *ngFor="let tag of tags" removable="true" (removed)="removeTag(tag)">
+                {{ tag }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Tags"
+                        autocomplete="off"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addTag($event)">
+            </mat-chip-list>
+        </mat-form-field>
+
+
+        <!-- <div *ngIf="user" style="width: 90%; margin: auto; display: flex; justify-content: space-between; align-items: center;">
+            <mat-form-field color="primary" style="width: 120px; margin: 1em;">
+                <mat-icon matPrefix color="primary">attach_money</mat-icon>
+                <input
+                    matInput
+                    formControlName="price"
+                    placeholder="Price"
+                    (input)="priceInput()"
+                    maxlength="5"
+                    autocomplete="off">
+                <span matSuffix>.00 &nbsp;</span>
+            </mat-form-field>
+        
+            <mat-form-field color="primary" style="flex: 1; margin: 1em;">
+                <mat-label>Inventory</mat-label>
+                <mat-select formControlName="quantity">
+                    <mat-option *ngFor="let quant of quantityOptions" [value]="quant">
+                        {{ quant }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+
+
+        <button
+            type="button"
+            mat-raised-button
+            [disabled]="images?.length > 9"
+            style="padding: 0; width: 90%; margin: auto; display: block;">
+            <label for="image-upload" style="cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0 1em;">
+                <mat-icon>publish</mat-icon>
+                <span style="margin-left: 10px">{{ images?.length > 9 ? 'Max amount of Images' : 'Upload Image' }}</span>
+            </label>
+        </button>
         <input
-            matInput
-            [(ngModel)]="title"
-            placeholder="Title"
-            maxlength="120"
-            minlength="1"
-            autocomplete="off">
-        <mat-hint *ngIf="!title">A Title is required</mat-hint>
-    </mat-form-field>
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            (change)="addImage($event)">
+
+        <p *ngIf="images.length" style="text-align: center;">Click an image to set it as post thumbnail</p>
+        <p *ngIf="!images.length" style="text-align: center;">*Add at least 1 image</p>
+
+        <div class="image-preview-container">
+            <div *ngFor="let image of images; index as i;">
+                <button
+                    mat-mini-fab
+                    color="warn"
+                    style="position: absolute; margin-top: -15px; margin-left: -5px;"
+                    (click)="removeImage(i)">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <img
+                    class="image-preview"
+                    [ngClass]="thumbnailImgUrl === image.url ? 'selected-thumbnail' : ''"
+                    [src]="image.url"
+                    (click)="setThumbnail(image.url)"
+                    alt="No Preview for SVG's">
+            </div>
+        </div>
+
+
+        <button
+            type="submit"
+            mat-raised-button
+            [disabled]="!postForm.valid"
+            color="primary"
+            style="width: 80%; margin: 2em auto; display: block;">
+            <mat-icon>done</mat-icon>
+            <span style="margin-left: 10px">Submit Post</span>
+        </button>
+
+    </form>
+    <!-- Title -->
+
 
 
     <!-- Category -->
-    <mat-form-field color="primary">
-        <mat-label>Category</mat-label>
-        <mat-select [(ngModel)]="category">
-            <mat-option *ngFor="let cat of categoryOptions" [value]="cat">
-                {{ cat | titlecase }}
-            </mat-option>
-        </mat-select>
-        <mat-hint *ngIf="!category">A Category is required</mat-hint>
-    </mat-form-field>
+
 
 
     <!-- Price & Quantity -->
-    <div *ngIf="approvedSeller" style="width: 90%; margin: auto; display: flex; justify-content: space-between; align-items: center;">
-        <mat-form-field color="primary" style="width: 120px; margin: 1em;">
-            <mat-icon matPrefix color="primary">attach_money</mat-icon>
-            <input
-                matInput
-                [(ngModel)]="price"
-                placeholder="Price"
-                (input)="priceInput()"
-                maxlength="5"
-                autocomplete="off">
-            <span matSuffix>.00 &nbsp;</span>
-            <mat-hint>Optional</mat-hint>
-        </mat-form-field>
     
-        <mat-form-field color="primary" style="flex: 1; margin: 1em;">
-            <mat-label>Available Quantity</mat-label>
-            <mat-select [(ngModel)]="quantity">
-                <mat-option *ngFor="let quant of quantityOptions" [value]="quant">
-                    {{ quant }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
 
 
     <!-- Description -->
-    <mat-form-field>
-        <textarea
-            matInput
-            [(ngModel)]="description"
-            placeholder="Describe your work!"
-            rows="4"
-            autocomplete="off">
-        </textarea>
-    </mat-form-field>
 
-
-    <!-- Image Upload -->
-    <button
-        mat-raised-button
-        [disabled]="images?.length > 9"
-        style="padding: 0; width: 90%; margin: auto; display: block;">
-        <label for="image-upload" style="cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0 1em;">
-            <mat-icon>publish</mat-icon>
-            <span style="margin-left: 10px">{{ images?.length > 9 ? 'Max amount of Images' : 'Upload Image' }}</span>
-        </label>
-    </button>
-    <input
-        id="image-upload"
-        type="file"
-        accept="image/*"
-        style="display: none"
-        (change)="addImage($event)">
-
-
-    <!-- Images Preview-->
-    <p *ngIf="images.length">Click an image to set it as post thumbnail</p>
-    <div class="image-preview-container">
-        <div *ngFor="let image of images; index as i;">
-            <button
-                mat-mini-fab
-                color="warn"
-                style="position: absolute; margin-top: -15px; margin-left: -5px;"
-                (click)="removeImage(i)">
-                <mat-icon>close</mat-icon>
-            </button>
-            <img
-                class="image-preview"
-                [ngClass]="thumbnailImgUrl === image.url ? 'selected-thumbnail' : ''"
-                [src]="image.url"
-                (click)="setThumbnail(image.url)"
-                alt="No Preview for SVG's">
-        </div>
-    </div>
 
 
     <!-- Link -->
-    <mat-form-field>
-        <input
-            matInput
-            [(ngModel)]="link"
-            placeholder="Add a link"
-            autocomplete="off">
-        <mat-hint>Optional</mat-hint>
-    </mat-form-field>
+
 
 
     <!-- Tags -->
-    <mat-form-field>
-        <mat-chip-list #chipList aria-label="Tags">
-          <mat-chip *ngFor="let tag of tags" removable="true" (removed)="removeTag(tag)">
-            {{ tag }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="Tags"
-                 autocomplete="off"
-                 [matChipInputFor]="chipList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 (matChipInputTokenEnd)="addTag($event)">
-        </mat-chip-list>
-    </mat-form-field>
+
+
+
+    <!-- Image Upload -->
+
+
+
+    <!-- Images Preview-->
+
 
 
     <!-- Submit Button -->
-    <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!title || !category || !thumbnailImgUrl"
-        (click)="submit()"
-        style="width: 80%; margin: 1em auto; display: block; color: white;">
-        <mat-icon>done</mat-icon>
-        <span style="margin-left: 10px">Submit Post</span>
-    </button>
 
 
     <!-- Missing Fields -->
-    <ul *ngIf="!title || !category || !thumbnailImgUrl">
+    <!-- <ul *ngIf="!title || !category || !thumbnailImgUrl">
         <li *ngIf="!title">Missing Title</li>
         <li *ngIf="!category">Missing Category</li>
         <li *ngIf="!thumbnailImgUrl">Need at least 1 image</li>
-    </ul>
+    </ul> -->
 
 </mat-card>

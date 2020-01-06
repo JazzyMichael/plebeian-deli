@@ -13,6 +13,8 @@ export class PostService {
   posts$: BehaviorSubject<any>;
   featuredPosts$: BehaviorSubject<any>;
 
+  editingPost: any = null;
+
   constructor(
     private afStore: AngularFirestore,
     private userService: UserService,
@@ -105,9 +107,9 @@ export class PostService {
       );
   }
 
-  getPost(id: string): Observable<any> {
+  getPost(postId: string): Observable<any> {
     return this.afStore
-      .doc(`posts/${id}`)
+      .doc(`posts/${postId}`)
       .valueChanges()
       .pipe(
         switchMap((post: any) => {
@@ -125,13 +127,7 @@ export class PostService {
 
                 return { ...user, thumbnail };
               }),
-              switchMap(user => {
-                return of({
-                  ...post,
-                  postId: id,
-                  user
-                });
-              })
+              switchMap(user => of({ ...post, postId, user }))
             );
         })
       );

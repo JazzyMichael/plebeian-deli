@@ -1,11 +1,13 @@
 <div class="container">
-    <button mat-icon-button (click)="openSidenav()">
-        <mat-icon>face</mat-icon>
-    </button>
+    <img
+        src="assets/images/b35-ticket-logo.png"
+        alt="Profile Pic"
+        height="40"
+        (click)="openSidenav()">
 
     <mat-form-field class="search-box" floatLabel="never">
         <input matInput placeholder="" autocomplete="off">
-        <mat-icon matSuffix style="cursor: pointer">search</mat-icon>
+        <mat-icon matSuffix style="cursor: pointer; margin-top: 5px;">search</mat-icon>
     </mat-form-field>
 
     <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">
