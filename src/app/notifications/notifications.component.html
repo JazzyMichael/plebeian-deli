@@ -26,7 +26,7 @@
     </ng-container>
 
 
-    <button mat-button style="display: block; margin: 2em auto; color: #8aaaf4;">Load older notificiations</button>
+    <button *ngIf="!newCount && !loadedOld" mat-button (click)="loadOlder()" style="display: block; margin: 2em auto; color: #8aaaf4;">Load older notificiations</button>
 
 
 </div>

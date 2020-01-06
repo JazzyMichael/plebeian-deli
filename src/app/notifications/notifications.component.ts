@@ -13,6 +13,8 @@ export class NotificationsComponent implements OnInit {
   newNotifications$: Observable<any[]>;
   newCount: number;
 
+  loadedOld: boolean;
+
   constructor(
     private notificationService: NotificationService,
     private authService: AuthService
@@ -42,6 +44,17 @@ export class NotificationsComponent implements OnInit {
 
     this.notificationService
       .updateNotification(userId, notificationId, obj);
+  }
+
+  async loadOlder() {
+    const user = await this.authService.getCurrentUser();
+
+    if (!user) {
+      return;
+    }
+
+    this.newNotifications$ = this.notificationService.getOld(user.uid);
+    this.loadedOld = true;
   }
 
 }

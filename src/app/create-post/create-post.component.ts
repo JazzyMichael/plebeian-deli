@@ -254,7 +254,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     try {
       let docRef;
 
-      postObj.price = postObj.price ? parseInt(postObj.price) : 0;
+      postObj.price = postObj.price ? parseInt(postObj.price) : null;
 
       if (this.postService.editingPost) {
         const editingPostId = this.postService.editingPost.postId;

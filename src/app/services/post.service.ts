@@ -92,7 +92,7 @@ export class PostService {
     const sortField = opts[sort];
 
     return this.afStore
-      .collection('posts', ref => ref.where('tags', 'array-contains', tag).orderBy(sortField).limit(100))
+      .collection('posts', ref => ref.where('tags', 'array-contains', tag).orderBy(sortField, 'desc').limit(100))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {
