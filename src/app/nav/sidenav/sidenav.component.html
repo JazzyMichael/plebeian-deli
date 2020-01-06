@@ -18,8 +18,15 @@
         </div>
     </div>
 
-    <button mat-button class="nav-link" (click)="closeSidenav.emit()">
-        <mat-icon class="nav-link-icon">notifications_none</mat-icon>
+    <button mat-button class="nav-link" routerLink="/notifications" (click)="closeSidenav.emit()">
+        <mat-icon
+            *ngIf="newCount"
+            [matBadge]="newCount"
+            matBadgeColor="accent"
+            class="nav-link-icon">
+            notifications_none
+        </mat-icon>
+        <mat-icon *ngIf="!newCount" class="nav-link-icon">notifications_none</mat-icon>
         <span>Notifications</span>
     </button>
 

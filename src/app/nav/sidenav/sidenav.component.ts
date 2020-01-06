@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,6 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+
+  newCount: number;
 
   @Input() user: any;
 
@@ -15,9 +18,10 @@ export class SidenavComponent implements OnInit {
   @Output() signIn: EventEmitter<any> = new EventEmitter();
   @Output() signOut: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit() {
+    this.notificationService.newCount$.subscribe(num => this.newCount = num || 0);
   }
 
 }
