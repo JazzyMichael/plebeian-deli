@@ -30,7 +30,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   async viewNotification(n: any) {
-    console.log(n);
 
     const user = await this.authService.getCurrentUser();
 

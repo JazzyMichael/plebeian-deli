@@ -10,6 +10,7 @@ import { CommentsService } from 'src/app/services/comments.service';
 export class CommentFormComponent implements OnInit {
   @Input() deliPostId: string;
   @Input() primePostId: string;
+  @Input() postUserId: string;
 
   newComment: string;
 
@@ -23,6 +24,8 @@ export class CommentFormComponent implements OnInit {
     const obj = {
       userId,
       username,
+      postId: this.deliPostId,
+      postUserId: this.postUserId,
       message: this.newComment,
       createdTimestamp: new Date()
     };

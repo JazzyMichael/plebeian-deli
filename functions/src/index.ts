@@ -23,7 +23,7 @@ export const userCreate = functions.auth.user().onCreate((user: any) => {
 
     const createdTimestamp = admin.firestore.FieldValue.serverTimestamp()
 
-    const random = Math.random().toString().slice(2, 8);
+    const random = Math.random().toString().slice(2, 8)
 
     const username = providerData.displayName.split(' ').join('').substring(0, 4) + `${random}`
 
@@ -42,6 +42,38 @@ export const userCreate = functions.auth.user().onCreate((user: any) => {
 
     return db.doc(`users/${user.uid}`).set(userData)
 })
+
+
+export const newComment = functions.firestore
+    .document('posts/{postId}/comments/{commentId}')
+    .onCreate((snap, context) => {
+        const newCommentValue = snap.data()
+
+        const { postId, postUserId, username, userId } = newCommentValue
+
+        if (!postUserId) throw new Error('No Post User Id')
+
+        const createdTimestamp = admin.firestore.FieldValue.serverTimestamp()
+
+        const notification = {
+            type: 'comment',
+            username,
+            postId,
+            postUserId,
+            userId,
+            createdTimestamp,
+            new: true
+        }
+
+        return db.collection(`users/${postUserId}/notifications`).add(notification)
+    })
+
+
+export const replyComment = functions.firestore
+    .document('posts/{postId}/comments/{commentId}')
+    .onUpdate((snap, context) => {
+        //
+    })
 
 // when new users are created in firestore,
 // create a stripe customer for that user

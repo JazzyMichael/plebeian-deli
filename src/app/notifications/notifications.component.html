@@ -12,16 +12,21 @@
             *ngFor="let notification of notifications"
             class="notification"
             (click)="viewNotification(notification)"
-            [routerLink]="notification.postId ? '/post/' + notification.postId : '/prime-cuts/' + notification.primePostId">
+            [routerLink]="'/post/' + notification.postId">
 
             <div *ngIf="notification.type === 'like'" style="display: flex; align-items: center;">
                 <mat-icon class="heart-icon">favorite</mat-icon>
 
                 <p><span style="font-weight: 600; font-size: 1em; margin: 0 0 0 1.5em;">{{ notification.username }} </span> liked your post</p>
             </div>
-            
 
-            <p *ngIf="notification.type === 'comment'">New Comment from <span style="font-weight: 600; font-size: 1em;"> {{ notification.username }}</span></p>
+
+            <div *ngIf="notification.type === 'comment'" style="display: flex; align-items: center;">
+                <mat-icon class="heart-icon">mode_comment</mat-icon>
+
+                <p><span style="font-weight: 600; font-size: 1em; margin: 0 0 0 1.5em;">New Comment from  </span> {{ notification.username }}</p>
+            </div>
+
         </div>
     </ng-container>
 
