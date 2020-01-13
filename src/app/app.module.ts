@@ -13,6 +13,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import {
   AngularFireAuthGuard,
   canActivate,
@@ -21,7 +22,6 @@ import {
   hasCustomClaim,
   AngularFireAuthGuardModule
 } from '@angular/fire/auth-guard';
-import { map } from 'rxjs/operators';
 
 // Components
 import { AppComponent } from './app.component';
@@ -196,6 +196,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
+    AngularFireAnalyticsModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
@@ -217,6 +218,8 @@ const routes: Routes = [
   ],
   providers: [
     AngularFireAuthGuard,
+    ScreenTrackingService,
+    UserTrackingService,
     Title
   ],
   bootstrap: [AppComponent]

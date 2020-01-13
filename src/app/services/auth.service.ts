@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
-import { switchMap, first, map, tap } from 'rxjs/operators';
+import { switchMap, first, map } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
-import { AnalyticsService } from './analytics.service';
 import { NotificationService } from './notification.service';
 import { UserService } from './user.service';
 
@@ -27,7 +26,6 @@ export class AuthService {
     private oldUserService: OldUserService,
     private userService: UserService,
     private router: Router,
-    private analyticsService: AnalyticsService,
     private notificiationService: NotificationService
     ) {
       this.user$ = new BehaviorSubject(null);
@@ -74,7 +72,6 @@ export class AuthService {
 
     try {
       await this.afAuth.auth.signInWithPopup(provider);
-      this.analyticsService.login();
     } catch (e) {
       console.log('error signing in with popup, trying redirect', e);
       await this.afAuth.auth.signInWithRedirect(provider);
@@ -88,7 +85,6 @@ export class AuthService {
 
     try {
       await this.afAuth.auth.signInWithPopup(provider);
-      this.analyticsService.login();
     } catch (e) {
       console.log('error signing in with popup, trying redirect', e);
       await this.afAuth.auth.signInWithRedirect(provider);
@@ -102,8 +98,6 @@ export class AuthService {
       const email = authData.user.email;
 
       const isOldUser = this.oldUserService.oldUserEmails.some(e => e === email);
-
-      this.analyticsService.login();
 
       if (!isOldUser) {
         return this.router.navigateByUrl('/checkout');

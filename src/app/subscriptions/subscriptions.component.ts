@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { AnalyticsService } from '../services/analytics.service';
 
 declare const fbq: any;
 
@@ -15,7 +14,6 @@ export class SubscriptionsComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private analytics: AnalyticsService,
     private router: Router
     ) { }
 
@@ -56,8 +54,6 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   async selectSubscription() {
-    console.log('selectSubscription');
-
     const user = await this.auth.getCurrentUser();
 
     if (!user) {
@@ -66,8 +62,6 @@ export class SubscriptionsComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/checkout');
     }
-
-    this.analytics.addToCart();
   }
 
 }
