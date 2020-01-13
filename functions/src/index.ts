@@ -71,8 +71,25 @@ export const newComment = functions.firestore
 
 export const replyComment = functions.firestore
     .document('posts/{postId}/comments/{commentId}')
-    .onUpdate((snap, context) => {
-        //
+    .onUpdate((change, context) => {
+        const { authorReply } = change.after.data()
+
+        if (!authorReply) return Promise.resolve()
+
+        const createdTimestamp = admin.firestore.FieldValue.serverTimestamp()
+
+        const notification = {
+            type: 'comment-reply',
+            username: authorReply.username,
+            postId: authorReply.postId,
+            postUserId: authorReply.userId,
+            userId: authorReply.sourceCommentUserId,
+            originalCommentId: authorReply.sourceCommentId,
+            createdTimestamp,
+            new: true
+        }
+
+        return db.collection(`users/${authorReply.sourceCommentUserId}/notifications`).add(notification)
     })
 
 // when new users are created in firestore,

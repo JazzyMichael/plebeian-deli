@@ -47,6 +47,7 @@ export class CommentListComponent implements OnInit {
       postId: this.postId,
       postUserId: '',
       sourceCommentId: this.replying.commentId,
+      sourceCommentUserId: this.replying.userId,
       message: text,
       createdTimestamp: new Date()
     };

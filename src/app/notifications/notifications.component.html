@@ -27,6 +27,13 @@
                 <p><span style="font-weight: 600; font-size: 1em; margin: 0 0 0 1.5em;">New Comment from  </span> {{ notification.username }}</p>
             </div>
 
+
+            <div *ngIf="notification.type === 'comment-reply'" style="display: flex; align-items: center;">
+                <mat-icon class="heart-icon">forum</mat-icon>
+
+                <p><span style="font-weight: 600; font-size: 1em; margin: 0 0 0 1.5em;">{{ notification.username }} </span> replied to your comment</p>
+            </div>
+
         </div>
     </ng-container>
 
