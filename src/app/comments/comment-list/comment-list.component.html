@@ -1,11 +1,52 @@
 
 <div class="comment-list">
 
+    <ng-container *ngFor="let comment of comments">
 
-    <div *ngFor="let comment of comments" class="comment">
-        <h4 style="margin: 0; color: black;">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
-        <p style="padding: 1em; color: #777; margin: 0;">{{ comment.message }}</p>
-    </div>
+        <div class="comment">
+            <h4 style="margin: 0; color: black;">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
+            <p class="comment-message">{{ comment.message }}</p>
+            <button
+                *ngIf="canReply && !comment.authorReply"
+                mat-button
+                color="primary"
+                (click)="replying !== comment ? startReply(comment) : endReply()"
+                style="display: block; margin-left: auto;">
+                {{ replying !== comment ? 'reply' : 'cancel' }}
+            </button>
+        </div>
+
+        <div *ngIf="comment.authorReply as comment" class="reply-comment">
+            <h4 style="margin: 0; color: black;">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
+
+            <p class="comment-message">{{ comment.message }}</p>
+        </div>
+    
+    
+        <div *ngIf="replying === comment" style="margin-bottom: 111px">
+            <mat-form-field color="accent" style="width: 100%">
+                <textarea
+                    matInput
+                    #replyInput
+                    [placeholder]="'Reply to ' + comment.username"
+                    maxlength="240"
+                    rows="4"></textarea> <!-- keep closing tag directly next to opening tag without ngModel -->
+                <mat-hint align="end">{{ replyInput.value?.length || 0 }}/240</mat-hint>
+            </mat-form-field>
+        
+            <br>
+        
+            <button
+                mat-raised-button
+                color="accent"
+                [disabled]="!replyInput.value?.length"
+                (click)="submitReply(replyInput.value)"
+                style="width: 100%; display: block; padding-left: 2em; padding-right: 2em; margin-top: 10px;">
+                Post Reply
+            </button>
+        </div>
+
+    </ng-container>
 
 
 </div>

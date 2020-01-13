@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentsService } from 'src/app/services/comments.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-comment-form',
@@ -14,7 +15,11 @@ export class CommentFormComponent implements OnInit {
 
   newComment: string;
 
-  constructor(public authService: AuthService, private commentsService: CommentsService) { }
+  constructor(
+    public authService: AuthService,
+    private commentsService: CommentsService,
+    private snackbar: MatSnackBar
+  ) { }
 
   ngOnInit() {
   }
@@ -44,7 +49,7 @@ export class CommentFormComponent implements OnInit {
 
     prom
       .then(res => {
-        window.alert('Comment Saved!');
+        this.snackbar.open('Comment Added!', 'Ok', { duration: 3000 });
         this.newComment = '';
       });
   }

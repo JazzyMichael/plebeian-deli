@@ -25,6 +25,16 @@ export class CommentsService {
   }
 
 
+  authorReplyToComment(reply: any) {
+    return this.afStore
+      .collection('posts')
+      .doc(reply.postId)
+      .collection('comments')
+      .doc(reply.sourceCommentId)
+      .update({ authorReply: reply });
+  }
+
+
   // add to notifications for each user who commented
   addDeliComment(postId: string, commentObj: any) {
     return this.afStore

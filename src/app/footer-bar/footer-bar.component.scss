@@ -9,12 +9,18 @@
     align-items: center;
 }
 
+.deli-tab-img {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
 .mat-icon-button {
     color: #afafaf;
 }
 
 .active-tab {
     color: white;
+    opacity: 1 !important;
 }
 
 .fab-btn {

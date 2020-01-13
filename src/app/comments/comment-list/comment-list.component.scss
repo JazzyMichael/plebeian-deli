@@ -1,20 +1,27 @@
-.comment-list {
-    padding: 1em;
-}
 
 .comment {
-    padding: 0.25em;
+    box-sizing: border-box;
+    padding: 0.75em;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 2px;
     margin: 15px auto 15px 0;
-    width: 95%;
+    width: 100%;
     border-left: 5px solid #7fcaa2;
     transition: 300ms all ease-out;
 }
 
-.comment:hover {
-    width: 94%;
-    border-radius: 10px;
+.reply-comment {
+    width: 90%;
+    padding: 0.75em;
+    background-color: white;
+    border-radius: 2px;
+    margin: 15px 0 15px auto;
+    border-left: 5px solid #f54081;
+    transition: 300ms all ease-out;
+}
+
+.reply-comment:hover, .comment:hover {
+    border-radius: 12px;
 }
 
 .comment-date {
@@ -22,4 +29,10 @@
     font-weight: 300;
     color: #777;
     margin-left: 10px;
+}
+
+.comment-message {
+    padding: 1em 1em 0 1em;
+    color: #777;
+    margin: 0;
 }

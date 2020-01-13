@@ -6,7 +6,7 @@
 </div>
 
 <!-- View all Comments -->
-<app-comment-list *ngIf="comments$ | async as comments" [comments]="comments"></app-comment-list>
+<app-comment-list *ngIf="comments$ | async as comments" [comments]="comments" [postId]="deliPostId"></app-comment-list>
 
 <br>
 
