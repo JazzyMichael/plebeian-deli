@@ -49,6 +49,14 @@
                 </div>
             </div>
             <hr>
+            <mat-chip-list *ngIf="post.tags?.length" class="tag-container">
+                <mat-chip
+                    *ngFor="let tag of post.tags"
+                    class="tag-chip"
+                    (click)="searchByTag(tag)">
+                    {{ tag }}
+                </mat-chip>
+            </mat-chip-list>
         </div>
 
         <button

@@ -148,6 +148,10 @@ export class PostComponent implements OnInit, OnDestroy {
     }
   }
 
+  searchByTag(tag: string) {
+    console.log(tag);
+  }
+
   facebookShare() {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=plebeiandeli.art/post/${this.postId}`, '_blank');
   }

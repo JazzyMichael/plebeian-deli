@@ -124,6 +124,17 @@
     margin-left: 0;
 }
 
+.tag-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1em;
+}
+
+.tag-chip {
+    cursor: pointer;
+}
+
 .arrows {
     text-align: center;
     padding: 10px;
