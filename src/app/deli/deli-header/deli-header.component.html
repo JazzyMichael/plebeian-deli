@@ -1,9 +1,13 @@
 <div class="container">
-    <img
+    <!-- <img
         src="assets/images/b35-ticket-logo.png"
         alt="Profile Pic"
         height="40"
-        (click)="openSidenav()">
+        (click)="openSidenav()"> -->
+
+    <button mat-icon-button (click)="openSidenav()">
+        <mat-icon>face</mat-icon>
+    </button>    
 
     <mat-form-field class="search-box" floatLabel="never">
         <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">

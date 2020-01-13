@@ -3,11 +3,15 @@
     *ngIf="['/calendar', '/exhibitions', '/members', '/about'].includes(location.path()); else backOnly"
     class="container">
 
-    <img
+    <!-- <img
         src="assets/images/b35-ticket-logo.png"
         alt="Profile Pic"
         height="40"
-        (click)="sidenavClick()">
+        (click)="sidenavClick()"> -->
+
+    <button mat-icon-button (click)="sidenavClick()">
+        <mat-icon>face</mat-icon>
+    </button>
 
     <div style="font-size: 1.4em;">{{ location.path().substring(1) | titlecase }}</div>
 
