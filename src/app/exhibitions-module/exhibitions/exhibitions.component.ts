@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-exhibitions',
@@ -12,11 +11,9 @@ export class ExhibitionsComponent implements OnInit {
   totalPages: number;
   page: number;
 
-  constructor(private titleService: Title) { }
+  constructor() { }
 
   ngOnInit() {
-    this.titleService.setTitle('Exhibitions');
-
     this.exhibitions = [
       {
         date: 'April 2019',

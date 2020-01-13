@@ -1,3 +1,11 @@
+.exhibitions-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap-reverse;
+    max-width: 1000px;
+    margin: 2em auto;
+}
+
 mat-card {
     max-width: 200px;
     margin: 1em;

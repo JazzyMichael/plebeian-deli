@@ -1,3 +1,18 @@
+<div class="exhibitions-list">
+
+    <mat-card *ngFor="let x of exhibitions" (click)="select(x)" [ngClass]="selected === x ? 'selected' : ''">
+        <mat-card-header>{{ x.date }}</mat-card-header>
+
+        <img mat-card-image [src]="x.cover" alt="Cover" draggable="false">
+
+        <mat-card-actions>
+            <button mat-button color="accent" style="width: 100%">
+                <a download href="{{x.download}}" style="text-decoration: none; color: #ff4081;">Download</a>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>
 
 <div *ngIf="selected" style="text-align: center; margin: 1em 0;">
 
@@ -28,21 +43,5 @@
         (after-load-complete)="loaded($event)"
         style="display: block; width: 500px; max-width: 90%; margin: auto">
     </pdf-viewer>
-
-</div>
-
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap-reverse; max-width: 1000px; margin: 2em auto;">
-
-    <mat-card *ngFor="let x of exhibitions" (click)="select(x)" [ngClass]="selected === x ? 'selected' : ''">
-        <mat-card-header>{{ x.date }}</mat-card-header>
-
-        <img mat-card-image [src]="x.cover" alt="Cover" draggable="false">
-
-        <mat-card-actions>
-            <button mat-button color="accent" style="width: 100%">
-                <a download href="{{x.download}}" style="text-decoration: none; color: #ff4081;">Download</a>
-            </button>
-        </mat-card-actions>
-    </mat-card>
 
 </div>

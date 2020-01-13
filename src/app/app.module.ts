@@ -26,7 +26,6 @@ import {
 // Components
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
-import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MembersComponent } from './members/members.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
@@ -60,7 +59,6 @@ import { OrdersComponent } from './orders/orders.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
@@ -100,7 +98,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/deli', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'deli', component: DeliComponent },
-  { path: 'exhibitions', component: ExhibitionsComponent },
+  { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
   { path: 'calendar', component: CalendarComponent },
   { path: 'members', component: MembersComponent },
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
@@ -127,7 +125,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AboutComponent,
-    ExhibitionsComponent,
     CalendarComponent,
     MembersComponent,
     SubscriptionsComponent,
@@ -200,7 +197,6 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
-    PdfViewerModule,
     NgxHmCarouselModule,
     NgxMasonryModule,
     InfiniteScrollModule,
