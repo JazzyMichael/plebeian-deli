@@ -23,7 +23,7 @@ export class CommentListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const { postUserId } = this.comments.find(c => c.postUserId);
+    const { postUserId } = this.comments.find(c => c.postUserId) || { postUserId: null };
 
     const user = await this.auth.getCurrentUser();
 

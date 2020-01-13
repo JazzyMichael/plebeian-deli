@@ -59,7 +59,6 @@ import { OrdersComponent } from './orders/orders.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { NgxMasonryModule } from 'ngx-masonry';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
 import { ServicePaymentComponent } from './orders/service-payment/service-payment.component';
@@ -198,7 +197,6 @@ const routes: Routes = [
     AngularFireStorageModule,
     AngularFireFunctionsModule,
     NgxHmCarouselModule,
-    NgxMasonryModule,
     InfiniteScrollModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
