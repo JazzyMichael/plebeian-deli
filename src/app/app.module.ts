@@ -16,17 +16,18 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import {
   AngularFireAuthGuard,
-  canActivate,
   redirectLoggedInTo,
   redirectUnauthorizedTo,
-  hasCustomClaim,
   AngularFireAuthGuardModule
 } from '@angular/fire/auth-guard';
+
+// 3rd Party Modules
+import { NgxHmCarouselModule } from 'ngx-hm-carousel';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Components
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { MembersComponent } from './members/members.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { DeliComponent } from './deli/deli.component';
@@ -54,12 +55,6 @@ import { ServicesComponent } from './profile/services/services.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { InquireFormComponent } from './inquire-form/inquire-form.component';
 import { OrdersComponent } from './orders/orders.component';
-
-// 3rd Party Modules
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
 import { ServicePaymentComponent } from './orders/service-payment/service-payment.component';
 import { BoughtServicesComponent } from './orders/bought-services/bought-services.component';
@@ -98,7 +93,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
   { path: 'members', component: MembersComponent },
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'info', component: InfoComponent },
@@ -124,7 +119,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AboutComponent,
-    CalendarComponent,
     MembersComponent,
     SubscriptionsComponent,
     DeliComponent,
@@ -197,11 +191,7 @@ const routes: Routes = [
     AngularFireStorageModule,
     AngularFireFunctionsModule,
     NgxHmCarouselModule,
-    InfiniteScrollModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    })
+    InfiniteScrollModule
   ],
   exports: [
     MaterialModule

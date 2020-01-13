@@ -1,21 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
-  isSameMonth,
-  addHours
+  isSameMonth
 } from 'date-fns';
 import {
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent,
   CalendarView
 } from 'angular-calendar';
-import { Subject, Observable, of, Subscription } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -47,7 +41,6 @@ export class CalendarComponent implements OnInit {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        // this.events = this.events.filter(iEvent => iEvent !== event);
         this.handleEvent('Deleted', event);
       }
     }
@@ -94,8 +87,6 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent | any): void {
-    console.log({ action, event });
-
     const eventId = event.data.eventId;
     this.router.navigateByUrl(`/event/${eventId}`);
   }
