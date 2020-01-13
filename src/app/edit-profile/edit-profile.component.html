@@ -1,12 +1,12 @@
 
-<div class="container">
+<div *ngIf="user$ | async as user" class="container">
 
     <div class="edit-header">
         <div>img</div>
 
         <div>
-            <div>username</div>
-            <div>medium</div>
+            <div>{{ user.username }}</div>
+            <div>{{ user.medium }}</div>
         </div>
     </div>
 
@@ -17,15 +17,65 @@
         <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
     </mat-form-field>
 
+    <br>
 
-    <!-- 
-        instagram
-        facebook
-        twitter
-        other
-     -->
+    <p style="margin-left: 1em">Social Links</p>
 
-    <br><br>
+    <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
+        <span matPrefix>@ &nbsp;</span>
+        <input
+            matInput
+            #instagramInput
+            [value]="user.instagramUrl || ''"
+            type="text"
+            placeholder="Instagram Handle"
+            autocomplete="off"
+            (input)="updateField('instagramUrl', $event.target.value)">
+        <mat-icon
+            matSuffix
+            (click)="$event.stopPropagation()">
+            link
+        </mat-icon>
+        <mat-hint>*link is generated from name</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field style="margin-top: 1em">
+        <input
+            matInput
+            #otherLinkInput
+            [value]="user.facebookUrl || ''"
+            type="text"
+            placeholder="Facebook Link"
+            autocomplete="off"
+            (input)="updateField('facebookUrl', $event.target.value)">
+        <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field style="margin-top: 1em">
+        <input
+            matInput
+            #otherLinkInput
+            [value]="user.twitterUrl || ''"
+            type="text"
+            placeholder="Twitter Link"
+            autocomplete="off"
+            (input)="updateField('twitterUrl', $event.target.value)">
+        <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field style="margin-top: 1em">
+        <input
+            matInput
+            #otherLinkInput
+            [value]="user.otherLink || ''"
+            type="text"
+            placeholder="Other Link"
+            autocomplete="off"
+            (input)="updateField('otherLink', $event.target.value)">
+        <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
+    </mat-form-field>
+
+    <br>
 
     <!-- location -->
     <mat-form-field color="accent">
@@ -34,5 +84,7 @@
             placeholder="Location"
             autocomplete="off">
     </mat-form-field>
+
+    <br><br><br><br><br>
 
 </div>
