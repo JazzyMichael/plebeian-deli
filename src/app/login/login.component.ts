@@ -1,19 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { switchMap, debounceTime, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+
+  userSub: Subscription;
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.userSub = this.auth.user$.subscribe(user => {
+      if (user) {
+        this.auth.navigateToProfile();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
   }
 
   validateUniqueUsername(control: AbstractControl) {

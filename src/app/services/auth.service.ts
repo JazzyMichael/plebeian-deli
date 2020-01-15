@@ -32,15 +32,8 @@ export class AuthService {
       this.username = '';
 
       this.afAuth.auth.getRedirectResult()
-        .then(res => {
-          console.log('redirect res', res)
-          if (res && res.user) {
-            this.handleAuthData(res);
-          }
-        })
-        .catch(e => {
-          console.log('redirect err', e);
-        });
+        .then(res => { if (res && res.user) { this.handleAuthData(res); } })
+        .catch(e => console.log('auth redirect error', e));
 
       this.afAuth.authState.pipe(
         switchMap((user: any) => {
@@ -73,8 +66,10 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithPopup(provider);
     } catch (e) {
-      console.log('error signing in with popup, trying redirect', e);
-      await this.afAuth.auth.signInWithRedirect(provider);
+      if (e && e.code !== 'auth/popup-closed-by-user') {
+        console.log('error signing in with popup, trying redirect', e);
+        await this.afAuth.auth.signInWithRedirect(provider);
+      }
     }
   }
 
@@ -86,8 +81,10 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithPopup(provider);
     } catch (e) {
-      console.log('error signing in with popup, trying redirect', e);
-      await this.afAuth.auth.signInWithRedirect(provider);
+      if (e && e.code !== 'auth/popup-closed-by-user') {
+        console.log('error signing in with popup, trying redirect', e);
+        await this.afAuth.auth.signInWithRedirect(provider);
+      }
     }
   }
 
