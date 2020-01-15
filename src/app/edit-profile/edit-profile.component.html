@@ -11,9 +11,9 @@
     </div>
 
     <mat-form-field hintLabel="Max 240 Characters" color="accent">
-        <mat-icon *ngIf="descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
-        <mat-icon *ngIf="descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation();">done</mat-icon>
-        <textarea matInput #descriptionInput placeholder="Bio" maxlength="240" rows="5" [value]="user.description"></textarea>
+        <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="accent" class="description-btn" (click)="descriptionInput.value = user.bio || ''; $event.stopPropagation();">clear</mat-icon>
+        <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="primary" class="description-btn" (click)="updateField(user.uid, 'bio', descriptionInput.value); $event.stopPropagation();">done</mat-icon>
+        <textarea matInput #descriptionInput placeholder="Bio" maxlength="240" rows="5" [value]="user.bio || ''"></textarea>
         <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
     </mat-form-field>
 
@@ -30,7 +30,7 @@
             type="text"
             placeholder="Instagram Handle"
             autocomplete="off"
-            (input)="updateField('instagramUrl', $event.target.value)">
+            (input)="updateField(user.uid, 'instagramUrl', $event.target.value)">
         <mat-icon
             matSuffix
             (click)="$event.stopPropagation()">
@@ -47,7 +47,7 @@
             type="text"
             placeholder="Facebook Link"
             autocomplete="off"
-            (input)="updateField('facebookUrl', $event.target.value)">
+            (input)="updateField(user.uid, 'facebookUrl', $event.target.value)">
         <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
     </mat-form-field>
 
@@ -59,7 +59,7 @@
             type="text"
             placeholder="Twitter Link"
             autocomplete="off"
-            (input)="updateField('twitterUrl', $event.target.value)">
+            (input)="updateField(user.uid, 'twitterUrl', $event.target.value)">
         <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
     </mat-form-field>
 
@@ -71,7 +71,7 @@
             type="text"
             placeholder="Other Link"
             autocomplete="off"
-            (input)="updateField('otherLink', $event.target.value)">
+            (input)="updateField(user.uid, 'otherLink', $event.target.value)">
         <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
     </mat-form-field>
 

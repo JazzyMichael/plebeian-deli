@@ -8,6 +8,11 @@
     <span style="margin-left: 10px">Done</span>
 </button>
 
+<button *ngIf="editable && editing" mat-raised-button routerLink="/edit-profile" style="display: block; width: 90%; margin: 1em auto;">
+    <mat-icon>outdoor_grill</mat-icon>
+    <span style="margin-left: 10px">More Edits</span>
+</button>
+
 <br>
 
 <ng-container *ngIf="user$ | async as user">
@@ -83,55 +88,7 @@
             </button>
 
             <!-- Social Links -->
-            <div *ngIf="editable && editing; else viewSocialLinks" style="width: 85%">
-                <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
-                    <span matPrefix>@ &nbsp;</span>
-                    <input
-                        matInput
-                        #instagramInput
-                        [value]="user.instagram || ''"
-                        type="text"
-                        placeholder="Instagram Handle"
-                        autocomplete="off"
-                        (input)="onInstagramInput($event.target.value)">
-                    <mat-icon
-                        matSuffix
-                        (click)="$event.stopPropagation()">
-                        link
-                    </mat-icon>
-                    <mat-hint>*link is generated from name</mat-hint>
-                </mat-form-field>
-
-                <br>
-
-                <mat-form-field style="margin-top: 1em">
-                    <input
-                        matInput
-                        #otherLinkInput
-                        [value]="user.facebook || ''"
-                        type="text"
-                        placeholder="Facebook Link"
-                        autocomplete="off"
-                        (input)="onFacebookInput($event.target.value)">
-                    <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
-                </mat-form-field>
-
-                <br>
-
-                <mat-form-field style="margin-top: 1em">
-                    <input
-                        matInput
-                        #otherLinkInput
-                        [value]="user.otherLink || ''"
-                        type="text"
-                        placeholder="Other Link"
-                        autocomplete="off"
-                        (input)="onOtherLinkInput($event.target.value)">
-                    <mat-icon matSuffix (click)="$event.stopPropagation()">link</mat-icon>
-                </mat-form-field>
-            </div>
-
-            <ng-template #viewSocialLinks>
+            <div>
                 <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
                     <mat-icon svgIcon="instagram"></mat-icon>
                     <span class="social-text">{{ user.instagram }}</span>
@@ -146,7 +103,7 @@
                     <mat-icon>link</mat-icon>
                     <span class="social-text">Website</span>
                 </button>
-            </ng-template>
+            </div>
 
             <!-- CV -->
             <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
@@ -216,19 +173,10 @@
             Save New Username {{ newUsername ? '(' + newUsername + ')' : '' }}
         </button>
 
-        <!-- Bio/Description -->
-        <ng-container *ngIf="editable && editing; else readonlyDescription">
-            <mat-form-field hintLabel="Max 240 Characters" color="accent" style="width: 95%; margin: auto; display: block;">
-                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="accent" class="description-btn" (click)="descriptionInput.value = user.description; $event.stopPropagation();">clear</mat-icon>
-                <mat-icon *ngIf="doneLoading && descriptionInput?.value !== user.description" color="primary" class="description-btn" (click)="updateDescription(descriptionInput.value); user.description = descriptionInput.value; $event.stopPropagation()">done</mat-icon>
-                <textarea matInput #descriptionInput placeholder="{{ 'Tell us about yourself,\nyour art,\nand all that you have to offer!' }}" maxlength="240" rows="5" [value]="user.description"></textarea>
-                <mat-hint align="end">{{ descriptionInput.value?.length || 0 }}/240</mat-hint>
-            </mat-form-field>
-        </ng-container>
 
-        <ng-template #readonlyDescription>
-            <div style="width: 95%; margin: 1em auto; display: block;">{{ user.description }}</div>
-        </ng-template>
+        <!-- Bio/Description -->
+        <div style="width: 95%; margin: 1em auto; display: block;">{{ user.bio || user.description || '' }}</div>
+
 
         <br><br>
 

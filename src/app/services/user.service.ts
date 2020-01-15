@@ -115,6 +115,13 @@ export class UserService {
       .catch(e => console.log('error updating user', e));
   }
 
+  updateUserPromise(uid: string, obj: any) {
+    return this.afStore
+      .doc(`users/${uid}`)
+      .update(obj)
+      .catch(e => console.log('oops', e));
+  }
+
   getUserThumbnail(user: any, size: number = 100): Observable<any> {
     const uid = user.uid;
     const type = user.profileType;

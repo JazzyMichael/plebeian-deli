@@ -97,10 +97,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editing = !this.editing;
   }
 
-  updateDescription(description: string) {
-    this.userService.updateUser(this.uid, { description });
-  }
-
   updateUserMedium(event: any) {
     const medium = event.value.toLowerCase();
     this.userService.updateUser(this.uid, { medium });
@@ -110,25 +106,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.update$.next({ location });
   }
 
-  onInstagramInput(instagram: string) {
-    this.update$.next({ instagram });
-  }
-
   openInstagram(instagram: string) {
     const url = `https://www.instagram.com/${instagram}`;
     window.open(url, '_blank');
   }
 
-  onFacebookInput(facebook: string) {
-    this.update$.next({ facebook });
-  }
-
   openFacebook(facebookUrl: string) {
     window.open(facebookUrl, '_blank');
-  }
-
-  onOtherLinkInput(otherLink: string) {
-    this.update$.next({ otherLink });
   }
 
   openOtherLink(otherLink: string) {
