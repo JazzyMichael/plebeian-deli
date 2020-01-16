@@ -1,14 +1,64 @@
 
 <div *ngIf="user$ | async as user" class="container">
 
-    <div class="edit-header">
-        <div>img</div>
+    <br>
 
-        <div>
-            <div>{{ user.username }}</div>
-            <div>{{ user.medium }}</div>
-        </div>
+    <p style="margin-left: 1em">Profile Picture</p>
+
+    <div
+        *ngIf="user.thumbnail | async as thumbnail"
+        class="profile-pic"
+        [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}"
+        [ngClass]="thumbnail ? 'bg' : ''">
+        <label for="profile-pic-upload" class="upload-btn">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">Upload</span>
+        </label>
+        <input
+            id="profile-pic-upload"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            (change)="uploadProfilePic(user.uid, $event)">
     </div>
+
+    <br>
+
+    <p *ngIf="user.backgroundThumbnail" style="margin-left: 1em">Background Picture</p>
+
+    <div
+        *ngIf="user.backgroundThumbnail | async as thumbnail; else uploadBackgroundPicture"
+        class="profile-pic"
+        [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}"
+        [ngClass]="thumbnail ? 'bg' : ''">
+        <label for="profile-pic-upload" class="upload-btn">
+            <mat-icon>publish</mat-icon>
+            <span style="margin-left: 10px">Upload</span>
+        </label>
+        <input
+            id="profile-pic-upload"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            (change)="uploadBackgroundPic(user.uid, $event)">
+    </div>
+
+    <ng-template #uploadBackgroundPicture>
+        <div style="max-width: 80%; margin: auto;">
+            <label for="profile-pic-upload" class="upload-btn">
+                <mat-icon>publish</mat-icon>
+                <span style="margin-left: 10px">Upload</span>
+            </label>
+            <input
+                id="profile-pic-upload"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="uploadBackgroundPic(user.uid, $event)">
+        </div>
+    </ng-template>
+
+    <br>
 
     <mat-form-field hintLabel="Max 240 Characters" color="accent">
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="accent" class="description-btn" (click)="descriptionInput.value = user.bio || ''; $event.stopPropagation();">clear</mat-icon>

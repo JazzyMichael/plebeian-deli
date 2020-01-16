@@ -47,7 +47,8 @@ export class AuthService {
         })
       ).subscribe((user: any) => {
         if (user) {
-          user['thumbnail'] = this.userService.getUserThumbnail(user);
+          user['thumbnail'] = this.userService.getUserThumbnail(user, 250);
+          user['backgroundThumbnail'] = this.userService.getUserBackground(user, 500);
           this.username = user.username;
           this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));

@@ -28,6 +28,13 @@
             <button mat-icon-button (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
+
+            <ng-container *ngIf="auth.user$ | async as user">
+                <div></div>
+                <button *ngIf="location.path() === '/' + user.username" mat-icon-button routerLink="/edit-profile">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </ng-container>
         </div>
     </ng-container>
 </ng-template>
