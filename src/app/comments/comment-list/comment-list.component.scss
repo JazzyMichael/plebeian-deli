@@ -2,22 +2,24 @@
 .comment {
     box-sizing: border-box;
     padding: 0.75em;
-    background-color: white;
+    background-color: #424242;
     border-radius: 2px;
     margin: 15px auto 15px 0;
     width: 100%;
     border-left: 5px solid #7fcaa2;
+    box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
     transition: 300ms all ease-out;
 }
 
 .reply-comment {
-    width: 90%;
+    width: 85%;
     padding: 0.75em;
-    background-color: white;
+    background-color: #424242;
     border-radius: 2px;
     margin: 15px 0 15px auto;
     border-left: 5px solid #f54081;
     transition: 300ms all ease-out;
+    box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
 }
 
 .reply-comment:hover, .comment:hover {
@@ -27,12 +29,11 @@
 .comment-date {
     font-size: 0.75em;
     font-weight: 300;
-    color: #777;
+    color: #bbbbbb;
     margin-left: 10px;
 }
 
 .comment-message {
     padding: 1em 1em 0 1em;
-    color: #777;
     margin: 0;
 }

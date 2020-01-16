@@ -4,7 +4,7 @@
     <ng-container *ngFor="let comment of comments">
 
         <div class="comment">
-            <h4 style="margin: 0; color: black;">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
+            <h4 style="margin: 0">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
             <p class="comment-message">{{ comment.message }}</p>
             <button
                 *ngIf="canReply && !comment.authorReply"
@@ -17,7 +17,7 @@
         </div>
 
         <div *ngIf="comment.authorReply as comment" class="reply-comment">
-            <h4 style="margin: 0; color: black;">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
+            <h4 style="margin: 0">{{ comment.username }} <i class="comment-date"> {{ comment.createdTimestamp.toDate() | date }}</i></h4>
 
             <p class="comment-message">{{ comment.message }}</p>
         </div>
