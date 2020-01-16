@@ -60,6 +60,30 @@
 
     <br>
 
+    <div style="display: flex; justify-content: center; align-items: center; margin: 2em auto 0;">
+        <span *ngIf="!editingUsername" style="margin-right: 3px">Username: </span>
+
+        <button mat-button (click)="editingUsername = !editingUsername">
+            <mat-icon *ngIf="!editingUsername">edit</mat-icon>
+            <span style="margin-left: 10px">{{ editingUsername ? 'cancel' : user.username }}</span>
+        </button>
+    
+        <button
+            *ngIf="editingUsername"
+            mat-raised-button
+            [disabled]="!newUsername"
+            (click)="updateField(user.uid, 'username', newUsername)">
+            Save New Username
+        </button>
+    </div>
+
+    <app-username-form
+        *ngIf="editingUsername"
+        (username)="onUpdateUsername($event)">
+    </app-username-form>
+
+    <br>
+
     <mat-form-field hintLabel="Max 240 Characters" color="accent">
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="accent" class="description-btn" (click)="descriptionInput.value = user.bio || ''; $event.stopPropagation();">clear</mat-icon>
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="primary" class="description-btn" (click)="updateField(user.uid, 'bio', descriptionInput.value); $event.stopPropagation();">done</mat-icon>
@@ -69,7 +93,7 @@
 
     <br>
 
-    <p style="margin-left: 1em">Social Links</p>
+    <p style="margin-left: 1em; margin-top: 2em;">Social Links</p>
 
     <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
         <span matPrefix>@ &nbsp;</span>
@@ -134,6 +158,32 @@
             placeholder="Location"
             autocomplete="off">
     </mat-form-field>
+
+
+
+    <!-- CV -->
+    <!-- <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
+        <button *ngIf="user.cv" mat-button style="padding: 0">
+            <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
+        </button>
+        <button mat-button style="padding: 0">
+            <label for="cv-upload" class="cv-upload-btn">
+                <mat-icon>publish</mat-icon>
+                <span style="margin-left: 10px">Upload New CV</span>
+            </label>
+        </button>
+        <input
+            id="cv-upload"
+            type="file"
+            accept="application/pdf"
+            style="display: none"
+            (change)="uploadCv($event)">
+    </ng-container> -->
+
+    <br>
+    <br>
+
+    <button mat-button style="display: block; margin: auto;">Stripe</button>
 
     <br><br><br><br><br>
 

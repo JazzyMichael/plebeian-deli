@@ -10,13 +10,8 @@
         class="profile-pic"
         (click)="gotoUserProfile.emit()">
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.5em 1em 2em;">
-        <span style="color: black" (click)="gotoUserProfile.emit()">{{ user.username }}</span>
-
-        <div>
-            <mat-icon color="primary" (click)="gotoUserProfile.emit()" style="margin-right: 0.4em">edit</mat-icon>
-            <mat-icon color="primary" (click)="gotoUserProfile.emit()">visibility</mat-icon>
-        </div>
+    <div style="display: flex; justify-content: center; align-items: center; margin: 0.5em 1em 2em; cursor: pointer;">
+        <span style="color: black; border-bottom: 2px solid #4caf50; padding-bottom: 5px; font-family: cursive, 'Lexend Deca', sans-serif; font-weight: 100;" (click)="gotoUserProfile.emit()">{{ user.username }}</span>
     </div>
 
     <button mat-button class="nav-link" routerLink="/notifications" (click)="closeSidenav.emit()">

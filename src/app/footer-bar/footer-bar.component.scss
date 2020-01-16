@@ -29,6 +29,16 @@
     position: fixed;
     bottom: 30px;
     left: calc(50% - 26px);
+    transform: rotate(0deg);
+    transition: 333ms all ease-out;
+}
+
+.disabled-fab-btn {
+    position: fixed;
+    bottom: 3px;
+    left: calc(50% - 26px);
+    transform: rotate(90deg);
+    transition: 333ms all ease-out;
 }
 
 .active-fab {

@@ -15,6 +15,10 @@ export class EditProfileComponent implements OnInit {
 
   debounce: any;
 
+  editingUsername: boolean;
+
+  newUsername: string;
+
   constructor(
     private auth: AuthService,
     private snackbar: MatSnackBar,
@@ -36,7 +40,14 @@ export class EditProfileComponent implements OnInit {
       obj[field] = value;
       await this.userService.updateUserPromise(uid, obj);
       this.snackbar.open('Profile Updated!', 'Ok', { duration: 3000 });
+      if (field === 'username') {
+        this.newUsername = '';
+      }
     }, 666);
+  }
+
+  onUpdateUsername(username: string) {
+    this.newUsername = username;
   }
 
   async uploadProfilePic(uid, event: any) {

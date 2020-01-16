@@ -159,20 +159,6 @@
             <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
         </div>
 
-        <app-username-form
-            *ngIf="editing"
-            (username)="onUpdateUsername($event)">
-        </app-username-form>
-
-        <button
-            *ngIf="editing"
-            mat-raised-button
-            [disabled]="!newUsername"
-            style="display: block; margin: -1.75em auto 2em;"
-            (click)="saveNewUsername()">
-            Save New Username {{ newUsername ? '(' + newUsername + ')' : '' }}
-        </button>
-
 
         <!-- Bio/Description -->
         <div style="width: 95%; margin: 1em auto; display: block;">{{ user.bio || user.description || '' }}</div>

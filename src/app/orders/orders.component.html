@@ -1,8 +1,32 @@
 
 
-<mat-tab-group mat-align-tabs="center" *ngIf="user">
+<mat-tab-group mat-stretch-tabs style="width: 90%; max-width: 666px; margin: auto;">
 
-    <mat-tab label="Sold Posts" *ngIf="user.membership === 'artist'">
+    <mat-tab label="Sold">
+        <div style="text-align: center">
+            <br>
+
+            <p>Sold Posts list</p>
+    
+            <br>
+    
+            <p>or Seller Sign Up</p>
+    
+            <br>
+    
+            <p>or No Orders message</p>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Bought" style="text-align: center">
+        <div style="text-align: center">
+            <br>
+            <p>No purchases... yet!</p>
+            <br>
+        </div>
+    </mat-tab>
+
+    <!-- <mat-tab label="Sold Posts" *ngIf="user.membership === 'artist'">
         <p *ngIf="!user.approvedSeller" style="text-align: center; margin-top: 2em;">Link your Plebeian account to a Stripe account to start selling posts.</p>
         
         <app-sold-posts *ngIf="user.approvedSeller"></app-sold-posts>
@@ -20,6 +44,6 @@
 
     <mat-tab label="Bought Services">
         <app-bought-services [user]="user"></app-bought-services>
-    </mat-tab>
+    </mat-tab> -->
 
 </mat-tab-group>

@@ -24,7 +24,7 @@
         routerLinkActive="active-fab"
         [disabled]="location.path() === '/new-post' || location.path() === '/login'"
         aria-label="New Post"
-        class="fab-btn">
+        [ngClass]="location.path() === '/new-post' || location.path() === '/login' ? 'disabled-fab-btn' : 'fab-btn'">
         <mat-icon style="transform: scale(1.3); padding-bottom: 2px;">add</mat-icon>
     </button>
 
