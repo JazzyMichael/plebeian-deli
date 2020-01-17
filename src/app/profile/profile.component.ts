@@ -21,14 +21,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   uid: string;
   editable: boolean;
   editing: boolean = false;
-  doneLoading: boolean;
   categories: any[];
-  update$: Subject<any> = new Subject();
   galleries$: Observable<any>;
   newUsername: string;
 
   userSub: Subscription;
-  updateSub: Subscription;
 
   constructor(
     private router: Router,
@@ -46,7 +43,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) => {
         const username = params.get('username');
         if (!username) return this.router.navigateByUrl('/about');
-        // this.editing = false;
 
         return this.auth.getUser(username).pipe(
           tap((user: any) => {
@@ -62,34 +58,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.auth.user$.subscribe(user => {
+    this.userSub = this.auth.user$.subscribe(user => {
       if (user && user.uid === this.uid) {
         this.editable = true;
       }
     });
 
-    setTimeout(() => {
-      this.doneLoading = true;
-    }, 1111);
-
     this.categories = this.catService.getCategories();
-
-    this.update$.pipe(debounceTime(1000)).subscribe(userObj => {
-      this.userService.updateUser(this.uid, userObj);
-      if (userObj.username) {
-        this.router.navigateByUrl(`/${userObj.username}`);
-        this.newUsername = '';
-      }
-    });
   }
 
   ngOnDestroy() {
-    try {
-      if (this.updateSub) {
-        this.updateSub.unsubscribe();
-      }
-    } catch (e) {
-      console.log('unsub', e);
+    if (this.userSub) {
+      this.userSub.unsubscribe();
     }
   }
 
@@ -97,13 +77,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editing = !this.editing;
   }
 
-  updateUserMedium(event: any) {
-    const medium = event.value.toLowerCase();
-    this.userService.updateUser(this.uid, { medium });
-  }
-
   onLocationInput(location: string) {
-    this.update$.next({ location });
+    console.log(location);
   }
 
   openInstagram(instagram: string) {
@@ -117,14 +92,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   openOtherLink(otherLink: string) {
     window.open(otherLink, '_blank');
-  }
-
-  onUpdateUsername(username: string) {
-    this.newUsername = username;
-  }
-
-  saveNewUsername() {
-    this.update$.next({ username: this.newUsername });
   }
 
   async initiateChat(userToChat: any) {

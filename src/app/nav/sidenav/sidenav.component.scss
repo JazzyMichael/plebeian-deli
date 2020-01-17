@@ -22,9 +22,17 @@ button {
 }
 
 .profile-pic {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 150px;
+    max-width: 150px;
     margin: 0 auto;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.username-text {
+    color: black;
+    border-bottom: 2px solid #4caf50;
+    padding: 0 10px 5px;
+    font-family: cursive, 'Lexend Deca', sans-serif;
+    font-weight: 300;
 }

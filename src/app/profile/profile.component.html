@@ -1,16 +1,10 @@
-<button *ngIf="editable && !editing" mat-raised-button (click)="toggleEditing()" style="display: block; width: 90%; margin: 1em auto;">
+<button
+    *ngIf="editable"
+    mat-raised-button
+    class="widescreen-edit-button"
+    routerLink="/edit-profile">
     <mat-icon>edit</mat-icon>
     <span style="margin-left: 10px">Edit Profile</span>
-</button>
-
-<button *ngIf="editable && editing" mat-raised-button (click)="toggleEditing()" style="display: block; width: 90%; margin: 1em auto;">
-    <mat-icon>sports_handball</mat-icon>
-    <span style="margin-left: 10px">Done</span>
-</button>
-
-<button *ngIf="editable && editing" mat-raised-button routerLink="/edit-profile" style="display: block; width: 90%; margin: 1em auto;">
-    <mat-icon>outdoor_grill</mat-icon>
-    <span style="margin-left: 10px">More Edits</span>
 </button>
 
 <br>
@@ -42,37 +36,11 @@
                 </ng-container>
             </div>
 
-            <!-- Medium -->
-            <mat-form-field
-                *ngIf="user.membership === 'artist' && editable && editing"
-                color="accent"
-                style="margin-top: 1em">
-                <mat-label>Medium</mat-label>
-                <mat-select [value]="user.medium" (selectionChange)="updateUserMedium($event)">
-                    <mat-option *ngFor="let cat of categories" [value]="cat.name">
-                        {{ cat.name | titlecase }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
             <!-- Real Name -->
-            <p *ngIf="!editing">{{ user.displayName || user.username }}</p>
-
-            <br *ngIf="editing">
+            <p>{{ user.displayName || user.username }}</p>
 
             <!-- Location -->
-            <mat-form-field *ngIf="editable && editing; else viewLocation" color="accent">
-                <input
-                    matInput
-                    [value]="user.location || ''"
-                    placeholder="Location"
-                    autocomplete="off"
-                    (input)="onLocationInput($event.target.value)">
-            </mat-form-field>
-
-            <ng-template #viewLocation>
-                <p>{{ user.location }}</p>
-            </ng-template>
+            <p>{{ user.location }}</p>
 
         </div>
 

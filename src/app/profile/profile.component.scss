@@ -10,6 +10,12 @@
     width: 100%;
 }
 
+.widescreen-edit-button {
+    display: none;
+    width: 90%;
+    margin: 1em auto;
+}
+
 /* Left Section */
 
 .left-column {
@@ -133,6 +139,10 @@
 @media (min-width: 600px) {
     .cont {
         flex-direction: row;
+    }
+
+    .widescreen-edit-button {
+        display: block;
     }
 
     .left-column {

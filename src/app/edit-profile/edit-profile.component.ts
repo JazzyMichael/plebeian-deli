@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from '../services/user.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { CategoriesService } from '../services/categories.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,22 +13,22 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class EditProfileComponent implements OnInit {
   user$: Observable<any>;
-
   debounce: any;
-
   editingUsername: boolean;
-
   newUsername: string;
+  categories: any[];
 
   constructor(
     private auth: AuthService,
     private snackbar: MatSnackBar,
     private userService: UserService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private catService: CategoriesService
   ) { }
 
   ngOnInit() {
     this.user$ = this.auth.user$.asObservable();
+    this.categories = this.catService.getCategories();
   }
 
   updateField(uid: string, field: string, value: string) {

@@ -84,6 +84,17 @@
 
     <br>
 
+    
+    <mat-form-field color="accent" style="margin-top: 1em">
+        <mat-label>Medium</mat-label>
+        <mat-select [value]="user.medium" (selectionChange)="updateField(user.uid, 'medium', $event.value)">
+            <mat-option *ngFor="let cat of categories" [value]="cat.name">
+                {{ cat.name | titlecase }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
     <mat-form-field hintLabel="Max 240 Characters" color="accent">
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="accent" class="description-btn" (click)="descriptionInput.value = user.bio || ''; $event.stopPropagation();">clear</mat-icon>
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="primary" class="description-btn" (click)="updateField(user.uid, 'bio', descriptionInput.value); $event.stopPropagation();">done</mat-icon>

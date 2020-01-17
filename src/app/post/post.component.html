@@ -11,7 +11,7 @@
 
     <div class="mobile-title">{{ post.title }}</div>
 
-    <app-post-images class="mobile-images" [images]="post.images"></app-post-images>
+    <app-post-images *ngIf="post.images?.length" class="mobile-images" [images]="post.images"></app-post-images>
 
     <mat-card style="margin: 2em auto; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="post-header">

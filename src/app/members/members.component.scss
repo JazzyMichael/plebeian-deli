@@ -19,8 +19,8 @@
 
 .member-card {
     height: 300px;
-    width: 250px;
-    margin: 0.5em;
+    width: 100%;
+    margin: 1.5em auto;
     background-color: linear-gradient(#add87d, #80caa2);
     display: flex;
     flex-direction: column;
@@ -57,6 +57,8 @@
 
 .member-info {
     background: #f5f5f5;
+    background-color: rgba(245, 245, 245, 0.7);
+    color: black;
     min-height: 15%;
     max-height: 100px;
     overflow: hidden;
@@ -94,6 +96,13 @@
 
 .cont::-webkit-scrollbar-track { 
     display: none; 
+}
+
+@media (min-width: 500px) {
+    .member-card {
+        width: 250px;
+        margin: 0.5em;
+    }
 }
 
 @media (min-width: 777px) {
