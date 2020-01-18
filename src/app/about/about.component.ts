@@ -1,9 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 // import { SignupDialogComponent } from 'src/app/signup-dialog/signup-dialog.component';
-import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -47,16 +45,12 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goToSubscriptions: boolean;
 
-  userSub: Subscription;
-
   constructor(
-    private route: ActivatedRoute,
     public dialog: MatDialog,
-    private auth: AuthService
     ) {
-    this.route.queryParams.subscribe(params => {
-      this.goToSubscriptions = !!params.subscriptions;
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   this.goToSubscriptions = !!params.subscriptions;
+    // });
   }
 
   ngOnInit() {
@@ -64,15 +58,12 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.goToSubscriptions) {
-      document.getElementById('subscriptions-section').scrollIntoView();
-    }
+    // if (this.goToSubscriptions) {
+    //   document.getElementById('subscriptions-section').scrollIntoView();
+    // }
   }
 
   ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
   }
 
   selectFeature(index: number) {

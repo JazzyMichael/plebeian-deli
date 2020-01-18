@@ -29,7 +29,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { MembersComponent } from './members/members.component';
-import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { DeliComponent } from './deli/deli.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -41,7 +40,6 @@ import { InfoComponent } from './info/info.component';
 import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
-import { CheckoutComponent } from './checkout/checkout.component';
 import { PrimePostComponent } from './prime-post/prime-post.component';
 import { EventComponent } from './event/event.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
@@ -69,7 +67,6 @@ import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
 import { FaqComponent } from './faq/faq.component';
 import { CollectPaymentComponent } from './collect-payment/collect-payment.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
-import { ChoosePlanComponent } from './choose-plan/choose-plan.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { CategorySelectComponent } from './deli/category-select/category-select.component';
 import { PostLayoutComponent } from './post-layout/post-layout.component';
@@ -104,7 +101,6 @@ const routes: Routes = [
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
-  { path: 'checkout', component: CheckoutComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'terms', component: TermsComponent },
@@ -120,7 +116,6 @@ const routes: Routes = [
     AppComponent,
     AboutComponent,
     MembersComponent,
-    SubscriptionsComponent,
     DeliComponent,
     NavComponent,
     FooterComponent,
@@ -132,7 +127,6 @@ const routes: Routes = [
     EventsComponent,
     ArtistsComponent,
     ChatComponent,
-    CheckoutComponent,
     PrimePostComponent,
     EventComponent,
     PaymentFormComponent,
@@ -161,7 +155,6 @@ const routes: Routes = [
     FaqComponent,
     CollectPaymentComponent,
     SignupSuccessComponent,
-    ChoosePlanComponent,
     AddressFormComponent,
     CategorySelectComponent,
     PostThumbnailComponent,

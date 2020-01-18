@@ -30,11 +30,11 @@
       </iframe>
     </div>
 
-    <div class="page-section" id="subscriptions-section">
+    <!-- <div class="page-section" id="subscriptions-section">
       <div class="container">
           <app-subscriptions></app-subscriptions>
       </div>
-    </div>
+    </div> -->
     
     <div class="page-section accent-section">
       <div class="process-container">
@@ -55,7 +55,7 @@
 
     <div class="page-section">
         <div class="container">
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 4em;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 2em;">
                 <div *ngFor="let feature of features; index as i" class="process-graphic feature-icon" [ngClass]="feature.name === selectedFeature.name ? 'selected-feature' : ''" (click)="selectFeature(i)">
                     <img [src]="feature.icon" class="feature-img" />
                     <span [ngStyle]="{ 'color': feature.color }">{{ feature.name }}</span>
