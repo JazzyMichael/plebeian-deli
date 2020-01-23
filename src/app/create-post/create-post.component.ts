@@ -223,21 +223,25 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       if (!img.file && img.url) {
         postImages.push(img);
       } else {
-        const random = Math.random().toString().slice(0, 8);
+        const random = Math.random().toString().slice(3, 8);
 
         const fileType = img.file.type.split('/')[1];
 
-        const path = `deli-pictures/${random}`;
+        const path = `deli-pictures/${this.user.uid.substring(0, 10)}-${random}.${fileType}`;
 
         const ref = this.storage.ref(path);
 
-        await this.storage.upload(path, img.file);
+        const metadata = { customMetadata: { userId: this.user.uid } };
+
+        await this.storage.upload(path, img.file, metadata);
 
         const url = await ref.getDownloadURL().toPromise();
 
-        const thumbPath = `deli-pictures/thumbnails/0_500x500.${random.substring(2)}`;
+        const thumbnailPathBase = `deli-pictures/thumbnails/${this.user.uid.substring(0, 10)}-${random}`;
 
-        postImages.push({ url, thumbPath });
+        const thumbPath = `${thumbnailPathBase}_500x500.${fileType}`;
+
+        postImages.push({ url, thumbPath, thumbnailPathBase, path, fileType });
       }
     }
 

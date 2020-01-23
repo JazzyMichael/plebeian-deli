@@ -43,7 +43,6 @@ export const userCreate = functions.auth.user().onCreate((user: any) => {
     return db.doc(`users/${user.uid}`).set(userData)
 })
 
-
 export const newComment = functions.firestore
     .document('posts/{postId}/comments/{commentId}')
     .onCreate((snap, context) => {
@@ -92,6 +91,56 @@ export const replyComment = functions.firestore
         return db.collection(`users/${authorReply.sourceCommentUserId}/notifications`).add(notification)
     })
 
+export const postDelete = functions.firestore
+    .document('posts/{postId}')
+    .onDelete(async (snapshot, context) => {
+        const post = snapshot.data()
+
+        console.log({ postImages: post.images})
+
+        if (!post || !post.images || !post.images.length) {
+            console.log('no post images', post)
+            return
+        }
+
+        if (!post.images[0].thumbnailPathBase || !post.images[0].fileType || !post.images[0].path) {
+            console.log('invalid images', post.images)
+            return
+        }
+
+        const imgPaths: any[] = post.images.map(img => {
+            return [
+                `${img.path}`,
+                `${img.thumbnailPathBase}_100x100.${img.fileType}`,
+                `${img.thumbnailPathBase}_250x250.${img.fileType}`,
+                `${img.thumbnailPathBase}_500x500.${img.fileType}`
+            ]
+        })
+
+        function flatten(a) {
+            return Array.isArray(a) ? [].concat(...a.map(flatten)) : a;
+        }
+
+        const paths = flatten(imgPaths)
+
+        const promises = paths.map(p => admin.storage().bucket('plebeian-deli.appspot.com').file(p).delete())
+
+        try {
+            await Promise.all(promises)
+        } catch (error) {
+            console.log({ msg: 'ERROR DELETING IMAGES', error })
+            return
+        }
+    })
+
+
+
+
+
+
+
+
+
 // when new users are created in firestore,
 // create a stripe customer for that user
 // export const createStripeCustomer = functions.auth
@@ -112,18 +161,6 @@ export const replyComment = functions.firestore
 
 
 
-
-
-// listen to new comments
-
-// export const newComment = functions.firestore
-//     .document('posts/{postId}/comments/{commentId}')
-//     .onCreate((snap, context) => {
-//         const newValue = snap.data();
-//         return;
-
-//         // add notification to poster & 
-//     });
 
 
 
