@@ -54,11 +54,8 @@ import { CreateServiceComponent } from './create-service/create-service.componen
 import { InquireFormComponent } from './inquire-form/inquire-form.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
-import { ServicePaymentComponent } from './orders/service-payment/service-payment.component';
 import { BoughtServicesComponent } from './orders/bought-services/bought-services.component';
 import { SoldServicesComponent } from './orders/sold-services/sold-services.component';
-import { SoldPostsComponent } from './orders/sold-posts/sold-posts.component';
-import { BoughtPostsComponent } from './orders/bought-posts/bought-posts.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
@@ -141,11 +138,8 @@ const routes: Routes = [
     InquireFormComponent,
     OrdersComponent,
     ViewingServiceComponent,
-    ServicePaymentComponent,
     BoughtServicesComponent,
     SoldServicesComponent,
-    SoldPostsComponent,
-    BoughtPostsComponent,
     PostLayoutComponent,
     NotificationsComponent,
     CommentsComponent,

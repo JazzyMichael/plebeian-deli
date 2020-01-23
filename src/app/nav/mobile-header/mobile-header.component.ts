@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mobile-header',
@@ -11,7 +13,13 @@ export class MobileHeaderComponent implements OnInit {
 
   @Output() openSidenav: EventEmitter<any> = new EventEmitter();
 
-  constructor(public location: Location, public auth: AuthService) { }
+  profilePic: Observable<any>;
+
+  constructor(public location: Location, public auth: AuthService) {
+    this.profilePic = this.auth.user$.asObservable().pipe(
+      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png'))
+    );
+  }
 
   ngOnInit() {
   }

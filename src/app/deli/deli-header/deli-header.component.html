@@ -1,13 +1,11 @@
 <div class="container">
-    <!-- <img
-        src="assets/images/b35-ticket-logo.png"
+    <img
+        *ngIf="profilePic | async as pic"
+        [src]="pic"
         alt="Profile Pic"
         height="40"
-        (click)="openSidenav()"> -->
-
-    <button mat-icon-button (click)="openSidenav()">
-        <mat-icon>face</mat-icon>
-    </button>    
+        style="border-radius: 50%"
+        (click)="openSidenav()">
 
     <mat-form-field class="search-box" floatLabel="never">
         <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">

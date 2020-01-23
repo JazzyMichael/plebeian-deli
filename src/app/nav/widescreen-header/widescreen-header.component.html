@@ -63,25 +63,21 @@
                     <mat-icon>sentiment_very_satisfied</mat-icon>
                     <span>Profile</span>
                 </button>
-                <button *ngIf="user.membership === 'viewer'" mat-menu-item routerLink="/checkout">
-                    <mat-icon>sentiment_satisfied</mat-icon>
-                    <span>Upgrade</span>
+                <button mat-menu-item routerLink="/new-post">
+                    <mat-icon>post_add</mat-icon>
+                    <span>New Post</span>
                 </button>
                 <button mat-menu-item routerLink="/orders">
                     <mat-icon>storefront</mat-icon>
                     <span>Orders</span>
                 </button>
-                <button mat-menu-item routerLink="/faq">
-                    <mat-icon>help_outline</mat-icon>
-                    <span>F.A.Q.</span>
-                </button>
-                <!-- <button *ngIf="user.writer" mat-menu-item routerLink="/new-prime-post">
-                    <mat-icon>post_add</mat-icon>
-                    <span>New Prime Post</span>
-                </button> -->
                 <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
                     <mat-icon>local_offer</mat-icon>
                     <span>Seller Info</span>
+                </button>
+                <button mat-menu-item routerLink="/faq">
+                    <mat-icon>help_outline</mat-icon>
+                    <span>F.A.Q.</span>
                 </button>
                 <button mat-menu-item (click)="auth.logout()">
                     <mat-icon>sentiment_very_dissatisfied</mat-icon>

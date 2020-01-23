@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject, Subscription, Observable, of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-deli-header',
@@ -14,6 +14,8 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
 
   debouncer$: Subject<any> = new Subject();
   debouncerSub: Subscription;
+
+  profilePic: Observable<any>;
 
   @Output() sortChange: EventEmitter<string> = new EventEmitter();
 
@@ -31,6 +33,10 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
       element.blur();
       this.searchChange.emit(term);
     });
+
+    this.profilePic = this.auth.user$.asObservable().pipe(
+      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png'))
+    );
   }
 
   ngOnDestroy() {

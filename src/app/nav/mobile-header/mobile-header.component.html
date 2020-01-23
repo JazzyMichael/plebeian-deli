@@ -3,15 +3,13 @@
     *ngIf="['/calendar', '/exhibitions', '/members', '/about', '/orders', '/notifications', '/faq'].includes(location.path()); else backOnly"
     class="container">
 
-    <!-- <img
-        src="assets/images/b35-ticket-logo.png"
+    <img
+        *ngIf="profilePic | async as pic"
+        [src]="pic"
         alt="Profile Pic"
         height="40"
-        (click)="sidenavClick()"> -->
-
-    <button mat-icon-button (click)="sidenavClick()">
-        <mat-icon>face</mat-icon>
-    </button>
+        style="border-radius: 50%"
+        (click)="sidenavClick()">
 
     <div style="font-size: 1.4em;">{{ location.path().substring(1) | titlecase }}</div>
 
@@ -29,8 +27,15 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
 
-            <ng-container *ngIf="auth.user$ | async as user">
+            <div *ngIf="['/new-post', '/edit-profile'].includes(location.path()); else noTitle" style="font-size: 1.4em;">
+                {{ location.path().substring(1).split('-').join(' ') | titlecase }}
+            </div>
+
+            <ng-template #noTitle>
                 <div></div>
+            </ng-template>
+
+            <ng-container *ngIf="auth.user$ | async as user">
                 <button *ngIf="location.path() === '/' + user.username" mat-icon-button routerLink="/edit-profile">
                     <mat-icon>edit</mat-icon>
                 </button>
