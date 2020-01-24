@@ -1,7 +1,7 @@
 <div class="order-info-box">
 
     <div class="heading">
-        <div style="height: 30px; width: 30px; display: flex; border: 2px solid white;"></div>
+        <div style="height: 30px; width: 30px; display: flex; border: 2px solid white; border-radius: 50%;"></div>
 
         <h3 style="margin-left: 1em">Artist Username</h3>
     </div>
@@ -20,13 +20,26 @@
         <div class="right-side">
             <h3>Shipping Info</h3>
 
-            <p>1 Drummond Farms Ln, Newark, DE 19191</p>
+            <p style="text-align: center">1 Drummond Farms Ln, Newark, DE 19191</p>
 
-            <div class="sub-total"></div>
+            <div class="sub-total">
+                <div class="sub-total-heading sub-total-item">
+                    <span>Subtotal:</span>
+                    <span>{{ 20 | currency }}</span>
+                </div>
+                <div class="sub-total-item">
+                    <span>Processing:</span>
+                    <span>+ 1.64</span>
+                </div>
+                <div class="sub-total-item">
+                    <span>Shipping:</span>
+                    <span>+ 1.01</span>
+                </div>
+            </div>
 
             <div class="total">
                 <span>Total: </span>
-                <span>{{ 22.6 | currency }}</span>
+                <span>{{ 22.65 | currency }}</span>
             </div>
         </div>
 

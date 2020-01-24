@@ -102,7 +102,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
-  { path: 'order/:id', component: OrderDetailsComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },

@@ -40,3 +40,21 @@
     align-items: flex-end;
     width: 100%;
 }
+
+.sub-total {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.sub-total-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    font-size: 0.9em;
+}
+
+.sub-total-heading {
+    font-size: 1em !important;
+    color: #4caf50;
+}

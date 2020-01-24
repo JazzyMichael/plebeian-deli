@@ -28,7 +28,7 @@ export class OrdersService {
     this.selectedOrder = order;
 
     if (this.selectedOrder) {
-      this.router.navigateByUrl(`/order/${order.id}`);
+      this.router.navigateByUrl(`/order-details/${order.id}`);
     }
   }
 
