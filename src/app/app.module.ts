@@ -1,3 +1,4 @@
+// tslint:disable: max-line-length
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -77,6 +78,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 import { SidenavComponent } from './nav/sidenav/sidenav.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -100,6 +102,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'purchase/:id', component: BuyPostComponent },
   { path: 'orders', component: OrdersComponent },
+  { path: 'order/:id', component: OrderDetailsComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
@@ -160,7 +163,8 @@ const routes: Routes = [
     EditProfileComponent,
     WidescreenHeaderComponent,
     MobileHeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,

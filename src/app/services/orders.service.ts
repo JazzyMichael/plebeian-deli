@@ -1,14 +1,44 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
 
-  constructor(private afStore: AngularFirestore) { }
+  sampleOrders: any[] = [
+    { title: 'Banana Pudding', status: 'pending', timestamp: '1 min ago', image: 'assets/images/calendar-250.png', id: '111aaa' },
+    { title: 'sQuash', status: 'accepted', timestamp: '6 min ago', image: 'assets/images/tv-250.png', id: '222bbb' },
+    { title: 'Chimpanzee Dance Squad', status: 'in-progress', timestamp: '10 days ago', image: 'assets/images/calendar-250.png', id: '333ccc' },
+    { title: 'Spanish Lilys on a Summer Morning', status: 'fullfilled', timestamp: '1 month ago', image: 'assets/images/ham-250.png', id: '444ddd' }
+  ];
 
+  selectedOrder: any;
+
+  constructor(private afStore: AngularFirestore, private router: Router) { }
+
+  getSampleOrders(): Observable<any[]> {
+    return of(this.sampleOrders);
+  }
+
+  selectOrder(order: any) {
+    this.selectedOrder = order;
+
+    if (this.selectedOrder) {
+      this.router.navigateByUrl(`/order/${order.id}`);
+    }
+  }
+
+  getSelectedOrder() {
+    if (!this.selectedOrder) {
+      this.router.navigateByUrl('/orders');
+    }
+
+    return this.selectedOrder;
+  }
 
   // service orders
 
@@ -18,7 +48,7 @@ export class OrdersService {
       .doc(docId)
       .valueChanges()
       .pipe(
-        map(serviceOrder => {
+        map((serviceOrder: any) => {
           return { ...serviceOrder, serviceOrderId: docId };
         })
       );

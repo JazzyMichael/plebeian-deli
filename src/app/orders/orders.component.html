@@ -2,43 +2,36 @@
 
 <mat-tab-group mat-stretch-tabs style="width: 90%; max-width: 666px; margin: auto;">
 
-    <mat-tab label="Sold">
-        <div style="text-align: center">
-            <br>
-
-            <p>Sold Posts list</p>
-    
-            <br>
-    
-            <p>or Seller Sign Up</p>
-    
-            <br>
-    
-            <p>or No Orders message</p>
-        </div>
-    </mat-tab>
-
-    <mat-tab label="Bought" style="text-align: center">
+    <mat-tab label="Bought">
         <div style="margin-top: 2em">
 
-            
-            <div *ngFor="let order of orders" style="display: flex; align-items: center; border-bottom: 1px solid white; margin-bottom: 10px; padding: 8px 0;">
+            <div *ngFor="let order of orders | async" (click)="selectOrder(order)" class="order-list-item">
+                <img [src]="order.image" class="order-image" alt="Order Image">
 
-                <img [src]="order.image" alt="Order Image" style="max-height: 60px; max-width: 100px; margin-right: 5px;">
-
-                <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                    <span style="display: flex;">
-                        <h3 style="margin: 0">{{ order.title }}</h3>
-                        <h5 style="margin: 0 0 0 15px">-{{ order.status }}</h5>
-                    </span>
-    
-                    <p style="margin: 10px 0">{{ order.timestamp }}</p>
+                <div class="order-info">
+                    <span>{{ order.title }}</span>
+                    <span style="margin-top: 5px">{{ order.timestamp }}</span>
                 </div>
 
+                <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
             </div>
 
+        </div>
+    </mat-tab>
+ 
+    <mat-tab label="Sold">
+        <div style="margin-top: 2em">
 
+            <div *ngFor="let order of orders | async" (click)="selectOrder(order)" class="order-list-item">
+                <img [src]="order.image" class="order-image" alt="Order Image">
 
+                <div class="order-info">
+                    <span>{{ order.title }}</span>
+                    <span style="margin-top: 5px">{{ order.timestamp }}</span>
+                </div>
+
+                <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
+            </div>
 
         </div>
     </mat-tab>
