@@ -1,11 +1,10 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { CategoriesService } from '../services/categories.service';
-import { AuthService } from '../services/auth.service';
-import { ChatService } from '../services/chat.service';
-import { Title } from '@angular/platform-browser';
+import { CategoriesService } from '../../services/categories.service';
+import { AuthService } from '../../services/auth.service';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-members',
@@ -28,16 +27,13 @@ export class MembersComponent implements OnInit {
     private catService: CategoriesService,
     private ren: Renderer2,
     private authService: AuthService,
-    private chatService: ChatService,
-    private titleService: Title
+    private chatService: ChatService
     ) { }
 
   ngOnInit() {
     this.filterUsers();
 
     this.categories = this.catService.getCategories().map(c => c.name);
-
-    this.titleService.setTitle('Members');
   }
 
   onScroll() {

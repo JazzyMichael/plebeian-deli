@@ -8,7 +8,6 @@ import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 import { ChatService } from '../services/chat.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -34,8 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     public userService: UserService,
     private storage: AngularFireStorage,
     private catService: CategoriesService,
-    private chatService: ChatService,
-    private titleService: Title
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
@@ -48,7 +46,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
           tap((user: any) => {
             if (!user) return this.router.navigateByUrl('/about');
             this.editable = user.username === this.auth.username;
-            this.titleService.setTitle(user.username);
             this.user = user;
             console.log(user);
             this.uid = user.uid || null;

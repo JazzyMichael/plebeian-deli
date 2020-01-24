@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { Observable } from 'rxjs';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { InquireFormComponent } from 'src/app/inquire-form/inquire-form.component';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -25,8 +23,7 @@ export class ServicesComponent implements OnInit {
   constructor(
     private serviceService: ServiceService,
     private ordersService: OrdersService,
-    private authService: AuthService,
-    public dialog: MatDialog
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -70,37 +67,35 @@ export class ServicesComponent implements OnInit {
   }
 
   inquire(title: string = 'Open Commission', description?: string) {
-    if (this.editable) {
-      return;
-    }
+    return;
 
-    const dialogRef = this.dialog.open(InquireFormComponent, {
-      data: { serviceTitle: title }
-    });
+    // const dialogRef = this.dialog.open(InquireFormComponent, {
+    //   data: { serviceTitle: title }
+    // });
 
-    dialogRef.afterClosed().subscribe(async result => {
-      console.log('dialog closed res', result);
+    // dialogRef.afterClosed().subscribe(async result => {
+    //   console.log('dialog closed res', result);
 
-      const currentUser = await this.authService.getCurrentUser();
+    //   const currentUser = await this.authService.getCurrentUser();
 
-      const serviceOrder = {
-        serviceTitle: title,
-        serviceDescription: description || '',
-        orderDescription: result.orderDescription,
-        orderImages: result.orderImages,
-        inquiredTimestamp: new Date(),
-        sellerId: this.user.uid,
-        buyerId: currentUser.uid,
-        messages: [],
-        accepted: false,
-        purchased: false,
-        shipped: false
-      };
+    //   const serviceOrder = {
+    //     serviceTitle: title,
+    //     serviceDescription: description || '',
+    //     orderDescription: result.orderDescription,
+    //     orderImages: result.orderImages,
+    //     inquiredTimestamp: new Date(),
+    //     sellerId: this.user.uid,
+    //     buyerId: currentUser.uid,
+    //     messages: [],
+    //     accepted: false,
+    //     purchased: false,
+    //     shipped: false
+    //   };
 
-      console.log('service order', serviceOrder);
+    //   console.log('service order', serviceOrder);
 
-      this.ordersService.placeServiceOrder(serviceOrder);
-    });
+    //   this.ordersService.placeServiceOrder(serviceOrder);
+    // });
   }
 
 }

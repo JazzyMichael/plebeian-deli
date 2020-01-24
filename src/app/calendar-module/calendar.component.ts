@@ -13,7 +13,6 @@ import { Subject, of } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 
 const colors: any = {
   red: { primary: '#ad2121', secondary: '#FAE3E3' },
@@ -50,13 +49,10 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private router: Router,
-    private titleService: Title
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Calendar');
-
     this.events$ = this.eventService.events$.pipe(
       switchMap((events: any[]) => {
         return of(events.map(event => {

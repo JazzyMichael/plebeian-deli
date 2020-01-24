@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { PrimeCutsService } from '../services/prime-cuts.service';
-import { Title } from '@angular/platform-browser';
 import { tap, debounceTime } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
@@ -31,8 +30,7 @@ export class PrimePostComponent implements OnInit {
     private router: Router,
     private primeCutsService: PrimeCutsService,
     private authService: AuthService,
-    private notificationService: NotificationService,
-    private titleService: Title
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -57,10 +55,6 @@ export class PrimePostComponent implements OnInit {
           tap(post => {
             if (!post) {
               return this.router.navigateByUrl('/prime-cuts');
-            }
-
-            if (post.title) {
-              this.titleService.setTitle(post.title);
             }
 
             this.postUserId = post.userId;

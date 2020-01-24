@@ -1,5 +1,5 @@
 // tslint:disable: max-line-length
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,12 +24,10 @@ import {
 
 // 3rd Party Modules
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Components
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
-import { MembersComponent } from './members/members.component';
 import { DeliComponent } from './deli/deli.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -52,16 +50,10 @@ import { TermsComponent } from './terms/terms.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { ServicesComponent } from './profile/services/services.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
-import { InquireFormComponent } from './inquire-form/inquire-form.component';
-import { OrdersComponent } from './orders/orders.component';
-import { ViewingServiceComponent } from './viewing-service/viewing-service.component';
-import { BoughtServicesComponent } from './orders/bought-services/bought-services.component';
-import { SoldServicesComponent } from './orders/sold-services/sold-services.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
-import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
 import { FaqComponent } from './faq/faq.component';
 import { CollectPaymentComponent } from './collect-payment/collect-payment.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
@@ -78,7 +70,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 import { SidenavComponent } from './nav/sidenav/sidenav.component';
-import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -90,7 +81,8 @@ const routes: Routes = [
   { path: 'deli', component: DeliComponent },
   { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
   { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
-  { path: 'members', component: MembersComponent },
+  { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
+  { path: 'orders', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }, loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule) },
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'info', component: InfoComponent },
   { path: 'faq', component: FaqComponent },
@@ -101,8 +93,6 @@ const routes: Routes = [
   { path: 'event/:id', component: EventComponent },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'purchase/:id', component: BuyPostComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'terms', component: TermsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
@@ -115,7 +105,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AboutComponent,
-    MembersComponent,
     DeliComponent,
     NavComponent,
     FooterComponent,
@@ -138,17 +127,11 @@ const routes: Routes = [
     CreatePostComponent,
     ServicesComponent,
     CreateServiceComponent,
-    InquireFormComponent,
-    OrdersComponent,
-    ViewingServiceComponent,
-    BoughtServicesComponent,
-    SoldServicesComponent,
     PostLayoutComponent,
     NotificationsComponent,
     CommentsComponent,
     CommentListComponent,
     CommentFormComponent,
-    SignupDialogComponent,
     FaqComponent,
     CollectPaymentComponent,
     SignupSuccessComponent,
@@ -163,8 +146,7 @@ const routes: Routes = [
     EditProfileComponent,
     WidescreenHeaderComponent,
     MobileHeaderComponent,
-    SidenavComponent,
-    OrderDetailsComponent
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -181,21 +163,15 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
-    NgxHmCarouselModule,
-    InfiniteScrollModule
+    NgxHmCarouselModule
   ],
   exports: [
     MaterialModule
   ],
-  entryComponents: [
-    InquireFormComponent,
-    SignupDialogComponent
-  ],
   providers: [
     AngularFireAuthGuard,
     ScreenTrackingService,
-    UserTrackingService,
-    Title
+    UserTrackingService
   ],
   bootstrap: [AppComponent]
 })
