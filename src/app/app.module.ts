@@ -39,7 +39,6 @@ import { InfoComponent } from './info/info.component';
 import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
-import { PrimePostComponent } from './prime-post/prime-post.component';
 import { EventComponent } from './event/event.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { UsernameFormComponent } from './username-form/username-form.component';
@@ -92,7 +91,6 @@ const routes: Routes = [
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
-  { path: 'prime-cuts/:id', component: PrimePostComponent },
 
   { path: 'faq', component: FaqComponent },
   { path: 'info', component: InfoComponent },
@@ -121,7 +119,6 @@ const routes: Routes = [
     EventsComponent,
     ArtistsComponent,
     ChatComponent,
-    PrimePostComponent,
     EventComponent,
     PaymentFormComponent,
     UsernameFormComponent,

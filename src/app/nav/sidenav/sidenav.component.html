@@ -26,6 +26,11 @@
         <span>Notifications</span>
     </button>
 
+    <button mat-button routerLink="/chat" (click)="closeSidenav.emit()" class="nav-link">
+        <mat-icon class="nav-link-icon">mail</mat-icon>
+        <span>Messages</span>
+    </button>
+
     <button mat-button routerLink="/orders" (click)="closeSidenav.emit()" class="nav-link">
         <mat-icon class="nav-link-icon">storefront</mat-icon>
         <span>Orders</span>
