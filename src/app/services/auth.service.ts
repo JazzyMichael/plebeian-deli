@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import { switchMap, first, map, startWith } from 'rxjs/operators';
 import { ChatService } from './chat.service';
-import { OldUserService } from './old-user.service';
 import { NotificationService } from './notification.service';
 import { UserService } from './user.service';
 
@@ -23,7 +22,6 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private chatService: ChatService,
-    private oldUserService: OldUserService,
     private userService: UserService,
     private router: Router,
     private notificiationService: NotificationService
@@ -91,34 +89,17 @@ export class AuthService {
   }
 
   async handleAuthData(authData: any) {
-
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-
-      const email = authData.user.email;
-
-      const isOldUser = this.oldUserService.oldUserEmails.some(e => e === email);
-
-      if (!isOldUser) {
-        return this.router.navigateByUrl('/checkout');
-      } else {
-        setTimeout(() => {
-          const route = '/deli';
-          return this.router.navigateByUrl(route);
-        }, 100);
-      }
-
+      setTimeout(() => { this.router.navigateByUrl('/edit-profile'); }, 300);
     } else {
-      setTimeout(() => {
-        const route = this.username ? `/${this.username}` : '/deli';
-        return this.router.navigateByUrl(route);
-      }, 100);
+      setTimeout(() => { this.router.navigateByUrl(this.username ? `/${this.username}` : '/deli'); }, 300);
     }
   }
 
   async logout() {
-    const res = await this.afAuth.auth.signOut();
+    await this.afAuth.auth.signOut();
 
-    console.log('logout', res);
+    localStorage.clear();
 
     return this.router.navigateByUrl('/deli');
   }

@@ -4,15 +4,15 @@ import { PostService } from '../services/post.service';
 import { tap } from 'rxjs/operators';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
-declare var Stripe: any;
+// declare var Stripe: any;
 
 // prod
-const stripe = Stripe('pk_live_9RFFwjYhsrCgEbkm3DBpyOv8');
+// const stripe = Stripe('pk_live_9RFFwjYhsrCgEbkm3DBpyOv8');
 // test
 // const stripe = Stripe('pk_test_vWeiNQrgSgiNW9fBO2IX0EUT');
-const elements = stripe.elements();
+// const elements = stripe.elements();
 
-const card = elements.create('card');
+// const card = elements.create('card');
 
 @Component({
   selector: 'app-buy-post',
@@ -65,16 +65,16 @@ export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.price = post && post.price ? post.price / 0.9721 : null;
 
-            this.sellerStripeId = post && post.stripeConnectData && post.stripeConnectData.stripe_user_id ? 
-              post.stripeConnectData.stripe_user_id :
-              null;
+            // this.sellerStripeId = post && post.stripeConnectData && post.stripeConnectData.stripe_user_id ? 
+            //   post.stripeConnectData.stripe_user_id :
+            //   null;
 
-            if (!this.mounted) {
-              setTimeout(() => {
-                card.mount(this.cardForm.nativeElement);
-                this.mounted = true;
-              }, 333);
-            }
+            // if (!this.mounted) {
+            //   setTimeout(() => {
+            //     card.mount(this.cardForm.nativeElement);
+            //     this.mounted = true;
+            //   }, 333);
+            // }
           })
         );
     });
@@ -85,36 +85,31 @@ export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    try {
-      card.unmount(this.cardForm.nativeElement);
-    } catch (e) {
-      console.log('unmount', e);
-    }
   }
 
   async handleForm(e: any) {
     e.preventDefault();
 
-    const { token, error } = await stripe.createToken(card);
+    // const { token, error } = await stripe.createToken(card);
 
-    if (error || !this.price || !this.sellerStripeId) {
-      console.log('error', error);
-      const errorElement = document.getElementById('card-errors');
-      errorElement.textContent = JSON.stringify(error);
-    } else {
-      this.loading = true;
+    // if (error || !this.price || !this.sellerStripeId) {
+    //   console.log('error', error);
+    //   const errorElement = document.getElementById('card-errors');
+    //   errorElement.textContent = JSON.stringify(error);
+    // } else {
+    //   this.loading = true;
 
-      const res = await this.fun
-        .httpsCallable('createConnectCharge')({
-          source: token.id,
-          sellerAccountId: this.sellerStripeId,
-          price: this.price,
-          orderType: 'post'
-        })
-        .toPromise();
+    //   const res = await this.fun
+    //     .httpsCallable('createConnectCharge')({
+    //       source: token.id,
+    //       sellerAccountId: this.sellerStripeId,
+    //       price: this.price,
+    //       orderType: 'post'
+    //     })
+    //     .toPromise();
 
-      this.loading = false;
-    }
+    //   this.loading = false;
+    // }
   }
 
 }

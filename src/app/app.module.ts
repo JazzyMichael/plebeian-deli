@@ -30,7 +30,11 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { DeliComponent } from './deli/deli.component';
 import { NavComponent } from './nav/nav.component';
+import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
+import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
+import { SidenavComponent } from './nav/sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
+import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
 import { LoginComponent } from './login/login.component';
@@ -40,7 +44,6 @@ import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
 import { EventComponent } from './event/event.component';
-import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { UsernameFormComponent } from './username-form/username-form.component';
 import { SellerComponent } from './seller/seller.component';
 import { ConnectComponent } from './connect/connect.component';
@@ -63,11 +66,7 @@ import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
 import { DescriptionBoxComponent } from './post/description-box/description-box.component';
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
-import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
-import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
-import { SidenavComponent } from './nav/sidenav/sidenav.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -119,7 +118,6 @@ const routes: Routes = [
     ArtistsComponent,
     ChatComponent,
     EventComponent,
-    PaymentFormComponent,
     UsernameFormComponent,
     SellerComponent,
     ConnectComponent,
