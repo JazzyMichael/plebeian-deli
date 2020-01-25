@@ -41,26 +41,26 @@
         <span>Seller Info</span>
     </button>
 
-    <button mat-button class="nav-link" routerLink="/about" (click)="closeSidenav.emit()">
-        <mat-icon class="nav-link-icon">home</mat-icon>
-        <span>About</span>
-    </button>
-
     <button mat-button routerLink="/faq" class="nav-link" (click)="closeSidenav.emit()">
         <mat-icon class="nav-link-icon">help_outline</mat-icon>
         <span>F.A.Q.</span>
     </button>
 
-    <hr style="width: 100%; border-color: #f54081;">
-
-    <button mat-button class="nav-link">
-        <mat-icon class="nav-link-icon">contact_mail</mat-icon>
-        <span>Contact</span>
+    <button mat-button class="nav-link" routerLink="/about" (click)="closeSidenav.emit()">
+        <mat-icon class="nav-link-icon">home</mat-icon>
+        <span>About</span>
     </button>
+
+    <hr style="width: 100%; border-color: #f54081;">
 
     <button mat-button routerLink="/terms" (click)="closeSidenav.emit()" class="nav-link">
         <mat-icon class="nav-link-icon">list_alt</mat-icon>
         <span>Terms of Service</span>
+    </button>
+
+    <button mat-button class="nav-link" (click)="contactClick()">
+        <mat-icon class="nav-link-icon">contact_mail</mat-icon>
+        <span>Contact</span>
     </button>
 
     <button mat-button class="nav-link" (click)="signOut.emit()">

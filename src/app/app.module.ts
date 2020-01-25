@@ -54,7 +54,6 @@ import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { FaqComponent } from './faq/faq.component';
-import { CollectPaymentComponent } from './collect-payment/collect-payment.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { CategorySelectComponent } from './deli/category-select/category-select.component';
@@ -135,7 +134,6 @@ const routes: Routes = [
     CommentListComponent,
     CommentFormComponent,
     FaqComponent,
-    CollectPaymentComponent,
     SignupSuccessComponent,
     AddressFormComponent,
     CategorySelectComponent,
