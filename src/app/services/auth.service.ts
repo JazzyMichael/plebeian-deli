@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
-import { switchMap, first, map } from 'rxjs/operators';
+import { switchMap, first, map, startWith } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { OldUserService } from './old-user.service';
 import { NotificationService } from './notification.service';
@@ -36,6 +36,7 @@ export class AuthService {
         .catch(e => console.log('auth redirect error', e));
 
       this.afAuth.authState.pipe(
+        startWith(() => localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null),
         switchMap((user: any) => {
           if (user && user.uid) {
             this.notificiationService.getNew(user.uid);

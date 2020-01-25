@@ -77,25 +77,30 @@ const redirectLoggedInToDeli = () => redirectLoggedInTo(['deli']);
 
 const routes: Routes = [
   { path: '', redirectTo: '/deli', pathMatch: 'full' },
-  { path: 'about', component: AboutComponent },
-  { path: 'deli', component: DeliComponent },
+
   { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
   { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
   { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
   { path: 'orders', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }, loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule) },
+
+  { path: 'deli', component: DeliComponent },
+  { path: 'chat', component: ChatComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'info', component: InfoComponent },
-  { path: 'faq', component: FaqComponent },
-  { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'subscriptions', redirectTo: '/about?subscriptions=true', pathMatch: 'full' },
-  { path: 'prime-cuts/:id', component: PrimePostComponent },
+
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'purchase/:id', component: BuyPostComponent },
+  { path: 'prime-cuts/:id', component: PrimePostComponent },
+
+  { path: 'faq', component: FaqComponent },
+  { path: 'info', component: InfoComponent },
   { path: 'terms', component: TermsComponent },
-  { path: 'notifications', component: NotificationsComponent },
+  { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'notifications', component: NotificationsComponent },
+
   { path: 'edit-profile', component: EditProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin} },
   { path: ':username', component: ProfileComponent },
   { path: '**', redirectTo: '/deli', pathMatch: 'full' }

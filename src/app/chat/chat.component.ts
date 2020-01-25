@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,7 +12,7 @@ import { ThemeService } from '../services/theme.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  @Input() user: any;
+  user: any;
   showChats: boolean;
   viewingChat: any;
   newChatMessage: string;
@@ -24,18 +25,18 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     public chatService: ChatService,
     private router: Router,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private auth: AuthService
     ) { }
 
   ngOnDestroy() {
-    try {
-      if (this.chatsSub) {
-        this.chatsSub.unsubscribe();
-      }
-    } catch (e) {}
+    if (this.chatsSub) {
+      this.chatsSub.unsubscribe();
+    }
   }
 
   ngOnInit() {
+
     this.newChatMessage = '';
 
     this.chatsSub = this.chatService.userChats$.asObservable()
@@ -45,9 +46,15 @@ export class ChatComponent implements OnInit, OnDestroy {
 
           this.newMessages = 0;
 
+          const user = await this.auth.getCurrentUser();
+
+          if (!user) {
+            return chats || [];
+          }
+
           for await (let chat of chats) {
 
-            const userObj = chat.users.find(u => u.uid === this.user.uid);
+            const userObj = chat.users.find(u => u.uid === user.uid);
 
             let newMessage = false;
 
@@ -136,30 +143,31 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.updateUserLastViewed({ ...this.viewingChat });
+    // this.updateUserLastViewed({ ...this.viewingChat });
 
     this.viewingChat = null;
   }
 
   updateUserLastViewed(chat: any) {
-    // find user in chat.users
-    let userObj = chat.users.find(u => u.uid === this.user.uid);
-    // update lastViewedTimestamp
-    const newTimestamp = Date.now();
-    userObj.lastViewedTimestamp = newTimestamp;
-    // update chat doc
-    let newUsersArr = chat.users;
-    let index = newUsersArr.findIndex(u => u.uid === this.user.uid);
-    newUsersArr[index].lastViewedTimestamp = Date.now();
+    return;
+    // // find user in chat.users
+    // let userObj = chat.users.find(u => u.uid === this.user.uid);
+    // // update lastViewedTimestamp
+    // const newTimestamp = Date.now();
+    // userObj.lastViewedTimestamp = newTimestamp;
+    // // update chat doc
+    // let newUsersArr = chat.users;
+    // let index = newUsersArr.findIndex(u => u.uid === this.user.uid);
+    // newUsersArr[index].lastViewedTimestamp = Date.now();
 
-    if (chat.messagesCount) {
-      this.newMessages -= chat.newMessageCount;
-      if (this.newMessages && this.newMessages < 0) {
-        this.newMessages = 0;
-      }
-    }
+    // if (chat.messagesCount) {
+    //   this.newMessages -= chat.newMessageCount;
+    //   if (this.newMessages && this.newMessages < 0) {
+    //     this.newMessages = 0;
+    //   }
+    // }
 
-    this.chatService.updateChat(chat.id, { users: newUsersArr });
+    // this.chatService.updateChat(chat.id, { users: newUsersArr });
   }
 
   viewUserProfile(username: string) {

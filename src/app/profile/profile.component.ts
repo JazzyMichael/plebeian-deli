@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   async initiateChat(userToChat: any) {
-    const loggedInUser = await this.auth.user$.pipe(first()).toPromise();
+    const loggedInUser = await this.auth.getCurrentUser();
 
     if (!loggedInUser || loggedInUser.uid === userToChat.uid) {
       window.alert('Must be signed in to send a message, sign up for free!');
@@ -100,6 +100,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     this.chatService.initiateChat(loggedInUser.uid, userToChat.uid);
+
+    this.router.navigateByUrl('/chat');
   }
 
   async uploadProfilePic(event: any) {

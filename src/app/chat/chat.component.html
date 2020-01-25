@@ -1,4 +1,4 @@
-<button
+<!-- <button
     mat-fab
     color="light"
     class="chat-fab"
@@ -22,13 +22,11 @@
         color="accent">
         close
     </mat-icon>
-</button>
+</button> -->
 
 <mat-card
-    *ngIf="showChats"
     class="chats-card"
-    [style.background]="!viewingChat ? 'white' : darkTheme ? 'black' : 'white'"
-    [ngStyle]="{'bottom': viewingChat ? '27px' : '0px'}">
+    [style.background]="'black'">
 
     <!-- chat box headers -->
     <div *ngIf="viewingChat" class="chats-card-header">

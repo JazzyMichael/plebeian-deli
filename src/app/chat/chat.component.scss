@@ -1,7 +1,4 @@
 .chat-fab {
-    position: fixed;
-    bottom: 5%;
-    right: 18%;
     z-index: 100;
     transition: all 250ms ease-out;
 }
@@ -13,16 +10,8 @@
 }
 
 .chats-card {
-    height: 350px;
     width: 100%;
-    max-width: 500px;
-    max-height: 80vh;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    z-index: 100;
     padding: 0 0 1em 0;
-    overflow: auto;
 }
 
 .chats-card-header {
@@ -32,6 +21,7 @@
     background-color: #f5f5f5;
     padding: 0 1em;
     height: 15%;
+    color: black;
 }
 
 .showing-chats {
@@ -84,15 +74,4 @@ mat-list-item:hover {
 
 textarea {
     resize: none !important;
-}
-
-@media (min-width: 550px) {
-    .chats-card {
-        bottom: 5%;
-        right: 5%;
-    }
-
-    .showing-chats {
-        bottom: 450px;
-    }
 }

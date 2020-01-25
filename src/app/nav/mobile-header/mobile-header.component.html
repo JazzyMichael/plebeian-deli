@@ -13,7 +13,7 @@
 
     <div style="font-size: 1.4em;">{{ location.path().substring(1) | titlecase }}</div>
 
-    <button mat-icon-button>
+    <button mat-icon-button routerLink="/chat">
         <mat-icon>mail</mat-icon>
     </button>
 </div>
@@ -21,7 +21,7 @@
 
 
 <ng-template #backOnly>
-    <ng-container *ngIf="!['/deli'].includes(location.path())">
+    <ng-container *ngIf="!['/deli', '/chat'].includes(location.path())">
         <div class="container">
             <button mat-icon-button (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>
