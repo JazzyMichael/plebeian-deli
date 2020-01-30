@@ -78,7 +78,7 @@ const routes: Routes = [
   { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
   { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
   { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
-  { path: 'orders', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }, loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule) },
+  { path: 'orders', loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
 
   { path: 'deli', component: DeliComponent },
   { path: 'chat', component: ChatComponent },

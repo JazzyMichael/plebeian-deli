@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ChatService {
   openChatBox$: Subject<any>;
   openMessagesBox$: Subject<any>;
 
-  constructor(private afStore: AngularFirestore) {
+  constructor(private afStore: AngularFirestore, private router: Router) {
     this.userChats$ = new BehaviorSubject([]);
     this.openChatBox$ = new Subject();
     this.openMessagesBox$ = new Subject();
@@ -81,6 +82,7 @@ export class ChatService {
       .add(chatDoc)
       .then(res => {
         this.openMessagesBox$.next(true);
+        this.router.navigateByUrl('/chats');
       })
       .catch(e => console.log('error starting chat', e));
   }
