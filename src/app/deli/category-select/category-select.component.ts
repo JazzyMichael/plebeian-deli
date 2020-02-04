@@ -8,7 +8,6 @@ import { AngularFireAnalytics } from '@angular/fire/analytics';
   styleUrls: ['./category-select.component.scss']
 })
 export class CategorySelectComponent implements OnInit {
-  categories: string[];
   selected: string;
 
   fullCategories: any[];
@@ -21,7 +20,6 @@ export class CategorySelectComponent implements OnInit {
 
   ngOnInit() {
     this.fullCategories = [ { name: 'all', icon: 'all_inclusive' }, ...this.catService.getCategories() ];
-    this.categories = this.fullCategories.map(c => c.name);
     this.selected = 'all';
   }
 

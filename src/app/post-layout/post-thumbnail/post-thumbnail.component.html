@@ -1,4 +1,4 @@
-<mat-card *ngIf="post" class="post-thumbnail" (click)="postClick(post.postId)">
+<mat-card *ngIf="post" class="post-thumbnail" (click)="postClick(post.postId)" [ngStyle]="{ 'border-color': getBorderColor(post.category) }">
     <img
         *ngIf="post.thumbnail | async as thumbnail"
         [src]="thumbnail"

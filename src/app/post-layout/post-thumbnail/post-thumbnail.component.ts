@@ -19,4 +19,16 @@ export class PostThumbnailComponent implements OnInit {
     this.router.navigateByUrl(`/post/${postId}`);
   }
 
+  getBorderColor(cat: string) {
+    switch (cat) {
+      case 'sculpture': return '#89fdf6';
+      case 'design': return '#9888ff';
+      case 'illustration': return '#ff5959';
+      case 'painting': return '#ff9f59';
+      case 'animation': return '#fdf5a2';
+      case 'photography': return '#4caf50';
+      default: return '#ff4081';
+    }
+  }
+
 }

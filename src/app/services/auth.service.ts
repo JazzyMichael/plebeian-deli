@@ -26,7 +26,12 @@ export class AuthService {
     private router: Router,
     private notificiationService: NotificationService
     ) {
-      this.user$ = new BehaviorSubject(null);
+      const startingUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+      if (startingUser) {
+        startingUser['thumbnail'] = this.userService.getUserThumbnail(startingUser, 250);
+        startingUser['backgroundThumbnail'] = this.userService.getUserBackground(startingUser, 500);
+      }
+      this.user$ = new BehaviorSubject(startingUser);
       this.username = '';
 
       this.afAuth.auth.getRedirectResult()
@@ -34,7 +39,6 @@ export class AuthService {
         .catch(e => console.log('auth redirect error', e));
 
       this.afAuth.authState.pipe(
-        startWith(() => localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null),
         switchMap((user: any) => {
           if (user && user.uid) {
             this.notificiationService.getNew(user.uid);

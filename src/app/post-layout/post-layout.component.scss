@@ -1,8 +1,9 @@
 .post-layout {
-    width: 92%;
+    width: 96%;
     margin: 0 auto 50px;
     padding-bottom: 25px;
     column-count: 2;
+    column-gap: 12px;
 }
 
 @media (min-width: 500px) {

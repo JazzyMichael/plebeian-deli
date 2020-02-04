@@ -1,10 +1,11 @@
 <mat-chip-list class="mobile-cat-select">
     <mat-chip
-        *ngFor="let cat of categories"
+        *ngFor="let cat of fullCategories"
         class="category-item"
-        [ngClass]="{ 'selected-item': selected === cat }"
-        (click)="onSelect(cat)">
-        {{ cat }}
+        [ngClass]="{ 'selected-item': selected === cat.name }"
+        [ngStyle]="{ 'border-color': cat.color || '#fdf5a2', 'color': selected === cat.name ? cat.color || '#fdf5a2' : '#fff' }"
+        (click)="onSelect(cat.name)">
+        {{ cat.name }}
     </mat-chip>
 </mat-chip-list>
 
