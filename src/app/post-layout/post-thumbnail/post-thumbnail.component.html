@@ -1,11 +1,11 @@
-<mat-card *ngIf="post" class="post-thumbnail" (click)="postClick(post.postId)" [ngStyle]="{ 'border-color': getBorderColor(post.category) }">
+<mat-card *ngIf="post" class="post-thumbnail" (click)="postClick(post.postId)">
     <img
         *ngIf="post.thumbnail | async as thumbnail"
         [src]="thumbnail"
         class="thumbnail-img"
         alt="Post Image" >
 
-    <mat-card-content style="padding: 1em">
+    <mat-card-content style="padding: 1em" [ngStyle]="{ 'border-top': '3px solid ' + getBorderColor(post.category) }">
         <p>{{ post.title }}</p>
 
         <div *ngIf="post.price" style="text-align: right">
