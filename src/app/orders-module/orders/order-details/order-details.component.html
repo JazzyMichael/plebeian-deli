@@ -48,7 +48,32 @@
 </div>
 
 
-<div class="status-update"></div>
+<div *ngIf="order?.status === 'pending'" style="text-align: right; margin: 1.5em;">
+    <p style="color: #4caf50;">Waiting for ArtistName to accept your order!</p>
+</div>
 
 
-<div class="tracking-box"></div>
+<div *ngIf="order?.status === 'accepted'" style="text-align: right; margin: 1.5em;">
+    <p style="color: #4caf50;">ArtistName has accepted your order!</p>
+    <p>6 min ago</p>
+</div>
+
+
+<div *ngIf="order?.status === 'in-progress'" style="text-align: right; margin: 1.5em;">
+    <p style="color: #4caf50;">ArtistName is working on your order!</p>
+    <p>6 min ago</p>
+</div>
+
+
+<div *ngIf="order?.status === 'fullfilled'" style="text-align: right; margin: 1.5em;">
+    <p style="color: #4caf50;">ArtistName has fullfilled your order!</p>
+    <p>6 min ago</p>
+</div>
+
+
+<div *ngIf="order?.status === 'fullfilled'" class="order-info-box">
+    <p>Tracking #</p>
+    <p><a style="color: white" href="http://www.google.com/search?q=LE000589587CA" target="_blank">LE000589587CA</a></p>
+</div>
+
+

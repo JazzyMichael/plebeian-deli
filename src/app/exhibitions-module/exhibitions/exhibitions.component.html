@@ -13,35 +13,3 @@
     </mat-card>
 
 </div>
-
-<div *ngIf="selected" style="text-align: center; margin: 1em 0;">
-
-    <button
-        mat-icon-button
-        [disabled]="page === 1"
-        (click)="previousPage()"
-        aria-label="Previous Page Button">
-        <mat-icon>navigate_before</mat-icon>
-    </button>
-
-    <span style="margin: 0 1em">{{ page }} / {{ totalPages }}</span>
-
-    <button
-        mat-icon-button
-        [disabled]="page === totalPages"
-        (click)="nextPage()"
-        aria-label="Next Page Button">
-        <mat-icon>navigate_next</mat-icon>
-    </button>
-
-    <pdf-viewer
-        [src]="selected.download"
-        [original-size]="false"
-        [render-text]="false"
-        [show-all]="false"
-        [(page)]="page"
-        (after-load-complete)="loaded($event)"
-        style="display: block; width: 500px; max-width: 90%; margin: auto">
-    </pdf-viewer>
-
-</div>
