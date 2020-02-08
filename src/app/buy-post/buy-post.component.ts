@@ -20,7 +20,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
   styleUrls: ['./buy-post.component.scss']
 })
 export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('cardForm', { static: false }) cardForm: ElementRef;
+  @ViewChild('cardForm') cardForm: ElementRef;
 
   mounted: boolean;
 
