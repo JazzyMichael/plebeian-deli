@@ -1,4 +1,4 @@
-<div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em; background-color: #e7e7e7;">
+<div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em;">
 
     <div *ngIf="post$ | async as post">
 
@@ -20,28 +20,6 @@
 
         <app-address-form></app-address-form>
 
-        <mat-card style="width: 400px; max-width: 90%; margin: 1em auto;">
-            <p>Art Price: {{ post.price | currency }}</p>
-
-            <p>Stripe Processing Fee: {{ (post.price / 0.9721) - post.price | currency}}</p>
-
-            <p>Total: {{ post.price / 0.9721 | currency }}</p>
-
-            <img style="display: block; margin: 1em auto; width: 100%;" src="assets/images/powered-by-stripe.png" alt="Powered By Stripe">
-        
-            <form *ngIf="!loading" action="/charge" method="post" (submit)="handleForm($event)" style="text-align: center; width: 500px; max-width: 95%; margin: 2em auto;">
-                <mat-card>
-                    <div #cardForm></div>
-                </mat-card>
-            </form>
-
-            <mat-spinner *ngIf="loading" style="margin: auto"></mat-spinner>
-
-            <br>
-
-            <button mat-raised-button color="primary" style="color: white">Purchase</button>
-        </mat-card>
-
         <mat-card>
             <mat-card-content>
                 <p>The Seller will be notified when your order is placed!</p>
@@ -51,7 +29,5 @@
         </mat-card>
 
     </div>
-
-
 
 </div>

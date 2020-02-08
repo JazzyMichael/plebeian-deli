@@ -60,7 +60,7 @@ export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             if (!post.quantity) {
-              return window.alert('This art just sold out!');
+              // return window.alert('This art just sold out!');
             }
 
             this.price = post && post.price ? post.price / 0.9721 : null;

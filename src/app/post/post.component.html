@@ -1,5 +1,13 @@
 <div *ngIf="post$ | async as post" class="container">
 
+    <button
+        *ngIf="user && ['Yg1KGgr6HCUjI1kvdVjlXujwJ7Z2', 'cZAJAT0Th3Qu4M91Jc2MFqMxsls1', 'raKDGj7QGwMpGlED5JQRVDSQZ983'].includes(user.uid)"
+        mat-raised-button
+        style="display: block; margin: 2em auto;"
+        [routerLink]="'/purchase/' + post.postId">
+        TEST PURCHASE
+    </button>
+
     <div class="sub-header">
         <div class="sub-header__user" [routerLink]="'/' + post.user.username">
             <img class="sub-header__image" [src]="post.user.thumbnail | async" alt="Profile Picture">
