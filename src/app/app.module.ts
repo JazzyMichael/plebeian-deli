@@ -22,9 +22,6 @@ import {
   AngularFireAuthGuardModule
 } from '@angular/fire/auth-guard';
 
-// 3rd Party Modules
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-
 // Components
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
@@ -40,7 +37,6 @@ import { PostsComponent } from './profile/posts/posts.component';
 import { LoginComponent } from './login/login.component';
 import { PostComponent } from './post/post.component';
 import { InfoComponent } from './info/info.component';
-import { EventsComponent } from './profile/events/events.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
 import { EventComponent } from './event/event.component';
@@ -50,7 +46,6 @@ import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
 import { TermsComponent } from './terms/terms.component';
 import { CreatePostComponent } from './create-post/create-post.component';
-import { ServicesComponent } from './profile/services/services.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
@@ -67,6 +62,7 @@ import { DescriptionBoxComponent } from './post/description-box/description-box.
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { CreateEventComponent } from './create-event/create-event.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -86,6 +82,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'new-service', component: CreateServiceComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'new-event', component: CreateEventComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
 
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
@@ -115,7 +112,6 @@ const routes: Routes = [
     PostsComponent,
     PostComponent,
     InfoComponent,
-    EventsComponent,
     ArtistsComponent,
     ChatComponent,
     EventComponent,
@@ -125,7 +121,6 @@ const routes: Routes = [
     BuyPostComponent,
     TermsComponent,
     CreatePostComponent,
-    ServicesComponent,
     CreateServiceComponent,
     PostLayoutComponent,
     NotificationsComponent,
@@ -145,7 +140,8 @@ const routes: Routes = [
     EditProfileComponent,
     WidescreenHeaderComponent,
     MobileHeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    CreateEventComponent
   ],
   imports: [
     BrowserModule,
@@ -161,8 +157,7 @@ const routes: Routes = [
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireFunctionsModule,
-    NgxHmCarouselModule
+    AngularFireFunctionsModule
   ],
   exports: [
     MaterialModule

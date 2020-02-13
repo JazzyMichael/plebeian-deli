@@ -1,0 +1,93 @@
+<mat-card class="event-form-card">
+    <form *ngIf="eventForm" [formGroup]="eventForm" (submit)="submit()">
+        <mat-form-field>
+            <input
+                matInput
+                formControlName="title"
+                placeholder="Title"
+                maxlength="120"
+                minlength="1"
+                autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea
+                matInput
+                formControlName="description"
+                placeholder="Description"
+                rows="4"
+                autocomplete="off"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                matInput
+                formControlName="location"
+                placeholder="Location"
+                maxlength="120"
+                minlength="1"
+                autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                matInput
+                placeholder="Link"
+                formControlName="link"
+                autocomplete="off">
+            <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                matInput
+                [matDatepicker]="picker"
+                [matDatepickerFilter]="pickerFilter"
+                placeholder="Date"
+                formControlName="date"
+                (click)="picker.open()"
+                autocomplete="off">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input
+                matInput
+                placeholder="Start Time"
+                formControlName="time"
+                autocomplete="off">
+        </mat-form-field>
+
+        <br>
+
+        <div style="text-align: center">
+            <button *ngIf="!eventImagePreview" mat-button type="button" style="padding: 0">
+                <label for="event-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
+                    <mat-icon>publish</mat-icon>
+                    <span style="margin-left: 10px">Upload</span>
+                </label>
+            </button>
+            <input
+                id="event-pic-upload"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="uploadEventPic($event)">
+        
+            <img *ngIf="eventImagePreview" [src]="eventImagePreview" alt="Event Image" style="max-width: 150px; max-height: 150px;">
+        </div>
+
+        <br>
+
+        <button
+            type="submit"
+            mat-raised-button
+            [disabled]="!eventForm.valid || !eventImage"
+            color="primary"
+            style="width: 80%; margin: 2em auto; display: block;">
+            <mat-icon>done</mat-icon>
+            <span style="margin-left: 10px">Add Event</span>
+        </button>
+    </form>
+</mat-card>

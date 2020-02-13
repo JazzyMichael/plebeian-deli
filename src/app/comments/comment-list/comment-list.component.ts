@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommentsService } from 'src/app/services/comments.service';
 import { AuthService } from 'src/app/services/auth.service';
 

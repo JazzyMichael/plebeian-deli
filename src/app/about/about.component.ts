@@ -1,7 +1,4 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
-// import { SignupDialogComponent } from 'src/app/signup-dialog/signup-dialog.component';
 
 @Component({
   selector: 'app-about',
@@ -45,22 +42,13 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goToSubscriptions: boolean;
 
-  constructor(
-    public dialog: MatDialog,
-    ) {
-    // this.route.queryParams.subscribe(params => {
-    //   this.goToSubscriptions = !!params.subscriptions;
-    // });
-  }
+  constructor() { }
 
   ngOnInit() {
     this.selectFeature(0);
   }
 
   ngAfterViewInit() {
-    // if (this.goToSubscriptions) {
-    //   document.getElementById('subscriptions-section').scrollIntoView();
-    // }
   }
 
   ngOnDestroy() {

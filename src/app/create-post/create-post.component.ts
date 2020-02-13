@@ -5,7 +5,7 @@ import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostService } from '../services/post.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';

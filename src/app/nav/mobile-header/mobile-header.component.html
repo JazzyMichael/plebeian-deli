@@ -27,7 +27,7 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
 
-            <div *ngIf="['/new-post', '/new-service', '/edit-profile'].includes(location.path()) || location.path().split('/')[1] === 'order-details'; else noTitle" style="font-size: 1.4em;">
+            <div *ngIf="['/new-post', '/new-service', 'new-event', '/edit-profile'].includes(location.path()) || location.path().split('/')[1] === 'order-details'; else noTitle" style="font-size: 1.4em;">
                 {{ location.path().split('/')[1].split('-').join(' ') | titlecase }}
             </div>
 

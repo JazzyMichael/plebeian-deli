@@ -19,6 +19,19 @@ export class EventService {
       });
   }
 
+  getUserEvents(uid: string) {
+    return this.afStore
+      .collection('events', ref => ref.where('userId', '==', uid))
+      .valueChanges({ idField: 'eventId' });
+  }
+
+  deleteEvent(eventId: string) {
+    return this.afStore
+      .collection('events')
+      .doc(eventId)
+      .delete();
+  }
+
   getEvent(eventId: string) {
     return this.afStore
       .collection('events')

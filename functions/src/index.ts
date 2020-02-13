@@ -7,9 +7,9 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
 
-import * as Stripe from 'stripe';
+// import * as Stripe from 'stripe';
 // const stripe = new Stripe(functions.config().stripe.secret);
-const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
+// const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
 
 import fetch from 'node-fetch';
 
@@ -133,7 +133,31 @@ export const postDelete = functions.firestore
         }
     })
 
+export const eventDelete = functions.firestore
+    .document('events/{eventId}')
+    .onDelete(async (snapshot, context) => {
+        const event = snapshot.data()
 
+        if (!event || !event.imagePath || !event.thumbnailStoragePathBase || !event.imageFileType) {
+            return
+        }
+
+        const storagePaths = [
+            `${event.imagePath}`,
+            `${event.thumbnailStoragePathBase}_100x100.${event.imageFileType}`,
+            `${event.thumbnailStoragePathBase}_250x250.${event.imageFileType}`,
+            `${event.thumbnailStoragePathBase}_500x500.${event.imageFileType}`
+        ]
+
+        const promises = storagePaths.map(p => admin.storage().bucket('plebeian-deli.appspot.com').file(p).delete())
+
+        try {
+            await Promise.all(promises)
+        } catch (error) {
+            console.log({ msg: 'Error deleting event images', error })
+            return
+        }
+    })
 
 
 
