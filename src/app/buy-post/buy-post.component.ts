@@ -26,6 +26,8 @@ export class BuyPostComponent implements OnInit, OnDestroy {
   price: number;
   sellerStripeId: string;
 
+  purchaseComplete: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

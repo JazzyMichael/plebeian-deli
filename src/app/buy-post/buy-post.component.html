@@ -1,4 +1,4 @@
-<div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em;">
+<!-- <div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em;">
 
     <div *ngIf="post$ | async as post">
 
@@ -10,10 +10,49 @@
 
         <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
 
-        <br>
-
-        <app-address-form></app-address-form>
-
     </div>
 
+</div> -->
+
+<div class="stage-container">
+    <span [ngClass]="{ 'active-stage': !purchaseComplete }">SHIPPING</span>
+    <span>-></span>
+    <span>BILLING</span>
+    <span>-></span>
+    <span [ngClass]="{ 'active-stage': purchaseComplete }">COMPLETE</span>
 </div>
+
+<mat-card *ngIf="!purchaseComplete">
+    <mat-card-content>
+        <app-address-form></app-address-form>
+    </mat-card-content>
+    <mat-card-actions style="text-align: right">
+        <button mat-button (click)="purchaseComplete = true">
+            <span style="font-size: 1.2em">Checkout</span>
+            <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="purchaseComplete">
+    <mat-card-header>
+        <mat-card-title>Your Purchase is Complete!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <br>
+        <p>Arist Order Message Goes Here</p>
+        <br>
+        <hr>
+        <br>
+        <p>Thank you for shopping with Plebeian and supporting artist's everywhere!</p>
+        <br>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center">
+        <button mat-button routerLink="/orders">
+            <span style="font-size: 1.1em">View Orders</span>
+            <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+<button *ngIf="purchaseComplete" mat-button (click)="purchaseComplete = false" style="display: block; margin: 2em auto;">Reset Purchase Complete</button>
