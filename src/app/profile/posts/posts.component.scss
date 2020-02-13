@@ -19,6 +19,8 @@
     transition: 200ms all ease-out;
     text-align: center;
     margin: 0.5em;
+    width: 100%;
+    max-width: 666px;
     cursor: pointer;
 }
 
@@ -30,7 +32,7 @@
 
 .post-img {
     height: 200px;
-    width: 300px;
+    width: 100%;
     background-size: cover;
     background-position: center;
 }

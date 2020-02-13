@@ -1,4 +1,4 @@
-<mat-card *ngIf="!approvedSeller" class="seller-card">
+<mat-card *ngIf="!user || !approvedSeller" class="seller-card">
     <p>Plebeian is integrated with Stripe to process payments.</p>
     <br>
     <p>When you click "Connect With Stripe" you will be taken to a special Stripe page to setup or link your account.</p>
@@ -16,12 +16,16 @@
         (click)="connectClick()">
 </mat-card>
 
-<mat-card *ngIf="approvedSeller" class="approved-seller-card">
+<mat-card *ngIf="user && approvedSeller" class="approved-seller-card">
 
-    <p style="text-align: center; font-size: 0.9em;">Leave a message for your new supporters to recieve with their purchase.</p>
+    <p style="text-align: center; font-size: 0.9em;">Customize the Order Placed Message for your new supporters to recieve with their purchase.</p>
 
-    <mat-form-field style="width: 100%; margin: 2em 0;" color="accent">
-        <textarea matInput rows="3" autocomplete="off" placeholder="Order Placed Message"></textarea>
+    <mat-form-field style="width: 100%; margin: 2em 0; position: relative;" color="accent">
+        <button *ngIf="orderMessage?.value !== user.orderPlacedMessage" mat-icon-button color="primary" (click)="saveOrderMessage(orderMessage.value)" style="position: absolute; top: 0; right: 0; cursor: pointer;">
+            <mat-icon>done</mat-icon>
+        </button>
+        <textarea #orderMessage matInput [value]="user.orderPlacedMessage || ''" rows="4" autocomplete="off" maxlength="240" placeholder="Say Thank You to your Customers"></textarea>
+        <mat-hint align="end">{{ orderMessage.value?.length || 0 }}/240</mat-hint>
     </mat-form-field>
 
     <br>

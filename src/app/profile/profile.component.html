@@ -73,29 +73,9 @@
             </div> -->
 
             <!-- CV -->
-            <!-- <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
-                <button *ngIf="user.cv" mat-button style="padding: 0">
-                    <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
-                </button>
-                <button mat-button style="padding: 0">
-                    <label for="cv-upload" class="cv-upload-btn">
-                        <mat-icon>publish</mat-icon>
-                        <span style="margin-left: 10px">Upload New CV</span>
-                    </label>
-                </button>
-                <input
-                    id="cv-upload"
-                    type="file"
-                    accept="application/pdf"
-                    style="display: none"
-                    (change)="uploadCv($event)">
-            </ng-container>
-    
-            <ng-template #viewCV>
-                <button *ngIf="user.membership === 'artist' && user.cv" mat-button style="padding: 0">
-                    <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
-                </button>
-            </ng-template> -->
+            <button *ngIf="user.cv" mat-button style="padding: 0">
+                <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
+            </button>
 
             <!-- Galleries -->
             <ng-container *ngIf="user.membership === 'artist'">

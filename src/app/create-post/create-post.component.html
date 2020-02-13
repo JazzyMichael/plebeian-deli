@@ -3,8 +3,7 @@
 
 <mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
 
-<mat-card *ngIf="!uploading && postForm" style="margin: 0.5em auto 5em; width: 85%; max-width: 700px;">
-
+<mat-card *ngIf="!uploading && postForm" class="post-card">
 
     <form [formGroup]="postForm" (submit)="submit()">
 
