@@ -8,25 +8,11 @@
             <p>{{ post.createdTimestamp.toDate() | date }}</p>
         </div>
 
-        <mat-card>
-
-            <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
-
-            <img *ngIf="post.thumbnail | async as thumbnail" [src]="thumbnail" class="thumbnail-img" alt="Post Image">
-
-        </mat-card>
+        <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
 
         <br>
 
         <app-address-form></app-address-form>
-
-        <mat-card>
-            <mat-card-content>
-                <p>The Seller will be notified when your order is placed!</p>
-
-                <p>Check your orders page <a>here</a> to see when it is finished/shipped!</p>
-            </mat-card-content>
-        </mat-card>
 
     </div>
 

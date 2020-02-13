@@ -52,8 +52,6 @@ import { CategorySelectComponent } from './deli/category-select/category-select.
 import { PostLayoutComponent } from './post-layout/post-layout.component';
 import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
 import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
-import { DescriptionBoxComponent } from './post/description-box/description-box.component';
-import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
@@ -124,8 +122,6 @@ const routes: Routes = [
     CategorySelectComponent,
     PostThumbnailComponent,
     DeliHeaderComponent,
-    DescriptionBoxComponent,
-    CommentBoxComponent,
     PostImagesComponent,
     FooterBarComponent,
     EditProfileComponent,

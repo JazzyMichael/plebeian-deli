@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { switchMap, tap, debounceTime, first } from 'rxjs/operators';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
@@ -79,14 +79,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleEditing() {
-    this.editing = !this.editing;
-  }
-
-  onLocationInput(location: string) {
-    console.log(location);
-  }
-
   openInstagram(instagram: string) {
     const url = `https://www.instagram.com/${instagram}`;
     window.open(url, '_blank');
@@ -125,8 +117,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.log('NO UID or file type');
       return;
     }
-
-    console.log('file type: ', file.type);
 
     const fileType = file.type.split('/')[1];
 

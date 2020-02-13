@@ -79,11 +79,12 @@
 
 
     <!-- description -->
-    <app-description-box *ngIf="post.description" [description]="post.description"></app-description-box>
-
+    <mat-card *ngIf="post.description" style="margin: 1.25em auto">
+        <mat-card-content>{{ post.description.length > 100 ? post.description.substring(0, 100) + '...' : post.description }}</mat-card-content>
+    </mat-card>
+    
 
     <!-- Comments -->
-    <br>
     <app-comments [deliPostId]="postId" [postUserId]="postUserId"></app-comments>
 
 

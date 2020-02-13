@@ -19,17 +19,11 @@ import { AngularFireFunctions } from '@angular/fire/functions';
   templateUrl: './buy-post.component.html',
   styleUrls: ['./buy-post.component.scss']
 })
-export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('cardForm') cardForm: ElementRef;
-
-  mounted: boolean;
+export class BuyPostComponent implements OnInit, OnDestroy {
 
   loading: boolean;
-
   post$: any;
-
   price: number;
-
   sellerStripeId: string;
 
   constructor(
@@ -65,7 +59,7 @@ export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.price = post && post.price ? post.price / 0.9721 : null;
 
-            // this.sellerStripeId = post && post.stripeConnectData && post.stripeConnectData.stripe_user_id ? 
+            // this.sellerStripeId = post && post.stripeConnectData && post.stripeConnectData.stripe_user_id ?
             //   post.stripeConnectData.stripe_user_id :
             //   null;
 
@@ -80,36 +74,7 @@ export class BuyPostComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {
-    // card.mount(this.cardForm.nativeElement);
-  }
-
   ngOnDestroy() {
-  }
-
-  async handleForm(e: any) {
-    e.preventDefault();
-
-    // const { token, error } = await stripe.createToken(card);
-
-    // if (error || !this.price || !this.sellerStripeId) {
-    //   console.log('error', error);
-    //   const errorElement = document.getElementById('card-errors');
-    //   errorElement.textContent = JSON.stringify(error);
-    // } else {
-    //   this.loading = true;
-
-    //   const res = await this.fun
-    //     .httpsCallable('createConnectCharge')({
-    //       source: token.id,
-    //       sellerAccountId: this.sellerStripeId,
-    //       price: this.price,
-    //       orderType: 'post'
-    //     })
-    //     .toPromise();
-
-    //   this.loading = false;
-    // }
   }
 
 }

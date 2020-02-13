@@ -3,7 +3,6 @@ import { ChatService } from '../services/chat.service';
 import { Observable, Subscription } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ThemeService } from '../services/theme.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     public chatService: ChatService,
     private router: Router,
-    private themeService: ThemeService,
     private auth: AuthService
     ) { }
 
@@ -105,10 +103,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.openMessagesBox$.subscribe(bool => {
       this.showChats = true;
       this.viewingChat = null;
-    });
-
-    this.themeService.isDarkTheme.subscribe(isDark => {
-      this.darkTheme = isDark;
     });
   }
 

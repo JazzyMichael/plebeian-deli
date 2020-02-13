@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { switchMap, debounceTime, tap } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,15 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
-  }
-
-  validateUniqueUsername(control: AbstractControl) {
-    return control.valueChanges.pipe(
-      debounceTime(777),
-      tap(val => console.log('val', val)),
-      switchMap(val => this.auth.getUser(val)),
-      switchMap(userArr => userArr ? of(control.setErrors({ usernameTaken: true })) : of(control.setErrors(null))),
-    );
   }
 
   googleLogin() {
