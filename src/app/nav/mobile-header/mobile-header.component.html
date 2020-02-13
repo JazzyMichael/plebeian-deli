@@ -27,15 +27,24 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
 
-            <div *ngIf="['/new-post', '/new-service', 'new-event', '/edit-profile'].includes(location.path()) || location.path().split('/')[1] === 'order-details'; else noTitle" style="font-size: 1.4em;">
-                {{ location.path().split('/')[1].split('-').join(' ') | titlecase }}
+            <div *ngIf="
+                    user && location.path() === '/' + user.username
+                    || ['/new-post', '/new-service', 'new-event', '/edit-profile'].includes(location.path())
+                    || location.path().split('/')[1] === 'order-details';
+                    else noTitle"
+                style="font-size: 1.4em;">
+                {{ user && location.path() === '/' + user.username ? user.username : location.path().split('/')[1].split('-').join(' ') | titlecase }}
             </div>
+
+            <!-- <ng-template #usernameTitle>
+                <div style="font-size: 1.2em;">{{ user.username }}</div>
+            </ng-template> -->
 
             <ng-template #noTitle>
                 <div></div>
             </ng-template>
 
-            <ng-container *ngIf="auth.user$ | async as user">
+            <ng-container *ngIf="user">
                 <button *ngIf="location.path() === '/' + user.username" mat-icon-button routerLink="/edit-profile">
                     <mat-icon>edit</mat-icon>
                 </button>

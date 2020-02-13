@@ -1,25 +1,14 @@
-
-<mat-card *ngIf="!approvedSeller" style="width: 500px; max-width: 85%; margin: 2em auto;">
+<mat-card *ngIf="!approvedSeller" class="seller-card">
     <p>Plebeian is integrated with Stripe to process payments.</p>
-
     <br>
-
     <p>When you click "Connect With Stripe" you will be taken to a special Stripe page to setup or link your account.</p>
-
     <br>
-
     <p>If you already have a Stripe account you will just log in and automatically be linked to Plebeian and taken back to Plebeian Site.</p>
-
     <br>
-
     <p>If you are new to Stripe you will create an account and then be re-directed back to the Plebeian Site when you are finished.</p>
-
     <br>
-
     <p>After the setup you will be eligible to put a price on your work and recieve orders!</p>
-
     <br>
-
     <img
         src="assets/images/connect-with-stripe.png"
         alt="Connect With Stripe"
@@ -29,7 +18,7 @@
 
 
 
-<mat-card *ngIf="approvedSeller" style="text-align: center">
+<mat-card *ngIf="approvedSeller" class="approved-seller-card">
 
     <p>You are an official Plebeian Seller!</p>
 
@@ -38,13 +27,3 @@
     <p>Orders go here</p>
 
 </mat-card>
-
-<!--
-
-    test platform data:
-    
-    - client_id: ca_Fh9rJPQapCoKCcWgClCGJtY6pBesglFu
-    -redirect_uri
-
--->
-

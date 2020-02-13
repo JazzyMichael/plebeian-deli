@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -13,15 +13,21 @@ export class MobileHeaderComponent implements OnInit {
 
   @Output() openSidenav: EventEmitter<any> = new EventEmitter();
 
+  userSub: Subscription;
+  user: any;
   profilePic: Observable<any>;
 
-  constructor(public location: Location, public auth: AuthService) {
-    this.profilePic = this.auth.user$.asObservable().pipe(
-      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png'))
-    );
-  }
+  constructor(public location: Location, public auth: AuthService) { }
 
   ngOnInit() {
+    this.userSub = this.auth.user$.subscribe(user => {
+      this.user = user;
+      this.profilePic = user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png');
+    });
+  }
+
+  ngOnDestroy () {
+    if (this.userSub) this.userSub.unsubscribe();
   }
 
   sidenavClick() {

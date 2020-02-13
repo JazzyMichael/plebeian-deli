@@ -45,8 +45,8 @@
 }
 
 .profile-pic {
-    height: 150px;
-    width: 150px;
+    height: 125px;
+    width: 125px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -132,7 +132,7 @@
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 666px) {
     .cont {
         flex-direction: row;
     }
@@ -160,8 +160,8 @@
     }
 
     .profile-pic {
-        height: 200px;
-        width: 200px;
+        height: 250px;
+        width: 250px;
     }
 
     .left-column, .right-column {
@@ -172,6 +172,7 @@
 .services-container {
     overflow-x: scroll;
     display: flex;
+    align-items: center;
 }
 
 .service-card {
@@ -181,4 +182,20 @@
     max-width: 160px;
     margin: 0.5em;
     position: relative;
+    cursor: pointer;
+}
+
+.event-card {
+    box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
+    max-height: 200px;
+    min-width: 120px;
+    max-width: 200px;
+    margin: 0.5em;
+    position: relative;
+    cursor: pointer;
+}
+
+.mat-card-image {
+    margin-top: -16px;
+    border-radius: 10px 10px 0 0;
 }

@@ -14,7 +14,7 @@
 
     <div class="left-column" [ngClass]="editing ? 'left-column-editing' : ''">
         
-        <div class="header-section-1">
+        <div style="margin: 10px">
         
             <!-- Profile Pic-->
             <div
@@ -46,17 +46,16 @@
 
         <div class="header-section-2">
 
-            <!-- message -->
-            <button
-                *ngIf="!editable"
-                mat-raised-button
-                style="margin-bottom: 1em"
-                (click)="initiateChat(user)">
-                Send Message
-            </button>
+            <h2>{{ user.medium || 'artist' | titlecase }}</h2>
+
+            <div style="width: 95%; margin: 1em auto; display: block;">
+                <h4>BIO</h4>
+                <!-- <p>{{ user.bio || '' }}</p> -->
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur eveniet doloremque est repellat sunt dolore, similique obcaecati ratione voluptate iste architecto laborum asperiores eum in aliquam saepe fugiat commodi! Magni?</p>
+            </div>
 
             <!-- Social Links -->
-            <div>
+            <!-- <div>
                 <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
                     <mat-icon svgIcon="instagram"></mat-icon>
                     <span class="social-text">{{ user.instagram }}</span>
@@ -71,10 +70,10 @@
                     <mat-icon>link</mat-icon>
                     <span class="social-text">Website</span>
                 </button>
-            </div>
+            </div> -->
 
             <!-- CV -->
-            <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
+            <!-- <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
                 <button *ngIf="user.cv" mat-button style="padding: 0">
                     <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
                 </button>
@@ -96,7 +95,7 @@
                 <button *ngIf="user.membership === 'artist' && user.cv" mat-button style="padding: 0">
                     <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
                 </button>
-            </ng-template>
+            </ng-template> -->
 
             <!-- Galleries -->
             <ng-container *ngIf="user.membership === 'artist'">
@@ -119,17 +118,17 @@
     <div class="right-column">
 
         <!-- Username and Medium/Membership -->
-        <div *ngIf="!editing" class="name-and-medium">
+        <!-- <div *ngIf="!editing" class="name-and-medium">
             <h1 style="font-weight: 200">{{ user.username }}</h1>
             <h1 *ngIf="user.membership === 'viewer'" style="font-weight: 200">{{ 'Member' }}</h1>
             <h1 *ngIf="user.membership === 'artist' && user.medium" style="font-weight: 200">{{ user.medium | titlecase }}</h1>
             <h1 *ngIf="user.membership === 'artist' && !user.medium" style="font-weight: 200">Artist</h1>
             <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
-        </div>
+        </div> -->
 
 
         <!-- Bio/Description -->
-        <div style="width: 95%; margin: 1em auto; display: block;">{{ user.bio || user.description || '' }}</div>
+        <!-- <div style="width: 95%; margin: 1em auto; display: block;">{{ user.bio || user.description || '' }}</div> -->
 
 
         <br><br>
@@ -163,68 +162,75 @@
         <br>
 
         <!-- Services -->
-        <div style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
-            <h2>Services</h2>
-            <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <div class="services-container">
-            <mat-card *ngFor="let service of services$ | async" class="service-card">
-                <button
-                    *ngIf="editable"
-                    mat-icon-button
-                    [matMenuTriggerFor]="actions"
-                    style="position: absolute; top: 0; right: 0;"
-                    (click)="$event.stopPropagation()">
-                    <mat-icon>more_vert</mat-icon>
+        <ng-container *ngIf="services$ | async as services">
+            <div *ngIf="services?.length" style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
+                <h2>Services</h2>
+                <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
+                    <mat-icon>add</mat-icon>
                 </button>
-                <mat-menu #actions="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>edit</mat-icon>
-                        <span style="margin-left: 5px">Edit</span>
+            </div>
+            <div *ngIf="services?.length" class="services-container">
+                <mat-card *ngFor="let service of services" class="service-card">
+                    <button
+                        *ngIf="editable"
+                        mat-icon-button
+                        [matMenuTriggerFor]="actions"
+                        style="position: absolute; top: 0; right: 0;"
+                        (click)="$event.stopPropagation()">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item color="warn" (click)="serviceService.deleteService(service.serviceId)">
-                        <mat-icon color="warn">delete</mat-icon>
-                        <span style="margin-left: 5px; color: #f44336;">Delete</span>
-                    </button>
-                </mat-menu>
-                <p>{{ service.title }}</p>
-            </mat-card>
-        </div>
+                    <mat-menu #actions="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span style="margin-left: 5px">Edit</span>
+                        </button>
+                        <button mat-menu-item color="warn" (click)="serviceService.deleteService(service.serviceId)">
+                            <mat-icon color="warn">delete</mat-icon>
+                            <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                        </button>
+                    </mat-menu>
+                    <p>{{ service.title }}</p>
+                </mat-card>
+            </div>
+        </ng-container>
 
         <br>
 
         <!-- Events -->
-        <div style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
-            <h2>Events</h2>
-            <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-event">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <div class="services-container">
-            <mat-card *ngFor="let event of events$ | async" class="service-card">
-                <button
-                    *ngIf="editable"
-                    mat-icon-button
-                    [matMenuTriggerFor]="actions"
-                    style="position: absolute; top: 0; right: 0;"
-                    (click)="$event.stopPropagation()">
-                    <mat-icon>more_vert</mat-icon>
+        <ng-container *ngIf="events$ | async as events">
+            <div *ngIf="events?.length" style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
+                <h2>Events</h2>
+                <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-event">
+                    <mat-icon>add</mat-icon>
                 </button>
-                <mat-menu #actions="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>edit</mat-icon>
-                        <span style="margin-left: 5px">Edit</span>
+            </div>
+            <div *ngIf="events?.length" class="services-container">
+                <mat-card *ngFor="let event of events" class="event-card" [routerLink]="'/event/' + event.eventId">
+                    <button
+                        *ngIf="editable"
+                        mat-icon-button
+                        [matMenuTriggerFor]="actions"
+                        style="position: absolute; top: 0; right: 0;"
+                        (click)="$event.stopPropagation()">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
-                        <mat-icon color="warn">delete</mat-icon>
-                        <span style="margin-left: 5px; color: #f44336;">Delete</span>
-                    </button>
-                </mat-menu>
-                <p>{{ event.title }}</p>
-            </mat-card>
-        </div>
+                    <mat-menu #actions="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span style="margin-left: 5px">Edit</span>
+                        </button>
+                        <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
+                            <mat-icon color="warn">delete</mat-icon>
+                            <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                        </button>
+                    </mat-menu>
+                    <img mat-card-image [src]="event.imageUrl" alt="Event Image">
+                    <mat-card-content>
+                        <p>{{ event.title }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-container>
 
         <br>
 

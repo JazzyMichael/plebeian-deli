@@ -42,7 +42,7 @@ export class EventComponent implements OnInit {
             }
 
             if (!this.gallery) {
-              this.gallery = await this.userService.getUserById(event.galleryId);
+              this.gallery = await this.userService.getUserById(event.userId || event.gallerId);
             }
           })
         );

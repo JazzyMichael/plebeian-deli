@@ -29,4 +29,8 @@ export class SellerComponent implements OnInit {
     window.open(url);
   }
 
+  saveOrderMessage(msg: string) {
+    console.log(msg);
+  }
+
 }
