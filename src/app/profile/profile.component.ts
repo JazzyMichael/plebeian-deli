@@ -92,6 +92,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     window.open(otherLink, '_blank');
   }
 
+  editService(service: any) {
+    this.serviceService.editingService = service;
+    this.router.navigateByUrl('/new-service');
+  }
+
+  editEvent(event: any) {
+    this.eventService.editingEvent = event;
+    this.router.navigateByUrl('/new-event');
+  }
+
   async initiateChat(userToChat: any) {
     const loggedInUser = await this.auth.getCurrentUser();
 

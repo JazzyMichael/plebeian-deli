@@ -29,7 +29,7 @@
 
             <div *ngIf="
                     user && location.path() === '/' + user.username
-                    || ['/new-post', '/new-service', 'new-event', '/edit-profile'].includes(location.path())
+                    || ['/new-post', '/new-service', 'new-event', '/edit-profile', '/seller'].includes(location.path())
                     || location.path().split('/')[1] === 'order-details';
                     else noTitle"
                 style="font-size: 1.4em;">

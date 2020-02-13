@@ -14,14 +14,14 @@ export class SellerComponent implements OnInit {
   scope = '&scope=read_write';
 
   user: any;
-  approvedSeller: boolean;
+  approvedSeller: boolean = false;
 
   constructor(private authService: AuthService) { }
 
   async ngOnInit() {
     this.user = await this.authService.getCurrentUser();
 
-    this.approvedSeller = this.user && this.user.approvedSeller;
+    // this.approvedSeller = this.user && this.user.approvedSeller;
   }
 
   connectClick() {

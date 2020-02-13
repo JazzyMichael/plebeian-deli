@@ -83,11 +83,10 @@
         <button
             type="submit"
             mat-raised-button
-            [disabled]="!eventForm.valid || !eventImage"
-            color="primary"
+            [disabled]="!eventForm.valid || !eventImagePreview"
             style="width: 80%; margin: 2em auto; display: block;">
             <mat-icon>done</mat-icon>
-            <span style="margin-left: 10px">Add Event</span>
+            <span style="margin-left: 10px">{{ editingEvent ? 'Update Event' : 'Add Event' }}</span>
         </button>
     </form>
 </mat-card>

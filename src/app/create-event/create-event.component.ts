@@ -16,6 +16,7 @@ export class CreateEventComponent implements OnInit {
   eventImage: any;
   eventImagePreview: any;
   uploading: boolean;
+  editingEvent: any;
 
   pickerFilter: any = (d: Date): boolean => {
     const today = new Date();
@@ -33,18 +34,21 @@ export class CreateEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.editingEvent = this.eventService.editingEvent || null;
     this.createEventForm();
   }
 
   createEventForm(): void {
     this.eventForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      location: ['', Validators.required],
-      date: [null, Validators.required],
-      time: [null, Validators.required],
-      link: ['']
+      title: [this.editingEvent && this.editingEvent.title || '', Validators.required],
+      description: [this.editingEvent && this.editingEvent.description || '', Validators.required],
+      location: [this.editingEvent && this.editingEvent.location || '', Validators.required],
+      date: [this.editingEvent && this.editingEvent.date || null, Validators.required],
+      time: [this.editingEvent && this.editingEvent.time || null, Validators.required],
+      link: [this.editingEvent && this.editingEvent.link || '']
     });
+    this.eventService.editingEvent = null;
+    this.eventImagePreview = this.editingEvent && this.editingEvent.imageUrl || null;
   }
 
   async uploadEventPic(event: any) {
@@ -71,42 +75,46 @@ export class CreateEventComponent implements OnInit {
 
     const user = await this.auth.getCurrentUser();
 
-    if (!user || !this.eventImage) {
+    if (!user || !this.eventImagePreview) {
       return window.alert('No user or event image');
     }
 
-    const random = Math.random().toString().slice(3, 9);
+    if (this.editingEvent) {
+      await this.eventService.updateEvent(this.editingEvent.eventId, { updatedTimestamp: new Date(), ...this.eventForm.value });
+      this.snackBar.open('Event has been updated on the Calendar!', '', { duration: 2000 });
+    } else {
+      const random = Math.random().toString().slice(3, 9);
 
-    const imageFileType = this.eventImage.type.split('/')[1];
+      const imageFileType = this.eventImage.type.split('/')[1];
 
-    const imagePath = `event-images/${user.uid.substring(0, 10)}-${random}.${imageFileType}`;
+      const imagePath = `event-images/${user.uid.substring(0, 10)}-${random}.${imageFileType}`;
 
-    const ref = this.storage.ref(imagePath);
+      const ref = this.storage.ref(imagePath);
 
-    const metadata = { customMetadata: { userId: user.uid } };
+      const metadata = { customMetadata: { userId: user.uid } };
 
-    await this.storage.upload(imagePath, this.eventImage, metadata);
+      await this.storage.upload(imagePath, this.eventImage, metadata);
 
-    const imageUrl = await ref.getDownloadURL().toPromise();
+      const imageUrl = await ref.getDownloadURL().toPromise();
 
-    const thumbnailStoragePathBase = `event-images/thumbnails/${user.uid.substring(0, 10)}-${random}`;
+      const thumbnailStoragePathBase = `event-images/thumbnails/${user.uid.substring(0, 10)}-${random}`;
 
-    const thumbnailStoragePath = `${thumbnailStoragePathBase}_250x250.${imageFileType}`;
+      const thumbnailStoragePath = `${thumbnailStoragePathBase}_250x250.${imageFileType}`;
 
-    const newEvent = {
-      ...this.eventForm.value,
-      thumbnailStoragePath,
-      thumbnailStoragePathBase,
-      imageUrl,
-      imagePath,
-      imageFileType,
-      createdTimestamp: new Date(),
-      userId: user.uid
-    };
+      const newEvent = {
+        ...this.eventForm.value,
+        thumbnailStoragePath,
+        thumbnailStoragePathBase,
+        imageUrl,
+        imagePath,
+        imageFileType,
+        createdTimestamp: new Date(),
+        userId: user.uid
+      };
 
-    await this.eventService.addEvent(newEvent);
-
-    this.snackBar.open('Event has been added to the Calendar!', '', { duration: 2000 });
+      await this.eventService.addEvent(newEvent);
+      this.snackBar.open('Event has been added to the Calendar!', '', { duration: 2000 });
+    }
 
     this.router.navigateByUrl('/calendar');
   }

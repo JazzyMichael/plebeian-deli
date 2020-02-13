@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ServiceService {
+  editingService: any;
   // services$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(private afStore: AngularFirestore) {

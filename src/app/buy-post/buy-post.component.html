@@ -1,19 +1,3 @@
-<!-- <div style="max-width: 1000px; margin: 0 auto; padding: 3em 2em 4em;">
-
-    <div *ngIf="post$ | async as post">
-
-        <div style="display: flex; justify-content: start; align-items: center;">
-            <img [src]="post?.user?.profileUrl" alt="Profile Picture" style="height: 75px; margin-right: 1em; cursor: pointer;" [routerLink]="'/' + post.user.username">
-            <p style="font-size: 1.75em; margin: 0 1em 0 0; cursor: pointer;" [routerLink]="'/' + post.user.username">{{ post?.user?.username }}</p>
-            <p>{{ post.createdTimestamp.toDate() | date }}</p>
-        </div>
-
-        <h1 style="margin: 0.5em 0 1em">{{ post.title }}</h1>
-
-    </div>
-
-</div> -->
-
 <div class="stage-container">
     <span [ngClass]="{ 'active-stage': !purchaseComplete }">SHIPPING</span>
     <span>-></span>

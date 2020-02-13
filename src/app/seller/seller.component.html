@@ -12,18 +12,33 @@
     <img
         src="assets/images/connect-with-stripe.png"
         alt="Connect With Stripe"
-        class="connect-img"
+        class="stripe-img"
         (click)="connectClick()">
 </mat-card>
 
-
-
 <mat-card *ngIf="approvedSeller" class="approved-seller-card">
 
-    <p>You are an official Plebeian Seller!</p>
+    <p style="text-align: center; font-size: 0.9em;">Leave a message for your new supporters to recieve with their purchase.</p>
 
-    <p>You can now add a Price and Quantity to your posts. This will allow anyone to purchase to your work from Plebeian Deli.</p>
+    <mat-form-field style="width: 100%; margin: 2em 0;" color="accent">
+        <textarea matInput rows="3" autocomplete="off" placeholder="Order Placed Message"></textarea>
+    </mat-form-field>
 
-    <p>Orders go here</p>
+    <br>
+    <p>You can now add a Price to your posts and offer commissions and services. This will allow anyone to purchase to your work from Plebeian Deli.</p>
+    <br>
+    <p>Accept payments from Apple Pay, Google Pay, Credit, and Debit!</p>
+    <br>
+    <p>Refund orders and customize the Stripe Checkout page from your Stripe Dashboard.</p>
+    <br>
+    <br>
+    <a href="http://stripe.com" target="_blank" style="display: block; margin: 1em auto 2em; color: cadetblue; text-align: center;">Open Dashboard</a>
+
+    <img
+        src="assets/images/powered-by-stripe.png"
+        alt="Powered By Stripe"
+        class="stripe-img">
 
 </mat-card>
+
+<button mat-button style="display: block; margin: 100px auto;" (click)="approvedSeller = !approvedSeller">Toggle Approved Seller</button>

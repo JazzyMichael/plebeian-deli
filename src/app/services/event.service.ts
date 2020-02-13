@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class EventService {
   events$: BehaviorSubject<any>;
+  editingEvent: any;
 
   constructor(private afStore: AngularFirestore) {
     this.events$ = new BehaviorSubject([]);
@@ -30,6 +31,13 @@ export class EventService {
       .collection('events')
       .doc(eventId)
       .delete();
+  }
+
+  updateEvent(eventId: string, event: any) {
+    return this.afStore
+      .collection('events')
+      .doc(eventId)
+      .update(event);
   }
 
   getEvent(eventId: string) {

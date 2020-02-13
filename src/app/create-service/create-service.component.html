@@ -23,10 +23,9 @@
             type="submit"
             mat-raised-button
             [disabled]="!serviceForm.valid"
-            color="primary"
             style="width: 80%; margin: 2em auto; display: block;">
             <mat-icon>done</mat-icon>
-            <span style="margin-left: 10px">Offer Service</span>
+            <span style="margin-left: 10px">{{ editingService ? 'Update Service' : 'Offer Service' }}</span>
         </button>
     </form>
 </mat-card>

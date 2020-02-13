@@ -180,7 +180,7 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #actions="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="editService(service)">
                             <mat-icon>edit</mat-icon>
                             <span style="margin-left: 5px">Edit</span>
                         </button>
@@ -215,7 +215,7 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #actions="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="editEvent(event)">
                             <mat-icon>edit</mat-icon>
                             <span style="margin-left: 5px">Edit</span>
                         </button>

@@ -1,8 +1,19 @@
-.connect-img {
+.stripe-img {
     cursor: pointer;
     width: 100%;
 }
 
-.connect-img:hover {
+.stripe-img:hover {
     opacity: 0.75;
+}
+
+.seller-card, .approved-seller-card {
+    max-width: 85%;
+    width: 666px;
+    margin: 2em auto;
+    box-shadow: inset 10px 10px 20px rgba(255, 253, 253, 0.25) !important;
+}
+
+.approved-seller-card p {
+    margin-bottom: 2em;
 }

@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServiceService } from '../services/service.service';
@@ -12,10 +11,8 @@ import { ServiceService } from '../services/service.service';
 })
 export class CreateServiceComponent implements OnInit {
 
-  title: string;
-  description: string;
-
   serviceForm: FormGroup;
+  editingService: any;
 
   constructor(
     private fb: FormBuilder,
@@ -25,14 +22,16 @@ export class CreateServiceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.editingService = this.serviceService.editingService || null;
     this.createServiceForm();
   }
 
   createServiceForm() {
     this.serviceForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required]
+      title: [this.editingService && this.editingService.title || '', Validators.required],
+      description: [this.editingService && this.editingService.description || '', Validators.required]
     });
+    this.serviceService.editingService = null;
   }
 
   async submit() {
@@ -42,8 +41,13 @@ export class CreateServiceComponent implements OnInit {
       createdTimestamp: new Date(),
       userId: user.uid
     };
-    await this.serviceService.addService(newService);
-    this.snackBar.open('Service created!', '', { duration: 2000 });
+    if (this.editingService) {
+      await this.serviceService.updateService(this.editingService.serviceId, newService);
+      this.snackBar.open('Service Updated!', '', { duration: 2000 });
+    } else {
+      await this.serviceService.addService(newService);
+      this.snackBar.open('Service created!', '', { duration: 2000 });
+    }
     this.auth.navigateToProfile();
   }
 
