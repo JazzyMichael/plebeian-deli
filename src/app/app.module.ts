@@ -15,12 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
-import {
-  AngularFireAuthGuard,
-  redirectLoggedInTo,
-  redirectUnauthorizedTo,
-  AngularFireAuthGuardModule
-} from '@angular/fire/auth-guard';
+import { AngularFireAuthGuard, AngularFireAuthGuardModule, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 // Components
 import { AppComponent } from './app.component';
@@ -36,7 +31,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
 import { LoginComponent } from './login/login.component';
 import { PostComponent } from './post/post.component';
-import { InfoComponent } from './info/info.component';
 import { ArtistsComponent } from './profile/artists/artists.component';
 import { ChatComponent } from './chat/chat.component';
 import { EventComponent } from './event/event.component';
@@ -46,13 +40,13 @@ import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
 import { TermsComponent } from './terms/terms.component';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { CreateEventComponent } from './create-event/create-event.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { FaqComponent } from './faq/faq.component';
-import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { CategorySelectComponent } from './deli/category-select/category-select.component';
 import { PostLayoutComponent } from './post-layout/post-layout.component';
@@ -62,7 +56,6 @@ import { DescriptionBoxComponent } from './post/description-box/description-box.
 import { CommentBoxComponent } from './post/comment-box/comment-box.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { CreateEventComponent } from './create-event/create-event.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -80,6 +73,7 @@ const routes: Routes = [
   { path: 'chat', component: ChatComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
+
   { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'new-service', component: CreateServiceComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'new-event', component: CreateEventComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
@@ -89,7 +83,6 @@ const routes: Routes = [
   { path: 'purchase/:id', component: BuyPostComponent },
 
   { path: 'faq', component: FaqComponent },
-  { path: 'info', component: InfoComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'seller', component: SellerComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'connect', component: ConnectComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
@@ -111,7 +104,6 @@ const routes: Routes = [
     LoginComponent,
     PostsComponent,
     PostComponent,
-    InfoComponent,
     ArtistsComponent,
     ChatComponent,
     EventComponent,
@@ -128,7 +120,6 @@ const routes: Routes = [
     CommentListComponent,
     CommentFormComponent,
     FaqComponent,
-    SignupSuccessComponent,
     AddressFormComponent,
     CategorySelectComponent,
     PostThumbnailComponent,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -12,7 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -70,4 +71,17 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTabsModule,
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon('custommenu',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/menu-icon.svg'));
+    this.matIconRegistry.addSvgIcon('facebook',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/social/facebook.svg'));
+    this.matIconRegistry.addSvgIcon('instagram',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/social/instagram.svg'));
+    this.matIconRegistry.addSvgIcon('twitter',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/social/twitter.svg'));
+    this.matIconRegistry.addSvgIcon('youtube',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/social/youtube.svg'));
+  }
+}
