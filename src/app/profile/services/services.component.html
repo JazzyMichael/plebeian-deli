@@ -16,15 +16,6 @@
     </div>
 </div>
 
-
-<app-create-service
-    *ngIf="editable && editing"
-    [service]="editingService"
-    [approvedSeller]="user.approvedSeller"
-    (save)="saveService($event)">
-</app-create-service>
-
-
 <div style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
 
     <mat-card *ngFor="let service of services$ | async" style="width: 200px; cursor: pointer;" (click)="inquire(service.title, service.description)">

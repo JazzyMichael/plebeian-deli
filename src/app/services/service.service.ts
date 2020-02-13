@@ -21,10 +21,7 @@ export class ServiceService {
   getUserServices(uid: string) {
     return this.afStore
       .collection('services', ref => ref.where('userId', '==', uid))
-      .valueChanges({ idField: 'serviceId' })
-      .pipe(
-        tap(x => console.log('tap'))
-      );
+      .valueChanges({ idField: 'serviceId' });
   }
 
   addService(serviceObj: any) {

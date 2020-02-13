@@ -28,8 +28,8 @@
 
     <ng-template #carouselContent let-cat let-i="index">
         <article class="item">
-            <span>{{ cat.name | titlecase }}</span>
-            <mat-icon style="font-size: 30px">{{ cat.icon }}</mat-icon>
+            <span *ngIf="cat">{{ cat.name | titlecase }}</span>
+            <mat-icon *ngIf="cat" style="font-size: 30px">{{ cat.icon }}</mat-icon>
         </article>
     </ng-template>
 

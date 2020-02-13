@@ -8,6 +8,7 @@ import { CategoriesService } from '../services/categories.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 import { ChatService } from '../services/chat.service';
+import { ServiceService } from '../services/service.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   editing: boolean = false;
   categories: any[];
   galleries$: Observable<any>;
+  services$: Observable<any[]>;
   newUsername: string;
+  services: any[] = [1, 2, 3, 4, 5];
 
   userSub: Subscription;
 
@@ -33,7 +36,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     public userService: UserService,
     private storage: AngularFireStorage,
     private catService: CategoriesService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    public serviceService: ServiceService
   ) { }
 
   ngOnInit() {
@@ -49,6 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.user = user;
             console.log(user);
             this.uid = user.uid || null;
+            this.services$ = this.serviceService.getUserServices(this.uid);
             this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );

@@ -163,11 +163,40 @@
         <br>
 
         <!-- Services -->
-        <app-services
+        <!-- <app-services
             *ngIf="user.membership === 'artist' && user.approvedSeller"
             [user]="user"
             [editable]="editable">
-        </app-services>
+        </app-services> -->
+        <div style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
+            <h2>Services</h2>
+            <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div class="services-container">
+            <mat-card *ngFor="let service of services$ | async" class="service-card">
+                <button
+                    *ngIf="editable"
+                    mat-button
+                    [matMenuTriggerFor]="actions"
+                    style="float: right"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span style="margin-left: 5px">Edit</span>
+                    </button>
+                    <button mat-menu-item color="warn" (click)="serviceService.deleteService(service.serviceId)">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                    </button>
+                </mat-menu>
+                <p>{{ service.title }}</p>
+            </mat-card>
+        </div>
 
         <br>
 

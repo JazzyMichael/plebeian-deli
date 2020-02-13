@@ -31,10 +31,6 @@
     align-items: center;
 }
 
-.header-section-1 {
-
-}
-
 .header-section-2 {
     display: flex;
     flex-direction: column;
@@ -171,4 +167,17 @@
     .left-column, .right-column {
         margin: 0 1rem;
     }
+}
+
+.services-container {
+    overflow-x: scroll;
+    display: flex;
+}
+
+.service-card {
+    box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
+    height: 120px;
+    min-width: 120px;
+    max-width: 160px;
+    margin: 0.5em;
 }

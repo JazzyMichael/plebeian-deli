@@ -1,4 +1,4 @@
-<ngx-hm-carousel
+<!-- <ngx-hm-carousel
     #carousel
     [(ngModel)]="carouselIndex"
     [data]="images"
@@ -16,7 +16,7 @@
         </article>
     </ng-template>
 
-    <!-- <ng-template #carouselPrev>
+    <ng-template #carouselPrev>
         <div *ngIf="images?.length > 1 && carouselIndex > 0" class="arrows">
             <mat-icon style="font-size: 2em">keyboard_arrow_left</mat-icon>
         </div>
@@ -26,6 +26,8 @@
         <div *ngIf="images && images.length > 1 && carouselIndex < images.length - 1" class="arrows">
             <mat-icon style="font-size: 2em">keyboard_arrow_right</mat-icon>
         </div>
-    </ng-template> -->
+    </ng-template>
 
-</ngx-hm-carousel>
+</ngx-hm-carousel> -->
+
+<img [src]="images[0].url" alt="Post Image" draggable="false" class="post-img">
