@@ -25,6 +25,13 @@ export class ServiceService {
       .valueChanges({ idField: 'serviceId' });
   }
 
+  getService(docId: string) {
+    return this.afStore
+      .collection('services')
+      .doc(docId)
+      .get();
+  }
+
   addService(serviceObj: any) {
     return this.afStore
       .collection('services')

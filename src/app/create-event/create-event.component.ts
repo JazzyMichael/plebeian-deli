@@ -113,7 +113,7 @@ export class CreateEventComponent implements OnInit {
       };
 
       await this.eventService.addEvent(newEvent);
-      this.snackBar.open('Event has been added to the Calendar!', '', { duration: 2000 });
+      this.snackBar.open('Event has been added to the Calendar!', '', { duration: 3000 });
     }
 
     this.router.navigateByUrl('/calendar');

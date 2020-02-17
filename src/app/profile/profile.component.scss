@@ -189,7 +189,6 @@
     box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
     max-height: 200px;
     min-width: 120px;
-    max-width: 200px;
     margin: 0.5em;
     position: relative;
     cursor: pointer;
@@ -197,5 +196,6 @@
 
 .mat-card-image {
     margin-top: -16px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px 5px 0 0;
+    max-height: 170px;
 }

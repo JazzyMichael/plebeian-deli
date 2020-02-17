@@ -48,7 +48,6 @@ export class PostComponent implements OnInit, OnDestroy {
       this.postId = postId;
 
       document.querySelector('.mat-drawer-content').scrollTop = 0;
-
       document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
       this.user = await this.authService.getCurrentUser();

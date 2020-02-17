@@ -54,6 +54,7 @@ import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbn
 import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
 import { PostImagesComponent } from './post/post-images/post-images.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { InquireServiceComponent } from './inquire-service/inquire-service.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -79,6 +80,7 @@ const routes: Routes = [
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'purchase/:id', component: BuyPostComponent },
+  { path: 'service/:id', component: InquireServiceComponent },
 
   { path: 'faq', component: FaqComponent },
   { path: 'terms', component: TermsComponent },
@@ -128,7 +130,8 @@ const routes: Routes = [
     WidescreenHeaderComponent,
     MobileHeaderComponent,
     SidenavComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    InquireServiceComponent
   ],
   imports: [
     BrowserModule,

@@ -150,7 +150,7 @@
                 </button>
             </div>
             <div *ngIf="services?.length" class="services-container">
-                <mat-card *ngFor="let service of services" class="service-card">
+                <mat-card *ngFor="let service of services" class="service-card" [routerLink]="'/service/' + service.serviceId">
                     <button
                         *ngIf="editable"
                         mat-icon-button

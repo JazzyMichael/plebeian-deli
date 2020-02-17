@@ -1,4 +1,6 @@
-<mat-card class="event-form-card">
+<mat-spinner *ngIf="uploading" style="display: block; margin: 3em auto;"></mat-spinner>
+
+<mat-card *ngIf="!uploading" class="event-form-card">
     <form *ngIf="eventForm" [formGroup]="eventForm" (submit)="submit()">
         <mat-form-field>
             <input
