@@ -25,4 +25,8 @@ export class CategoriesService {
   getCategories() {
     return this.categories;
   }
+
+  getCategoryNames() {
+    return this.categories.map(c => c.name);
+  }
 }

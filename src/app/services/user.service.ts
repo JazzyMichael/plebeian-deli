@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, BehaviorSubject, pipe, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,13 @@ export class UserService {
   constructor(
     private afStore: AngularFirestore,
     private storage: AngularFireStorage
-    ) {
-    // const cachedUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : null;
+  ) {
 
     this.users$ = new BehaviorSubject([]);
     this.admins$ = new BehaviorSubject([]);
 
     this.afStore
-      .collection('users', ref => ref.orderBy('createdTimestamp', 'asc').limit(20))
+      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').limit(20))
       .get()
       .pipe(
         map(users => {
@@ -58,7 +57,7 @@ export class UserService {
     const lastVisible = currentUsers[currentUsers.length - 1].createdTimestamp;
 
     this.afStore
-      .collection('users', ref => ref.orderBy('createdTimestamp', 'asc').startAfter(lastVisible).limit(10))
+      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(10))
       .get()
       .pipe(
         map(users => {
@@ -127,14 +126,11 @@ export class UserService {
     const type = user.profileType;
 
     if (!type) {
-      // console.log('no profile type', user);
       return of(user.profileUrl);
     }
 
     const path = `profile-pictures/thumbnails/${uid}_${size}x${size}.${type}`;
-
     const ref = this.storage.ref(path);
-
     return ref.getDownloadURL();
   }
 
@@ -143,20 +139,44 @@ export class UserService {
     const type = user.backgroundType;
 
     if (!type) {
-      // console.log('no bg type', user);
       return of('');
     }
 
     const path = `profile-backgrounds/thumbnails/${uid}_${size}x${size}.${type}`;
-
     const ref = this.storage.ref(path);
-
     return ref.getDownloadURL();
   }
 
-  // getAdmins() {
-  //   return this.afStore
-  //     .collection('users', ref => ref.where('admin', '==', true).limit(3))
-  //     .valueChanges({ idField: 'userId' });
-  // }
+  async updateUserProfilePic(uid: string, file: any) {
+    const fileType = file.type.split('/')[1];
+    const path = `profile-pictures/${uid}.${fileType}`;
+    const metadata = { customMetadata: { uid, fileType } };
+    const ref = this.storage.ref(path);
+    await ref.put(file, metadata);
+    ref.getDownloadURL().subscribe(async url => {
+      await this.updateUserPromise(uid, { profileUrl: url, profileType: fileType });
+    });
+  }
+
+  async updateUserBackgroundPic(uid: string, file: any) {
+    const fileType = file.type.split('/')[1];
+    const path = `profile-backgrounds/${uid}.${fileType}`;
+    const metadata = { customMetadata: { uid, fileType } };
+    const ref = this.storage.ref(path);
+    await ref.put(file, metadata);
+    ref.getDownloadURL().subscribe(async url => {
+      await this.updateUserPromise(uid, { backgroundUrl: url, backgroundType: fileType });
+    });
+  }
+
+  async updateUserCV(uid: string, file: any) {
+    const fileType = file.type.split('/')[1];
+    const path = `profile-cvs/${uid}.${fileType}`;
+    const metadata = { customMetadata: { uid, fileType } };
+    const ref = this.storage.ref(path);
+    await ref.put(file, metadata);
+    ref.getDownloadURL().subscribe(async url => {
+      await this.updateUserPromise(uid, { cv: url, cvType: fileType });
+    });
+  }
 }

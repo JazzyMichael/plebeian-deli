@@ -24,23 +24,17 @@ mat-icon {
             user-select: none;
 }
 
-.mat-dialog-container {
-    padding: 0px !important;
-    overflow: hidden !important;
-}
-
-// .main-container {
-//     perspective: 1px;
-//     transform-style: preserve-3d;
-//     height: 100vh;
-//     overflow-x: hidden;
-//     // overflow-y: scroll;
-// }
-
 mwl-calendar-month-cell,
 mwl-calendar-day-view-hour-segment,
 mwl-calendar-week-view-hour-segment {
     touch-action: auto !important;
+}
+
+.pleb-card {
+    margin: 2em auto;
+    width: 85%;
+    max-width: 666px;
+    box-shadow: inset 10px 10px 20px rgba(255, 253, 253, 0.25) !important;
 }
 
 @media (min-width: 777px) {

@@ -5,8 +5,6 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { CategoriesService } from '../services/categories.service';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 import { ChatService } from '../services/chat.service';
 import { ServiceService } from '../services/service.service';
 import { EventService } from '../services/event.service';
@@ -36,7 +34,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private auth: AuthService,
     public userService: UserService,
-    private storage: AngularFireStorage,
     private catService: CategoriesService,
     private chatService: ChatService,
     public serviceService: ServiceService,
@@ -52,10 +49,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         return this.auth.getUser(username).pipe(
           tap((user: any) => {
             if (!user) return this.router.navigateByUrl('/about');
-            this.editable = user.username === this.auth.username;
-            this.user = user;
             console.log(user);
+            this.user = user;
             this.uid = user.uid || null;
+            this.editable = user && user.uid === this.uid;
             this.services$ = this.serviceService.getUserServices(this.uid);
             this.events$ = this.eventService.getUserEvents(this.uid);
             this.galleries$ = this.userService.getUserGalleries(this.uid);
@@ -65,9 +62,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.userSub = this.auth.user$.subscribe(user => {
-      if (user && user.uid === this.uid) {
-        this.editable = true;
-      }
+      this.editable = user && user.uid === this.uid;
     });
 
     this.categories = this.catService.getCategories();
@@ -118,72 +113,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
   async uploadProfilePic(event: any) {
     const file = event.target.files[0];
 
+    if (!file || !file.type || !file.type.split('/')[1]) {
+      return alert('Thats a really weird file');
+    }
     if (file.type.split('/')[0] !== 'image') {
-      console.log('Only Images are allowed for profile picture');
-      return;
+      return alert('Only Images are allowed for profile pics');
+    }
+    if (!this.uid) {
+      return alert('You aint signed in homie');
     }
 
-    if (!this.uid || !file.type.split('/')[1]) {
-      console.log('NO UID or file type');
-      return;
-    }
-
-    const fileType = file.type.split('/')[1];
-
-    const path = `profile-pictures/${this.uid}.${fileType}`;
-
-    const ref = this.storage.ref(path);
-
-    await ref.put(file, { customMetadata: { username: this.user.username } });
-
-    ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { profileUrl: url, profileType: fileType });
-    });
+    await this.userService.updateUserProfilePic(this.uid, file);
   }
 
   async uploadBackgroundPic(event: any) {
     const file = event.target.files[0];
 
+    if (!file || !file.type || !file.type.split('/')[1]) {
+      return alert('Thats a really weird file');
+    }
     if (file.type.split('/')[0] !== 'image') {
-      console.log('images only bro');
-      return;
+      return alert('Only Images are allowed for background pics');
+    }
+    if (!this.uid) {
+      return alert('You aint signed in homie');
     }
 
-    if (!this.uid || !file.type.split('/')[1]) {
-      console.log('NO UID or file type');
-      return;
-    }
-
-    const fileType = file.type.split('/')[1];
-
-    const path = `profile-backgrounds/${this.uid}.${fileType}`;
-
-    const ref = this.storage.ref(path);
-
-    await ref.put(file);
-
-    ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { backgroundUrl: url, backgroundType: fileType });
-    });
+    await this.userService.updateUserBackgroundPic(this.uid, file);
   }
-
-  async uploadCv(event: any) {
-    const file = event.target.files[0];
-
-    if (file.type.split('/')[0] !== 'application') {
-      console.log('Only PDF\'s are allowed for CV');
-      return;
-    }
-
-    const path = `cvs/${this.uid}`;
-
-    const ref = this.storage.ref(path);
-
-    await this.storage.upload(path, file);
-
-    ref.getDownloadURL().subscribe(url => {
-      this.userService.updateUser(this.uid, { cv: url });
-    });
-  }
-
 }

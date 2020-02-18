@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../services/user.service';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { CategoriesService } from '../services/categories.service';
 
 @Component({
@@ -11,24 +10,29 @@ import { CategoriesService } from '../services/categories.service';
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, AfterViewChecked {
   user$: Observable<any>;
   debounce: any;
   editingUsername: boolean;
   newUsername: string;
   categories: any[];
+  uploading: string;
 
   constructor(
     private auth: AuthService,
     private snackbar: MatSnackBar,
     private userService: UserService,
-    private storage: AngularFireStorage,
-    private catService: CategoriesService
+    private catService: CategoriesService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.user$ = this.auth.user$.asObservable();
     this.categories = this.catService.getCategories();
+  }
+
+  ngAfterViewChecked(){
+    this.cd.detectChanges();
   }
 
   updateField(uid: string, field: string, value: string) {
@@ -40,7 +44,7 @@ export class EditProfileComponent implements OnInit {
       const obj = {};
       obj[field] = value;
       await this.userService.updateUserPromise(uid, obj);
-      this.snackbar.open('Profile Updated!', 'Ok', { duration: 3000 });
+      this.snackbar.open('Profile Updated!', '', { duration: 3000 });
       if (field === 'username') {
         this.newUsername = '';
       }
@@ -51,75 +55,60 @@ export class EditProfileComponent implements OnInit {
     this.newUsername = username;
   }
 
-  async uploadProfilePic(uid, event: any) {
-    return;
+  async uploadProfilePic(uid: string, event: any) {
     const file = event.target.files[0];
 
+    if (!file || !file.type || !file.type.split('/')[1]) {
+      return alert('Thats a really weird file');
+    }
     if (file.type.split('/')[0] !== 'image') {
-      console.log('Only Images are allowed for profile picture');
-      return;
+      return alert('Only Images are allowed for profile pics');
     }
 
-    if (!uid || !file.type.split('/')[1]) {
-      console.log('NO UID or file type');
-      return;
-    }
+    this.uploading = 'profile-picture';
 
-    console.log('file type: ', file.type);
+    await this.userService.updateUserProfilePic(uid, file);
 
-    const fileType = file.type.split('/')[1];
+    this.snackbar.open('Profile Pic Updated!', '', { duration: 3000 });
 
-    const path = `profile-pictures/${uid}.${fileType}`;
-
-    const ref = this.storage.ref(path);
-
-    await ref.put(file, { customMetadata: { uid } });
-
-    const url = await ref.getDownloadURL().toPromise();
-
-    await this.userService.updateUserPromise(uid, { profileUrl: url, profileType: fileType });
+    this.uploading = null;
   }
 
   async uploadBackgroundPic(uid: string, event: any) {
-    return;
     const file = event.target.files[0];
 
+    if (!file || !file.type || !file.type.split('/')[1]) {
+      return alert('Thats a really weird file');
+    }
     if (file.type.split('/')[0] !== 'image') {
-      console.log('images only bro');
-      return;
+      return alert('Only Images are allowed for background pics');
     }
 
-    if (!uid || !file.type.split('/')[1]) {
-      console.log('NO UID or file type');
-      return;
-    }
+    this.uploading = 'background';
 
-    const fileType = file.type.split('/')[1];
+    await this.userService.updateUserBackgroundPic(uid, file);
 
-    const path = `profile-backgrounds/${uid}.${fileType}`;
+    this.snackbar.open('Background Pic Updated!', '', { duration: 3000 });
 
-    const ref = this.storage.ref(path);
-
-    await ref.put(file);
-
-    ref.getDownloadURL().subscribe(async url => {
-      await this.userService.updateUserPromise(uid, { backgroundUrl: url, backgroundType: fileType });
-    });
-
-    // console.log('ref', ref);
-
-    // try {
-    //   await ref.put(file);
-    // } catch (e) {
-    //   console.log('catch', e);
-    //   this.storage.upload(path, file);
-    // }
-
-    // await ref.put(file);
-
-    // const url = await ref.getDownloadURL().toPromise();
-
-    // await this.userService.updateUserPromise(uid, { backgroundUrl: url, backgroundType: fileType });
+    this.uploading = null;
   }
 
+  async uploadCV(uid: string, event: any) {
+    const file = event.target.files[0];
+
+    if (!file || !file.type || !file.type.split('/')[1]) {
+      return alert('Thats a really weird file');
+    }
+    if (file.type.split('/')[0] !== 'application') {
+      return alert('Only PDFs are allowed for CVs');
+    }
+
+    this.uploading = 'cv';
+
+    await this.userService.updateUserCV(uid, file);
+
+    this.snackbar.open('CV Updated!', '', { duration: 3000 });
+
+    this.uploading = null;
+  }
 }

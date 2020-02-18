@@ -31,12 +31,12 @@
         class="profile-pic"
         [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}"
         [ngClass]="thumbnail ? 'bg' : ''">
-        <label for="profile-pic-upload" class="upload-btn">
+        <label for="background-pic-upload" class="upload-btn">
             <mat-icon>publish</mat-icon>
             <span style="margin-left: 10px">Upload</span>
         </label>
         <input
-            id="profile-pic-upload"
+            id="background-pic-upload"
             type="file"
             accept="image/*"
             style="display: none"
@@ -45,12 +45,12 @@
 
     <ng-template #uploadBackgroundPicture>
         <div style="max-width: 80%; margin: auto;">
-            <label for="profile-pic-upload" class="upload-btn">
+            <label for="background-pic-upload" class="upload-btn">
                 <mat-icon>publish</mat-icon>
                 <span style="margin-left: 10px">Upload</span>
             </label>
             <input
-                id="profile-pic-upload"
+                id="background-pic-upload"
                 type="file"
                 accept="image/*"
                 style="display: none"
