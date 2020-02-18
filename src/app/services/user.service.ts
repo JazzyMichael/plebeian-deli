@@ -147,6 +147,10 @@ export class UserService {
     return ref.getDownloadURL();
   }
 
+  async deleteCV(uid: string) {
+    await this.afStore.doc(`users/${uid}`).update({ cv: '' });
+  }
+
   async updateUserProfilePic(uid: string, file: any) {
     const fileType = file.type.split('/')[1];
     const path = `profile-pictures/${uid}.${fileType}`;

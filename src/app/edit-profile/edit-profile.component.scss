@@ -18,6 +18,18 @@
     font-size: 1.2em;
 }
 
+.cv-upload-btn {
+    height: 200px;
+    width: 200px;
+    border: 2px solid white;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em auto;
+    cursor: pointer;
+}
+
 .profile-pic {
     height: 222px;
     width: 222px;
@@ -53,4 +65,9 @@ mat-form-field {
     float: right;
     margin-right: 20px;
     cursor: pointer;
+}
+
+.container {
+    max-width: 777px;
+    margin: auto;
 }

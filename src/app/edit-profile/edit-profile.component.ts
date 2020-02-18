@@ -111,4 +111,8 @@ export class EditProfileComponent implements OnInit, AfterViewChecked {
 
     this.uploading = null;
   }
+
+  async deleteCV(uid: string) {
+    await this.userService.deleteCV(uid);
+  }
 }

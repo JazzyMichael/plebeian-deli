@@ -1,9 +1,7 @@
 
 <div *ngIf="user$ | async as user" class="container">
 
-    <br>
-
-    <p style="margin-left: 1em">Profile Picture</p>
+    <p style="margin-left: 1em; margin-top: 1em;">Profile Picture</p>
 
     <div
         *ngIf="user.thumbnail | async as thumbnail"
@@ -84,7 +82,6 @@
 
     <br>
 
-    
     <mat-form-field color="accent" style="margin-top: 1em">
         <mat-label>Medium</mat-label>
         <mat-select [value]="user.medium" (selectionChange)="updateField(user.uid, 'medium', $event.value)">
@@ -93,7 +90,6 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-
 
     <mat-form-field hintLabel="Max 240 Characters" color="accent">
         <mat-icon *ngIf="descriptionInput?.value !== user.bio" color="accent" class="description-btn" (click)="descriptionInput.value = user.bio || ''; $event.stopPropagation();">clear</mat-icon>
@@ -170,32 +166,34 @@
             autocomplete="off">
     </mat-form-field>
 
-
+    <br>
 
     <!-- CV -->
-    <!-- <ng-container *ngIf="user.membership === 'artist' && editable && editing; else viewCV">
-        <button *ngIf="user.cv" mat-button style="padding: 0">
+    <div *ngIf="user.cv" style="display: flex; justify-content: space-between; align-items: center; width: 666px; max-width: 85%; margin: 1em auto;">
+        <button mat-button style="padding: 0">
             <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
         </button>
-        <button mat-button style="padding: 0">
-            <label for="cv-upload" class="cv-upload-btn">
-                <mat-icon>publish</mat-icon>
-                <span style="margin-left: 10px">Upload New CV</span>
-            </label>
+    
+        <button mat-button (click)="deleteCV(user.uid)">
+            Delete CV
         </button>
+    </div>
+
+    <br>
+
+    <div style="margin-bottom: 2em">
+        <label for="cv-upload" class="cv-upload-btn">
+            <p style="position: absolute; top: 20px; font-size: 0.75em;">Add CV</p>
+            <mat-icon style="color: white !important; transform: scale(3);">add</mat-icon>
+        </label>
         <input
             id="cv-upload"
             type="file"
             accept="application/pdf"
             style="display: none"
-            (change)="uploadCv($event)">
-    </ng-container> -->
+            (change)="uploadCV(user.uid, $event)">
+    </div>
 
     <br>
-    <br>
-
-    <button mat-button style="display: block; margin: auto;">Stripe</button>
-
-    <br><br><br><br><br>
 
 </div>
