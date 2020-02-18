@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-
 import { MatNativeDateModule } from '@angular/material/core';
-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -73,8 +71,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class MaterialModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-    this.matIconRegistry.addSvgIcon('custommenu',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/menu-icon.svg'));
     this.matIconRegistry.addSvgIcon('facebook',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/images/social/facebook.svg'));
     this.matIconRegistry.addSvgIcon('instagram',

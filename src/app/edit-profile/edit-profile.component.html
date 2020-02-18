@@ -181,7 +181,7 @@
 
     <br>
 
-    <div style="margin-bottom: 2em">
+    <div *ngIf="!user.cv" style="margin-bottom: 2em">
         <label for="cv-upload" class="cv-upload-btn">
             <p style="position: absolute; top: 20px; font-size: 0.75em;">Add CV</p>
             <mat-icon style="color: white !important; transform: scale(3);">add</mat-icon>

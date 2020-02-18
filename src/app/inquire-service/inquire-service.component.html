@@ -1,10 +1,25 @@
 <mat-card *ngIf="service" class="pleb-card">
     <mat-card-header>
-        <mat-card-title>Inquire {{ service.title }}</mat-card-title>
+        <mat-card-title>{{ service.title }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
         <p>{{ service.description }}</p>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi sed similique maxime nobis aperiam accusantium. Consequuntur repudiandae facere doloribus iste eum quod debitis tempora quasi quo perferendis. Deserunt, molestias fugiat.</p>
+
+        <mat-form-field>
+            <textarea matInput rows="10" placeholder="Explain Your Project"></textarea>
+        </mat-form-field>
+
+        <p style="text-align: center;">Add Images for Artist to Reference</p>
+
+        <mat-form-field>
+            <input matInput placeholder="Desired Completion Date" type="text">
+        </mat-form-field>
     </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-raised-button color="primary" style="width: 100%; color: white;">SEND WORK REQUEST</button>
+    </mat-card-actions>
+
+    <p>*Artist will accept or deny work request at their own desgreshin</p>
 </mat-card>

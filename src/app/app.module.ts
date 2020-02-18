@@ -19,42 +19,43 @@ import { AngularFireAuthGuard, AngularFireAuthGuardModule, redirectLoggedInTo, r
 
 // Components
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
-import { DeliComponent } from './deli/deli.component';
 import { NavComponent } from './nav/nav.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 import { SidenavComponent } from './nav/sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
-import { ProfileComponent } from './profile/profile.component';
-import { PostsComponent } from './profile/posts/posts.component';
-import { LoginComponent } from './login/login.component';
+
+import { DeliComponent } from './deli/deli.component';
+import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
+import { CategorySelectComponent } from './deli/category-select/category-select.component';
+import { PostLayoutComponent } from './post-layout/post-layout.component';
+import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
 import { PostComponent } from './post/post.component';
-import { ArtistsComponent } from './profile/artists/artists.component';
+import { PostImagesComponent } from './post/post-images/post-images.component';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentListComponent } from './comments/comment-list/comment-list.component';
+import { CommentFormComponent } from './comments/comment-form/comment-form.component';
+import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
+import { SellerComponent } from './seller/seller.component';
 import { ChatComponent } from './chat/chat.component';
 import { EventComponent } from './event/event.component';
-import { UsernameFormComponent } from './username-form/username-form.component';
-import { SellerComponent } from './seller/seller.component';
+import { TermsComponent } from './terms/terms.component';
+import { ProfileComponent } from './profile/profile.component';
+import { PostsComponent } from './profile/posts/posts.component';
+import { ArtistsComponent } from './profile/artists/artists.component';
 import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
-import { TermsComponent } from './terms/terms.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { CommentsComponent } from './comments/comments.component';
-import { CommentListComponent } from './comments/comment-list/comment-list.component';
-import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { FaqComponent } from './faq/faq.component';
-import { AddressFormComponent } from './address-form/address-form.component';
-import { CategorySelectComponent } from './deli/category-select/category-select.component';
-import { PostLayoutComponent } from './post-layout/post-layout.component';
-import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
-import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
-import { PostImagesComponent } from './post/post-images/post-images.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { InquireServiceComponent } from './inquire-service/inquire-service.component';
+import { UsernameFormComponent } from './username-form/username-form.component';
+import { AddressFormComponent } from './address-form/address-form.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 

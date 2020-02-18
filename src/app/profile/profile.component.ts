@@ -113,7 +113,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   async uploadProfilePic(event: any) {
     const file = event.target.files[0];
 
-    if (!file || !file.type || !file.type.split('/')[1]) {
+    if (!file) {
+      return;
+    }
+    if (!file.type || !file.type.split('/')[1]) {
       return alert('Thats a really weird file');
     }
     if (file.type.split('/')[0] !== 'image') {
@@ -129,7 +132,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   async uploadBackgroundPic(event: any) {
     const file = event.target.files[0];
 
-    if (!file || !file.type || !file.type.split('/')[1]) {
+    if (!file) {
+      return;
+    }
+    if (!file.type || !file.type.split('/')[1]) {
       return alert('Thats a really weird file');
     }
     if (file.type.split('/')[0] !== 'image') {
