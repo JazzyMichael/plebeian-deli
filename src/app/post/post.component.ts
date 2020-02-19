@@ -59,8 +59,6 @@ export class PostComponent implements OnInit, OnDestroy {
               return this.router.navigateByUrl('/deli');
             }
 
-            console.log('tags:', post.tags);
-
             this.postUserId = post.userId;
             this.likedUids = post.likedUids && post.likedUids.length ?
               post.likedUids :
@@ -83,18 +81,18 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.debounceSub = this.likeDebouncer
       .pipe(debounceTime(1111))
-      .subscribe(x => {
+      .subscribe(async x => {
         if (x) {
-          if (this.likedUids.some(x => x === this.user.uid)) {
-            console.log('no changes');
+          // liked
+
+          if (this.likedUids.some(uid => uid === this.user.uid)) {
+            // already liked
             return;
           }
-          // liked
-          console.log('liked');
-          // update post userLikes array with uid
+
           this.likedUids.push(this.user.uid);
-          this.postService.updatePost(this.postId, { likedUids: this.likedUids })
-            .then(res => console.log(res));
+          await this.postService.updatePost(this.postId, { likedUids: this.likedUids });
+
           // update post user notifications
           const obj = {
             userId: this.user.uid,
@@ -105,20 +103,18 @@ export class PostComponent implements OnInit, OnDestroy {
             type: 'like',
             postThumbnailUrl: ''
           };
+
           this.notificationService.addNotification(this.postUserId, obj);
         } else {
           // unliked
 
-          const likedUids = this.likedUids.filter(x => x !== this.user.uid);
+          const likedUids = this.likedUids.filter(uid => uid !== this.user.uid);
           if (likedUids.length === this.likedUids.length) {
-            console.log('no changes');
+            // already unliked
             return;
           }
 
-          console.log('unliked');
-
-          this.postService.updatePost(this.postId, { likedUids })
-            .then(res => console.log(res));
+          await this.postService.updatePost(this.postId, { likedUids });
         }
       });
   }
@@ -131,9 +127,8 @@ export class PostComponent implements OnInit, OnDestroy {
 
   async likePost() {
     // if not signed in show popup
-    // console.log('liked click user', this.user);
     if (!this.user) {
-      return window.alert('Log in to Like Posts!');
+      return alert('Log in to Like Posts!');
     }
 
     if (this.alreadyLiked) {
@@ -157,7 +152,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   twitterShare() {
     const url = 'https://twitter.com/intent/tweet?text=Check%20out%20this%20Plebeian%20post!';
-
     window.open(url, '_blank');
   }
 

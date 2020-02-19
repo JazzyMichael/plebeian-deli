@@ -1,28 +1,4 @@
-<!-- <div class="heading-row" id="edit-view">
-    <div *ngIf="editable">
-        <button *ngIf="editing" mat-raised-button (click)="cancelNewPost()">
-            <mat-icon>close</mat-icon>
-            Cancel
-        </button>
-        <button *ngIf="!editing" mat-raised-button (click)="startNewPost()">
-            <mat-icon>add</mat-icon>
-            New Post
-        </button>
-    </div>
-</div>
-
-<br> -->
-
-<div *ngIf="editing && !user.approvedSeller">
-    <button
-        mat-raised-button
-        routerLink="/seller"
-        style="width: 100%">
-        Connect your account to Stripe to add a price
-    </button>
-</div>
-
-<br><br><br>
+<br><br>
 
 <div class="post-list">
 
@@ -54,7 +30,6 @@
         </ng-container>
 
         <!-- Thumbnail Image -->
-        <!-- <div *ngIf="post.thumbnailImgUrl" [ngStyle]="{'background-image': 'url(' + post.thumbnailImgUrl + ')'}" class="post-img"></div> -->
         <ng-container *ngIf="post.thumbnail | async as thumbnailURL">
             <div [ngStyle]="{'background-image': 'url(' + thumbnailURL + ')'}" class="post-img"></div>
         </ng-container>
@@ -63,4 +38,3 @@
         <p style="font-weight: 300; letter-spacing: 1.1px;">{{ post.title }}</p>
     </div>
 </div>
-

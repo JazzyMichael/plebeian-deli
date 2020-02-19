@@ -151,9 +151,7 @@
         </button>
     </div>
     <div *ngIf="events?.length" class="services-container">
-        <mat-card *ngFor="let event of events"
-            class="event-card"
-            [routerLink]="'/event/' + event.eventId">
+        <mat-card *ngFor="let event of events" class="event-card" [routerLink]="'/event/' + event.eventId">
             <div [ngStyle]="{'background': event?.imageUrl ? 'url(' + event.imageUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}" class="event-img">
                 <button
                     *ngIf="editable"
@@ -185,36 +183,8 @@
 <br>
 
 <!-- Posts -->
-<app-posts
-    *ngIf="user"
-    [user]="user"
-    [editable]="editable"
-    [categories]="categories">
-</app-posts>
+<app-posts *ngIf="user" [user]="user" [editable]="editable"></app-posts>
 
 <div style="height: 100px"></div>
 
 <app-footer></app-footer>
-
-
-
-<!-- Galleries -->
-<!-- <ng-container *ngIf="user.membership === 'artist'">
-    <ng-container *ngIf="galleries$ | async as galleries">
-        <p *ngIf="galleries.length">Galleries</p>
-        <button
-            mat-button
-            *ngFor="let gallery of galleries"
-            [routerLink]="'/' + gallery.username"
-            style="display: block">
-            {{ gallery.username }}
-        </button>
-    </ng-container>
-</ng-container> -->
-
-<!-- Artists -->
-<!-- <app-artists
-    *ngIf="user.membership === 'gallery'"
-    [user]="user"
-    [editable]="editable">
-</app-artists> -->

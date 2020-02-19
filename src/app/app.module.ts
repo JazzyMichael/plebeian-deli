@@ -44,7 +44,6 @@ import { EventComponent } from './event/event.component';
 import { TermsComponent } from './terms/terms.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
-import { ArtistsComponent } from './profile/artists/artists.component';
 import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
 import { CreatePostComponent } from './create-post/create-post.component';
@@ -105,7 +104,6 @@ const routes: Routes = [
     LoginComponent,
     PostsComponent,
     PostComponent,
-    ArtistsComponent,
     ChatComponent,
     EventComponent,
     UsernameFormComponent,

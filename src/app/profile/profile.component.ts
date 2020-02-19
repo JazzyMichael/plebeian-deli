@@ -4,7 +4,6 @@ import { AuthService } from '../services/auth.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { CategoriesService } from '../services/categories.service';
 import { ChatService } from '../services/chat.service';
 import { ServiceService } from '../services/service.service';
 import { EventService } from '../services/event.service';
@@ -20,13 +19,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   uid: string;
   editable: boolean;
   editing: boolean = false;
-  categories: any[];
-  galleries$: Observable<any>;
   services$: Observable<any[]>;
   events$: Observable<any[]>;
-  newUsername: string;
-  services: any[] = [1, 2, 3, 4, 5];
-
   userSub: Subscription;
 
   constructor(
@@ -34,7 +28,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private auth: AuthService,
     public userService: UserService,
-    private catService: CategoriesService,
     private chatService: ChatService,
     public serviceService: ServiceService,
     public eventService: EventService
@@ -55,7 +48,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.editable = user && user.uid === this.uid;
             this.services$ = this.serviceService.getUserServices(this.uid);
             this.events$ = this.eventService.getUserEvents(this.uid);
-            this.galleries$ = this.userService.getUserGalleries(this.uid);
           })
         );
       })
@@ -64,8 +56,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSub = this.auth.user$.subscribe(user => {
       this.editable = user && user.uid === this.uid;
     });
-
-    this.categories = this.catService.getCategories();
   }
 
   ngOnDestroy() {

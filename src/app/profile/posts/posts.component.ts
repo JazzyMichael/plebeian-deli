@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PostsComponent implements OnInit, OnChanges {
   @Input() user: any;
   @Input() editable: boolean;
-  @Input() categories: any[];
 
   posts$: Observable<any>;
   editing: boolean;
@@ -20,7 +19,6 @@ export class PostsComponent implements OnInit, OnChanges {
 
   update$: Subject<any> = new Subject();
   updateSub: Subscription;
-  quillEditorRef: any;
   firstImageUrl: string;
 
   constructor(
@@ -49,7 +47,7 @@ export class PostsComponent implements OnInit, OnChanges {
       .catch(error => {
         console.log('error deleting post');
         console.log({ post, error });
-        this.snackBar.open('There was an error deleting your post, try again later', 'Ok', { duration: 3000 });
+        this.snackBar.open('There was an error deleting your post, try again later', '', { duration: 3000 });
       });
   }
 

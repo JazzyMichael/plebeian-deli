@@ -43,6 +43,7 @@ testem.log
 /e2e
 /src/environments/*
 /.firebase
+.firebase
 
 # System Files
 .DS_Store
