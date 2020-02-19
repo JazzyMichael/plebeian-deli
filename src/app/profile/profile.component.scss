@@ -99,6 +99,7 @@
 .left-side, .right-side {
     padding: 1em;
     text-align: left;
+    min-width: 25%;
 }
 
 .profile-links {
@@ -130,17 +131,19 @@
 
 .event-card {
     box-shadow: inset 4px 5px 20px rgba(255, 253, 253, 0.25);
-    max-height: 200px;
-    min-width: 120px;
-    margin: 0.5em;
+    height: 250px;
+    min-width: 175px;
+    max-width: 200px;
+    margin: 0.5em 1em;
+    padding: 0;
     position: relative;
     cursor: pointer;
 }
 
-.mat-card-image {
-    margin-top: -16px;
-    border-radius: 5px 5px 0 0;
-    max-height: 170px;
+.event-img {
+    height: 200px;
+    background-size: cover !important;
+    background-position: center !important;
 }
 
 @media (min-width: 777px) {

@@ -151,27 +151,31 @@
         </button>
     </div>
     <div *ngIf="events?.length" class="services-container">
-        <mat-card *ngFor="let event of events" class="event-card" [routerLink]="'/event/' + event.eventId">
-            <button
-                *ngIf="editable"
-                mat-icon-button
-                [matMenuTriggerFor]="actions"
-                style="position: absolute; top: 0; right: 0;"
-                (click)="$event.stopPropagation()">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #actions="matMenu">
-                <button mat-menu-item (click)="editEvent(event)">
-                    <mat-icon>edit</mat-icon>
-                    <span style="margin-left: 5px">Edit</span>
+        <mat-card *ngFor="let event of events"
+            class="event-card"
+            [routerLink]="'/event/' + event.eventId">
+            <div [ngStyle]="{'background': event?.imageUrl ? 'url(' + event.imageUrl + ')' : 'linear-gradient(#80caa2, #add87d)'}" class="event-img">
+                <button
+                    *ngIf="editable"
+                    mat-icon-button
+                    [matMenuTriggerFor]="actions"
+                    style="position: absolute; top: 0; right: 0;"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
-                    <mat-icon color="warn">delete</mat-icon>
-                    <span style="margin-left: 5px; color: #f44336;">Delete</span>
-                </button>
-            </mat-menu>
-            <img mat-card-image [src]="event.imageUrl" alt="Event Image">
-            <mat-card-content>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item (click)="editEvent(event)">
+                        <mat-icon>edit</mat-icon>
+                        <span style="margin-left: 5px">Edit</span>
+                    </button>
+                    <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+            <mat-card-content style="padding: 1em">
                 <p>{{ event.title }}</p>
             </mat-card-content>
         </mat-card>
