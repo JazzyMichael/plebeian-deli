@@ -1,126 +1,28 @@
-<button
-    *ngIf="editable"
-    mat-raised-button
-    class="widescreen-edit-button"
-    routerLink="/edit-profile">
-    <mat-icon>edit</mat-icon>
-    <span style="margin-left: 10px">Edit Profile</span>
-</button>
 
-<br>
+<div *ngIf="user$ | async as user" class="profile-container">
 
-<ng-container *ngIf="user$ | async as user">
-<div class="cont">
-
-    <div class="left-column" [ngClass]="editing ? 'left-column-editing' : ''">
-        
-        <div style="margin: 10px">
-        
-            <!-- Profile Pic-->
-            <div
-                *ngIf="user.mediumThumbnail | async as thumbnail"
-                class="profile-pic"
-                [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}"
-                [ngClass]="thumbnail ? 'bg' : ''">
-                <ng-container *ngIf="editable">
-                    <label for="profile-pic-upload" class="upload-btn">
-                        <mat-icon>publish</mat-icon>
-                        <span style="margin-left: 10px">Upload</span>
-                    </label>
-                    <input
-                        id="profile-pic-upload"
-                        type="file"
-                        accept="image/*"
-                        style="display: none"
-                        (change)="uploadProfilePic($event)">
-                </ng-container>
-            </div>
-
-            <!-- Real Name -->
-            <p>{{ user.displayName || user.username }}</p>
-
-            <!-- Location -->
-            <p>{{ user.location }}</p>
-
-        </div>
-
-        <div class="header-section-2">
-
-            <h2>{{ user.medium || 'artist' | titlecase }}</h2>
-
-            <div style="width: 95%; margin: 1em auto; display: block;">
-                <h4>BIO</h4>
-                <p>{{ user.bio || '' }}</p>
-                <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur eveniet doloremque est repellat sunt dolore, similique obcaecati ratione voluptate iste architecto laborum asperiores eum in aliquam saepe fugiat commodi! Magni?</p> -->
-            </div>
-
-            <!-- Social Links -->
-            <!-- <div>
-                <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
-                    <mat-icon svgIcon="instagram"></mat-icon>
-                    <span class="social-text">{{ user.instagram }}</span>
-                </button>
-
-                <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
-                    <mat-icon svgIcon="facebook"></mat-icon>
-                    <span class="social-text">Facebook</span>
-                </button>
-
-                <button *ngIf="user.otherLink" mat-button (click)="openOtherLink(user.otherLink)">
-                    <mat-icon>link</mat-icon>
-                    <span class="social-text">Website</span>
-                </button>
-            </div> -->
-
-            <!-- CV -->
-            <button *ngIf="user.cv" mat-button style="padding: 0">
-                <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em;">View CV</a>
-            </button>
-
-            <!-- Galleries -->
-            <ng-container *ngIf="user.membership === 'artist'">
-                <ng-container *ngIf="galleries$ | async as galleries">
-                    <p *ngIf="galleries.length">Galleries</p>
-                    <button
-                        mat-button
-                        *ngFor="let gallery of galleries"
-                        [routerLink]="'/' + gallery.username"
-                        style="display: block">
-                        {{ gallery.username }}
-                    </button>
-                </ng-container>
-            </ng-container>
-
-        </div>
-
+    <div
+        *ngIf="user.backgroundThumbnail | async as thumbnail; else nobg"
+        class="profile-background"
+        [ngStyle]="{'background': thumbnail ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}">
+        <ng-container *ngIf="editable">
+            <label for="background-pic-upload" class="background-upload-btn">
+                <mat-icon>add_a_photo</mat-icon>
+            </label>
+            <input
+                id="background-pic-upload"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="uploadBackgroundPic($event)">
+        </ng-container>
     </div>
 
-    <div class="right-column">
-
-        <!-- Username and Medium/Membership -->
-        <!-- <div *ngIf="!editing" class="name-and-medium">
-            <h1 style="font-weight: 200">{{ user.username }}</h1>
-            <h1 *ngIf="user.membership === 'viewer'" style="font-weight: 200">{{ 'Member' }}</h1>
-            <h1 *ngIf="user.membership === 'artist' && user.medium" style="font-weight: 200">{{ user.medium | titlecase }}</h1>
-            <h1 *ngIf="user.membership === 'artist' && !user.medium" style="font-weight: 200">Artist</h1>
-            <h1 *ngIf="user.membership === 'gallery'" style="font-weight: 200">{{ 'Gallery' }}</h1>
-        </div> -->
-
-
-        <!-- Bio/Description -->
-        <!-- <div style="width: 95%; margin: 1em auto; display: block;">{{ user.bio || user.description || '' }}</div> -->
-
-
-        <br><br>
-
-        <!-- ProfileBackgroundUrl -->
-        <div
-            *ngIf="editable && editing"
-            class="profile-background-pic">
+    <ng-template #nobg>
+        <div class="profile-background" [ngStyle]="{'background': 'linear-gradient(#80caa2, #add87d)' }">
             <ng-container *ngIf="editable">
-                <label for="background-pic-upload" class="upload-btn" style="border-radius: 10px; opacity: 0.95;">
-                    <mat-icon>publish</mat-icon>
-                    <span style="margin-left: 10px">{{ user.backgroundUrl ? 'Change Background Image' : 'Upload Background Image' }}</span>
+                <label for="background-pic-upload" class="background-upload-btn">
+                    <mat-icon>add_a_photo</mat-icon>
                 </label>
                 <input
                     id="background-pic-upload"
@@ -130,112 +32,185 @@
                     (change)="uploadBackgroundPic($event)">
             </ng-container>
         </div>
+    </ng-template>
 
-        <ng-container *ngIf="user.backgroundThumbnail | async as bg">
-            <img
-                *ngIf="bg.length"
-                [src]="bg"
-                alt="Background Image"
-                style="max-height: 500px; max-width: 95%; margin: 0 auto; display: block;">
-        </ng-container>
+    <div class="profile-user">
+        <div
+            *ngIf="user.mediumThumbnail | async as thumbnail"
+            class="profile-pic"
+            [ngStyle]="{'background': thumbnail?.length ? 'url(' + thumbnail + ')' : 'linear-gradient(#80caa2, #add87d)'}" >
+            <ng-container *ngIf="editable">
+                <label for="profile-pic-upload" class="upload-btn">
+                    <mat-icon>publish</mat-icon>
+                    <span style="margin-left: 10px">Upload</span>
+                </label>
+                <input
+                    id="profile-pic-upload"
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    (change)="uploadProfilePic($event)">
+            </ng-container>
+        </div>
 
-        <br>
+        <div class="profile-username-and-medium">
+            <h2>{{ user.username }}</h2>
+            <p>{{ user.medium || 'Artist' }}</p>
+        </div>
 
-        <!-- Services -->
-        <ng-container *ngIf="services$ | async as services">
-            <div *ngIf="services?.length" style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Services</h2>
-                <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
-                    <mat-icon>add</mat-icon>
+        <div class="profile-medium">
+            <p>{{ user.medium || 'Artist' }}</p>
+        </div>
+    </div>
+
+    <button *ngIf="editable" mat-raised-button class="widescreen-edit-button" routerLink="/edit-profile">
+        <mat-icon>edit</mat-icon>
+        <span style="margin-left: 10px">Edit Profile</span>
+    </button>
+
+    <div class="profile-info">
+        <div class="left-side">
+            <p>{{ user.displayName || user.username }}</p>
+            <p>{{ user.location }}</p>
+
+            <div class="profile-links">
+                <button *ngIf="user.instagram" mat-button (click)="openInstagram(user.instagram)">
+                    <mat-icon svgIcon="instagram"></mat-icon>
+                    <span class="social-text">Instagram</span>
                 </button>
-            </div>
-            <div *ngIf="services?.length" class="services-container">
-                <mat-card *ngFor="let service of services" class="service-card" [routerLink]="'/service/' + service.serviceId">
-                    <button
-                        *ngIf="editable"
-                        mat-icon-button
-                        [matMenuTriggerFor]="actions"
-                        style="position: absolute; top: 0; right: 0;"
-                        (click)="$event.stopPropagation()">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #actions="matMenu">
-                        <button mat-menu-item (click)="editService(service)">
-                            <mat-icon>edit</mat-icon>
-                            <span style="margin-left: 5px">Edit</span>
-                        </button>
-                        <button mat-menu-item color="warn" (click)="serviceService.deleteService(service.serviceId)">
-                            <mat-icon color="warn">delete</mat-icon>
-                            <span style="margin-left: 5px; color: #f44336;">Delete</span>
-                        </button>
-                    </mat-menu>
-                    <p>{{ service.title }}</p>
-                </mat-card>
-            </div>
-        </ng-container>
-
-        <br>
-
-        <!-- Events -->
-        <ng-container *ngIf="events$ | async as events">
-            <div *ngIf="events?.length" style="margin: 1em; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Events</h2>
-                <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-event">
-                    <mat-icon>add</mat-icon>
+            
+                <button *ngIf="user.facebook" mat-button (click)="openFacebook(user.facebook)">
+                    <mat-icon svgIcon="facebook"></mat-icon>
+                    <span class="social-text">Facebook</span>
                 </button>
+            
+                <button *ngIf="user.otherLink" mat-button (click)="openOtherLink(user.otherLink)">
+                    <mat-icon>link</mat-icon>
+                    <span class="social-text">Website</span>
+                </button>    
             </div>
-            <div *ngIf="events?.length" class="services-container">
-                <mat-card *ngFor="let event of events" class="event-card" [routerLink]="'/event/' + event.eventId">
-                    <button
-                        *ngIf="editable"
-                        mat-icon-button
-                        [matMenuTriggerFor]="actions"
-                        style="position: absolute; top: 0; right: 0;"
-                        (click)="$event.stopPropagation()">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #actions="matMenu">
-                        <button mat-menu-item (click)="editEvent(event)">
-                            <mat-icon>edit</mat-icon>
-                            <span style="margin-left: 5px">Edit</span>
-                        </button>
-                        <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
-                            <mat-icon color="warn">delete</mat-icon>
-                            <span style="margin-left: 5px; color: #f44336;">Delete</span>
-                        </button>
-                    </mat-menu>
-                    <img mat-card-image [src]="event.imageUrl" alt="Event Image">
-                    <mat-card-content>
-                        <p>{{ event.title }}</p>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </ng-container>
 
-        <br>
+            <button *ngIf="user.cv" mat-button style="padding: 0">
+                <a href="{{ user.cv }}" target="_blank" style="text-decoration: none; padding: 0 1em; color: white;">
+                    View CV
+                </a>
+            </button>
+        </div>
 
-        <!-- Artists -->
-        <app-artists
-            *ngIf="user.membership === 'gallery'"
-            [user]="user"
-            [editable]="editable">
-        </app-artists>
-
+        <div class="right-side">
+            <h3>BIO</h3>
+            <p>{{ user.bio || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga aut atque ipsa illum ipsum quas aliquid temporibus ullam laudantium tenetur voluptas illo ea sequi ratione, dolorem blanditiis nihil, reprehenderit minus.' }}</p>
+        </div>
     </div>
 
 </div>
 
+<br>
+
+<!-- Services -->
+<ng-container *ngIf="services$ | async as services">
+    <div *ngIf="services?.length" style="margin: 1em auto; display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 888px;">
+        <h2>Services</h2>
+        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="services?.length" class="services-container">
+        <mat-card *ngFor="let service of services" class="service-card" [routerLink]="'/service/' + service.serviceId">
+            <button
+                *ngIf="editable"
+                mat-icon-button
+                [matMenuTriggerFor]="actions"
+                style="position: absolute; top: 0; right: 0;"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actions="matMenu">
+                <button mat-menu-item (click)="editService(service)">
+                    <mat-icon>edit</mat-icon>
+                    <span style="margin-left: 5px">Edit</span>
+                </button>
+                <button mat-menu-item color="warn" (click)="serviceService.deleteService(service.serviceId)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                </button>
+            </mat-menu>
+            <p>{{ service.title }}</p>
+        </mat-card>
+    </div>
+</ng-container>
+
+<br>
+
+<!-- Events -->
+<ng-container *ngIf="events$ | async as events">
+    <div *ngIf="events?.length" style="margin: 1em auto; display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 888px;">
+        <h2>Events</h2>
+        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-event">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="events?.length" class="services-container">
+        <mat-card *ngFor="let event of events" class="event-card" [routerLink]="'/event/' + event.eventId">
+            <button
+                *ngIf="editable"
+                mat-icon-button
+                [matMenuTriggerFor]="actions"
+                style="position: absolute; top: 0; right: 0;"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actions="matMenu">
+                <button mat-menu-item (click)="editEvent(event)">
+                    <mat-icon>edit</mat-icon>
+                    <span style="margin-left: 5px">Edit</span>
+                </button>
+                <button mat-menu-item color="warn" (click)="eventService.deleteEvent(event.eventId)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span style="margin-left: 5px; color: #f44336;">Delete</span>
+                </button>
+            </mat-menu>
+            <img mat-card-image [src]="event.imageUrl" alt="Event Image">
+            <mat-card-content>
+                <p>{{ event.title }}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-container>
+
+<br>
+
 <!-- Posts -->
 <app-posts
-    *ngIf="user.membership === 'artist'"
+    *ngIf="user"
     [user]="user"
     [editable]="editable"
     [categories]="categories">
 </app-posts>
 
-</ng-container>
-
 <div style="height: 100px"></div>
 
-
 <app-footer></app-footer>
+
+
+
+<!-- Galleries -->
+<!-- <ng-container *ngIf="user.membership === 'artist'">
+    <ng-container *ngIf="galleries$ | async as galleries">
+        <p *ngIf="galleries.length">Galleries</p>
+        <button
+            mat-button
+            *ngFor="let gallery of galleries"
+            [routerLink]="'/' + gallery.username"
+            style="display: block">
+            {{ gallery.username }}
+        </button>
+    </ng-container>
+</ng-container> -->
+
+<!-- Artists -->
+<!-- <app-artists
+    *ngIf="user.membership === 'gallery'"
+    [user]="user"
+    [editable]="editable">
+</app-artists> -->

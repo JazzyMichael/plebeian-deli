@@ -69,9 +69,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
+    this.userSub.unsubscribe();
   }
 
   openInstagram(instagram: string) {
