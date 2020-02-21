@@ -1,39 +1,43 @@
-
-
 <mat-tab-group mat-stretch-tabs style="width: 90%; max-width: 666px; margin: auto;">
 
     <mat-tab label="Bought">
-        <div style="margin-top: 2em">
-
-            <div *ngFor="let order of orders | async" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.image" class="order-image" alt="Order Image">
+        <div *ngIf="buyerOrders$ | async as orders" style="margin-top: 2em; min-height: 200px;">
+            <div *ngFor="let order of orders" (click)="selectOrder(order)" class="order-list-item">
+                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
 
                 <div class="order-info">
-                    <span>{{ order.title }}</span>
-                    <span style="margin-top: 5px">{{ order.timestamp }}</span>
+                    <span>{{ order.item }}</span>
+                    <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
             </div>
 
+            <div *ngIf="!orders.length" style="text-align: center; margin: 2em auto;">
+                <p>You have no orders... yet!</p>
+            </div>
         </div>
     </mat-tab>
  
     <mat-tab label="Sold">
-        <div style="margin-top: 2em">
-
-            <div *ngFor="let order of orders | async" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.image" class="order-image" alt="Order Image">
+        <div *ngIf="isApprovedSeller; else notApprovedSeller" style="margin-top: 2em; min-height: 200px;">
+            <div *ngFor="let order of sellerOrders$ | async" (click)="selectOrder(order)" class="order-list-item">
+                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
 
                 <div class="order-info">
-                    <span>{{ order.title }}</span>
-                    <span style="margin-top: 5px">{{ order.timestamp }}</span>
+                    <span>{{ order.item }}</span>
+                    <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
             </div>
-
         </div>
+
+        <ng-template #notApprovedSeller>
+            <div style="margin: 4em auto; text-align: center; min-height: 200px;">
+                <p>Connect with Stripe to become an approved seller!</p>
+            </div>
+        </ng-template>
     </mat-tab>
 
 </mat-tab-group>

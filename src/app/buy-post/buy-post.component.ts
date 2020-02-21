@@ -1,82 +1,70 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/post.service';
-import { tap } from 'rxjs/operators';
-import { AngularFireFunctions } from '@angular/fire/functions';
-
-// declare var Stripe: any;
-
-// prod
-// const stripe = Stripe('pk_live_9RFFwjYhsrCgEbkm3DBpyOv8');
-// test
-// const stripe = Stripe('pk_test_vWeiNQrgSgiNW9fBO2IX0EUT');
-// const elements = stripe.elements();
-
-// const card = elements.create('card');
+import { OrdersService } from '../services/orders.service';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-buy-post',
   templateUrl: './buy-post.component.html',
   styleUrls: ['./buy-post.component.scss']
 })
-export class BuyPostComponent implements OnInit, OnDestroy {
+export class BuyPostComponent implements OnInit {
 
-  loading: boolean;
-  post$: any;
-  price: number;
+  post: any;
   sellerStripeId: string;
-
   purchaseComplete: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private fun: AngularFireFunctions
+    private ordersService: OrdersService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(async params => {
+    document.querySelector('.mat-drawer-content').scrollTop = 0;
+    document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
-      const postId = params.get('id');
-
-      if (!postId) {
+    this.route.paramMap.pipe(
+      switchMap(params => of(params.get('id'))),
+      switchMap(postId => this.postService.getPost(postId))
+    ).subscribe(async post => {
+      if (!post) {
         return this.router.navigateByUrl('/deli');
       }
-
-      document.querySelector('.mat-drawer-content').scrollTop = 0;
-
-      document.querySelector('.mat-sidenav-content').scrollTop = 0;
-
-      this.post$ = this.postService.getPost(postId)
-        .pipe(
-          tap(post => {
-            if (!post) {
-              return this.router.navigateByUrl('/deli');
-            }
-
-            if (!post.quantity) {
-              // return window.alert('This art just sold out!');
-            }
-
-            this.price = post && post.price ? post.price / 0.9721 : null;
-
-            // this.sellerStripeId = post && post.stripeConnectData && post.stripeConnectData.stripe_user_id ?
-            //   post.stripeConnectData.stripe_user_id :
-            //   null;
-
-            // if (!this.mounted) {
-            //   setTimeout(() => {
-            //     card.mount(this.cardForm.nativeElement);
-            //     this.mounted = true;
-            //   }, 333);
-            // }
-          })
-        );
+      this.post = post;
     });
   }
 
-  ngOnDestroy() {
+  async beginStripeCheckout() {
+    const buyer = await this.auth.getCurrentUser();
+
+    const order = {
+      type: 'post',
+      postId: this.post.postId,
+      item: this.post.title,
+      category: this.post.category,
+      thumbnailUrl: this.post.thumbnailImgUrl,
+      thumbnailPath: this.post.thumbnailPath,
+      sellerId: this.post.userId,
+      buyerId: buyer.uid,
+      createdTimestamp: new Date(),
+      price: 1,
+      quantity: 1,
+      subtotal: 1,
+      fee: 1,
+      total: 2,
+      shipping: {},
+      status: 'pending'
+    };
+
+    await this.ordersService.placeOrder(order);
+
+    this.purchaseComplete = true;
   }
 
 }

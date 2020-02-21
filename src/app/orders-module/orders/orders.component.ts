@@ -1,26 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { OrdersService } from '../../services/orders.service';
 import { AuthService } from '../../services/auth.service';
-import { tap, debounceTime } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
 
-  orders: Observable<any[]>;
+  buyerOrders$: Observable<any[]>;
+  sellerOrders$: Observable<any[]>;
+
+  userSub: Subscription;
+  isApprovedSeller: boolean;
 
   constructor(
     private authService: AuthService,
     private ordersService: OrdersService
-  ) {
-    this.orders = this.ordersService.getSampleOrders();
-  }
+  ) { }
 
   ngOnInit() {
+    this.userSub = this.authService.user$.subscribe(user => {
+      if (!user) {
+        return;
+      }
+
+      this.buyerOrders$ = this.ordersService.getBuyerOrders(user.uid).pipe(tap(console.log));
+      this.isApprovedSeller = !!user.approvedSeller;
+      if (this.isApprovedSeller) {
+        this.sellerOrders$ = this.ordersService.getSellerOrders(user.uid);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 
   selectOrder(order: any) {
