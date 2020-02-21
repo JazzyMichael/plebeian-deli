@@ -51,6 +51,17 @@
         <span>About</span>
     </button>
 
+    <hr *ngIf="notificationService.canInstall" style="width: 100%; border-color: #f54081;">
+
+    <button
+        *ngIf="notificationService.canInstall"
+        mat-raised-button
+        color="accent"
+        (click)="installClick()"
+        class="install-button">
+        INSTALL
+    </button>
+
     <hr style="width: 100%; border-color: #f54081;">
 
     <button mat-button routerLink="/terms" (click)="closeSidenav.emit()" class="nav-link">

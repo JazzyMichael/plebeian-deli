@@ -9,6 +9,9 @@ export class NotificationService {
   notifications$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   newCount$: BehaviorSubject<number> = new BehaviorSubject(0);
 
+  canInstall: boolean;
+  deferredPrompt: any;
+
   constructor(private afStore: AngularFirestore) { }
 
   getNew(uid: string) {

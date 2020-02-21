@@ -8,8 +8,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class SidenavComponent implements OnInit {
 
-  newCount: number;
-
   @Input() user: any;
 
   @Output() closeSidenav: EventEmitter<any> = new EventEmitter();
@@ -18,7 +16,9 @@ export class SidenavComponent implements OnInit {
   @Output() signIn: EventEmitter<any> = new EventEmitter();
   @Output() signOut: EventEmitter<any> = new EventEmitter();
 
-  constructor(private notificationService: NotificationService) { }
+  newCount: number;
+
+  constructor(public notificationService: NotificationService) { }
 
   ngOnInit() {
     this.notificationService.newCount$.subscribe(num => this.newCount = num || 0);
@@ -26,6 +26,26 @@ export class SidenavComponent implements OnInit {
 
   contactClick() {
     window.alert('CONTACT DEEZ NUTS');
+  }
+
+  installClick() {
+    this.notificationService.deferredPrompt.prompt();
+
+    this.notificationService.deferredPrompt.userChoice
+      .then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Accepted :)');
+          this.notificationService.deferredPrompt = null;
+          this.notificationService.canInstall = false;
+        } else {
+          console.log('Dismissed :(');
+        }
+      })
+      .catch((error) => {
+        console.log('error with install prompt', error);
+        this.notificationService.deferredPrompt = null;
+        this.notificationService.canInstall = false;
+      });
   }
 
 }
