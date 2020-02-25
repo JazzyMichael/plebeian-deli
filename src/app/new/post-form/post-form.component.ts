@@ -151,27 +151,34 @@ export class PostFormComponent implements OnInit, OnDestroy {
       thumbnailIndex = 0;
     }
 
-    const postObj = await this.postService.savePostImages(this.images, thumbnailIndex);
+    const postImgObj = await this.postService.savePostImages(this.images, thumbnailIndex);
 
-    Object.assign(postObj, this.postForm.value);
-    postObj['tags'] = this.tags || [];
-    postObj['startingQuantity'] = this.postForm.value.quantity;
+    const fullObj = {
+      ...this.postForm.value,
+      ...postImgObj,
+      tags: this.tags
+    };
 
     try {
-      let docRef;
+      let docRef: any;
 
       if (this.postService.editingPost) {
         const editingPostId = this.postService.editingPost.postId;
-        postObj['updatedTimestamp'] = new Date();
-        await this.postService.updatePost(editingPostId, postObj);
         docRef = { id: editingPostId };
+        await this.postService.updatePost(editingPostId, {
+          ...fullObj,
+          updatedTimestamp: new Date()
+        });
       } else {
-        postObj['createdTimestamp'] = new Date();
-        postObj['likes'] = 0;
-        docRef = await this.postService.createPost(postObj);
+        docRef = await this.postService.createPost({
+          ...fullObj,
+          createdTimestamp: new Date(),
+          likes: 0
+        });
       }
 
       this.postForm.reset();
+      this.postService.editingPost = null;
       this.snackBar.open('Post Added to the Deli!', '', { duration: 3000 });
       this.router.navigateByUrl(`/post/${docRef.id}`);
 
@@ -179,6 +186,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
       console.log(e);
       this.snackBar.open('Oops! Something went wrong, try again later.', 'Ok');
       this.uploading = false;
+      this.postService.editingPost = null;
       this.postForm.reset();
     }
   }

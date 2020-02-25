@@ -1,23 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
   editingService: any;
-  // services$: BehaviorSubject<any> = new BehaviorSubject([]);
 
-  constructor(private afStore: AngularFirestore) {
-    // this.afStore
-    //   .collection('services')
-    //   .valueChanges({ idField: 'serviceId' })
-    //   .subscribe(services => {
-    //     this.services$.next(services);
-    //   });
-  }
+  constructor(private afStore: AngularFirestore) { }
 
   getUserServices(uid: string) {
     return this.afStore
@@ -36,7 +26,6 @@ export class ServiceService {
     return this.afStore
       .collection('services')
       .add(serviceObj)
-      .then(() => console.log('service added'))
       .catch(e => console.log('error adding service', e));
   }
 
@@ -45,7 +34,6 @@ export class ServiceService {
       .collection('services')
       .doc(docId)
       .update(serviceObj)
-      .then(() => console.log('service updated'))
       .catch(e => console.log('error updating service', e));
   }
 
@@ -54,7 +42,6 @@ export class ServiceService {
       .collection('services')
       .doc(docId)
       .delete()
-      .then(() => console.log('service deleted'))
       .catch(e => console.log('error deleting service', e));
   }
 }

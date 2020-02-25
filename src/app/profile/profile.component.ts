@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.user = user;
             this.uid = user.uid || null;
             const loggedInUser = await this.auth.getCurrentUser();
-            this.editable = loggedInUser.uid === this.uid;
+            this.editable = loggedInUser && loggedInUser.uid === this.uid;
             this.services$ = this.serviceService.getUserServices(this.uid);
             this.events$ = this.eventService.getUserEvents(this.uid);
           })

@@ -174,22 +174,21 @@ export class PostService {
     for await (let img of images) {
       if (!img.file && img.url) {
         postImages.push(img);
-        continue;
+      } else {
+        const fileType = img.file.type.split('/')[1];
+        const random = Math.random().toString().slice(3, 9);
+        const path = `deli-pictures/${uid.substring(0, 10)}-${random}.${fileType}`;
+        const metadata = { customMetadata: { userId: uid } };
+
+        const ref = this.storage.ref(path);
+        await this.storage.upload(path, img.file, metadata);
+        const url = await ref.getDownloadURL().toPromise();
+
+        const thumbnailPathBase = `deli-pictures/thumbnails/${uid.substring(0, 10)}-${random}`;
+        const thumbPath = `${thumbnailPathBase}_500x500.${fileType}`;
+
+        postImages.push({ url, thumbPath, thumbnailPathBase, path, fileType });
       }
-
-      const fileType = img.file.type.split('/')[1];
-      const random = Math.random().toString().slice(3, 9);
-      const path = `deli-pictures/${uid.substring(0, 10)}-${random}.${fileType}`;
-      const metadata = { customMetadata: { userId: uid } };
-
-      const ref = this.storage.ref(path);
-      await this.storage.upload(path, img.file, metadata);
-      const url = await ref.getDownloadURL().toPromise();
-
-      const thumbnailPathBase = `deli-pictures/thumbnails/${uid.substring(0, 10)}-${random}`;
-      const thumbPath = `${thumbnailPathBase}_500x500.${fileType}`;
-
-      postImages.push({ url, thumbPath, thumbnailPathBase, path, fileType });
     }
 
     const postObj = {
