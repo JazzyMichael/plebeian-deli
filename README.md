@@ -12,8 +12,7 @@ The Angular ecosystem is amazing and contains all of the necessary tools to buil
 
 ### Third Party Packages
 
-*Last updated: 2/21/20*
+*Last updated: 2/22/20*
 
-- Swiper.js for carousels
-- Stripe.js for secure payment processing
 - ngx-infinite-scroll for lazy-loading data upon entering the viewport
+- angular-calendar & date-fns for calendar page

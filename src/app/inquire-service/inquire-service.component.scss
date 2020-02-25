@@ -3,3 +3,17 @@ mat-form-field {
     margin: 1em auto;
     display: block;
 }
+
+.image-preview-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.image-preview {
+    width: 100px;
+}

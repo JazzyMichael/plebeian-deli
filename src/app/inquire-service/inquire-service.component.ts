@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class InquireServiceComponent implements OnInit {
   user: any;
   service: any;
+  images: any[] = [];
 
   constructor(
     private router: Router,
@@ -34,11 +35,34 @@ export class InquireServiceComponent implements OnInit {
 
       if (doc && doc.exists) {
         this.service = doc.data();
-        console.log(this.service);
       } else {
         return this.router.navigateByUrl('/deli');
       }
     })
+  }
+
+  addImage(event: any) {
+    const file = event.target.files[0];
+
+    if (file.type.split('/')[0] !== 'image') {
+      return alert('Only Images Plz');
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      this.images.push({ file, url: e.target.result });
+    }
+
+    reader.readAsDataURL(file);
+  }
+
+  removeImage(index: number) {
+    this.images.splice(index, 1);
+  }
+
+  submit() {
+    alert('Not available yet');
   }
 
 }

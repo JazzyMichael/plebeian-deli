@@ -25,10 +25,7 @@ export class AppComponent {
 
   @HostListener('window:beforeinstallprompt', ['$event'])
   onbeforeinstallprompt(e) {
-    console.log(e);
-
     e.preventDefault();
-
     this.ns.deferredPrompt = e;
     this.ns.canInstall = true;
   }

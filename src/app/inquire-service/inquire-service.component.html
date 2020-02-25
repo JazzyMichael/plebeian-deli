@@ -12,13 +12,54 @@
 
         <p style="text-align: center;">Add Images for Artist to Reference</p>
 
+        <button
+            type="button"
+            mat-raised-button
+            [disabled]="images?.length === 5"
+            style="padding: 0; width: 90%; margin: auto; display: block;">
+            <label for="image-upload" style="cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0 1em;">
+                <mat-icon>publish</mat-icon>
+                <span style="margin-left: 10px">Upload Image</span>
+            </label>
+        </button>
+        <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            (change)="addImage($event)">
+
+        <div class="image-preview-container">
+            <div *ngFor="let image of images; index as i;">
+                <button
+                    mat-mini-fab
+                    color="warn"
+                    style="position: absolute; margin-top: -15px; margin-left: -5px;"
+                    (click)="removeImage(i)">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <img
+                    class="image-preview"
+                    [src]="image.url"      
+                    alt="No Preview for SVG's">
+            </div>
+        </div>
+
+        <p *ngIf="images.length === 5" style="text-align: center;"><i>*max 5 images</i></p>
+
         <mat-form-field>
             <input matInput placeholder="Desired Completion Date" type="text">
         </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions>
-        <button mat-raised-button color="primary" style="width: 100%; color: white;">SEND WORK REQUEST</button>
+        <button
+            mat-raised-button
+            color="primary"
+            style="width: 100%; color: white;"
+            click="submit()">
+            SEND WORK REQUEST
+        </button>
     </mat-card-actions>
 
     <p>*Artist will accept or deny work request at their own desgreshin</p>
