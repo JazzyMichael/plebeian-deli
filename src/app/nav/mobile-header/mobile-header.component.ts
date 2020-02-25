@@ -1,15 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mobile-header',
   templateUrl: './mobile-header.component.html',
   styleUrls: ['./mobile-header.component.scss']
 })
-export class MobileHeaderComponent implements OnInit {
+export class MobileHeaderComponent implements OnInit, OnDestroy {
 
   @Output() openSidenav: EventEmitter<any> = new EventEmitter();
 

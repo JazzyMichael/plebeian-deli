@@ -1,0 +1,9 @@
+.container {
+    padding: 1em 0;
+    background-color: #292929;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-items: center;
+}

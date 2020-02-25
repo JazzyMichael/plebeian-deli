@@ -20,9 +20,8 @@
 </div>
 
 
-
 <ng-template #backOnly>
-    <ng-container *ngIf="!['/deli', '/chat'].includes(location.path())">
+    <ng-container *ngIf="!['/deli', '/chat'].includes(location.path()) && location.path().split('/')[1] !== 'new'">
         <div class="container">
             <button mat-icon-button (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>
@@ -30,16 +29,12 @@
 
             <div *ngIf="
                     user && location.path() === '/' + user.username
-                    || ['/new-post', '/new-service', 'new-event', '/edit-profile', '/seller'].includes(location.path())
+                    || ['/edit-profile', '/seller'].includes(location.path())
                     || location.path().split('/')[1] === 'order-details';
                     else noTitle"
                 style="font-size: 1.4em;">
                 {{ user && location.path() === '/' + user.username ? user.username : location.path().split('/')[1].split('-').join(' ') | titlecase }}
             </div>
-
-            <!-- <ng-template #usernameTitle>
-                <div style="font-size: 1.2em;">{{ user.username }}</div>
-            </ng-template> -->
 
             <ng-template #noTitle>
                 <div></div>

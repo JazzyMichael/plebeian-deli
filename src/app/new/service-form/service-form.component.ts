@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ServiceService } from '../services/service.service';
+import { ServiceService } from 'src/app/services/service.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-create-service',
-  templateUrl: './create-service.component.html',
-  styleUrls: ['./create-service.component.scss']
+  selector: 'app-service-form',
+  templateUrl: './service-form.component.html',
+  styleUrls: ['./service-form.component.scss']
 })
-export class CreateServiceComponent implements OnInit {
-
-  serviceForm: FormGroup;
+export class ServiceFormComponent implements OnInit, OnDestroy {
   editingService: any;
+  serviceForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private auth: AuthService,
-    private serviceService: ServiceService
+    private serviceService: ServiceService,
+    private auth: AuthService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.editingService = this.serviceService.editingService || null;
     this.createServiceForm();
+  }
+
+  ngOnDestroy(): void {
+    this.serviceService.editingService = null;
   }
 
   createServiceForm() {

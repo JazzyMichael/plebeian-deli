@@ -26,7 +26,6 @@ import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.compone
 import { SidenavComponent } from './nav/sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
-
 import { DeliComponent } from './deli/deli.component';
 import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
 import { CategorySelectComponent } from './deli/category-select/category-select.component';
@@ -47,9 +46,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
 import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
-import { CreatePostComponent } from './create-post/create-post.component';
-import { CreateEventComponent } from './create-event/create-event.component';
-import { CreateServiceComponent } from './create-service/create-service.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FaqComponent } from './faq/faq.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -68,15 +64,12 @@ const routes: Routes = [
   { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
   { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
   { path: 'orders', loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'new', loadChildren: () => import('./new/new.module').then(m => m.NewModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
 
   { path: 'deli', component: DeliComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
-
-  { path: 'new-post', component: CreatePostComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'new-service', component: CreateServiceComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'new-event', component: CreateEventComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
 
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
@@ -112,8 +105,6 @@ const routes: Routes = [
     ConnectComponent,
     BuyPostComponent,
     TermsComponent,
-    CreatePostComponent,
-    CreateServiceComponent,
     PostLayoutComponent,
     NotificationsComponent,
     CommentsComponent,
@@ -130,7 +121,6 @@ const routes: Routes = [
     WidescreenHeaderComponent,
     MobileHeaderComponent,
     SidenavComponent,
-    CreateEventComponent,
     InquireServiceComponent
   ],
   imports: [

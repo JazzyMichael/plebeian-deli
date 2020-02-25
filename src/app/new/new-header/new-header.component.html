@@ -1,0 +1,9 @@
+<div class="container">
+    <button mat-icon-button (click)="location.back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div style="font-size: 1.2em;">{{ location.path().split('/')[1] + ' ' + location.path().split('/')[2] | titlecase }}</div>
+
+    <div></div>
+</div>

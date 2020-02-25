@@ -17,11 +17,10 @@
 
     <button
         mat-fab
-        routerLink="/new-post"
-        routerLinkActive="active-fab"
-        [disabled]="location.path() === '/new-post' || location.path() === '/login'"
+        routerLink="/new"
+        [disabled]="location.path().split('/')[1] === 'new' || location.path() === '/login'"
         aria-label="New Post"
-        [ngClass]="location.path() === '/new-post' || location.path() === '/login' ? 'disabled-fab-btn' : 'fab-btn'">
+        [ngClass]="location.path().split('/')[1] === 'new' || location.path() === '/login' ? 'disabled-fab-btn' : 'fab-btn'">
         <mat-icon style="transform: scale(1.3); padding-bottom: 2px;">add</mat-icon>
     </button>
 

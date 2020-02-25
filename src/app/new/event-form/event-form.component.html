@@ -61,10 +61,8 @@
                 autocomplete="off">
         </mat-form-field>
 
-        <br>
-
-        <div style="text-align: center">
-            <button *ngIf="!eventImagePreview" mat-button type="button" style="padding: 0">
+        <div style="text-align: center; margin: 2em auto;">
+            <button *ngIf="!eventImagePreview" mat-raised-button type="button" style="padding: 0">
                 <label for="event-pic-upload" style="cursor: pointer; display: flex; align-items: center; padding: 0 1em;">
                     <mat-icon>publish</mat-icon>
                     <span style="margin-left: 10px">Upload</span>
@@ -79,8 +77,6 @@
         
             <img *ngIf="eventImagePreview" [src]="eventImagePreview" alt="Event Image" style="max-width: 150px; max-height: 150px;">
         </div>
-
-        <br>
 
         <button
             type="submit"

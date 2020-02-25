@@ -3,7 +3,7 @@
 
 <mat-spinner *ngIf="uploading" style="margin: 2em auto"></mat-spinner>
 
-<mat-card *ngIf="!uploading && postForm" class="post-card">
+<mat-card *ngIf="!uploading && postForm" class="pleb-card">
 
     <form [formGroup]="postForm" (submit)="submit()">
 
@@ -22,7 +22,7 @@
         <mat-form-field color="primary">
             <mat-label>Category</mat-label>
             <mat-select formControlName="category">
-                <mat-option *ngFor="let cat of categoryOptions" [value]="cat">
+                <mat-option *ngFor="let cat of catOptions" [value]="cat">
                     {{ cat | titlecase }}
                 </mat-option>
             </mat-select>

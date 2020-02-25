@@ -21,11 +21,11 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
+    private router: Router,
     private chatService: ChatService,
     private userService: UserService,
-    private router: Router,
     private notificiationService: NotificationService
-    ) {
+  ) {
       // const startingUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
       const startingUser = null;
       if (startingUser) {

@@ -78,12 +78,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   editService(service: any) {
     this.serviceService.editingService = service;
-    this.router.navigateByUrl('/new-service');
+    this.router.navigateByUrl('/new/service');
   }
 
   editEvent(event: any) {
     this.eventService.editingEvent = event;
-    this.router.navigateByUrl('/new-event');
+    this.router.navigateByUrl('/new/event');
   }
 
   async initiateChat(userToChat: any) {

@@ -111,7 +111,7 @@
 <ng-container *ngIf="services$ | async as services">
     <div *ngIf="services?.length" style="margin: 1em auto; display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 888px;">
         <h2>Services</h2>
-        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-service">
+        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new/service">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -146,7 +146,7 @@
 <ng-container *ngIf="events$ | async as events">
     <div *ngIf="events?.length" style="margin: 1em auto; display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 888px;">
         <h2>Events</h2>
-        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new-event">
+        <button *ngIf="editable" mat-raised-button color="accent" routerLink="/new/event">
             <mat-icon>add</mat-icon>
         </button>
     </div>

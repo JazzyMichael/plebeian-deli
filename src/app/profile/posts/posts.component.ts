@@ -36,17 +36,16 @@ export class PostsComponent implements OnInit, OnChanges {
 
   editPost(post: any) {
     this.postService.editingPost = post;
-    this.router.navigateByUrl('/new-post');
+    this.router.navigateByUrl('/new/post');
   }
 
   deletePost(post: any) {
     this.postService.deletePost(post.postId)
       .then(() => {
-        this.snackBar.open('Post deleted!', 'Ok', { duration: 3000 });
+        this.snackBar.open('Post deleted!', 'Ok', { duration: 3333 });
       })
       .catch(error => {
-        console.log('error deleting post');
-        console.log({ post, error });
+        console.log('error deleting post', { post, error });
         this.snackBar.open('There was an error deleting your post, try again later', '', { duration: 3000 });
       });
   }

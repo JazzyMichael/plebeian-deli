@@ -5,6 +5,7 @@ import { map, switchMap, tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class PostService {
     private afStore: AngularFirestore,
     private userService: UserService,
     private storage: AngularFireStorage,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
     ) {
 
     this.posts$ = new BehaviorSubject([]);
@@ -162,5 +164,41 @@ export class PostService {
       .collection('posts')
       .doc(doc)
       .delete();
+  }
+
+  async savePostImages(images: any[], thumbnailIndex: number = 0) {
+    const { uid } = await this.auth.getCurrentUser();
+
+    const postImages = [];
+
+    for await (let img of images) {
+      if (!img.file && img.url) {
+        postImages.push(img);
+        continue;
+      }
+
+      const fileType = img.file.type.split('/')[1];
+      const random = Math.random().toString().slice(3, 9);
+      const path = `deli-pictures/${uid.substring(0, 10)}-${random}.${fileType}`;
+      const metadata = { customMetadata: { userId: uid } };
+
+      const ref = this.storage.ref(path);
+      await this.storage.upload(path, img.file, metadata);
+      const url = await ref.getDownloadURL().toPromise();
+
+      const thumbnailPathBase = `deli-pictures/thumbnails/${uid.substring(0, 10)}-${random}`;
+      const thumbPath = `${thumbnailPathBase}_500x500.${fileType}`;
+
+      postImages.push({ url, thumbPath, thumbnailPathBase, path, fileType });
+    }
+
+    const postObj = {
+      images: postImages,
+      thumbnailPath: postImages[thumbnailIndex].thumbPath,
+      thumbnailImgUrl: postImages[thumbnailIndex].url,
+      userId: uid
+    };
+
+    return postObj;
   }
 }
