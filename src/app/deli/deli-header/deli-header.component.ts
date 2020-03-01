@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { AuthService } from 'src/app/services/auth.service';
 import { Subject, Subscription, Observable, of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-deli-header',
@@ -17,11 +18,13 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
 
   profilePic: Observable<any>;
 
-  @Output() sortChange: EventEmitter<string> = new EventEmitter();
+  notificationsSub: Subscription;
+  showDot: boolean;
 
+  @Output() sortChange: EventEmitter<string> = new EventEmitter();
   @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private notifications: NotificationService) { }
 
   ngOnInit() {
     this.sort = 'recent';
@@ -37,10 +40,16 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
     this.profilePic = this.auth.user$.asObservable().pipe(
       switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png'))
     );
+
+    this.notificationsSub = this.notifications.newCount$
+      .subscribe((count: number = 0) => {
+        this.showDot = count > 0;
+      });
   }
 
   ngOnDestroy() {
     this.debouncerSub.unsubscribe();
+    this.notificationsSub.unsubscribe();
   }
 
   openSidenav() {

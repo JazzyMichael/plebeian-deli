@@ -1,11 +1,13 @@
 <div class="container">
-    <img
+    <div
         *ngIf="profilePic | async as pic"
-        [src]="pic"
-        alt="Profile Pic"
-        height="40"
-        style="border-radius: 50%"
-        (click)="openSidenav()">
+        class="profile-pic"
+        [style.background-image]="'url(' + pic + ')'"
+        (click)="openSidenav()"
+        [matBadge]="showDot ? '!' : ''"
+        matBadgeOverlap="true"
+        matBadgeColor="accent">
+    </div>
 
     <mat-form-field class="search-box" floatLabel="never">
         <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">
