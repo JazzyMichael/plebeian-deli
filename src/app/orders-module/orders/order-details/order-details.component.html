@@ -1,51 +1,58 @@
-<div class="order-info-box">
+<mat-card class="pleb-card" *ngIf="order">
 
-    <div class="heading">
-        <div style="height: 30px; width: 30px; display: flex; border: 2px solid white; border-radius: 50%;"></div>
+    <mat-card-header>
+        <div mat-card-avatar
+        style="background-size: cover"
+        [style.background-image]="'url(' + 'assets/images/ham-250.png' + ')'"></div>
+        <mat-card-title>Seller Username</mat-card-title>
+        <mat-card-subtitle>Seller Full Name or Email</mat-card-subtitle>
+    </mat-card-header>
 
-        <h3 style="margin-left: 1em">Artist Username</h3>
-    </div>
+    <mat-card-content>
+        <div class="center-container">
 
-
-    <div class="center-container">
-
-        <div class="left-side">
-            <h3>Post Title</h3>
-
-            <div style="height: 77px; width: 77px; display: flex; border: 2px solid white;"></div>
-
-            <p>Post Description</p>
-        </div>
-
-        <div class="right-side">
-            <h3>Shipping Info</h3>
-
-            <p style="text-align: center">1 Drummond Farms Ln, Newark, DE 19191</p>
-
-            <div class="sub-total">
-                <div class="sub-total-heading sub-total-item">
-                    <span>Subtotal:</span>
-                    <span>{{ 20 | currency }}</span>
+            <div class="left-side">
+                <h3>{{ order.item }}</h3>
+    
+                <div class="order-image" [style.background-image]="'url(' + order.thumbnailUrl + ')'"></div>
+    
+                <p>Item Description</p>
+            </div>
+    
+            <div class="right-side">
+                <h3>Shipping To:</h3>
+    
+                <p style="text-align: center">1 Drummond Farms Ln, Newark, DE 19191</p>
+    
+                <div class="sub-total">
+                    <div class="sub-total-heading sub-total-item">
+                        <span>Subtotal:</span>
+                        <span>{{ order.subtotal | currency }}</span>
+                    </div>
+                    <div class="sub-total-item">
+                        <span>Processing:</span>
+                        <span>+ {{ order.fee | currency }}</span>
+                    </div>
+                    <div class="sub-total-item">
+                        <span>Shipping:</span>
+                        <span>+ $0.00</span>
+                    </div>
                 </div>
-                <div class="sub-total-item">
-                    <span>Processing:</span>
-                    <span>+ 1.64</span>
-                </div>
-                <div class="sub-total-item">
-                    <span>Shipping:</span>
-                    <span>+ 1.01</span>
+    
+                <div class="total">
+                    <h2>Total: </h2>
+                    <h2>{{ order.total | currency }}</h2>
                 </div>
             </div>
-
-            <div class="total">
-                <span>Total: </span>
-                <span>{{ 22.65 | currency }}</span>
-            </div>
+    
         </div>
+    </mat-card-content>
 
-    </div>
+    <mat-card-actions>
+        <button mat-button style="width: 100%">View Post</button>
+    </mat-card-actions>
 
-</div>
+</mat-card>
 
 
 <div *ngIf="order?.status === 'pending'" style="text-align: right; margin: 1.5em;">

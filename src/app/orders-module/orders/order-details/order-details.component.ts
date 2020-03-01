@@ -14,6 +14,7 @@ export class OrderDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.order = this.ordersService.getSelectedOrder();
+    console.log(this.order);
   }
 
 }
