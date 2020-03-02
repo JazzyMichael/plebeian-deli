@@ -1,11 +1,13 @@
 .background {
-    height: calc(100vh - 73px);
+    height: 100vh;
     background-color: #7fca96;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
+    margin: auto;
+    max-width: 777px;
 }
 
 .logo {
@@ -22,6 +24,7 @@
 
 .sign-in-button-container {
     width: 100%;
+    margin-bottom: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -30,4 +33,10 @@
 .sign-in-button-container > * {
     flex: 1;
     margin: 0.5em 10px;
+}
+
+@media (min-width: 777px) {
+    .background {
+        height: 85vh;
+    }
 }
