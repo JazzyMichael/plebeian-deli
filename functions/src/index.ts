@@ -7,9 +7,9 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
 
-// import * as Stripe from 'stripe';
+import * as Stripe from 'stripe';
 // const stripe = new Stripe(functions.config().stripe.secret);
-// const stripe = new Stripe('sk_live_CawDzzhk3Z7d0qnQNqojJRsU');
+const stripe = new Stripe('sk_test_uk0YsGUapOzUY7TH1ni1SUTB00cneBKJSY');
 
 import fetch from 'node-fetch';
 
@@ -66,7 +66,6 @@ export const newComment = functions.firestore
 
         return db.collection(`users/${postUserId}/notifications`).add(notification)
     })
-
 
 export const replyComment = functions.firestore
     .document('posts/{postId}/comments/{commentId}')
@@ -159,78 +158,7 @@ export const eventDelete = functions.firestore
         }
     })
 
-
-
-
-
-
-
-// when new users are created in firestore,
-// create a stripe customer for that user
-// export const createStripeCustomer = functions.auth
-//     .user()
-//     .onCreate(async (userRecord, context) => {
-//         const firebaseUID: string = userRecord.uid;
-//         const firebaseEmail: string = userRecord.email;
-
-//         const customer = await stripe.customers.create({
-//             email: firebaseEmail,
-//             metadata: { firebaseUID }
-//         });
-
-//         return db.doc(`users/${firebaseUID}`).set({
-//             stripeId: customer.id
-//         }, { merge: true });
-//     });
-
-
-
-
-
-
-
-
-// add payment source (credit card) to stripe customer for user
-// subscribe user to plan
-// update user document
-// export const startSubscription = functions.https
-//     .onCall(async (data, context) => {
-//         if (!context || !context.auth || !context.auth.uid) {
-//             throw new Error('No Context Auth');
-//         }
-
-//         const userId = context.auth.uid;
-//         const userDoc = await db.doc(`users/${userId}`).get();
-//         const user = userDoc.data();
-
-//         if (!user || !user.stripeId) {
-//             throw new Error('No User or Stripe Account');
-//         }
-
-//         const source = await stripe.customers.createSource(user.stripeId, {
-//             source: data.source
-//         });
-
-//         if (!source) {
-//             throw new Error('Stripe failed to attach card');
-//         }
-
-//         const sub = await stripe.subscriptions.create({
-//             customer: user.stripeId,
-//             items: [{ plan: data.planId }],
-//             coupon: data.promoCode || ''
-//         });
-
-//         return db.doc(`users/${userId}`).set({
-//             status: sub.status,
-//             subscriptionId: sub.id,
-//             itemId: sub.items.data[0].id,
-//             membership: data.planName
-//         }, { merge: true });
-//     });
-
-
-// seller account
+// Create Stripe Seller Account
 export const createSellerAccount = functions.https
     .onCall(async (data, context) => {
         if (!context || !context.auth || !context.auth.uid) {
@@ -268,7 +196,73 @@ export const createSellerAccount = functions.https
             approvedSeller: true,
             stripeConnectData: stripeRes
         });
-    });
+    })
+
+// Create Stripe Checkout Session
+export const createStripeCheckoutSession = functions.https
+    .onCall(async (data, context) => {
+
+        const { sellerStripeAccountID, item } = data
+
+        if (!sellerStripeAccountID || !item) {
+            throw new Error('Invalid Cloud Function Arguments')
+        }
+
+        await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                name: item.name,
+                description: item.description,
+                amount: item.amount,
+                quantity: item.quantity,
+                images: [item.thumbnailUrl],
+                currency: 'usd'
+            }],
+            payment_intent_data: {
+                application_fee_amount: 1,
+                transfer_data: {
+                    destination: sellerStripeAccountID,
+                },
+            },
+            success_url: '',
+            cancel_url: ''
+        })
+    })
+
+// Stripe Webhook
+export const stripeCheckoutWebhook = functions.https
+    .onRequest(async (req, res) => {
+        const sig = req.headers['stripe-signature'];
+
+        let event: any;
+
+        const endpointSecret = 'Dashboards webhook settings';
+
+        try {
+            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        } catch (err) {
+            return res.status(400).send(`Stripe Webhook Error ${err.message}`);
+        }
+
+        if (event.type === 'checkout.session.completed') {
+            const session = event.data.object;
+
+
+            const userId = session.client_reference_id;
+
+            const timestamp = new Date();
+
+            // save session
+            await db
+                .doc(`checkout-sessions/${session.id}`)
+                .set({ ...session, timestamp, userId }, { merge: true });
+        }
+
+        return res.json({ received: true });
+    })
+
+
+
 
 
 // create connect charge
@@ -338,118 +332,4 @@ export const createSellerAccount = functions.https
 //     });
 
 
-// export const signupCheckoutSession = functions.https
-//     .onCall(async (data, context) => {
 
-//         if (!data || !context || !context.auth) {
-//             throw new Error('Invalid Request');
-//         }
-
-//         const membership = data.membership;
-
-//         const userId = context.auth.uid;
-
-//         const customerId = data.customerId || '';
-
-//         let sessionObj: any;
-
-//         // create payment session
-//         if (data.paymentCheckout && data.item) {
-//             sessionObj = {
-//                 mode: 'payment',
-//                 payment_method_types: ['card'],
-//                 success_url: `https://plebeiandeli.art/signup-success?membership=${membership}&session_id={CHECKOUT_SESSION_ID}`,
-//                 cancel_url: 'https://plebeiandeli.art/about',
-//                 customer: customerId,
-//                 client_reference_id: userId,
-//                 line_items: [
-//                     {
-//                         name: data.item.name,
-//                         amount: data.item.amount,
-//                         quantity: 1,
-//                         currency: 'usd',
-//                         description: data.item.description,
-//                         images: ['https://www.plebeiandeli.art/assets/images/b35-ticket-logo.png']
-//                     }
-//                 ]
-//             };
-//         }
-
-//         // create subscription session
-//         if (data.subscriptionCheckout && data.planId) {
-//             sessionObj = {
-//                 mode: 'subscription',
-//                 payment_method_types: ['card'],
-//                 success_url: `https://plebeiandeli.art/signup-success?membership=${membership}&session_id={CHECKOUT_SESSION_ID}`,
-//                 cancel_url: 'https://plebeiandeli.art/about',
-//                 customer: customerId,
-//                 client_reference_id: userId,
-//                 subscription_data: {
-//                     items: [{ plan: data.planId }],
-//                     trial_period_days: 30,
-//                     metadata: { membership }
-//                 }
-//             };
-//         }
-
-//         if (!sessionObj) {
-//             console.log('NO SESSION!');
-//             return;
-//         }
-
-//         const session = await stripe.checkout.sessions.create(sessionObj);
-
-//         console.log('SESSION ID', session.id);
-
-//         await db
-//             .doc(`users/${userId}`)
-//             .update({ signupSessionId: session.id });
-
-//         return session.id;
-//     });
-
-// export const stripeCheckoutWebhook = functions.https
-//     .onRequest(async (req, res) => {
-//         const sig = req.headers['stripe-signature'];
-
-//         let event: any;
-
-//         const endpointSecret = 'Dashboards webhook settings';
-
-//         try {
-//             event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-//         } catch (err) {
-//             const msg = `Webhook Error ${err.message}`;
-//             return res.status(400).send(msg);
-//         }
-
-//         if (event.type === 'checkout.session.completed') {
-//             const session = event.data.object;
-
-//             const artistRegex = new RegExp('membership=artist');
-
-//             const galleryRegex = new RegExp('membership=gallery');
-
-//             const membership = artistRegex.test(session.success_url) ? 'artist' : galleryRegex.test(session.success_url) ? 'gallery' : '';
-
-//             const userId = session.client_reference_id;
-
-//             const timestamp = new Date();
-
-//             if (membership) {
-//                 // update user membership
-//                 await db
-//                     .doc(`users/${userId}`)
-//                     .update({ membership });
-//             } else {
-//                 // update orders
-//             }
-
-//             // save session
-//             await db
-//                 .doc(`checkout-sessions/${session.id}`)
-//                 .set({ ...session, timestamp, userId }, { merge: true });
-//         }
-
-//         return res.json({ received: true });
-//     })
