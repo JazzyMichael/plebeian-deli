@@ -18,10 +18,15 @@
 
 .text-slide {
     width: 100%;
+    max-width: 100vw;
     text-align: center;
     font-style: italic;
     padding: 2em;
     box-sizing: border-box;
+}
+
+::ng-deep .swiper-pagination-bullet {
+    background: #fdf5a2 !important;
 }
 
 /* social login buttons */
@@ -52,7 +57,7 @@
     vertical-align: middle;
     width: 42px;
     height: 42px;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .google-btn {

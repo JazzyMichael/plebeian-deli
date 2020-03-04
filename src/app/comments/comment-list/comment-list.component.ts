@@ -27,7 +27,7 @@ export class CommentListComponent implements OnInit {
 
     const user = await this.auth.getCurrentUser();
 
-    this.canReply = user.uid === postUserId;
+    this.canReply = user && user.uid === postUserId;
   }
 
   startReply(comment: any) {

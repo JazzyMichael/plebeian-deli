@@ -10,13 +10,13 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   userSub: Subscription;
+  slides: string[];
   swiperConfig: any = {
     loop: true,
-    loopedSlides: 6,
     slidesPerView: 1,
-    autoplay: true
+    autoplay: true,
+    pagination: true
   };
-  slides: string[];
 
   constructor(private auth: AuthService) { }
 
@@ -38,10 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     const swiper = document.querySelector('.swiper-container');
     const swiperPrev = document.querySelector('.swiper-button-prev') as HTMLElement;
     const swiperNext = document.querySelector('.swiper-button-next') as HTMLElement;
-    swiper['swiper'].loopCreate();
-    swiperPrev.style.display = 'none';
-    swiperNext.style.display = 'none';
-}
+    if (swiper && swiper['swiper']) swiper['swiper'].loopCreate();
+    if (swiperPrev) swiperPrev.style.display = 'none';
+    if (swiperNext) swiperNext.style.display = 'none';
+  }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
