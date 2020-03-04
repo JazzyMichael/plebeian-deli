@@ -9,10 +9,7 @@ import { AngularFireAnalytics } from '@angular/fire/analytics';
 })
 export class CategorySelectComponent implements OnInit {
   selected: string;
-
   fullCategories: any[];
-  carouselIndex: number = 0;
-  infinite: boolean = true;
 
   @Output() selectedCategory: EventEmitter<string> = new EventEmitter();
 
@@ -24,21 +21,8 @@ export class CategorySelectComponent implements OnInit {
   }
 
   onSelect(category: string) {
-    this.selected = this.selected === category ? 'all' : category;
-    this.selectedCategory.emit(this.selected);
-    this.analytics.logEvent('category-select', { category: this.selected });
-  }
-
-  categorySelect(index: number) {
-    this.carouselIndex = index;
-    this.selected = this.fullCategories[index].name;
-    this.selectedCategory.emit(this.selected);
-    this.analytics.logEvent('category-select', { category: this.selected });
-  }
-
-  carouselIndexChanged(index: number) {
-    this.carouselIndex = index;
-    this.selected = this.fullCategories[index].name;
+    if (this.selected === category) return;
+    this.selected = category;
     this.selectedCategory.emit(this.selected);
     this.analytics.logEvent('category-select', { category: this.selected });
   }
