@@ -6,13 +6,12 @@ Latest Stable Releases of Angular, Material, Firebase, & PWA spec
 
 Marketplace platform built with Stripe.
 
-Latest Stable Release of Angular, Material, Firebase
+Latest Stable Release of Angular & Firebase
 
-The Angular ecosystem is amazing and contains all of the necessary tools to build an optimized site without many 3rd party libraries.
+### Third Party NPM Packages
 
-### Third Party Packages
+*Last updated: 3/4/20*
 
-*Last updated: 2/22/20*
-
-- ngx-infinite-scroll for lazy-loading data upon entering the viewport
 - angular-calendar & date-fns for calendar page
+- Swiper.js & ngx-swiper-wrapper for carousels
+- ngx-infinite-scroll wrapper component for infinite scroll
