@@ -35,6 +35,38 @@
     margin: 0.5em 10px;
 }
 
+.google-btn {
+    background-color: white;
+    color: #444444;
+    white-space: nowrap;
+}
+
+.google-icon {
+    background: url('../../assets/images/google-g.png')
+                transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+    margin-right: 5px;
+}
+
+.facebook-btn {
+    background-color: #4266b1;
+    color: white;
+    white-space: nowrap;
+}
+
+.facebook-icon {
+    background: url('../../assets/images/facebook-f.png')
+                transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+    margin-right: 5px;
+}
+
 @media (min-width: 777px) {
     .background {
         height: 85vh;

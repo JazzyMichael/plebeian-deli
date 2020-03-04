@@ -33,20 +33,27 @@
         <p style="text-align: center">- Sign In -</p>
 
         <button
-            mat-raised-button>
-        Apple
+            mat-raised-button
+            class="apple-btn"
+            disabled>
+            <span class="apple-icon"></span>
+            <span><i>Apple coming soon</i></span>
         </button>
 
         <button
             mat-raised-button
+            class="google-btn"
             (click)="googleLogin()">
-        Google
+            <span class="google-icon"></span>
+            <span>Google</span>
         </button>
 
         <button
             mat-raised-button
+            class="facebook-btn"
             (click)="facebookLogin()">
-        Facebook
+            <span class="facebook-icon"></span>
+            <span>Facebook</span>
         </button>
     </div>
 
