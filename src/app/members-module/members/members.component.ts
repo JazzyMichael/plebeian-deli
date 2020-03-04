@@ -1,7 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { CategoriesService } from '../../services/categories.service';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
@@ -13,27 +13,21 @@ import { ChatService } from '../../services/chat.service';
 })
 export class MembersComponent implements OnInit {
 
-  categories: any[];
-
-  users$;
-
+  users$: Observable<any>;
+  categoryNames: string[];
   selectedCategories: any[];
   searchTerm: string;
-  membership: string;
-  radioSelection: string = null;
 
   constructor(
     public userService: UserService,
     private catService: CategoriesService,
-    private ren: Renderer2,
     private authService: AuthService,
     private chatService: ChatService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.filterUsers();
-
-    this.categories = this.catService.getCategories().map(c => c.name);
+    this.categoryNames = this.catService.getCategoryNames();
   }
 
   onScroll() {
@@ -41,10 +35,9 @@ export class MembersComponent implements OnInit {
   }
 
   filterUsers() {
-    this.users$ = this.userService.users$.pipe(
+    this.users$ = this.userService.users$.asObservable().pipe(
       switchMap(users => {
         if (!this.searchTerm && (!this.selectedCategories || !this.selectedCategories.length)) {
-          console.log('members page users', users);
           return of(users);
         }
 
@@ -69,24 +62,9 @@ export class MembersComponent implements OnInit {
           return validCategory && validSearch;
         });
 
-        console.log('members page users', filtered);
         return of(filtered);
       })
     );
-  }
-
-  radioClick(el) {
-    setTimeout(() => {
-      if (this.radioSelection === el.value) {
-        el.checked = false;
-        this.ren.removeClass(el._elementRef.nativeElement, 'cdk-focused');
-        this.ren.removeClass(el._elementRef.nativeElement, 'cdk-program-focused');
-        this.radioSelection = null;
-        this.membership = null;
-      } else {
-        this.radioSelection = el.value;
-      }
-    });
   }
 
   change() {

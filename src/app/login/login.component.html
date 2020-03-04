@@ -24,9 +24,9 @@
     </svg>
 
 
-
-    <div class="phrases"><i>Life is creation – self and circumstances, the raw material. Dorothy Richardson</i></div>
-
+    <swiper *ngIf="slides?.length" [config]="swiperConfig" style="width: 100%;">
+        <div *ngFor="let slide of slides" class="text-slide">{{ slide }}</div>
+    </swiper>
 
 
     <div class="sign-in-button-container">
@@ -35,9 +35,9 @@
         <button
             mat-raised-button
             class="apple-btn"
-            disabled>
+            (click)="appleLogin()">
             <span class="apple-icon"></span>
-            <span><i>Apple coming soon</i></span>
+            <span>Apple</span>
         </button>
 
         <button

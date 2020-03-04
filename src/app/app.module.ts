@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { environment } from '../environments/environment';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -138,7 +139,8 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SwiperModule
   ],
   exports: [
     MaterialModule
