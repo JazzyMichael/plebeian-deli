@@ -93,7 +93,7 @@ export class PostService {
             return { ...post, thumbnail };
           });
         }),
-        tap(posts => this.deliPostsCat[`${category}-${sort}`] = [...posts])
+        tap(posts => this.deliPostsCat[`${category}-${sortField}`] = [...posts])
       );
   }
 
