@@ -81,7 +81,7 @@ export class PostService {
     const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
     const sortField = opts[sort];
 
-    if (this.deliPostsCat[`${category}-${sortField}`]) return of(this.deliPostsSort[`${category}-${sortField}`]);
+    if (this.deliPostsCat[`${category}-${sortField}`]) return of(this.deliPostsCat[`${category}-${sortField}`]);
 
     return this.afStore
       .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(20))
