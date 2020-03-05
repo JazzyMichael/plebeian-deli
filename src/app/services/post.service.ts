@@ -13,8 +13,10 @@ import { AuthService } from './auth.service';
 export class PostService {
   posts$: BehaviorSubject<any>;
   featuredPosts$: BehaviorSubject<any>;
-
   editingPost: any;
+
+  deliPostsSort: any = {};
+  deliPostsCat: any = {};
 
   constructor(
     private afStore: AngularFirestore,
@@ -59,6 +61,8 @@ export class PostService {
     const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
     const sortField = opts[sort];
 
+    if (this.deliPostsSort[sortField]) return of(this.deliPostsSort[sortField]);
+
     return this.afStore
       .collection('posts', ref => ref.orderBy(sortField, 'desc').limit(20))
       .valueChanges({ idField: 'postId' })
@@ -68,13 +72,16 @@ export class PostService {
             const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
             return { ...post, thumbnail };
           });
-        })
+        }),
+        tap(posts => this.deliPostsSort[sortField] = [...posts])
       );
   }
 
   getPostsByCategory(category: string, sort: string = 'recent') {
     const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
     const sortField = opts[sort];
+
+    if (this.deliPostsCat[`${category}-${sortField}`]) return of(this.deliPostsSort[`${category}-${sortField}`]);
 
     return this.afStore
       .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(20))
@@ -85,7 +92,8 @@ export class PostService {
             const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
             return { ...post, thumbnail };
           });
-        })
+        }),
+        tap(posts => this.deliPostsCat[`${category}-${sort}`] = [...posts])
       );
   }
 

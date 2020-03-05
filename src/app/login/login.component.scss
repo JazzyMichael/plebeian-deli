@@ -39,9 +39,20 @@
     justify-content: space-between;
 }
 
-.sign-in-button-container > * {
+.sign-in-button {
     flex: 1;
     margin: 0.5em 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-container {
+    width: 120px;
+    margin-left: 16px;
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: 1px;
 }
 
 .apple-btn {
@@ -53,11 +64,12 @@
 .apple-icon {
     background: url('../../assets/images/apple-a.png')
                 transparent 5px 50% no-repeat;
+    background-position: center;
     display: inline-block;
     vertical-align: middle;
     width: 42px;
     height: 42px;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .google-btn {
@@ -69,11 +81,12 @@
 .google-icon {
     background: url('../../assets/images/google-g.png')
                 transparent 5px 50% no-repeat;
+    background-position: center;
     display: inline-block;
     vertical-align: middle;
     width: 42px;
     height: 42px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .facebook-btn {
@@ -85,11 +98,12 @@
 .facebook-icon {
     background: url('../../assets/images/facebook-f.png')
                 transparent 5px 50% no-repeat;
+    background-position: center;
     display: inline-block;
     vertical-align: middle;
     width: 42px;
     height: 42px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 /* end of social login buttons */

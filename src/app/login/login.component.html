@@ -30,30 +30,36 @@
 
 
     <div class="sign-in-button-container">
-        <p style="text-align: center">- Sign In -</p>
+        <p style="text-align: center">Sign In</p>
 
         <button
             mat-raised-button
-            class="apple-btn"
+            class="sign-in-button apple-btn"
             (click)="appleLogin()">
-            <span class="apple-icon"></span>
-            <span>Apple</span>
+            <div class="inner-container">
+                <span class="apple-icon"></span>
+                <span style="margin-left: 8px">Apple</span>
+            </div>
         </button>
 
         <button
             mat-raised-button
-            class="google-btn"
+            class="sign-in-button google-btn"
             (click)="googleLogin()">
-            <span class="google-icon"></span>
-            <span>Google</span>
+            <div class="inner-container">
+                <span class="google-icon"></span>
+                <span style="margin-left: 4px">Google</span>
+            </div>
         </button>
 
         <button
             mat-raised-button
-            class="facebook-btn"
+            class="sign-in-button facebook-btn"
             (click)="facebookLogin()">
-            <span class="facebook-icon"></span>
-            <span>Facebook</span>
+            <div class="inner-container">
+                <span class="facebook-icon"></span>
+                <span>Facebook</span>
+            </div>
         </button>
     </div>
 
