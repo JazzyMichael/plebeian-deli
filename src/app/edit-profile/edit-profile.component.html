@@ -70,15 +70,12 @@
             *ngIf="editingUsername"
             mat-raised-button
             [disabled]="!newUsername"
-            (click)="updateField(user.uid, 'username', newUsername)">
+            (click)="saveNewUsername(user.uid)">
             Save New Username
         </button>
     </div>
 
-    <app-username-form
-        *ngIf="editingUsername"
-        (username)="onUpdateUsername($event)">
-    </app-username-form>
+    <app-username-form *ngIf="editingUsername" (username)="handleUsername($event)"></app-username-form>
 
     <br>
 

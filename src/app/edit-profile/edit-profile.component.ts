@@ -45,14 +45,21 @@ export class EditProfileComponent implements OnInit, AfterViewChecked {
       obj[field] = value;
       await this.userService.updateUserPromise(uid, obj);
       this.snackbar.open('Profile Updated!', '', { duration: 3000 });
-      if (field === 'username') {
-        this.newUsername = '';
-      }
     }, 666);
   }
 
-  onUpdateUsername(username: string) {
+  handleUsername(username: string) {
     this.newUsername = username;
+  }
+
+  async saveNewUsername(uid: string) {
+    await this.userService.updateUserPromise(uid, {
+      username: this.newUsername,
+      lowerCaseUsername: this.newUsername.toLowerCase()
+    });
+    this.newUsername = '';
+    this.editingUsername = false;
+    this.snackbar.open('Username Changed!', '', { duration: 3000 });
   }
 
   async uploadProfilePic(uid: string, event: any) {
@@ -62,10 +69,12 @@ export class EditProfileComponent implements OnInit, AfterViewChecked {
       return;
     }
     if (!file.type || !file.type.split('/')[1]) {
-      return alert('Thats a really weird file');
+      alert('Thats a really weird file');
+      return;
     }
     if (file.type.split('/')[0] !== 'image') {
-      return alert('Only Images are allowed for profile pics');
+      alert('Only Images are allowed for profile pics');
+      return;
     }
 
     this.uploading = 'profile-picture';
@@ -84,10 +93,12 @@ export class EditProfileComponent implements OnInit, AfterViewChecked {
       return;
     }
     if (!file.type || !file.type.split('/')[1]) {
-      return alert('Thats a really weird file');
+      alert('Thats a really weird file');
+      return;
     }
     if (file.type.split('/')[0] !== 'image') {
-      return alert('Only Images are allowed for background pics');
+      alert('Only Images are allowed for background pics');
+      return;
     }
 
     this.uploading = 'background';

@@ -1,27 +1,25 @@
-<form [formGroup]="signUpForm" style="max-width: 90%; margin: 2em auto">
+<form [formGroup]="usernameForm" style="max-width: 90%; margin: 2em auto">
 
     <mat-form-field color="primary" style="width: 100%">
 
         <input
             matInput
             autocomplete="off"
-            uniqueUsernameValidator
             formControlName="username"
             placeholder="Username"
-            (input)="onInput()"
             maxlength="16"
-            required>
+            (input)="onInput()">
 
-        <mat-error *ngIf="signUpForm.get('username').hasError('hasWhitespace')">
-            Username cannot have spaces
+        <mat-error *ngIf="usernameForm.get('username').hasError('required')">
+            Required
         </mat-error>
 
-        <mat-error *ngIf="signUpForm.get('username').hasError('usernameTaken')">
-            Username already taken
+        <mat-error *ngIf="usernameForm.get('username').hasError('pattern')">
+            Cannot have spaces
         </mat-error>
 
-        <mat-error *ngIf="signUpForm.get('username').hasError('required')">
-            Username is required
+        <mat-error *ngIf="usernameForm.get('username').hasError('usernameTaken')">
+            Already taken
         </mat-error>
 
     </mat-form-field>
