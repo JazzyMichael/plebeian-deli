@@ -95,18 +95,16 @@ export class AuthService {
 
   async handleAuthData(authData: any) {
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-      setTimeout(() => { this.router.navigateByUrl('/edit-profile'); }, 300);
+      setTimeout(() => { this.router.navigateByUrl('/edit-profile'); }, 250);
     } else {
-      setTimeout(() => { this.router.navigateByUrl(this.username ? `/${this.username}` : '/deli'); }, 300);
+      setTimeout(() => { this.router.navigateByUrl(this.username ? `/${this.username}` : '/deli'); }, 250);
     }
   }
 
   async logout() {
     await this.afAuth.auth.signOut();
-
     localStorage.clear();
-
-    return this.router.navigateByUrl('/deli');
+    return this.router.navigateByUrl('/login');
   }
 
   getCurrentUser() {
