@@ -47,7 +47,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
     );
 
     this.validitySub = this.addressForm.statusChanges.subscribe(() => {
-      this.valid.emit(this.addressForm.valid);
+      this.valid.emit(this.addressForm.valid ? this.addressForm.value : null);
     });
   }
 

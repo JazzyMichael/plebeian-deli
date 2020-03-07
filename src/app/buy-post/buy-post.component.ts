@@ -15,7 +15,7 @@ export class BuyPostComponent implements OnInit {
 
   post: any;
   sellerStripeId: string;
-  addressComplete: boolean;
+  validShipping: any;
   purchaseComplete: boolean;
 
   constructor(
@@ -41,8 +41,8 @@ export class BuyPostComponent implements OnInit {
     });
   }
 
-  addressValidityChange(isValid: boolean = false) {
-    this.addressComplete = isValid;
+  addressValidityChange(validForm: any) {
+    this.validShipping = validForm;
   }
 
   async beginStripeCheckout() {
@@ -63,7 +63,7 @@ export class BuyPostComponent implements OnInit {
       subtotal: 1,
       fee: 1,
       total: 2,
-      shipping: {},
+      shipping: this.validShipping,
       status: 'pending'
     };
 

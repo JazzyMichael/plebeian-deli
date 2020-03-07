@@ -19,8 +19,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   postId: string;
   postUserId: string;
-  carouselIndex = 0;
-
+  canPurchase: boolean;
   likedUids: string[];
   alreadyLiked: boolean;
   likeCount: number;
@@ -34,7 +33,8 @@ export class PostComponent implements OnInit, OnDestroy {
     private router: Router,
     private postService: PostService,
     private authService: AuthService,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -51,6 +51,8 @@ export class PostComponent implements OnInit, OnDestroy {
       document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
       this.user = await this.authService.getCurrentUser();
+
+      if (this.user) this.canPurchase = this.isTester(this.user.uid);
 
       this.post$ = this.postService.getPost(postId)
         .pipe(
@@ -128,7 +130,8 @@ export class PostComponent implements OnInit, OnDestroy {
   async likePost() {
     // if not signed in show popup
     if (!this.user) {
-      return alert('Log in to Like Posts!');
+      alert('Log in to Like Posts!');
+      return;
     }
 
     if (this.alreadyLiked) {
@@ -153,6 +156,15 @@ export class PostComponent implements OnInit, OnDestroy {
   twitterShare() {
     const url = 'https://twitter.com/intent/tweet?text=Check%20out%20this%20Plebeian%20post!';
     window.open(url, '_blank');
+  }
+
+  isTester(uid: string) {
+    return [
+      'raKDGj7QGwMpGlED5JQRVDSQZ983',
+      'Yg1KGgr6HCUjI1kvdVjlXujwJ7Z2',
+      'cZAJAT0Th3Qu4M91Jc2MFqMxsls1',
+      'kCmmJ90ZibOW7KrmG27lxYYqnN93'
+    ].includes(uid);
   }
 
 }

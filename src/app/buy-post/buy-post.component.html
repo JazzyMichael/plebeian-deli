@@ -6,19 +6,19 @@
     <span [ngClass]="{ 'active-stage': purchaseComplete }">COMPLETE</span>
 </div>
 
-<mat-card *ngIf="!purchaseComplete">
+<mat-card *ngIf="!purchaseComplete" class="pleb-card">
     <mat-card-content>
-        <app-address-form (valid)="addressValidityChange($event)"></app-address-form>
+        <app-address-form (validForm)="addressValidityChange($event)"></app-address-form>
     </mat-card-content>
     <mat-card-actions style="text-align: right">
-        <button mat-button [disabled]="!addressComplete" (click)="beginStripeCheckout()">
+        <button mat-button [disabled]="!validShipping" (click)="beginStripeCheckout()">
             <span style="font-size: 1.2em">Checkout</span>
             <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
         </button>
     </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="purchaseComplete">
+<mat-card *ngIf="purchaseComplete" class="pleb-card">
     <mat-card-header>
         <mat-card-title>Your Purchase is Complete!</mat-card-title>
     </mat-card-header>
