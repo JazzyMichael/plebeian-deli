@@ -9,8 +9,6 @@ import { map, tap } from 'rxjs/operators';
 })
 export class UserService {
   users$: BehaviorSubject<any>;
-  admins$: BehaviorSubject<any>;
-
   noMoreNewUsers: boolean;
 
   constructor(
@@ -19,7 +17,6 @@ export class UserService {
   ) {
 
     this.users$ = new BehaviorSubject([]);
-    this.admins$ = new BehaviorSubject([]);
 
     this.afStore
       .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').limit(20))
@@ -48,7 +45,6 @@ export class UserService {
 
   getMoreUsers() {
     if (this.noMoreNewUsers) {
-      console.log('no more users to load');
       return;
     }
 
@@ -57,7 +53,7 @@ export class UserService {
     const lastVisible = currentUsers[currentUsers.length - 1].createdTimestamp;
 
     this.afStore
-      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(10))
+      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').startAfter(lastVisible).limit(8))
       .get()
       .pipe(
         map(users => {
@@ -85,16 +81,42 @@ export class UserService {
       });
   }
 
-  getArtists() {
+  searchUsers(term: string = '') {
     return this.afStore
-      .collection('users', ref => ref.where('membership', '==', 'artist'))
-      .valueChanges({ idField: 'idField' });
+      .collection('users', ref => ref
+        .where('lowerCaseUsername', '>=', term.toLowerCase())
+        .where('lowerCaseUsername', '<=', term.toLowerCase() + 'z'))
+      .valueChanges().pipe(
+        map((users: any[] = []) => users.map(user => {
+          const beef = {
+            ...user,
+            thumbnail: this.getUserThumbnail(user),
+            backgroundThumbnail: this.getUserBackground(user)
+          };
+
+          return beef;
+        }))
+      );
+  }
+
+  getUsersByCategories(categories: string[]) {
+    return this.afStore
+      .collection('users', ref => ref.where('medium', 'in', categories))
+      .valueChanges().pipe(
+        map((users: any[] = []) => users.map(user => {
+          const beef = {
+            ...user,
+            thumbnail: this.getUserThumbnail(user),
+            backgroundThumbnail: this.getUserBackground(user)
+          };
+
+          return beef;
+        }))
+      );
   }
 
   getUserById(uid: string) {
-    return this.afStore
-      .collection('users')
-      .doc(uid)
+    return this.afStore.doc(`users/${uid}`)
       .get()
       .pipe(map(doc => doc.data()))
       .toPromise();
@@ -115,10 +137,7 @@ export class UserService {
   }
 
   updateUserPromise(uid: string, obj: any) {
-    return this.afStore
-      .doc(`users/${uid}`)
-      .update(obj)
-      .catch(e => console.log('oops', e));
+    return this.afStore.doc(`users/${uid}`).update(obj);
   }
 
   getUserThumbnail(user: any, size: number = 100): Observable<any> {

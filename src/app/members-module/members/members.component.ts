@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { switchMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { CategoriesService } from '../../services/categories.service';
-import { AuthService } from '../../services/auth.service';
-import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-members',
@@ -12,68 +10,69 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./members.component.scss']
 })
 export class MembersComponent implements OnInit {
-
+  debounce: any;
   users$: Observable<any>;
   categoryNames: string[];
   selectedCategories: any[];
   searchTerm: string;
 
-  constructor(
-    public userService: UserService,
-    private catService: CategoriesService,
-    private authService: AuthService,
-    private chatService: ChatService
-  ) { }
+  constructor(private userService: UserService, private catService: CategoriesService) { }
 
   ngOnInit() {
-    this.filterUsers();
+    this.setUsers();
     this.categoryNames = this.catService.getCategoryNames();
   }
 
-  onScroll() {
-    this.userService.getMoreUsers();
-  }
-
-  filterUsers() {
+  setUsers() {
     this.users$ = this.userService.users$.asObservable().pipe(
-      switchMap(users => {
-        if (!this.searchTerm && (!this.selectedCategories || !this.selectedCategories.length)) {
-          return of(users);
-        }
-
-        const filtered = users.filter(user => {
-          let validCategory: boolean;
-
-          if (this.selectedCategories && this.selectedCategories.length) {
-            validCategory = this.selectedCategories.some(c => {
-              return user.medium && c.toLowerCase() === user.medium.toLowerCase();
-            });
-          } else {
-            validCategory = true;
-          }
-
-          const lowerCaseSearchTerm = this.searchTerm ? this.searchTerm.toLowerCase() : '';
-          const lowerCaseUsername = user.username ? user.username.toLowerCase() : '';
-
-          const re = new RegExp(lowerCaseSearchTerm);
-
-          const validSearch = this.searchTerm ? re.test(lowerCaseUsername) : true;
-
-          return validCategory && validSearch;
-        });
-
-        return of(filtered);
-      })
+      map(users => this.categoryFilter(users, this.selectedCategories))
     );
   }
 
-  change() {
-    this.filterUsers();
+  setSearchUsers(term: string = '') {
+    this.users$ = this.userService.searchUsers(term).pipe(
+      map(users => this.categoryFilter(users, this.selectedCategories))
+    );
   }
 
-  async sendMessage(memberUid: string) {
-    const user = await this.authService.getCurrentUser();
-    this.chatService.initiateChat(user.uid, memberUid);
+  setCategoryUsers(categories: string[] = []) {
+    if (!categories.length || categories.length > 10) return this.setUsers();
+    this.users$ = this.userService.getUsersByCategories(categories);
+  }
+
+  onScroll() {
+    if (!this.searchTerm) this.userService.getMoreUsers();
+  }
+
+  searchInput() {
+    if (this.debounce) {
+      clearTimeout(this.debounce);
+    }
+
+    this.debounce = setTimeout(() => {
+      if (this.searchTerm) {
+        this.setSearchUsers(this.searchTerm);
+      } else {
+        this.setUsers();
+      }
+    }, 1000);
+  }
+
+  categorySelect() {
+    if (this.searchTerm) {
+      this.setSearchUsers(this.searchTerm);
+    } else {
+      this.setCategoryUsers(this.selectedCategories.map(x => x.toLowerCase()));
+    }
+  }
+
+  categoryFilter(users: any[] = [], selected: any[] = []) {
+    if (!selected.length) return users;
+
+    return users.filter(user =>
+      user.medium &&
+      selected.some(cat => cat.toLowerCase() === user.medium.toLowerCase())
+    );
   }
 
 }

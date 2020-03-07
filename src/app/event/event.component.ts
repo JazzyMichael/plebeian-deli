@@ -26,24 +26,16 @@ export class EventComponent implements OnInit {
 
       const eventId = params.get('id');
 
-      if (!eventId) {
-        return this.router.navigateByUrl('/calendar');
-      }
+      if (!eventId) return this.router.navigateByUrl('/calendar');
 
       document.querySelector('.mat-drawer-content').scrollTop = 0;
-
       document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
       this.event$ = this.eventService.getEvent(eventId)
         .pipe(
           tap(async event => {
-            if (!event) {
-              return this.router.navigateByUrl('/calendar');
-            }
-
-            if (!this.gallery) {
-              this.gallery = await this.userService.getUserById(event.userId || event.gallerId);
-            }
+            if (!event) return this.router.navigateByUrl('/calendar');
+            this.gallery = await this.userService.getUserById(event.userId || event.gallerId);
           })
         );
     });

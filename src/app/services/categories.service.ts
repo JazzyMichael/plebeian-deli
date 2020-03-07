@@ -11,13 +11,11 @@ export class CategoriesService {
     { name: 'painting', icon: 'palette', color: '#ff9f59' },
     { name: 'photography', icon: 'camera_enhance', color: '#fdf5a2' },
     { name: 'animation', icon: 'landscape', color: '#4caf50' },
-    { name: 'video', icon: 'videocam' },
-    { name: 'typography', icon: 'wb_auto' },
-    { name: 'mural art', icon: 'settings_brightness' },
-    { name: 'mixed media', icon: 'computer' },
-    { name: 'ceramics', icon: 'texture' },
     { name: 'metal', icon: 'settings_applications' },
-    { name: 'glass', icon: 'whatshot' }
+    { name: 'typography', icon: 'wb_auto' },
+    { name: 'ceramics', icon: 'texture' },
+    { name: 'glass', icon: 'whatshot' },
+    { name: 'murals', icon: 'settings_brightness' }
   ];
 
   constructor() { }
