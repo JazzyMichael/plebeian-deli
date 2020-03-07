@@ -1,4 +1,4 @@
-<form>
+<form *ngIf="addressForm" [formGroup]="addressForm">
 
     <!-- Order Notes -->
 
@@ -6,12 +6,12 @@
     <div class="form-row">
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
-            <input matInput>
+            <input matInput formControlName="firstName" maxlength="40">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
-            <input matInput>
+            <input matInput formControlName="lastName" maxlength="40">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
     </div>
@@ -19,7 +19,7 @@
     <!-- Street -->
     <mat-form-field appearance="outline">
         <mat-label>Street</mat-label>
-        <input matInput>
+        <input matInput formControlName="street" maxlength="80">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         <mat-hint>Where do you live?</mat-hint>
     </mat-form-field>
@@ -27,7 +27,7 @@
     <!-- Street pt 2 -->
     <mat-form-field appearance="outline">
         <mat-label>Building, Apt, Suite, etc...</mat-label>
-        <input matInput>
+        <input matInput formControlName="street" maxlength="80">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         <mat-hint>Optional</mat-hint>
     </mat-form-field>
@@ -36,26 +36,26 @@
         <!-- City -->
         <mat-form-field appearance="outline">
             <mat-label>City</mat-label>
-            <input matInput>
+            <input matInput formControlName="city" maxlength="40">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
 
         <!-- State -->
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>State</mat-label>
-            <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" autocomplete="none">
+            <input type="text" aria-label="state" matInput formControlName="state" [matAutocomplete]="auto" autocomplete="none">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{ option }}
+                <mat-option *ngFor="let state of filteredOptions | async" [value]="state.full">
+                    {{ state.abbreviation + ' - ' + state.name }}
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
 
         <!-- Zipcode -->
         <mat-form-field appearance="outline">
-            <mat-label>ZIP Code</mat-label>
-            <input matInput>
+            <mat-label>ZIP</mat-label>
+            <input matInput formControlName="zip" maxlength="16">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
     </div>

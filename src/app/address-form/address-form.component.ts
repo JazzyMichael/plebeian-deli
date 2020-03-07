@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 @Component({
@@ -8,31 +8,62 @@ import { startWith, map } from 'rxjs/operators';
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.scss']
 })
-export class AddressFormComponent implements OnInit {
-  states: string[];
+export class AddressFormComponent implements OnInit, OnDestroy {
+
+  @Output() valid: EventEmitter<boolean> = new EventEmitter(false);
+
+  states: any[];
   myControl: FormControl = new FormControl();
   filteredOptions: Observable<any>;
+  addressForm: FormGroup;
+  validitySub: Subscription;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.states = this.getStates();
+    this.states = this.getStates().map((state: string) => ({
+      abbreviation: state.split(' ')[0],
+      name: state.split(' ')[state.split(' ').length - 1],
+      full: state
+    }));
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.createAddressForm();
+  }
+
+  createAddressForm() {
+    this.addressForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      street: ['', Validators.required],
+      streetExtended: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.pattern(/(^\d{5}$)|(^\d{5}-\d{4}$)/)]
+    });
+
+    this.filteredOptions = this.addressForm.controls.state.valueChanges.pipe(
       startWith(''),
       map((value: string) => this.filterStates(value))
     );
+
+    this.validitySub = this.addressForm.statusChanges.subscribe(() => {
+      this.valid.emit(this.addressForm.valid);
+    });
   }
 
-  filterStates(value: string) {
-    const filterValue = value.toLowerCase();
+  filterStates(state: string) {
+    const filterValue = state.toLowerCase();
 
     const reg = new RegExp(filterValue);
 
     return this.states.filter(x => {
-      const state = x.toLowerCase();
-      return reg.test(state);
+      const fullStateString = x.full.toLowerCase();
+      return reg.test(fullStateString);
     });
+  }
+
+  ngOnDestroy() {
+    this.validitySub.unsubscribe();
   }
 
   getStates() {

@@ -15,7 +15,8 @@ export class BuyPostComponent implements OnInit {
 
   post: any;
   sellerStripeId: string;
-  purchaseComplete: boolean = false;
+  addressComplete: boolean;
+  purchaseComplete: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,10 @@ export class BuyPostComponent implements OnInit {
       }
       this.post = post;
     });
+  }
+
+  addressValidityChange(isValid: boolean = false) {
+    this.addressComplete = isValid;
   }
 
   async beginStripeCheckout() {

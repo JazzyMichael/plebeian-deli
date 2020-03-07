@@ -8,10 +8,10 @@
 
 <mat-card *ngIf="!purchaseComplete">
     <mat-card-content>
-        <app-address-form></app-address-form>
+        <app-address-form (valid)="addressValidityChange($event)"></app-address-form>
     </mat-card-content>
     <mat-card-actions style="text-align: right">
-        <button mat-button (click)="beginStripeCheckout()">
+        <button mat-button [disabled]="!addressComplete" (click)="beginStripeCheckout()">
             <span style="font-size: 1.2em">Checkout</span>
             <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
         </button>
