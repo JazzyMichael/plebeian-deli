@@ -1,7 +1,6 @@
 <mat-sidenav-container>
 
     <mat-sidenav #sidenav>
-
         <app-sidenav
             style="height: 100%;"
             [user]="auth.user$ | async"
@@ -10,10 +9,14 @@
             (signIn)="sidenav.close();"
             (signOut)="auth.logout(); sidenav.close();">
         </app-sidenav>
-
     </mat-sidenav>
 
-    <mat-sidenav-content style="position: static; background-color: black;">
+    <mat-sidenav-content
+        style="position: static; background-color: black;"
+        [ngStyle]="{
+            'height': sidenav.opened ? '100vh': 'unset',
+            'overflow-y': sidenav.opened ? 'hidden' : 'unset'
+        }">
 
         <app-widescreen-header class="widescreen-header"></app-widescreen-header>
 

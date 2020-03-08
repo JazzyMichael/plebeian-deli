@@ -3,12 +3,12 @@
     <mat-tab label="Bought">
         <div *ngIf="buyerOrders$ | async as orders" style="margin-top: 2em; min-height: 200px;">
             <div *ngFor="let order of orders" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
+                <!-- <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
 
                 <div class="order-info">
                     <span>{{ order.item }}</span>
                     <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
-                </div>
+                </div> -->
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
             </div>
@@ -22,12 +22,12 @@
     <mat-tab label="Sold">
         <div *ngIf="isApprovedSeller; else notApprovedSeller" style="margin-top: 2em; min-height: 200px;">
             <div *ngFor="let order of sellerOrders$ | async" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
+                <!-- <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
 
                 <div class="order-info">
                     <span>{{ order.item }}</span>
                     <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
-                </div>
+                </div> -->
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
             </div>

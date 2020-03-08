@@ -202,9 +202,9 @@ export const createSellerAccount = functions.https
 export const createStripeCheckoutSession = functions.https
     .onCall(async (data, context) => {
 
-        const { sellerStripeAccountID, item } = data
+        const { sellerStripeId, postId, item } = data
 
-        if (!sellerStripeAccountID || !item) {
+        if (!sellerStripeId || !item) {
             throw new Error('Invalid Cloud Function Arguments')
         }
 
@@ -221,11 +221,11 @@ export const createStripeCheckoutSession = functions.https
             payment_intent_data: {
                 application_fee_amount: 1,
                 transfer_data: {
-                    destination: sellerStripeAccountID,
+                    destination: sellerStripeId,
                 },
             },
-            success_url: '',
-            cancel_url: ''
+            success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
+            cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
         })
     })
 
