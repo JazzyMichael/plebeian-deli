@@ -1,7 +1,7 @@
 <div class="background">
 
     <!-- Logo -->
-    <svg class="logo" preserveAspectRatio="xMidYMid meet" data-bbox="4.014 5 1118.865 611.297" viewBox="0 0 1127.888 620.299" height="620.299" width="1127.888" xmlns="http://www.w3.org/2000/svg" data-type="ugc" role="img">
+    <svg class="logo" routerLink="/about" preserveAspectRatio="xMidYMid meet" data-bbox="4.014 5 1118.865 611.297" viewBox="0 0 1127.888 620.299" height="620.299" width="1127.888" xmlns="http://www.w3.org/2000/svg" data-type="ugc" role="img">
         <g>
             <path stroke-width="8" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M34.141 24.378H4.014L6.039 611.54l90.773.98-1.607-292.464h65.885l-1.563-296.91-125.386 1.232"></path>
             <path stroke-width="8" stroke="#231f20" stroke-miterlimit="10" fill="#80caa2" d="M242.866 24.941h-77.133l-1.607 282.822h-61.064v78.741h46.601v229.793l964.388-.47-5.238-412.054-101.267 40.158-1.71-73.518-83.844.186-137.933-.864v68.958h59.547l.629 130.983-56.684 1.712-24.444-190.785h-92.538l26.19 187.293-62.856 3.492v57.618h59.364V549.48l-78.57-1.746V176.403l-66.347 1.746-87.3 13.402-1.746-151.901-72.988 1.273 1.402 316.497-48.887 1.746v80.316h60.902l.207 99.522h-85.553l1.746-357.929-69.84 3.492-3.427-159.626z"></path>
@@ -24,7 +24,7 @@
     </svg>
 
 
-    <swiper *ngIf="slides?.length" [config]="swiperConfig" style="width: 100%">
+    <swiper *ngIf="slides?.length" [config]="swiperConfig" style="width: 100%; cursor: grabbing;">
         <div *ngFor="let slide of slides" class="text-slide">{{ slide }}</div>
     </swiper>
 
