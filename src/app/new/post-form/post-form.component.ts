@@ -156,7 +156,8 @@ export class PostFormComponent implements OnInit, OnDestroy {
     const fullObj = {
       ...this.postForm.value,
       ...postImgObj,
-      tags: this.tags
+      lowerCaseTitle: this.postForm.value.title.toLowerCase(),
+      tags: this.tags.map(tag => tag.toLowerCase())
     };
 
     try {

@@ -45,6 +45,35 @@ export class PostService {
       });
   }
 
+  getSortedPosts(sort: string = 'recent') {
+    return;
+  }
+
+  getPostsByCategoryNEW(category: string) {
+    return;
+  }
+
+  searchPosts(term: string = '') {
+    // posts where lowerCaseTitle >= term
+    // posts where tags array-contains term
+    // - forkjoin -
+    // -- remove duplicates --
+  }
+
+  getPostsByTitle(title: string) {
+    return this.afStore
+      .collection('posts', ref => ref
+        .where('lowerCaseTitle', '>=', title.toLowerCase())
+        .where('lowerCaseTitle', '<=', title.toLowerCase() + 'z'))
+      .valueChanges({ idField: 'id' });
+  }
+
+  getPostsByTag(tag: string) {
+    return this.afStore
+      .collection('posts', ref => ref.where('tags', 'array-contains', tag))
+      .valueChanges({ idField: 'id' });
+  }
+
   getPostThumbnail(path: string, backupUrl: string): Observable<any> {
     return this.storage
       .ref(path)

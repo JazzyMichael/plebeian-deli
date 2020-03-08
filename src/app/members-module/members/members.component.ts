@@ -13,7 +13,7 @@ export class MembersComponent implements OnInit {
   debounce: any;
   users$: Observable<any>;
   categoryNames: string[];
-  selectedCategories: any[];
+  selectedCategories: any[] = [];
   searchTerm: string;
 
   constructor(private userService: UserService, private catService: CategoriesService) { }
@@ -44,10 +44,12 @@ export class MembersComponent implements OnInit {
     if (!this.searchTerm) this.userService.getMoreUsers();
   }
 
-  searchInput() {
+  searchType(term: string) {
     if (this.debounce) {
       clearTimeout(this.debounce);
     }
+
+    this.searchTerm = term;
 
     this.debounce = setTimeout(() => {
       if (this.searchTerm) {
@@ -56,6 +58,17 @@ export class MembersComponent implements OnInit {
         this.setUsers();
       }
     }, 1000);
+  }
+
+  clearSearch(element: any) {
+    if (element && element.value) element.value = '';
+    this.searchTerm = '';
+    if (this.selectedCategories && this.selectedCategories.length) {
+      this.setCategoryUsers(this.selectedCategories);
+    } else {
+      this.setUsers();
+    }
+    setTimeout(() => element.blur(), 500);
   }
 
   categorySelect() {

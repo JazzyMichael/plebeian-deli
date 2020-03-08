@@ -9,13 +9,11 @@
 <div class="options-container">
     <div style="width: 95%; max-width: 500px; margin: 1em auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
         <mat-form-field color="accent">
-            <input
-                matInput
-                [(ngModel)]="searchTerm"
-                (keyup)="searchInput()"
-                autocomplete="off"
-                placeholder="Search"
-                style="font-weight: 100">
+            <mat-label>Search</mat-label>
+            <input matInput #searchInput (keyup)="searchType(searchInput.value)" autocomplete="off">
+            <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch(searchInput)">
+                <mat-icon>close</mat-icon>
+            </button>
         </mat-form-field>
 
         <mat-form-field color="accent">
