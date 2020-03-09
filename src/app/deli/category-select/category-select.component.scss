@@ -1,3 +1,7 @@
+.search-and-sort {
+    display: none;
+}
+
 ::ng-deep .mat-chip-list-wrapper {
     display: block !important;
     margin: 5px 0 !important;
@@ -25,10 +29,19 @@
 }
 
 @media(min-width: 777px) {
+    .search-and-sort {
+        display: flex;
+        justify-content: space-between;
+        margin: 2em auto;
+        width: 90%;
+        max-width: 777px;
+    }
+
     .category-item {
         font-size: 1.1em;
         display: inline-flex;
     }
+
     .category-select {
         margin-bottom: 1.5em;
     }

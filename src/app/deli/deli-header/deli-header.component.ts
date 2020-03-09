@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Subject, Subscription, Observable, of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deli-header',
@@ -24,7 +25,7 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
   @Output() sortChange: EventEmitter<string> = new EventEmitter();
   @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(private auth: AuthService, private notifications: NotificationService) { }
+  constructor(private auth: AuthService, private notifications: NotificationService, private router: Router) { }
 
   ngOnInit() {
     this.sort = 'recent';
@@ -38,7 +39,7 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
     });
 
     this.profilePic = this.auth.user$.asObservable().pipe(
-      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png'))
+      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/sell.svg'))
     );
 
     this.notificationsSub = this.notifications.newCount$
@@ -52,7 +53,10 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
     this.notificationsSub.unsubscribe();
   }
 
-  openSidenav() {
+  async openSidenav() {
+    if (!await this.auth.getCurrentUser()) {
+      return this.router.navigateByUrl('/login');
+    }
     this.auth.toggleSidenav.next(true);
   }
 
