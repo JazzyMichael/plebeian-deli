@@ -5,7 +5,9 @@
     class="mobile-only">
 </app-deli-header>
 
-<app-category-select (selectedCategory)="getPostsByCategory($event)"></app-category-select>
+<app-category-select
+    (selectedCategory)="categorySelect($event)">
+</app-category-select>
 
 <ng-container *ngIf="posts$ | async as posts">
     <app-post-layout [posts]="posts"></app-post-layout>

@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { UserService } from '../services/user.service';
-import { tap, catchError, debounceTime, map } from 'rxjs/operators';
+import { tap, debounceTime } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
 
@@ -15,7 +14,6 @@ import { NotificationService } from '../services/notification.service';
 export class PostComponent implements OnInit, OnDestroy {
   post$: Observable<any>;
   recentPosts$: Observable<any>;
-  featuredPosts$: Observable<any>;
 
   postId: string;
   postUserId: string;
@@ -74,11 +72,9 @@ export class PostComponent implements OnInit, OnDestroy {
               this.alreadyLiked = false;
             }
 
-            this.recentPosts$ = this.postService.posts$.pipe(map((x: any[]) => x.slice(0, 4)));
+            this.recentPosts$ = this.postService.getRecentPosts(4);
           })
         );
-
-      this.featuredPosts$ = this.postService.featuredPosts$.asObservable();
     });
 
     this.debounceSub = this.likeDebouncer
@@ -93,7 +89,7 @@ export class PostComponent implements OnInit, OnDestroy {
           }
 
           this.likedUids.push(this.user.uid);
-          await this.postService.updatePost(this.postId, { likedUids: this.likedUids });
+          await this.postService.updatePost(this.postId, { likedUids: this.likedUids, likes: this.likedUids.length });
 
           // update post user notifications
           const obj = {
@@ -116,7 +112,7 @@ export class PostComponent implements OnInit, OnDestroy {
             return;
           }
 
-          await this.postService.updatePost(this.postId, { likedUids });
+          await this.postService.updatePost(this.postId, { likedUids, likes: likedUids.length });
         }
       });
   }

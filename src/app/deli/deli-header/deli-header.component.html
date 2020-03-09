@@ -11,7 +11,10 @@
 
     <mat-form-field class="search-box" floatLabel="never">
         <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">
-        <mat-icon matSuffix style="cursor: pointer; margin-top: 5px;">search</mat-icon>
+        <mat-icon *ngIf="!searchInput?.value" matSuffix style="cursor: pointer; margin-top: 5px;">search</mat-icon>
+        <button mat-button *ngIf="searchInput?.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch(searchInput)">
+            <mat-icon>close</mat-icon>
+        </button>
     </mat-form-field>
 
     <button mat-icon-button [matMenuTriggerFor]="sortMenu" class="pointer-cursor">

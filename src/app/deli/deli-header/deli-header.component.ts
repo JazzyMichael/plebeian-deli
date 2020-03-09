@@ -30,7 +30,7 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
     this.sort = 'recent';
 
     this.debouncerSub = this.debouncer$.pipe(
-      debounceTime(2000)
+      debounceTime(1234)
     )
     .subscribe(({ term, element }) => {
       element.blur();
@@ -66,6 +66,11 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
 
   search(term: string, element: any) {
     this.debouncer$.next({ term, element });
+  }
+
+  clearSearch(element: any) {
+    if (element && element.value) element.value = '';
+    this.debouncer$.next({ term: '', element });
   }
 
 }

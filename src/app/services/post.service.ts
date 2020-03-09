@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, BehaviorSubject, of, combineLatest } from 'rxjs';
 import { map, switchMap, tap, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
@@ -11,26 +10,19 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class PostService {
-  posts$: BehaviorSubject<any>;
-  featuredPosts$: BehaviorSubject<any>;
   editingPost: any;
-
-  deliPostsSort: any = {};
-  deliPostsCat: any = {};
+  postsCache: any = {};
 
   constructor(
     private afStore: AngularFirestore,
     private userService: UserService,
     private storage: AngularFireStorage,
-    private router: Router,
     private auth: AuthService
-    ) {
+  ) {}
 
-    this.posts$ = new BehaviorSubject([]);
-    this.featuredPosts$ = new BehaviorSubject([]);
-
-    this.afStore
-      .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(50))
+  getRecentPosts(limit: number = 4) {
+    return this.afStore
+      .collection('posts', ref => ref.orderBy('createdTimestamp', 'desc').limit(limit))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {
@@ -39,58 +31,11 @@ export class PostService {
             return { ...post, thumbnail };
           });
         })
-      )
-      .subscribe(posts => {
-        this.posts$.next(posts);
-      });
-  }
-
-  getSortedPosts(sort: string = 'recent') {
-    return;
-  }
-
-  getPostsByCategoryNEW(category: string) {
-    return;
-  }
-
-  searchPosts(term: string = '') {
-    // posts where lowerCaseTitle >= term
-    // posts where tags array-contains term
-    // - forkjoin -
-    // -- remove duplicates --
-  }
-
-  getPostsByTitle(title: string) {
-    return this.afStore
-      .collection('posts', ref => ref
-        .where('lowerCaseTitle', '>=', title.toLowerCase())
-        .where('lowerCaseTitle', '<=', title.toLowerCase() + 'z'))
-      .valueChanges({ idField: 'id' });
-  }
-
-  getPostsByTag(tag: string) {
-    return this.afStore
-      .collection('posts', ref => ref.where('tags', 'array-contains', tag))
-      .valueChanges({ idField: 'id' });
-  }
-
-  getPostThumbnail(path: string, backupUrl: string): Observable<any> {
-    return this.storage
-      .ref(path)
-      .getDownloadURL()
-      .pipe(
-        catchError(e => {
-          console.log('postThumbnail not found', e);
-          return of(backupUrl);
-        })
       );
   }
 
-  getAllPostsBySort(sort: string = 'recent') {
-    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
-    const sortField = opts[sort];
-
-    if (this.deliPostsSort[sortField]) return of(this.deliPostsSort[sortField]);
+  getSortedPosts(sortField: string = 'createdTimestamp') {
+    if (this.postsCache[sortField]) return of(this.postsCache[sortField]);
 
     return this.afStore
       .collection('posts', ref => ref.orderBy(sortField, 'desc').limit(20))
@@ -102,18 +47,15 @@ export class PostService {
             return { ...post, thumbnail };
           });
         }),
-        tap(posts => this.deliPostsSort[sortField] = [...posts])
+        tap(posts => this.postsCache[sortField] = [...posts])
       );
   }
 
-  getPostsByCategory(category: string, sort: string = 'recent') {
-    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
-    const sortField = opts[sort];
-
-    if (this.deliPostsCat[`${category}-${sortField}`]) return of(this.deliPostsCat[`${category}-${sortField}`]);
+  getPostsByCategoryNEW(category: string) {
+    if (this.postsCache[category]) return of(this.postsCache[category]);
 
     return this.afStore
-      .collection('posts', ref => ref.where('category', '==', category).orderBy(sortField, 'desc').limit(20))
+      .collection('posts', ref => ref.where('category', '==', category))
       .valueChanges({ idField: 'postId' })
       .pipe(
         map(posts => {
@@ -122,23 +64,53 @@ export class PostService {
             return { ...post, thumbnail };
           });
         }),
-        tap(posts => this.deliPostsCat[`${category}-${sortField}`] = [...posts])
+        tap(posts => this.postsCache[category] = [...posts])
       );
   }
 
-  filterPostsByTag(tag: string, sort: string = 'recent') {
-    const opts = { recent: 'createdTimestamp', popular: 'likes', price: 'price' };
-    const sortField = opts[sort];
-
-    return this.afStore
-      .collection('posts', ref => ref.where('tags', 'array-contains', tag).orderBy(sortField, 'desc').limit(100))
-      .valueChanges({ idField: 'postId' })
+  searchPosts(term: string = '') {
+    return combineLatest([this.getPostsByTitle(term), this.getPostsByTag(term)])
       .pipe(
+        map(([titlePosts, tagPosts]) => {
+          const both = [...titlePosts];
+          tagPosts.forEach(tagPost => {
+            if (!titlePosts.some(titlePost => titlePost.postId === tagPost.postId)) {
+              both.push(tagPost);
+            }
+          });
+          return both;
+        }),
         map(posts => {
           return posts.map((post: any) => {
             const thumbnail = post.thumbnailPath ? this.getPostThumbnail(post.thumbnailPath, post.thumbnailImgUrl) : undefined;
             return { ...post, thumbnail };
           });
+        })
+      );
+  }
+
+  getPostsByTitle(title: string) {
+    return this.afStore
+      .collection('posts', ref => ref
+        .where('lowerCaseTitle', '>=', title.toLowerCase())
+        .where('lowerCaseTitle', '<=', title.toLowerCase() + 'z'))
+      .valueChanges({ idField: 'postId' });
+  }
+
+  getPostsByTag(tag: string) {
+    return this.afStore
+      .collection('posts', ref => ref.where('tags', 'array-contains', tag))
+      .valueChanges({ idField: 'postId' });
+  }
+
+  getPostThumbnail(path: string, backupUrl: string): Observable<any> {
+    return this.storage
+      .ref(path)
+      .getDownloadURL()
+      .pipe(
+        catchError(e => {
+          console.log('postThumbnail not found', e);
+          return of(backupUrl);
         })
       );
   }
