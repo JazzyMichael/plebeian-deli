@@ -64,14 +64,14 @@
 
     <hr style="width: 100%; border-color: #f54081;">
 
+    <button mat-button routerLink="/contact" class="nav-link" (click)="closeSidenav.emit()">
+        <mat-icon class="nav-link-icon">contact_mail</mat-icon>
+        <span>Contact</span>
+    </button>
+
     <button mat-button routerLink="/terms" class="nav-link" (click)="closeSidenav.emit()">
         <mat-icon class="nav-link-icon">list_alt</mat-icon>
         <span>Terms of Service</span>
-    </button>
-
-    <button mat-button routerLink="/contact" class="nav-link">
-        <mat-icon class="nav-link-icon">contact_mail</mat-icon>
-        <span>Contact</span>
     </button>
 
     <button mat-button class="nav-link" (click)="signOut.emit()">
