@@ -40,9 +40,9 @@
 </mat-card>
 
 <br><br>
-<ng-template *ngIf="auth.user$ | async as user">
+<ng-container *ngIf="auth.user$ | async as user">
     <button *ngIf="user && user.uid && isTester(user.uid)" mat-raised-button routerLink="/contact/messages" style="display: block; margin: 1em auto;">
         You're an Admin, Click to View Messages
     </button>
-</ng-template>
+</ng-container>
 <br><br>
