@@ -19,7 +19,7 @@ export class UserService {
     this.users$ = new BehaviorSubject([]);
 
     this.afStore
-      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').limit(20))
+      .collection('users', ref => ref.orderBy('createdTimestamp', 'desc').limit(16))
       .get()
       .pipe(
         map(users => {

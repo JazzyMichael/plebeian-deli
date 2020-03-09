@@ -70,7 +70,8 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
 
   clearSearch(element: any) {
     if (element && element.value) element.value = '';
-    this.debouncer$.next({ term: '', element });
+    element.blur();
+    this.searchChange.emit('');
   }
 
 }
