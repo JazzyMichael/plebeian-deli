@@ -31,7 +31,8 @@
             <div *ngIf="
                     user && location.path() === '/' + user.username
                     || ['/edit-profile', '/seller'].includes(location.path())
-                    || location.path().split('/')[1] === 'order-details';
+                    || location.path().split('/')[1] === 'order-details'
+                    || location.path() === '/contact';
                     else noTitle"
                 style="font-size: 1.4em;">
                 {{ user && location.path() === '/' + user.username ? user.username : location.path().split('/')[1].split('-').join(' ') | titlecase }}

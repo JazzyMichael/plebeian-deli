@@ -1,0 +1,19 @@
+<div class="container">
+
+    <mat-card *ngFor="let msg of msgs$ | async" class="pleb-card">
+        <mat-card-header>
+            <mat-card-title>{{ msg.name }} <span style="font-size: 0.9em"> - {{ msg.createdAt.toDate() | date }}</span></mat-card-title>
+            <mat-card-subtitle>{{ msg.email }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="padding: 1em">
+            <hr>
+            <mat-checkbox [checked]="msg.acknowledged" (change)="acknowledgedToggle($event, msg.id)">Acknowledged ?</mat-checkbox>
+            <p *ngIf="msg.acknowledged">Last checked by: {{ msg.acknowledgedBy || 'somebody' }}</p>
+            <br>
+            <hr>
+            <br>
+            <p>{{ msg.message }}</p>
+        </mat-card-content>
+    </mat-card>
+
+</div>
