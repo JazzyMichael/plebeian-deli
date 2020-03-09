@@ -118,7 +118,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
   addTag(event: MatChipInputEvent): void {
     const { input, value } = event;
 
-    if ((value || '').trim()) {
+    if (value || '') {
       this.tags.push(value);
 
       if (this.tags.length > 10) {
@@ -130,7 +130,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
       input.value = '';
     }
 
-    this.snackBar.open('Tag added!', '', { duration: 1500 });
+    this.snackBar.open('Tag added!', '', { duration: 2000 });
   }
 
   removeTag(tag: string) {
@@ -138,7 +138,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
 
     if (index >= 0) {
       this.tags.splice(index, 1);
-      this.snackBar.open('Tag removed!', '', { duration: 1500 });
+      this.snackBar.open('Tag removed!', '', { duration: 2000 });
     }
   }
 
@@ -157,7 +157,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
       ...this.postForm.value,
       ...postImgObj,
       lowerCaseTitle: this.postForm.value.title.toLowerCase(),
-      tags: this.tags.map(tag => tag.toLowerCase())
+      tags: this.tags.map(tag => tag.trim().toLowerCase())
     };
 
     try {

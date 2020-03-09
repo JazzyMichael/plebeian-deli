@@ -50,7 +50,7 @@ export class DeliComponent implements OnInit {
   getPosts() {
     if (this.searchTerm) {
 
-      this.posts$ = this.postService.searchPosts(this.searchTerm)
+      this.posts$ = this.postService.searchPosts(this.searchTerm.toLowerCase())
         .pipe(
           map((posts: any[] = []) => {
             if (this.category === 'all') return posts;
