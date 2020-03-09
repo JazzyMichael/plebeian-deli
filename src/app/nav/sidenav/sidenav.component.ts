@@ -24,10 +24,6 @@ export class SidenavComponent implements OnInit {
     this.notificationService.newCount$.subscribe(num => this.newCount = num || 0);
   }
 
-  contactClick() {
-    window.alert('CONTACT DEEZ NUTS');
-  }
-
   installClick() {
     this.notificationService.deferredPrompt.prompt();
 

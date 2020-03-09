@@ -28,7 +28,7 @@ export class MobileHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userSub = this.auth.user$.subscribe(user => {
       this.user = user;
-      this.profilePic = user && user.thumbnail ? user.thumbnail : of('assets/images/ham-250.png');
+      this.profilePic = user && user.thumbnail ? user.thumbnail : of('assets/images/sell.svg');
     });
 
     this.notificationSub = this.notifications.newCount$
@@ -43,7 +43,8 @@ export class MobileHeaderComponent implements OnInit, OnDestroy {
   }
 
   sidenavClick() {
-    this.openSidenav.emit();
+    if (!this.user) this.auth.navigateToProfile();
+    else this.openSidenav.emit();
   }
 
 }
