@@ -26,13 +26,7 @@ export class AuthService {
     private userService: UserService,
     private notificiationService: NotificationService
   ) {
-      // const startingUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-      const startingUser = null;
-      if (startingUser) {
-        startingUser['thumbnail'] = this.userService.getUserThumbnail(startingUser, 250);
-        startingUser['backgroundThumbnail'] = this.userService.getUserBackground(startingUser, 500);
-      }
-      this.user$ = new BehaviorSubject(startingUser);
+      this.user$ = new BehaviorSubject(null);
       this.username = '';
 
       this.afAuth.auth.getRedirectResult()
@@ -55,9 +49,7 @@ export class AuthService {
           user['backgroundThumbnail'] = this.userService.getUserBackground(user, 500);
           this.username = user.username;
           this.user$.next(user);
-          // localStorage.setItem('user', JSON.stringify(user));
         } else {
-          // localStorage.removeItem('user');
           this.username = null;
           this.user$.next(null);
           this.notificiationService.reset();
