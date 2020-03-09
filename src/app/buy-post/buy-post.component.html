@@ -1,12 +1,12 @@
 <div class="stage-container">
-    <span [ngClass]="{ 'active-stage': !purchaseComplete }">SHIPPING</span>
+    <span [ngClass]="{ 'active-stage': !purchaseComplete && !checkoutFail }">SHIPPING</span>
     <span>-></span>
-    <span>BILLING</span>
+    <span [ngClass]="{ 'active-stage': checkoutFail }">BILLING</span>
     <span>-></span>
-    <span [ngClass]="{ 'active-stage': purchaseComplete }">COMPLETE</span>
+    <span [ngClass]="{ 'active-stage': purchaseComplete && !checkoutFail }">COMPLETE</span>
 </div>
 
-<mat-card *ngIf="!purchaseComplete" class="pleb-card">
+<mat-card *ngIf="!purchaseComplete && !checkoutFail" class="pleb-card">
     <mat-card-content>
         <app-address-form (validForm)="addressValidityChange($event)"></app-address-form>
     </mat-card-content>
@@ -18,7 +18,24 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="purchaseComplete" class="pleb-card">
+<mat-card *ngIf="checkoutFail" class="pleb-card">
+    <mat-card-header style="padding: 1em;">
+        <mat-card-title>Ooops. You didn't make it through Checkout.</mat-card-title>
+    </mat-card-header>
+    <hr style="border: 2px solid #ff4081">
+    <mat-card-actions style="display: flex; justify-content: space-around; padding: 1em;">
+        <button mat-button (click)="goToShipping()">
+            <mat-icon style="margin-right: 10px">arrow_back</mat-icon>
+            <span style="font-size: 1.2em">Shipping</span>
+        </button>
+        <button mat-button>
+            <span style="font-size: 1.2em">Try Again</span>
+            <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="purchaseComplete && !checkoutFail" class="pleb-card">
     <mat-card-header>
         <mat-card-title>Your Purchase is Complete!</mat-card-title>
     </mat-card-header>

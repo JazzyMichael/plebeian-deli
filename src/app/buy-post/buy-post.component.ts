@@ -49,6 +49,11 @@ export class BuyPostComponent implements OnInit {
     this.validShipping = validForm;
   }
 
+  goToShipping() {
+    this.purchaseComplete = false;
+    this.checkoutFail = false;
+  }
+
   async beginStripeCheckout() {
     const buyer = await this.auth.getCurrentUser();
 
