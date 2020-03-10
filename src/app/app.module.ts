@@ -69,8 +69,8 @@ const routes: Routes = [
   { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
 
   { path: 'deli', component: DeliComponent },
-  { path: 'chat', component: ChatComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'chat', component: ChatComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
 
   { path: 'post/:id', component: PostComponent },
