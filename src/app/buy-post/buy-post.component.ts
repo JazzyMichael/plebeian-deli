@@ -77,6 +77,7 @@ export class BuyPostComponent implements OnInit {
       sellerStripeId: 'acct_1FDLnJImMAsZGgMt', // mikes test id
       sellerId: this.post.userId,
       buyerId: buyer.uid,
+      buyerEmail: buyer.email || null,
       item: {
         name: this.post.title,
         description: this.post.description,
@@ -85,6 +86,7 @@ export class BuyPostComponent implements OnInit {
         thumbnailUrl: this.post.thumbnailImgUrl
       },
       category: this.post.category,
+      thumbnailUrl: this.post.thumbnailImgUrl,
       thumbnailPath: this.post.thumbnailPath,
       createdTimestamp: new Date(),
       price: 1,

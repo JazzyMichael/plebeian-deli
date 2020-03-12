@@ -199,7 +199,7 @@ export const createSellerAccount = functions.https
 export const createCheckoutSession = functions.https
     .onCall(async (data, context) => {
 
-        const { sellerStripeId, postId, item, buyerEmail = null } = data
+        const { sellerStripeId, postId, item, buyerEmail } = data
 
         if (!sellerStripeId || !item) {
             throw new Error('Invalid Cloud Function Arguments')
