@@ -7,11 +7,10 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
 
-import * as Stripe from 'stripe';
-// const stripe = new Stripe(functions.config().stripe.secret);
-const stripe = new Stripe('sk_test_uk0YsGUapOzUY7TH1ni1SUTB00cneBKJSY');
-
 import fetch from 'node-fetch';
+
+import * as Stripe from 'stripe';
+const stripe = new Stripe(functions.config().stripe.testsecret);
 
 export const userCreate = functions.auth.user().onCreate((user: any) => {
 

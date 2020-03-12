@@ -5,6 +5,10 @@ import { PostService } from '../services/post.service';
 import { OrdersService } from '../services/orders.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+// import { environment } from '../../environments/environment';
+
+// declare var Stripe: any;
+// const stripe = Stripe(environment.stripe.key);
 
 @Component({
   selector: 'app-buy-post',
@@ -55,6 +59,26 @@ export class BuyPostComponent implements OnInit {
   }
 
   async beginStripeCheckout() {
+
+    // http trigger function to create stripe session
+    // use returned session id to redirect to that checkout session
+    // redirects back to this page with query string
+    // firebase webhook trigger function to receive checkout results and create order and notifications
+
+
+    // stripe docs client redirect example:
+    // stripe.redirectToCheckout({
+    //   // Make the id field from the Checkout Session creation API response
+    //   // available to this file, so you can provide it as parameter here
+    //   // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+    //   sessionId: '{{CHECKOUT_SESSION_ID}}'
+    // }).then(function (result) {
+    //   // If `redirectToCheckout` fails due to a browser or network
+    //   // error, display the localized error message to your customer
+    //   // using `result.error.message`.
+    // });
+
+
     const buyer = await this.auth.getCurrentUser();
 
     const order = {
