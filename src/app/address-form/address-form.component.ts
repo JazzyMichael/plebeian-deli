@@ -38,7 +38,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
       streetExtended: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', Validators.pattern(/(^\d{5}$)|(^\d{5}-\d{4}$)/)]
+      zip: ['', [Validators.pattern(/(^\d{5}$)|(^\d{5}-\d{4}$)/), Validators.required]]
     });
 
     this.filteredOptions = this.addressForm.controls.state.valueChanges.pipe(

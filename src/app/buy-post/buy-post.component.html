@@ -8,7 +8,7 @@
 
 <mat-card *ngIf="!purchaseComplete && !checkoutFail" class="pleb-card">
     <mat-card-content>
-        <app-address-form (validForm)="addressValidityChange($event)"></app-address-form>
+        <app-address-form (valid)="addressValidityChange($event)"></app-address-form>
     </mat-card-content>
     <mat-card-actions style="text-align: right">
         <button mat-button [disabled]="!validShipping" (click)="beginStripeCheckout()">

@@ -216,7 +216,7 @@ export const createCheckoutSession = functions.https
                 currency: 'usd'
             }],
             payment_intent_data: {
-                metadata: data,
+                metadata: { teest: 'test metadata', sellerId: data.sellerId, buyerId: data.buyerId },
                 receipt_email: buyerEmail,
                 application_fee_amount: 1,
                 transfer_data: {
