@@ -62,49 +62,47 @@ export class BuyPostComponent implements OnInit {
   }
 
   async beginStripeCheckout() {
-
-    // http trigger function to create stripe session
-    // use returned session id to redirect to that checkout session
-    // redirects back to this page with query string
-    // firebase webhook trigger function to receive checkout results and create order and notifications
-
-
     const buyer = await this.auth.getCurrentUser();
 
     const order = {
       type: 'post',
       postId: this.post.postId,
       sellerStripeId: 'acct_1FDLnJImMAsZGgMt', // mikes test id
-      sellerId: this.post.userId,
+      sellerId: buyer.uid,
       buyerId: buyer.uid,
       buyerEmail: buyer.email || null,
       item: {
         name: this.post.title,
-        description: this.post.description,
-        amount: 3,
+        description: this.post.description && this.post.description.length ? this.post.description : 'No description',
+        amount: 1000,
         quantity: 1,
         thumbnailUrl: this.post.thumbnailImgUrl
       },
       category: this.post.category,
       thumbnailUrl: this.post.thumbnailImgUrl,
       thumbnailPath: this.post.thumbnailPath,
-      createdTimestamp: new Date(),
-      price: 1,
-      quantity: 1,
-      subtotal: 1,
-      fee: 1,
-      total: 2,
+      subtotal: 1000,
+      fee: 300,
+      total: 1300,
       shipping: this.validShipping,
       status: 'pending'
     };
 
-    const sessionId = await this.funcs
+    const session = await this.funcs
       .httpsCallable('createCheckoutSession')(order)
       .toPromise();
 
-    const checkoutResult = await stripe.redirectToCheckout({ sessionId });
+    console.log({ session });
 
-    console.log(checkoutResult);
+    if (!session || !session.id) {
+      this.checkoutFail = true;
+      this.checkoutErrorMsg = 'Could not create checkout session...';
+      return;
+    }
+
+    const checkoutResult = await stripe.redirectToCheckout({ sessionId: session.id });
+
+    console.log({ checkoutResult });
 
     if (checkoutResult.error) {
       this.checkoutFail = true;

@@ -20,7 +20,8 @@
 
 <mat-card *ngIf="checkoutFail" class="pleb-card">
     <mat-card-header style="padding: 1em;">
-        <mat-card-title>Ooops. You didn't make it through Checkout.</mat-card-title>
+        <mat-card-title>You didn't make it through Checkout</mat-card-title>
+        <mat-card-subtitle>{{ checkoutErrorMsg || 'Oops' }}</mat-card-subtitle>
     </mat-card-header>
     <hr style="border: 2px solid #ff4081">
     <mat-card-actions style="display: flex; justify-content: space-around; padding: 1em;">

@@ -205,28 +205,35 @@ export const createCheckoutSession = functions.https
             throw new Error('Invalid Cloud Function Arguments')
         }
 
-        await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: [{
-                name: item.name,
-                description: item.description,
-                amount: item.amount,
-                quantity: item.quantity,
-                images: [item.thumbnailUrl],
-                currency: 'usd'
-            }],
-            payment_intent_data: {
-                metadata: { teest: 'test metadata', sellerId: data.sellerId, buyerId: data.buyerId },
-                receipt_email: buyerEmail,
-                application_fee_amount: 1,
-                transfer_data: {
-                    destination: sellerStripeId,
+        try {
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: [{
+                    name: item.name,
+                    description: item.description && item.description.length ? item.description : null,
+                    amount: item.amount,
+                    quantity: 1,
+                    images: [item.thumbnailUrl],
+                    currency: 'usd'
+                }],
+                payment_intent_data: {
+                    metadata: { test: 'test metadata', sellerId: data.sellerId, buyerId: data.buyerId },
+                    receipt_email: buyerEmail,
+                    application_fee_amount: 100,
+                    transfer_data: {
+                        destination: sellerStripeId,
+                    }
                 },
-            },
-            customer_email: buyerEmail,
-            success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
-            cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
-        })
+                customer_email: buyerEmail,
+                success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
+                cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
+            })
+    
+            return session
+        } catch (e) {
+            console.log(e);
+            return e;
+        }
     })
 
 export const stripeCheckoutWebhook = functions.https
@@ -245,9 +252,7 @@ export const stripeCheckoutWebhook = functions.https
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object
-
             const userId = session.client_reference_id
-
             const timestamp = admin.firestore.FieldValue.serverTimestamp()
 
             await db
