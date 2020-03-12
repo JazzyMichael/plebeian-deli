@@ -1,7 +1,7 @@
 {
   "name": "Plebeian",
   "short_name": "Plebeian",
-  "theme_color": "#4caf50",
+  "theme_color": "#424242",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
