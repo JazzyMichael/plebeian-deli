@@ -157,7 +157,6 @@ export const eventDelete = functions.firestore
         }
     })
 
-// Create Stripe Seller Account
 export const createSellerAccount = functions.https
     .onCall(async (data, context) => {
         if (!context || !context.auth || !context.auth.uid) {
@@ -197,11 +196,10 @@ export const createSellerAccount = functions.https
         });
     })
 
-// Create Stripe Checkout Session
-export const createStripeCheckoutSession = functions.https
+export const createCheckoutSession = functions.https
     .onCall(async (data, context) => {
 
-        const { sellerStripeId, postId, item } = data
+        const { sellerStripeId, postId, item, buyerEmail = null } = data
 
         if (!sellerStripeId || !item) {
             throw new Error('Invalid Cloud Function Arguments')
@@ -218,117 +216,45 @@ export const createStripeCheckoutSession = functions.https
                 currency: 'usd'
             }],
             payment_intent_data: {
+                metadata: data,
+                receipt_email: buyerEmail,
                 application_fee_amount: 1,
                 transfer_data: {
                     destination: sellerStripeId,
                 },
             },
+            customer_email: buyerEmail,
             success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
             cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
         })
     })
 
-// Stripe Webhook
 export const stripeCheckoutWebhook = functions.https
     .onRequest(async (req, res) => {
-        const sig = req.headers['stripe-signature'];
-
-        let event: any;
-
-        const endpointSecret = 'Dashboards webhook settings';
+        const sig = req.headers['stripe-signature']
+        let event: any
+        const endpointSecret = 'Dashboards webhook settings'
 
         try {
-            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
+            console.log('stripey')
+            console.log(event)
         } catch (err) {
-            return res.status(400).send(`Stripe Webhook Error ${err.message}`);
+            return res.status(400).send(`Stripe Webhook Error ${err.message}`)
         }
 
         if (event.type === 'checkout.session.completed') {
-            const session = event.data.object;
+            const session = event.data.object
 
+            const userId = session.client_reference_id
 
-            const userId = session.client_reference_id;
+            const timestamp = admin.firestore.FieldValue.serverTimestamp()
 
-            const timestamp = new Date();
-
-            // save session
             await db
                 .doc(`checkout-sessions/${session.id}`)
-                .set({ ...session, timestamp, userId }, { merge: true });
+                .set({ ...session, timestamp, userId }, { merge: true })
         }
 
         return res.json({ received: true });
     })
-
-
-
-
-
-// create connect charge
-// export const createConnectCharge = functions.https
-//     .onCall(async (data, context) => {
-//         if (!context || !context.auth || !context.auth.uid) {
-//             throw new Error('No Context Auth');
-//         }
-
-//         if (!data.orderType) {
-//             throw new Error('No Order Type');
-//         }
-
-//         if (!data.postId || !data.postQuantity || !data.price || !data.sellerId || !data.sellerAccountId) {
-//             throw new Error('Missing post data or seller account id');
-//         }
-
-//         if (!data.source) {
-//             throw new Error('No payment source');
-//         }
-
-//         const userId = context.auth.uid;
-
-//         const orderType = data.orderType;
-
-//         stripe.charges.create({
-//             amount: data.price,
-//             currency: 'usd',
-//             source: data.source
-//         }, {
-//             stripe_account: data.sellerAccountId
-//         })
-//         .then(charge => {
-//             console.log(charge);
-
-//             if (orderType === 'post') {
-//                 const orderObj = {
-//                     buyerId: userId,
-//                     sellerId: data.sellerId,
-//                     postId: data.postId,
-//                     postPrice: data.price,
-//                     purchasedTimestamp: new Date(),
-//                     paymentRes: charge,
-//                     shipped: false,
-//                     messages: []
-//                 };
-
-//                 // update post quantity
-//                 const postUpdateObj = {
-//                     quantity: data.postQuantity - 1
-//                 };
-//             } else if (orderType === 'service') {
-//                 // update service obj
-//                 const serviceObj = {
-
-//                 };
-//             } else {
-//                 console.log('WEIRD ORDER TYPE', orderType);
-//             }
-
-//             return charge;
-//         })
-//         .catch(error => {
-//             console.log(error);
-//             throw new Error('charge error');
-//         });
-//     });
-
-
 
