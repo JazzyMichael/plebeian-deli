@@ -88,6 +88,8 @@ export class BuyPostComponent implements OnInit {
       status: 'pending'
     };
 
+    console.log({ order });
+
     const session = await this.funcs
       .httpsCallable('createCheckoutSession')(order)
       .toPromise();

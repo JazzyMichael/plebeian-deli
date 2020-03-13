@@ -223,7 +223,7 @@ export const createCheckoutSession = functions.https
                         destination: sellerStripeId,
                     }
                 },
-                metadata: data,
+                metadata: { ...data, ...data.shipping, item: '', shipping: '' },
                 customer_email: buyerEmail || null,
                 success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
                 cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
