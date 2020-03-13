@@ -14,15 +14,15 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/node": "^12.12.29",
-    "@types/stripe": "^6.32.13",
-    "firebase-admin": "^8.9.2",
+    "@types/node": "^13.9.1",
+    "@types/stripe": "^7.13.22",
+    "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.3.0",
     "node-fetch": "^2.6.0",
-    "stripe": "^7.15.0"
+    "stripe": "^8.31.0"
   },
   "devDependencies": {
-    "tslint": "^5.20.1",
+    "tslint": "^6.1.0",
     "typescript": "^3.8.3"
   },
   "private": true

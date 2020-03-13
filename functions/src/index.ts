@@ -2,15 +2,15 @@
 
 if(Symbol["asyncIterator"] === undefined) ((Symbol as any)["asyncIterator"]) = Symbol.for("asyncIterator");
 
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-admin.initializeApp();
-const db = admin.firestore();
+import * as functions from 'firebase-functions'
+import * as admin from 'firebase-admin'
+admin.initializeApp()
+const db = admin.firestore()
 
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'
 
-import * as Stripe from 'stripe';
-const stripe = new Stripe(functions.config().stripe.testsecret);
+import Stripe from 'stripe'
+const stripe = new Stripe(functions.config().stripe.testsecret, null);
 
 export const userCreate = functions.auth.user().onCreate((user: any) => {
 
@@ -210,21 +210,21 @@ export const createCheckoutSession = functions.https
                 payment_method_types: ['card'],
                 line_items: [{
                     name: item.name,
-                    description: item.description && item.description.length ? item.description : null,
+                    description: item.description || null,
                     amount: item.amount,
                     quantity: 1,
                     images: [item.thumbnailUrl],
                     currency: 'usd'
                 }],
                 payment_intent_data: {
-                    metadata: { test: 'test metadata', sellerId: data.sellerId, buyerId: data.buyerId },
                     receipt_email: buyerEmail,
                     application_fee_amount: 100,
                     transfer_data: {
                         destination: sellerStripeId,
                     }
                 },
-                customer_email: buyerEmail,
+                metadata: data,
+                customer_email: buyerEmail || null,
                 success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
                 cancel_url: `https://plebeiandeli.art/purchase/${postId}?cancelled=true`
             })
@@ -244,20 +244,17 @@ export const stripeCheckoutWebhook = functions.https
 
         try {
             event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret)
-            console.log('stripey')
-            console.log(event)
         } catch (err) {
             return res.status(400).send(`Stripe Webhook Error ${err.message}`)
         }
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object
-            const userId = session.client_reference_id || ''
             const timestamp = admin.firestore.FieldValue.serverTimestamp()
 
             await db
                 .doc(`checkout-sessions/${session.id}`)
-                .set({ ...session, timestamp, userId }, { merge: true })
+                .set({ ...session, timestamp }, { merge: true })
         }
 
         return res.json({ received: true });
