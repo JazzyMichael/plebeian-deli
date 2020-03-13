@@ -9,18 +9,12 @@ import { NotificationService } from './services/notification.service';
 })
 export class AppComponent {
   constructor(swUpdates: SwUpdate, private ns: NotificationService) {
-
     swUpdates.available.subscribe(event => {
-      console.log(`Current Version: ${event.current} | Available Version: ${event.available}`);
+      console.log('Updating app version...');
       swUpdates.activateUpdate()
         .then(() => document.location.reload())
         .catch(e => console.log('Error updating app', e));
     });
-
-    swUpdates.activated.subscribe(event => {
-      console.log(`Upgraded ${event.previous} to ${event.current}`);
-    });
-
   }
 
   @HostListener('window:beforeinstallprompt', ['$event'])

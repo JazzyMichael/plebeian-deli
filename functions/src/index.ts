@@ -240,10 +240,10 @@ export const stripeCheckoutWebhook = functions.https
     .onRequest(async (req, res) => {
         const sig = req.headers['stripe-signature']
         let event: any
-        const endpointSecret = 'Dashboards webhook settings'
+        const endpointSecret = functions.config().stripe.webhooksecret
 
         try {
-            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
+            event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret)
             console.log('stripey')
             console.log(event)
         } catch (err) {
@@ -252,7 +252,7 @@ export const stripeCheckoutWebhook = functions.https
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object
-            const userId = session.client_reference_id
+            const userId = session.client_reference_id || ''
             const timestamp = admin.firestore.FieldValue.serverTimestamp()
 
             await db
