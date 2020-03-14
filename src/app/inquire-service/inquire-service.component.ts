@@ -99,7 +99,7 @@ export class InquireServiceComponent implements OnInit {
 
     console.log(res);
 
-    this.snackbar.open('Your inquiry has been sent to the artist!')
+    this.snackbar.open('Your inquiry has been sent to the artist!', '', { duration: 4444 })
 
     await this.router.navigateByUrl('/orders');
   }
