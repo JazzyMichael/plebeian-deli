@@ -223,6 +223,9 @@ export const createCheckoutSession = functions.https
                         destination: sellerStripeId,
                     }
                 },
+                shipping_address_collection: {
+                    allowed_countries: ['US']
+                },
                 metadata: { ...data, ...data.shipping, item: '', shipping: '' },
                 customer_email: buyerEmail || null,
                 success_url: `https://plebeiandeli.art/purchase/${postId}?success=true`,
@@ -231,7 +234,7 @@ export const createCheckoutSession = functions.https
     
             return session
         } catch (e) {
-            console.log(e);
+            console.log('Error creating stripe checkout session', e);
             return e;
         }
     })
@@ -240,23 +243,51 @@ export const stripeCheckoutWebhook = functions.https
     .onRequest(async (req, res) => {
         const sig = req.headers['stripe-signature']
         let event: any
-        const endpointSecret = functions.config().stripe.webhooksecret
+        const secret = functions.config().stripe.webhooksecret
 
         try {
-            event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret)
-        } catch (err) {
-            return res.status(400).send(`Stripe Webhook Error ${err.message}`)
+            event = stripe.webhooks.constructEvent(req.rawBody, sig, secret)
+        } catch (error) {
+            console.log('error constructing event', error)
+            return res.status(400).json(error.message)
         }
 
         if (event.type === 'checkout.session.completed') {
-            const session = event.data.object
             const timestamp = admin.firestore.FieldValue.serverTimestamp()
+            const checkoutSession = event.data.object
+            const checkoutEvent = {
+                ...event,
+                data: {
+                    checkoutSessionId: checkoutSession.id
+                }
+            }
 
-            await db
-                .doc(`checkout-sessions/${session.id}`)
-                .set({ ...session, timestamp }, { merge: true })
+            const order = {
+                type: 'post',
+                postId: checkoutSession.metadata.postId,
+                items: checkoutSession.display_items,
+                shipping: checkoutSession.shipping,
+                stripe: {
+                    checkoutEvent,
+                    checkoutSession
+                },
+                timestamp,
+                buyerId: checkoutSession.metadata.buyerId,
+                sellerId: checkoutSession.metadata.sellerId,
+                sellerStripeId: checkoutSession.metadata.sellerStripeId,
+                subtotal: 1000,
+                fee: 300,
+                total: 1300,
+                status: 'placed',
+                thumbnailUrl: checkoutSession.metadata.thumbnailUrl,
+                thumbnailPath: checkoutSession.metadata.thumbnailPath
+            }
+
+            await db.collection('orders').add(order)
+
+        } else {
+            console.log('not a checkout session event - ' + event.type, event)
         }
 
         return res.json({ received: true });
     })
-

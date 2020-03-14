@@ -13,8 +13,11 @@ export class OrderDetailsComponent implements OnInit {
   constructor(private ordersService: OrdersService) { }
 
   ngOnInit() {
+
     this.order = this.ordersService.getSelectedOrder();
+
     console.log(this.order);
+
   }
 
 }

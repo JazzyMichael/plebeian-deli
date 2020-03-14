@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/post.service';
-import { OrdersService } from '../services/orders.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -29,7 +28,6 @@ export class BuyPostComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private ordersService: OrdersService,
     private auth: AuthService,
     private funcs: AngularFireFunctions
   ) { }
@@ -85,7 +83,8 @@ export class BuyPostComponent implements OnInit {
       fee: 300,
       total: 1300,
       shipping: this.validShipping,
-      status: 'pending'
+      status: 'placed',
+      thankYouMessage: ''
     };
 
     console.log({ order });

@@ -7,11 +7,12 @@
 </div>
 
 <mat-card *ngIf="!purchaseComplete && !checkoutFail" class="pleb-card">
-    <mat-card-content>
-        <app-address-form (valid)="addressValidityChange($event)"></app-address-form>
+    <mat-card-content style="padding: 1em">
+        <p>You gotta put your shipping and card info in stripe and then they will take you back here</p>
+        <!-- <app-address-form (valid)="addressValidityChange($event)"></app-address-form> -->
     </mat-card-content>
-    <mat-card-actions style="text-align: right">
-        <button mat-button [disabled]="!validShipping" (click)="beginStripeCheckout()">
+    <mat-card-actions style="text-align: right; padding: 1em;">
+        <button mat-button (click)="beginStripeCheckout()">
             <span style="font-size: 1.2em">Checkout</span>
             <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
         </button>
@@ -24,11 +25,11 @@
         <mat-card-subtitle>{{ checkoutErrorMsg || 'Oops' }}</mat-card-subtitle>
     </mat-card-header>
     <hr style="border: 2px solid #ff4081">
-    <mat-card-actions style="display: flex; justify-content: space-around; padding: 1em;">
-        <button mat-button (click)="goToShipping()">
+    <mat-card-actions style="display: flex; justify-content: center; padding: 1em;">
+        <!-- <button mat-button (click)="goToShipping()">
             <mat-icon style="margin-right: 10px">arrow_back</mat-icon>
             <span style="font-size: 1.2em">Shipping</span>
-        </button>
+        </button> -->
         <button mat-button>
             <span style="font-size: 1.2em">Try Again</span>
             <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
@@ -42,7 +43,7 @@
     </mat-card-header>
     <mat-card-content>
         <br>
-        <p>Arist Order Message Goes Here</p>
+        <p style="text-align: center;">Woo!</p>
         <br>
         <hr>
         <br>
