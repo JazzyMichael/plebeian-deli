@@ -4,12 +4,11 @@ if(Symbol["asyncIterator"] === undefined) ((Symbol as any)["asyncIterator"]) = S
 
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-admin.initializeApp()
-const db = admin.firestore()
-
+import Stripe from 'stripe'
 import fetch from 'node-fetch'
 
-import Stripe from 'stripe'
+admin.initializeApp()
+const db = admin.firestore()
 const stripe = new Stripe(functions.config().stripe.testsecret, null);
 
 export const userCreate = functions.auth.user().onCreate((user: any) => {
@@ -263,15 +262,21 @@ export const stripeCheckoutWebhook = functions.https
             }
 
             const order = {
-                type: 'post',
-                postId: checkoutSession.metadata.postId,
-                items: checkoutSession.display_items,
-                shipping: checkoutSession.shipping,
+                type: checkoutSession.metadata.type,
+                timestamp,
+                item: {
+                    name: checkoutSession.items[0].custom.name,
+                    description: checkoutSession.items[0].custom.description,
+                    amount: 1000,
+                    quantity: 1,
+                },
                 stripe: {
                     checkoutEvent,
                     checkoutSession
                 },
-                timestamp,
+                shipping: checkoutSession.shipping,
+                postId: checkoutSession.metadata.postId,
+                itemDocId: checkoutSession.metadata.postId,
                 buyerId: checkoutSession.metadata.buyerId,
                 sellerId: checkoutSession.metadata.sellerId,
                 sellerStripeId: checkoutSession.metadata.sellerStripeId,
@@ -283,7 +288,9 @@ export const stripeCheckoutWebhook = functions.https
                 thumbnailPath: checkoutSession.metadata.thumbnailPath
             }
 
-            await db.collection('orders').add(order)
+            return checkoutSession.metadata.orderId
+                ? await db.doc(`orders/${checkoutSession.metadata.orderId}`).update({ checkout: order })
+                : await db.collection('orders').add(order)
 
         } else {
             console.log('not a checkout session event - ' + event.type, event)

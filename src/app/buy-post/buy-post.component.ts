@@ -65,7 +65,7 @@ export class BuyPostComponent implements OnInit {
     const order = {
       type: 'post',
       postId: this.post.postId,
-      sellerStripeId: 'acct_1FDLnJImMAsZGgMt', // mikes test id
+      sellerStripeId: 'acct_1FDLnJImMAsZGgMt',
       sellerId: buyer.uid,
       buyerId: buyer.uid,
       buyerEmail: buyer.email || null,

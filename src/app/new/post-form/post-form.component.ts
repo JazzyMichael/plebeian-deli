@@ -192,43 +192,32 @@ export class PostFormComponent implements OnInit, OnDestroy {
     }
   }
 
+
   // quantityOptions: number[] = [
   //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10
   // ];
 
-  // validatePrice$: Subject<any> = new Subject();
+  /*
+    validatePrice$: Subject<any> = new Subject();
 
-  // this.validatePrice$
-  //     .pipe(debounceTime(777))
-  //     .subscribe(() => {
-  //       if (this.price) {
-  //         let chars = this.price.split('');
+    priceInput() {
+      this.validatePrice$.next();
+    }
 
-  //         chars = chars.filter(c => {
-  //           if (
-  //             c === '1' ||
-  //             c === '2' ||
-  //             c === '3' ||
-  //             c === '4' ||
-  //             c === '5' ||
-  //             c === '6' ||
-  //             c === '7' ||
-  //             c === '8' ||
-  //             c === '9' ||
-  //             c === '0'
-  //           ) {
-  //             return true;
-  //           } else {
-  //             return false;
-  //           }
-  //         });
-
-  //         this.price = chars.join('');
-  //       }
-  //     });
-
-  // priceInput() {
-  //   this.validatePrice$.next();
-  // }
+    this.validatePrice$.pipe(debounceTime(777))
+      .subscribe(() => {
+        this.priceInputVal = (this.priceInputVal || '')
+          .split('')
+          .filter(c => {
+            return
+              c === '1' || c === '2' ||
+              c === '3' || c === '4' ||
+              c === '5' || c === '6' ||
+              c === '7' || c === '8' ||
+              c === '9' || c === '0';
+          })
+          .join('');
+      });
+  */
 
 }

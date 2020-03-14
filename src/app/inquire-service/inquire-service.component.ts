@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { AuthService } from '../services/auth.service';
+import { OrdersService } from '../services/orders.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-inquire-service',
@@ -17,7 +19,9 @@ export class InquireServiceComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private services: ServiceService,
-    private auth: AuthService
+    private orders: OrdersService,
+    private auth: AuthService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +39,7 @@ export class InquireServiceComponent implements OnInit {
 
       if (doc && doc.exists) {
         this.service = doc.data();
+        console.log(this.service);
       } else {
         return this.router.navigateByUrl('/deli');
       }
@@ -61,8 +66,42 @@ export class InquireServiceComponent implements OnInit {
     this.images.splice(index, 1);
   }
 
-  submit() {
-    alert('Not available yet');
+  async submit() {
+    const buyer = await this.auth.getCurrentUser();
+
+    const order = {
+      type: 'service',
+      buyerId: buyer.uid,
+      buyerEmail: buyer.email,
+      sellerId: buyer.uid,
+      sellerStripeId: 'acct_1FDLnJImMAsZGgMt',
+
+      item: {
+        name: this.service.title,
+        description: this.service.description || 'description',
+        amount: 1000,
+        quantity: 1,
+        thumbnailUrl: ''
+      },
+
+      fee: 100,
+      subtotal: 1000,
+      total: 1400,
+
+      thumbnailUrl: '',
+      thumbnailPath: '',
+      status: 'placed',
+      thankYouMessage: '',
+      timestamp: new Date()
+    };
+
+    const res = await this.orders.placeOrder(order);
+
+    console.log(res);
+
+    this.snackbar.open('Your inquiry has been sent to the artist!')
+
+    await this.router.navigateByUrl('/orders');
   }
 
 }

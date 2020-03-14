@@ -14,7 +14,7 @@
                 </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.items[0].custom.name }}</span>
+                    <span>{{ order.item?.name || order.items[0].custom.name }}</span>
                     <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 
@@ -41,7 +41,7 @@
                 </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.items[0].custom.name }}</span>
+                    <span>{{ order.item?.name || order.items[0].custom.name }}</span>
                     <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 

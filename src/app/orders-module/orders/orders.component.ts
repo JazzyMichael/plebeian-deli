@@ -26,9 +26,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSub = this.authService.user$.subscribe(user => {
-      if (!user) {
-        return;
-      }
+      if (!user) return;
 
       this.buyerOrders$ = this.ordersService.getBuyerOrders(user.uid).pipe(
         map(orders => {
@@ -37,7 +35,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
           })
         })
       );
-      this.isApprovedSeller = !!user.approvedSeller;
+
+      this.isApprovedSeller = !!user.approvedSeller || true;
       if (this.isApprovedSeller) {
         this.sellerOrders$ = this.ordersService.getSellerOrders(user.uid).pipe(
           map(orders => {
@@ -47,6 +46,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
           })
         );
       }
+
     });
   }
 
@@ -58,44 +58,4 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.ordersService.selectOrder(order);
   }
 
-  /*
-    ngOnInit() {
-
-    this.serviceOrders$ = this.ordersService
-      .getServiceOrdersForSeller(this.user.uid);
-
-    this.validatePrice$
-      .pipe(debounceTime(777))
-      .subscribe(() => {
-        if (this.newServicePrice) {
-          let chars = this.newServicePrice.split('');
-
-          chars = chars.filter(c => {
-            if (
-              c === '1' ||
-              c === '2' ||
-              c === '3' ||
-              c === '4' ||
-              c === '5' ||
-              c === '6' ||
-              c === '7' ||
-              c === '8' ||
-              c === '9' ||
-              c === '0'
-            ) {
-              return true;
-            } else {
-              return false;
-            }
-          });
-
-          this.newServicePrice = chars.join('');
-        }
-      });
-  }
-
-  priceInput() {
-    this.validatePrice$.next();
-  }
-  */
 }
