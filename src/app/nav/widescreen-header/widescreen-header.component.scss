@@ -1,4 +1,8 @@
-.dark-toolbar {
+.mat-menu-item-submenu-trigger::after {
+    display: none !important;
+}
+
+.toolbar {
     border-bottom: 5px solid #ff4081;
     height: 80px;
     background-color: #292929;

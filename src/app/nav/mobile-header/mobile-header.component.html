@@ -4,7 +4,7 @@
     class="container">
 
     <div
-        *ngIf="profilePic | async as pic"
+        *ngIf="profilePic | async as pic; else noPic"
         class="profile-pic"
         [style.background-image]="'url(' + pic + ')'"
         (click)="sidenavClick()"
@@ -12,6 +12,14 @@
         matBadgeOverlap="true"
         matBadgeColor="accent">
     </div>
+
+    <ng-template #noPic>
+        <div
+            class="profile-pic"
+            [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'"
+            (click)="sidenavClick()">
+        </div>
+    </ng-template>
 
     <div style="font-size: 1.4em;">{{ location.path().substring(1) | titlecase }}</div>
 

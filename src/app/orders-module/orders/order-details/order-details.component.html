@@ -1,21 +1,28 @@
 <mat-card class="pleb-card" *ngIf="order">
 
-    <mat-card-header>
-        <div mat-card-avatar
-        style="background-size: cover"
-        [style.background-image]="'url(' + 'assets/images/ham-250.png' + ')'"></div>
-        <mat-card-title>{{ order.sellerId }}</mat-card-title>
+    <ng-template #noThumbnail>
+        <div
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'">
+        </div>
+    </ng-template>
+
+    <mat-card-header style="padding: 0.75em">
+        <div *ngIf="order.thumb$ | async as thumbnail; else noThumbnail"
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + thumbnail + ')'"></div>
+        <mat-card-title>Seller Username</mat-card-title>
     </mat-card-header>
 
-    <mat-card-content>
+    <mat-card-content style="padding: 0.5em">
         <div class="center-container">
 
             <div class="left-side">
-                <h3>{{ order.items[0].name }}</h3>
-    
-                <div class="order-image" [style.background-image]="'url(' + order.thumbnailUrl + ')'"></div>
-    
-                <p>{{ order.items[0].description }}</p>
+                <h3>{{ order.items[0].custom.name }}</h3>
+        
+                <div *ngIf="order.thumb$ | async as thumbnail" class="order-image" [style.background-image]="'url(' + thumbnail + ')'"></div>
             </div>
     
             <div class="right-side">
@@ -49,7 +56,7 @@
         </div>
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions style="padding: 1em">
         <button mat-button style="width: 100%" [routerLink]="'/post/' + order.postId">View Post</button>
     </mat-card-actions>
 

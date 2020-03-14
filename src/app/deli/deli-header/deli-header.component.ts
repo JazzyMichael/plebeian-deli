@@ -39,7 +39,7 @@ export class DeliHeaderComponent implements OnInit, OnDestroy {
     });
 
     this.profilePic = this.auth.user$.asObservable().pipe(
-      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/images/sell.svg'))
+      switchMap(user => user && user.thumbnail ? user.thumbnail : of('assets/icons/icon-192x192.png'))
     );
 
     this.notificationsSub = this.notifications.newCount$

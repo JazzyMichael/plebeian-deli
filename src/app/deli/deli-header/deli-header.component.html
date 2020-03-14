@@ -1,6 +1,6 @@
 <div class="container">
     <div
-        *ngIf="profilePic | async as pic"
+        *ngIf="profilePic | async as pic; else noPic"
         class="profile-pic"
         [style.background-image]="'url(' + pic + ')'"
         (click)="openSidenav()"
@@ -8,6 +8,14 @@
         matBadgeOverlap="true"
         matBadgeColor="accent">
     </div>
+
+    <ng-template #noPic>
+        <div
+            class="profile-pic"
+            [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'"
+            (click)="openSidenav()">
+        </div>
+    </ng-template>
 
     <mat-form-field class="search-box" floatLabel="never">
         <input #searchInput matInput placeholder="" autocomplete="off" (input)="search(searchInput.value, searchInput)">

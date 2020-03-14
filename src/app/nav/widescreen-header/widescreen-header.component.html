@@ -1,5 +1,4 @@
-
-<div class="dark-toolbar">
+<div class="toolbar">
     <div class="toolbar-row">
 
         <!-- Logo -->
@@ -38,6 +37,8 @@
 
         <!-- logged in notifications & dropdown -->
         <ng-container *ngIf="auth.user$ | async as user; else noUser">
+
+
             <div class="mobile-notification-button">
                 <button mat-icon-button class="nav-link perm-nav-link" routerLink="/notifications">
                     <mat-icon
@@ -49,7 +50,7 @@
                     <mat-icon *ngIf="!newCount">notifications</mat-icon>
                 </button>
 
-                <button mat-button class="nav-link" [matMenuTriggerFor]="menu">
+                <button mat-button class="nav-link" [matMenuTriggerFor]="mainMenu">
                     <span>{{ user.username }}</span>
                     <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
@@ -57,22 +58,14 @@
 
 
             <!-- Dropdown Menu -->
-            <mat-menu #menu="matMenu">
+            <mat-menu #mainMenu="matMenu">
                 <button mat-menu-item [routerLink]="'/' + user.username">
                     <mat-icon>sentiment_very_satisfied</mat-icon>
                     <span>Profile</span>
                 </button>
-                <button mat-menu-item routerLink="/new/post">
-                    <mat-icon>post_add</mat-icon>
-                    <span>New Post</span>
-                </button>
-                <button mat-menu-item routerLink="/new/service">
-                    <mat-icon>post_add</mat-icon>
-                    <span>New Service</span>
-                </button>
-                <button mat-menu-item routerLink="/new/event">
-                    <mat-icon>post_add</mat-icon>
-                    <span>New Event</span>
+                <button mat-menu-item [matMenuTriggerFor]="newMenu">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    <span>Create</span>
                 </button>
                 <button mat-menu-item routerLink="/chat">
                     <mat-icon>mail</mat-icon>
@@ -82,7 +75,33 @@
                     <mat-icon>storefront</mat-icon>
                     <span>Orders</span>
                 </button>
-                <button *ngIf="user.membership === 'artist'" mat-menu-item routerLink="/seller">
+                <button mat-menu-item [matMenuTriggerFor]="moreMenu">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    <span>More</span>
+                </button>
+            </mat-menu>
+
+            <mat-menu #newMenu="matMenu">
+                <button mat-menu-item routerLink="/new/post">
+                    <mat-icon>post_add</mat-icon>
+                    <span>Post</span>
+                </button>
+                <button mat-menu-item routerLink="/new/service">
+                    <mat-icon>playlist_add</mat-icon>
+                    <span>Service</span>
+                </button>
+                <button mat-menu-item routerLink="/new/event">
+                    <mat-icon>add_circle_outline</mat-icon>
+                    <span>Event</span>
+                </button>
+            </mat-menu>
+
+            <mat-menu #moreMenu="matMenu">
+                <button mat-menu-item routerLink="/about">
+                    <mat-icon>eco</mat-icon>
+                    <span>About Us</span>
+                </button>
+                <button mat-menu-item routerLink="/seller">
                     <mat-icon>local_offer</mat-icon>
                     <span>Seller Info</span>
                 </button>
@@ -90,11 +109,17 @@
                     <mat-icon>help_outline</mat-icon>
                     <span>F.A.Q.</span>
                 </button>
+                <button mat-menu-item routerLink="/contact">
+                    <mat-icon>person</mat-icon>
+                    <span>Contact</span>
+                </button>
                 <button mat-menu-item (click)="auth.logout()">
                     <mat-icon>sentiment_very_dissatisfied</mat-icon>
                     <span>Log Out</span>
                 </button>
             </mat-menu>
+
+
         </ng-container>
 
 
@@ -108,5 +133,8 @@
                 <span>Sign In</span>
             </button>
         </ng-template>
+
+
+
     </div>
 </div>

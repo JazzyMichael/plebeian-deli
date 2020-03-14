@@ -28,7 +28,7 @@ export class MobileHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userSub = this.auth.user$.subscribe(user => {
       this.user = user;
-      this.profilePic = user && user.thumbnail ? user.thumbnail : of('assets/images/sell.svg');
+      this.profilePic = user && user.thumbnail ? user.thumbnail : of('assets/icons/icon-192x192.png');
     });
 
     this.notificationSub = this.notifications.newCount$

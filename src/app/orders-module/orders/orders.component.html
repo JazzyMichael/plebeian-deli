@@ -3,11 +3,19 @@
     <mat-tab label="Bought">
         <div *ngIf="buyerOrders$ | async as orders" style="margin-top: 2em; min-height: 200px;">
             <div *ngFor="let order of orders" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
+                <div
+                    *ngIf="order.thumb$ | async as thumbnail"
+                    class="order-image"
+                    [style.background-image]="'url(' + thumbnail + ')'">
+                </div>
+
+                <ng-template #noThumbnailOne>
+                    <div class="order-image" [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'"></div>
+                </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.item }}</span>
-                    <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
+                    <span>{{ order.items[0].custom.name }}</span>
+                    <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
@@ -22,11 +30,19 @@
     <mat-tab label="Sold">
         <div *ngIf="isApprovedSeller; else notApprovedSeller" style="margin-top: 2em; min-height: 200px;">
             <div *ngFor="let order of sellerOrders$ | async" (click)="selectOrder(order)" class="order-list-item">
-                <img [src]="order.thumbnailUrl" class="order-image" alt="Order Image">
+                <div
+                    *ngIf="order.thumb$ | async as thumbnail; else noThumbnailTwo"
+                    class="order-image"
+                    [style.background-image]="'url(' + thumbnail + ')'">
+                </div>
+
+                <ng-template #noThumbnailTwo>
+                    <div class="order-image" [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'"></div>
+                </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.item }}</span>
-                    <span style="margin-top: 5px">{{ order.createdTimestamp.toDate() | date }}</span>
+                    <span>{{ order.items[0].custom.name }}</span>
+                    <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>

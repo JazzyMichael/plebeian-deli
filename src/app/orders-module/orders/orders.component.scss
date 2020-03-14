@@ -10,9 +10,11 @@
 }
 
 .order-image {
-  max-height: 60px;
-  max-width: 80px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
+  background-size: cover;
+  background-position: center;
 }
 
 .order-info {
