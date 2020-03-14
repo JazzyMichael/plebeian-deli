@@ -31,6 +31,10 @@ export class OrdersService {
     return this.afStore.collection('orders').add(order);
   }
 
+  acceptOrder(id: string) {
+    return this.afStore.doc(`orders/${id}`).update({ status: 'accepted', updatedAt: new Date() });
+  }
+
   getBuyerOrders(buyerId: string) {
     return this.afStore
       .collection('orders', ref => ref.where('buyerId', '==', buyerId))

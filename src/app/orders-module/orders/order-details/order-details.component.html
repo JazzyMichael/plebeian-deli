@@ -67,13 +67,6 @@
     <p style="color: #4caf50;">Waiting for ArtistName to accept your order!</p>
 </div>
 
-
-<div *ngIf="order?.status === 'accepted'" style="text-align: right; margin: 1.5em;">
-    <p style="color: #4caf50;">ArtistName has accepted your order!</p>
-    <p>6 min ago</p>
-</div>
-
-
 <div *ngIf="order?.status === 'in-progress'" style="text-align: right; margin: 1.5em;">
     <p style="color: #4caf50;">ArtistName is working on your order!</p>
     <p>6 min ago</p>
@@ -91,4 +84,10 @@
     <p><a style="color: white" href="http://www.google.com/search?q=LE000589587CA" target="_blank">LE000589587CA</a></p>
 </div>
 
+
+<button *ngIf="order?.sellerId === '' && order?.status !== 'accepted'" (click)="acceptOrder()" mat-raised-button color="accent" style="display: block; margin: 1em auto; width: 90%;">
+    Accept
+</button>
+
+<p *ngIf="order?.status === 'accepted'" style="text-align: center;">Accepted!</p>
 

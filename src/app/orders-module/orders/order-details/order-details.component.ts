@@ -26,4 +26,8 @@ export class OrderDetailsComponent implements OnInit {
     return this.imgs.imageFromPath(path)
   }
 
+  async acceptOrder() {
+    await this.ordersService.acceptOrder(this.order.id);
+  }
+
 }
