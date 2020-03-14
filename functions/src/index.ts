@@ -34,6 +34,7 @@ export const userCreate = functions.auth.user().onCreate((user: any) => {
         providerId: providerData.providerId,
         providerUid: providerData.uid,
         username,
+        lowerCaseUsername: username.toLowerCase(),
         createdTimestamp,
         membership: 'artist'
     }
