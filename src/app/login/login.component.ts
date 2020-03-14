@@ -28,9 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.slides = [
-      'I found I could say things with color and shapes that I couldnt say any other way - things I had no words for.',
-      'Marks on paper are free - free speech - press - pictures all go together I suppose.',
-      'Painting is poetry that is seen rather than felt, and poetry is painting that is felt rather than seen.'
+      'Buy: Art from real independent artists all over the world',
+      'Sell: To an audience you may never have had access to easier than ever',
+      'Network: With a vast and growing collection of artists looking to change art for the better',
+      'Experience: The New Art Market'
     ];
   }
 

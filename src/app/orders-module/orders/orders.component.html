@@ -14,8 +14,8 @@
                 </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.item?.name || order.items[0].custom.name }}</span>
-                    <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
+                    <span>{{ order.item?.name || 'name' }}</span>
+                    <span style="margin-top: 5px" *ngIf="order.timestamp">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>
@@ -41,8 +41,8 @@
                 </ng-template>
 
                 <div class="order-info">
-                    <span>{{ order.item?.name || order.items[0].custom.name }}</span>
-                    <span style="margin-top: 5px">{{ order.timestamp.toDate() | date }}</span>
+                    <span>{{ order.item?.name || 'name' }}</span>
+                    <span style="margin-top: 5px" *ngIf="order.timestamp">{{ order.timestamp.toDate() | date }}</span>
                 </div>
 
                 <span class="order-status">{{ order.status.split('-').join(' ') | uppercase }}</span>

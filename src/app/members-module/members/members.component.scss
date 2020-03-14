@@ -31,6 +31,20 @@
     transition: 300ms all ease-out;
 }
 
+.member-card-no-hover {
+    height: 300px;
+    width: 100%;
+    margin: 1.5em auto;
+    background-color: linear-gradient(#add87d, #80caa2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 0.9em;
+    transition: 300ms all ease-out;
+}
+
 .bg {
     background-size: cover !important;
     background-position: center !important;
@@ -100,6 +114,10 @@
 
 @media (min-width: 500px) {
     .member-card {
+        width: 250px;
+        margin: 0.5em;
+    }
+    .member-card-no-hover {
         width: 250px;
         margin: 0.5em;
     }

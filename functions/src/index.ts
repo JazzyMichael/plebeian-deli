@@ -265,8 +265,8 @@ export const stripeCheckoutWebhook = functions.https
                 type: checkoutSession.metadata.type,
                 timestamp,
                 item: {
-                    name: checkoutSession.items[0].custom.name,
-                    description: checkoutSession.items[0].custom.description,
+                    name: checkoutSession.display_items[0].custom.name,
+                    description: checkoutSession.display_items[0].custom.description,
                     amount: 1000,
                     quantity: 1,
                 },

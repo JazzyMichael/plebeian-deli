@@ -20,15 +20,15 @@
         <div class="center-container">
 
             <div class="left-side">
-                <h3>{{ order.items[0].custom.name }}</h3>
+                <h3>{{ order.item?.name || 'name' }}</h3>
         
                 <div *ngIf="order.thumb$ | async as thumbnail" class="order-image" [style.background-image]="'url(' + thumbnail + ')'"></div>
             </div>
     
             <div class="right-side">
-                <h3>Shipping To: {{ order.shipping.address.name }}</h3>
+                <h3 *ngIf="order.shipping">Shipping To: {{ order.shipping.address.name }}</h3>
     
-                <p style="text-align: center">
+                <p *ngIf="order.shipping" style="text-align: center">
                     {{ order.shipping.address.line1 }} {{ order.shipping.address.line2 || '' }}, {{ order.shipping.address.city }} {{ order.shipping.address.state }} {{ order.shipping.address.postal_code }}, {{ order.shipping.address.country}}
                 </p>
     

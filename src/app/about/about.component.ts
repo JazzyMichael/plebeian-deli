@@ -25,7 +25,7 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
       bigText: 'I don\’t understand why people would want to get rid of pigeons. They don\’t bother no one.',
       author: 'Mike Tyson',
       firstBlob: 'The center for all of your work to be seen, talked about, and sold (if you choose). The Deli is where you can interact with others, find new work, and build a life changing community.',
-      secondBlob: 'You can run your entire art business through this tool, right here. You can show all of your work right here! Ditch the archaic system of old and invest in yourself with the Deli.',
+      secondBlob: 'You can run your entire art business through this tool, right here. You can show all of your work right here! Ditch the archaic system of old and invest in the future of the art market today.',
       link: '/deli'
     },
     {
