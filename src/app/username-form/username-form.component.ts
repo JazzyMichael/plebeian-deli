@@ -16,10 +16,7 @@ export class UsernameFormComponent {
   usernameForm = this.fb.group({
     username: [
       '',
-      [
-        Validators.required,
-        Validators.pattern(/^\S*$/)
-      ],
+      [Validators.required, Validators.pattern(/^\S*$/)],
       this.validateUsername.bind(this)
     ]
   });

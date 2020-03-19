@@ -1,0 +1,35 @@
+<div class="header">
+
+    <button mat-icon-button (click)="location.back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div>{{ title }}</div>
+
+    <button
+        *ngIf="location.path().split('/')[1] === 'list'; else pic"
+        mat-icon-button
+        routerLink="/messages/new">
+        <mat-icon>add</mat-icon>
+    </button>
+
+    <ng-template #pic>
+        <div
+            class="profile-pic"
+            [style.background-image]="'url(' + profilePic + ')'"
+            [routerLink]="'/' + title">
+        </div>
+    </ng-template>
+
+</div>
+
+<!-- 
+    List View
+    Back Icon - Title - New Icon
+
+    Message View
+    Back Icon - Username - Profile Pic
+
+    Form View
+    Back Icon - Title - (empty)
+-->

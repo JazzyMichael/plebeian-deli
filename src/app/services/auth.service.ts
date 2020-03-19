@@ -5,9 +5,9 @@ import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import { switchMap, first, map, startWith } from 'rxjs/operators';
-import { ChatService } from './chat.service';
 import { NotificationService } from './notification.service';
 import { UserService } from './user.service';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
     private router: Router,
-    private chatService: ChatService,
+    private msgs: ChatService,
     private userService: UserService,
     private notificiationService: NotificationService
   ) {
@@ -37,7 +37,6 @@ export class AuthService {
         switchMap((user: any) => {
           if (user && user.uid) {
             this.notificiationService.getNew(user.uid);
-            this.chatService.getUserChats(user.uid);
             return this.afStore.doc(`users/${user.uid}`).valueChanges();
           } else {
             return of(null);
@@ -49,10 +48,11 @@ export class AuthService {
           user['backgroundThumbnail'] = this.userService.getUserBackground(user, 500);
           this.username = user.username;
           this.user$.next(user);
+          this.msgs.getUserChats(user.uid, user);
         } else {
-          this.username = null;
-          this.user$.next(null);
+          this.resetUser();
           this.notificiationService.reset();
+          this.msgs.reset();
         }
       });
     }
@@ -97,6 +97,11 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     localStorage.clear();
     return this.router.navigateByUrl('/login');
+  }
+
+  resetUser() {
+    this.username = '';
+    this.user$.next(null);
   }
 
   getCurrentUser() {

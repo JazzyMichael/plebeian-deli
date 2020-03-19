@@ -30,7 +30,11 @@
 
 
 <ng-template #backOnly>
-    <ng-container *ngIf="!['/deli', '/chat', '/login'].includes(location.path()) && location.path().split('/')[1] !== 'new'">
+    <ng-container *ngIf="
+    !['/deli', '/chat', '/login'].includes(location.path())
+    && location.path().split('/')[1] !== 'new'
+    && location.path().split('/')[1] !== 'messages'">
+
         <div class="container">
             <button mat-icon-button (click)="location.back()">
                 <mat-icon>arrow_back</mat-icon>

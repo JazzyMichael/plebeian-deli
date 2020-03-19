@@ -1,0 +1,10 @@
+<mat-list *ngIf="msgs.messages$ | async as messages" style="max-width: 666px; margin: auto;">
+    <mat-list-item *ngFor="let chat of messages" [routerLink]="'/messages/' + chat.recipientId">
+        <img matListAvatar [src]="chat.recipientAvatar$ | async" alt="Profile Pic">
+        <h3 matLine>{{ chat.recipient.username }}</h3>
+    </mat-list-item>
+
+    <p *ngIf="!messages.length" style="text-align: center; margin: 1em auto;">
+        This is your hub for interaction, networking, and barter!
+    </p>
+</mat-list>

@@ -35,75 +35,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.newChatMessage = '';
-
-    this.chatsSub = this.chatService.userChats$.asObservable()
-      .pipe(
-        switchMap(async chats => {
-          console.log('chat sub', [...chats]);
-
-          this.newMessages = 0;
-
-          const user = await this.auth.getCurrentUser();
-
-          if (!user) {
-            return chats || [];
-          }
-
-          for await (let chat of chats) {
-
-            const userObj = chat.users.find(u => u.uid === user.uid);
-
-            let newMessage = false;
-
-            let newMessageCount = 0;
-
-            for (const message of chat.messages) {
-              if (message.uid !== userObj.uid && (message.timestamp > userObj.lastViewedTimestamp)) {
-                console.log('new message', message);
-                newMessage = true;
-                this.newMessages++;
-                newMessageCount++;
-                console.log('newMessages', this.newMessages);
-              }
-            }
-
-            chat['newMessage'] = newMessage;
-            chat['newMessageCount'] = newMessageCount;
-          }
-
-          return chats;
-
-        }),
-        tap(chats => console.log('chit chats', chats)),
-        tap(chats => {
-          let noNew = true;
-          chats.forEach(chat => {
-            if (chat.newMessage) {
-              noNew = false;
-            }
-          });
-          if (noNew) {
-            this.newMessages = 0;
-          }
-        })
-      )
-      .subscribe(chats => this.chats = chats);
     // pipe
     // loop through all chats
       // find user in user array
       // check lastViewedTimestamp
       // compare with last index in messages array timestamp
 
-    this.chatService.openChatBox$.subscribe(chatToOpen => {
-      this.showChats = true;
-      this.viewChat(chatToOpen);
-    });
-
-    this.chatService.openMessagesBox$.subscribe(bool => {
-      this.showChats = true;
-      this.viewingChat = null;
-    });
   }
 
   messagesToggle() {

@@ -116,6 +116,7 @@ export class UserService {
   }
 
   getUserById(uid: string) {
+    // return this.afStore.doc(`users/${uid}`).ref.get();
     return this.afStore.doc(`users/${uid}`)
       .get()
       .pipe(map(doc => doc.data()))

@@ -1,90 +1,90 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, first } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  userChats$: BehaviorSubject<any>;
-  openChatBox$: Subject<any>;
-  openMessagesBox$: Subject<any>;
+  messages$: BehaviorSubject<any> = new BehaviorSubject([]);
+  viewingChat$: Observable<any>;
 
-  constructor(private afStore: AngularFirestore, private router: Router) {
-    this.userChats$ = new BehaviorSubject([]);
-    this.openChatBox$ = new Subject();
-    this.openMessagesBox$ = new Subject();
-  }
+  constructor(
+    private afStore: AngularFirestore,
+    private userService: UserService
+  ) { }
 
-  getUserChats(uid: string) {
-    if (!uid) {
-      return;
-    }
+  getUserChats(senderId: string, sender: any) {
+    if (!senderId || !sender) return;
 
     this.afStore
-      .collection('chats', ref => ref.where('userIds', 'array-contains', uid))
+      .collection('chats', ref => ref.where('userIds', 'array-contains', senderId))
       .valueChanges({ idField: 'id' })
-      .pipe(
-        switchMap(async (chats: any) => {
+      .subscribe(async (chats: any[] = []) => {
+        const mapped = [];
 
-          for await (let chat of chats) {
+        for (const chat of chats) {
+          const recipientId = chat.userIds.find((uid: string) => uid !== senderId);
+          console.log({ recipientId });
+          const recipient = await this.userService.getUserById(recipientId);
+          const recipientAvatar$ = this.userService.getUserThumbnail(recipient);
 
-            const otherUserIdIndex = chat.users.findIndex((u: any) => u.uid !== uid);
+          mapped.push({
+            ...chat,
+            recipient,
+            recipientId,
+            recipientAvatar$,
+            sender,
+            senderId
+          });
+        }
 
-            const otherUserId = chat.users[otherUserIdIndex].uid;
-
-            const otherUserDoc = await this.afStore.collection('users').doc(otherUserId).get().toPromise();
-
-            const otherUser = otherUserDoc.data();
-
-            chat['otherUser'] = otherUser;
-
-          }
-
-          return chats;
-        })
-      )
-      .subscribe((chats: any[]) => {
-        this.userChats$.next(chats);
+        console.log(`new chats for ${senderId}`, mapped);
+        this.messages$.next(mapped);
       });
   }
 
-  watchSingleChat(docId: string) {
-    return this.afStore
-      .collection('chats')
-      .doc(docId)
-      .valueChanges();
+  reset() {
+    this.messages$.next([]);
+  }
+
+  watchSingleChat(uid: string) {
+    return this.afStore.doc(`chats/${uid}`).valueChanges();
+  }
+
+  setActiveChat(chat: any) {
+    this.viewingChat$ = this.watchSingleChat(chat.id);
   }
 
   async initiateChat(initiatingUserId: string, secondUserId: string) {
-    const chats = await this.userChats$.pipe(first()).toPromise();
+    // const chats = await this.userChats$.pipe(first()).toPromise();
 
-    const existingChat = chats.find(chat => {
-      return chat.users.some(user => user.uid === secondUserId);
-    });
+    // const existingChat = chats.find(chat => {
+    //   return chat.users.some(user => user.uid === secondUserId);
+    // });
 
-    if (existingChat) {
-      console.log('existing chat', existingChat);
-      this.openChatBox$.next(existingChat);
-      return;
-    }
+    // if (existingChat) {
+    //   console.log('existing chat', existingChat);
+    //   this.openChatBox$.next(existingChat);
+    //   return;
+    // }
 
-    const chatDoc = {
-      users: [{ uid: initiatingUserId, lastViewedTimestamp: Date.now() }, { uid: secondUserId, lastViewedTimestamp: Date.now() }],
-      messages: [],
-      userIds: [initiatingUserId, secondUserId]
-    };
+    // const chatDoc = {
+    //   users: [{ uid: initiatingUserId, lastViewedTimestamp: Date.now() }, { uid: secondUserId, lastViewedTimestamp: Date.now() }],
+    //   messages: [],
+    //   userIds: [initiatingUserId, secondUserId]
+    // };
 
-    this.afStore
-      .collection('chats')
-      .add(chatDoc)
-      .then(res => {
-        this.openMessagesBox$.next(true);
-        this.router.navigateByUrl('/chats');
-      })
-      .catch(e => console.log('error starting chat', e));
+    // this.afStore
+    //   .collection('chats')
+    //   .add(chatDoc)
+    //   .then(res => {
+    //     this.openMessagesBox$.next(true);
+    //     this.router.navigateByUrl('/chats');
+    //   })
+    //   .catch(e => console.log('error starting chat', e));
   }
 
   addChatMessage(docId: string, messages: any[]) {

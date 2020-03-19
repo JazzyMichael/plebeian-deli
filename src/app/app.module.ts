@@ -66,6 +66,7 @@ const routes: Routes = [
   { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
   { path: 'orders', loadChildren: () => import('./orders-module/orders-module.module').then(m => m.OrdersModuleModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'new', loadChildren: () => import('./new/new.module').then(m => m.NewModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'messages', loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
 
   { path: 'deli', component: DeliComponent },
