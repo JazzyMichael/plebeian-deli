@@ -4,11 +4,33 @@ import { NotificationService } from '../services/notification.service';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
+import { trigger, AnimationTriggerMetadata, transition, style, animate, query } from '@angular/animations';
+
+export const routeTransitionAnimation: AnimationTriggerMetadata = trigger('routeTransition', [
+  transition('* <=> *', [
+    query(':enter, :leave', [
+      style({
+        position: 'absolute',
+        left: 0,
+        width: '100%',
+        opacity: 0,
+        transform: 'scale(0) translateY(100%)'
+      })
+    ], { optional: true }),
+    query(':enter', [
+      animate('300ms ease', style({
+        opacity: 1,
+        transform: 'scale(1) translateY(0)'
+      }))
+    ], { optional: true })
+  ])
+]);
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
+  animations: [routeTransitionAnimation]
 })
 export class NavComponent implements OnInit, OnDestroy {
   newCount: number;

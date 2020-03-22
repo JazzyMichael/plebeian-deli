@@ -14,8 +14,8 @@ mat-expansion-panel {
 }
 
 .header {
-    padding: 1.5em 0.5em;
-    margin: 0 auto 50px;
+    padding: 1em 0.5em;
+    margin: 0 auto 25px;
     text-align: center;
     background-color: #fdf5a2
 }
@@ -23,5 +23,17 @@ mat-expansion-panel {
 .sub-title {
     font-style: italic;
     font-family: cursive;
+    font-size: 1.2em;
     color: #666666;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-links button {
+    width: 100%;
 }

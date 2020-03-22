@@ -22,7 +22,9 @@
 
         <app-mobile-header class="mobile-header" (openSidenav)="sidenav.open()"></app-mobile-header>
 
-        <router-outlet></router-outlet>
+        <main [@routeTransition]="outlet.isActivated ? outlet.activatedRoute : ''" style="position: relative">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </main>
 
         <div *ngIf="location.path() !== '/login'" style="margin-top: 5em"></div>
 
