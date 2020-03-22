@@ -1,15 +1,16 @@
 <div class="stage-container">
-    <span [ngClass]="{ 'active-stage': !purchaseComplete && !checkoutFail }">SHIPPING</span>
-    <span>-></span>
-    <span [ngClass]="{ 'active-stage': checkoutFail }">BILLING</span>
+    <span [ngClass]="{ 'active-stage': !purchaseComplete && !checkoutFail }">CHECKOUT</span>
     <span>-></span>
     <span [ngClass]="{ 'active-stage': purchaseComplete && !checkoutFail }">COMPLETE</span>
 </div>
 
 <mat-card *ngIf="!purchaseComplete && !checkoutFail" class="pleb-card">
+    <mat-card-header style="padding: 1em">
+        <mat-card-title>Checkout with Stripe</mat-card-title>
+        <mat-card-subtitle>Almost there!</mat-card-subtitle>
+    </mat-card-header>
     <mat-card-content style="padding: 1em">
-        <p>You gotta put your shipping and card info in stripe and then they will take you back here</p>
-        <!-- <app-address-form (valid)="addressValidityChange($event)"></app-address-form> -->
+        <p>Payments are processed with Stripe for security and to distribute the funds to the artist.</p>
     </mat-card-content>
     <mat-card-actions style="text-align: right; padding: 1em;">
         <button mat-button (click)="beginStripeCheckout()">
@@ -24,13 +25,16 @@
         <mat-card-title>You didn't make it through Checkout</mat-card-title>
         <mat-card-subtitle>{{ checkoutErrorMsg || 'Oops' }}</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-content style="padding: 1em">
+        <p>Payments are processed with Stripe for security and to distribute the funds to the artist.</p>
+    </mat-card-content>
     <hr style="border: 2px solid #ff4081">
-    <mat-card-actions style="display: flex; justify-content: center; padding: 1em;">
-        <!-- <button mat-button (click)="goToShipping()">
+    <mat-card-actions *ngIf="post" style="display: flex; justify-content: center; padding: 1em;">
+        <button mat-button [routerLink]="'/post/' + post.postId">
             <mat-icon style="margin-right: 10px">arrow_back</mat-icon>
-            <span style="font-size: 1.2em">Shipping</span>
-        </button> -->
-        <button mat-button>
+            <span style="font-size: 1.2em">View Post</span>
+        </button>
+        <button mat-button (click)="beginStripeCheckout()">
             <span style="font-size: 1.2em">Try Again</span>
             <mat-icon style="margin-left: 10px">arrow_forward</mat-icon>
         </button>
