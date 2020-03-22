@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { OrdersService } from '../../services/orders.service';
-import { AuthService } from '../../services/auth.service';
+import { OrdersService } from '../../../services/orders.service';
+import { AuthService } from '../../../services/auth.service';
 import { tap, map } from 'rxjs/operators';
 import { ImageService } from 'src/app/services/image.service';
 

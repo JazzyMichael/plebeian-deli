@@ -1,0 +1,22 @@
+<div style="max-width: 666px; width: 100%; margin: auto;">
+    <h2 style="text-align: center">Start a chat with {{ username }}</h2>
+
+    <mat-card class="pleb-card">
+        <mat-card-content>
+            <mat-form-field color="accent" style="width: 100%">
+                <textarea matInput #newMsgInp name="" rows="5"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+
+    <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!newMsgInp?.value"
+        (click)="initiateChat(newMsgInp.value)"
+        style="display: block; margin: 2em auto; min-width: 180px; color: white;"
+        [ngClass]="{ 'disabled-primary-btn': !newMsgInp?.value }">
+        Send
+    </button>
+
+</div>

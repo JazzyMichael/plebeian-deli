@@ -54,49 +54,26 @@ export class ChatService {
     return this.afStore.doc(`chats/${uid}`).valueChanges();
   }
 
-  setActiveChat(chat: any) {
-    this.viewingChat$ = this.watchSingleChat(chat.id);
+  formatNewChat(userId: string, recipientId: string, content: string) {
+    return {
+      timestamp: Date.now(),
+      userIds: [userId, recipientId],
+      messages: [{
+        timestamp: Date.now(),
+        content,
+        userId
+      }]
+    };
   }
 
-  async initiateChat(initiatingUserId: string, secondUserId: string) {
-    // const chats = await this.userChats$.pipe(first()).toPromise();
+  createChat(userId: string, recipientId: string, message: string) {
+    const chat = this.formatNewChat(userId, recipientId, message);
 
-    // const existingChat = chats.find(chat => {
-    //   return chat.users.some(user => user.uid === secondUserId);
-    // });
-
-    // if (existingChat) {
-    //   console.log('existing chat', existingChat);
-    //   this.openChatBox$.next(existingChat);
-    //   return;
-    // }
-
-    // const chatDoc = {
-    //   users: [{ uid: initiatingUserId, lastViewedTimestamp: Date.now() }, { uid: secondUserId, lastViewedTimestamp: Date.now() }],
-    //   messages: [],
-    //   userIds: [initiatingUserId, secondUserId]
-    // };
-
-    // this.afStore
-    //   .collection('chats')
-    //   .add(chatDoc)
-    //   .then(res => {
-    //     this.openMessagesBox$.next(true);
-    //     this.router.navigateByUrl('/chats');
-    //   })
-    //   .catch(e => console.log('error starting chat', e));
+    return this.afStore.collection('chats').add(chat);
   }
 
   addChatMessage(docId: string, messages: any[]) {
     return this.afStore.doc(`chats/${docId}`).update({ messages });
   }
 
-  updateChat(docId: string, chatObj: any) {
-    this.afStore
-      .collection('chats')
-      .doc(docId)
-      .update(chatObj)
-      .then(() => console.log('chat updated'))
-      .catch(e => console.log('error updating chat', e));
-  }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="chat$ | async as chat" style="height: 97%; display: grid; grid-template-rows: 3fr 1fr;">
+<div *ngIf="chat$ | async as chat" style="height: 97%; display: grid; grid-template-rows: 3fr 1fr; max-width: 777px; margin: auto;">
     <div class="messages-container" style="overflow: auto">
         <div
             *ngFor="let msg of chat.messages"
@@ -17,11 +17,12 @@
             maxlength="120">
         </textarea>
         <mat-icon
+            *ngIf="chatInput?.value && chatInput.value.trim()"
             matSuffix
-            [color]="chatInput.value?.length ? 'primary' : 'light'"
-            (click)="sendMessage(chatInput.value, chat.id, chat.messages, chatInput)">
+            color="primary"
+            (click)="sendMessage(chatInput.value.trim(), chat.id, chat.messages, chatInput)">
             send
         </mat-icon>
-        <mat-hint>{{ chatInput.value?.length || 0 }}/120</mat-hint>
+        <mat-hint>{{ chatInput?.value || 0 }}/120</mat-hint>
     </mat-form-field>
 </div>

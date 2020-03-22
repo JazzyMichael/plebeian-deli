@@ -15,7 +15,8 @@ const routes: Routes = [
     component: MessagesComponent,
     children: [
       { path: 'list', component: MessageListComponent },
-      { path: 'new', component: MessageFormComponent },
+      { path: 'new/:id/:username', component: MessageFormComponent },
+      { path: 'new', redirectTo: 'list' },
       { path: ':id', component: MessageViewComponent },
       { path: '**', redirectTo: '/messages/list' }
     ]

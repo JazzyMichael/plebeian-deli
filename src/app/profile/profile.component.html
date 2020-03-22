@@ -56,10 +56,24 @@
         <div class="profile-username-and-medium">
             <h2>{{ user.username }}</h2>
             <p>{{ user.medium || 'Artist' }}</p>
+            <button
+                mat-raised-button
+                [routerLink]="'/messages/' + uid"
+                style="display: block; margin: 1em auto; width: 100%;">
+                <mat-icon>mail</mat-icon>
+                <span style="margin-left: 10px">Send Message</span>
+            </button>
         </div>
 
         <div class="profile-medium">
             <p>{{ user.medium || 'Artist' }}</p>
+            <button
+                mat-raised-button
+                [routerLink]="'/messages/' + uid"
+                style="display: block; width: 90%;">
+                <mat-icon>mail</mat-icon>
+                <span style="margin-left: 10px">Chat</span>
+            </button>
         </div>
     </div>
 

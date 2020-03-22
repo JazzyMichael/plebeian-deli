@@ -86,19 +86,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/new/event');
   }
 
-  async initiateChat(userToChat: any) {
-    const loggedInUser = await this.auth.getCurrentUser();
-
-    if (!loggedInUser || loggedInUser.uid === userToChat.uid) {
-      alert('Must be signed in to send a message, sign up for free!');
-      return;
-    }
-
-    this.chatService.initiateChat(loggedInUser.uid, userToChat.uid);
-
-    this.router.navigateByUrl('/messages');
-  }
-
   async uploadProfilePic(event: any) {
     const file = event.target.files[0];
 

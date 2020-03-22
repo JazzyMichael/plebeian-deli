@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-message-view',
@@ -16,7 +17,9 @@ export class MessageViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private msgs: ChatService,
+    private userService: UserService,
     private auth: AuthService,
     private snackbar: MatSnackBar
   ) { }
@@ -27,7 +30,18 @@ export class MessageViewComponent implements OnInit {
 
       this.chat$ = this.msgs.messages$.asObservable().pipe(
         map((chats: any[] = []) => {
-          return chats.find(chat => chat.recipientId === id);
+          const chat = chats.find(chat => chat.recipientId === id);
+          if (!chat) {
+            this.userService.getUserById(id)
+              .then(user => {
+                if (!user || !user.username) this.router.navigateByUrl('/messages', { replaceUrl: true });
+                this.router.navigateByUrl(`/messages/new/${user.uid}/${user.username}`, { replaceUrl: true });
+              }).catch(e => {
+                console.log('error getting user by id', e);
+                this.router.navigateByUrl('/messages', { replaceUrl: true });
+              });
+          }
+          return chat;
         })
       );
     });
