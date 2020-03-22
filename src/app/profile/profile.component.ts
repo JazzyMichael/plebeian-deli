@@ -90,13 +90,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const loggedInUser = await this.auth.getCurrentUser();
 
     if (!loggedInUser || loggedInUser.uid === userToChat.uid) {
-      window.alert('Must be signed in to send a message, sign up for free!');
+      alert('Must be signed in to send a message, sign up for free!');
       return;
     }
 
     this.chatService.initiateChat(loggedInUser.uid, userToChat.uid);
 
-    this.router.navigateByUrl('/chat');
+    this.router.navigateByUrl('/messages');
   }
 
   async uploadProfilePic(event: any) {

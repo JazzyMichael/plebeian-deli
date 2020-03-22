@@ -23,7 +23,7 @@
 
     <div style="font-size: 1.4em;">{{ location.path().substring(1) | titlecase }}</div>
 
-    <button mat-icon-button routerLink="/chat">
+    <button mat-icon-button routerLink="/messages">
         <mat-icon>mail</mat-icon>
     </button>
 </div>
@@ -31,7 +31,7 @@
 
 <ng-template #backOnly>
     <ng-container *ngIf="
-    !['/deli', '/chat', '/login'].includes(location.path())
+    !['/deli', '/login'].includes(location.path())
     && location.path().split('/')[1] !== 'new'
     && location.path().split('/')[1] !== 'messages'">
 

@@ -40,7 +40,6 @@ import { CommentFormComponent } from './comments/comment-form/comment-form.compo
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { SellerComponent } from './seller/seller.component';
-import { ChatComponent } from './chat/chat.component';
 import { EventComponent } from './event/event.component';
 import { TermsComponent } from './terms/terms.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -71,7 +70,6 @@ const routes: Routes = [
 
   { path: 'deli', component: DeliComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'chat', component: ChatComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
 
   { path: 'post/:id', component: PostComponent },
@@ -101,7 +99,6 @@ const routes: Routes = [
     LoginComponent,
     PostsComponent,
     PostComponent,
-    ChatComponent,
     EventComponent,
     UsernameFormComponent,
     SellerComponent,

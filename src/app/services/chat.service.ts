@@ -88,12 +88,7 @@ export class ChatService {
   }
 
   addChatMessage(docId: string, messages: any[]) {
-    this.afStore
-    .collection('chats')
-    .doc(docId)
-    .update({ messages })
-    .then(() => console.log('message sent'))
-    .catch(e => console.log('error sending message', e));
+    return this.afStore.doc(`chats/${docId}`).update({ messages });
   }
 
   updateChat(docId: string, chatObj: any) {
