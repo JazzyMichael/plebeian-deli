@@ -1,0 +1,25 @@
+<div class="container">
+
+    <img class="logo" src="assets/images/ticket-logo.png" alt="Plebeian Deli Logo">
+
+    <div class="txt">
+        <h3 style="margin: 0 0 8px 0">Welcome!</h3>
+        <p style="margin: 0">Create a unique username to get started.</p>
+    </div>
+
+    <mat-card class="pleb-card" style="padding: 0">
+        <mat-card-content>
+            <app-username-form (username)="handleUsername($event)"></app-username-form>
+        </mat-card-content>
+    </mat-card>
+
+    <button
+        mat-raised-button
+        class="submit-button"
+        [disabled]="!username"
+        (click)="saveUsername(username)">
+        <span style="margin-right: 10px">Let's Go!</span>
+        <mat-icon>arrow_forward</mat-icon>
+    </button>
+
+</div>

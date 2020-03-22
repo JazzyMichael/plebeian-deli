@@ -87,7 +87,7 @@ export class AuthService {
 
   async handleAuthData(authData: any) {
     if (authData && authData.additionalUserInfo && authData.additionalUserInfo.isNewUser) {
-      setTimeout(() => { this.router.navigateByUrl('/edit-profile'); }, 250);
+      setTimeout(() => { this.router.navigateByUrl('/set-username'); }, 250);
     } else {
       setTimeout(() => { this.router.navigateByUrl(this.username ? `/${this.username}` : '/deli'); }, 250);
     }

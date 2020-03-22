@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../services/user.service';
-import { CategoriesService } from '../services/categories.service';
+import { UserService } from '../../services/user.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-edit-profile',

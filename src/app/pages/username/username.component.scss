@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 80vh;
+}
+
+.logo {
+    height: 150px;
+    margin-top: 1em;
+}
+
+.txt {
+    text-align: center;
+    padding: 1em;
+}
+
+.submit-button {
+    width: 85%;
+}

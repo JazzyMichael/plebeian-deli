@@ -37,21 +37,22 @@ import { PostImagesComponent } from './post/post-images/post-images.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
-import { LoginComponent } from './login/login.component';
-import { AboutComponent } from './about/about.component';
-import { SellerComponent } from './seller/seller.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AboutComponent } from './pages/about/about.component';
+import { SellerComponent } from './pages/seller/seller.component';
 import { EventComponent } from './event/event.component';
-import { TermsComponent } from './terms/terms.component';
+import { TermsComponent } from './pages/terms/terms.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './profile/posts/posts.component';
 import { ConnectComponent } from './connect/connect.component';
 import { BuyPostComponent } from './buy-post/buy-post.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { FaqComponent } from './faq/faq.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { InquireServiceComponent } from './inquire-service/inquire-service.component';
 import { UsernameFormComponent } from './username-form/username-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { UsernameComponent } from './pages/username/username.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -71,6 +72,7 @@ const routes: Routes = [
   { path: 'deli', component: DeliComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDeli } },
+  { path: 'set-username', component: UsernameComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
 
   { path: 'post/:id', component: PostComponent },
   { path: 'event/:id', component: EventComponent },
@@ -121,7 +123,8 @@ const routes: Routes = [
     WidescreenHeaderComponent,
     MobileHeaderComponent,
     SidenavComponent,
-    InquireServiceComponent
+    InquireServiceComponent,
+    UsernameComponent
   ],
   imports: [
     BrowserModule,

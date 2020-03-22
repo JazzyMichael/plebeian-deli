@@ -31,7 +31,7 @@
 
 <ng-template #backOnly>
     <ng-container *ngIf="
-    !['/deli', '/login'].includes(location.path())
+    !['/deli', '/login', '/set-username'].includes(location.path())
     && location.path().split('/')[1] !== 'new'
     && location.path().split('/')[1] !== 'messages'">
 

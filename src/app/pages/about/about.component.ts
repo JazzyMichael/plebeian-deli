@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AboutComponent implements OnInit {
   selectedFeature: any;
   features: any[] = [
     {
@@ -40,18 +40,10 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ];
 
-  goToSubscriptions: boolean;
-
   constructor() { }
 
   ngOnInit() {
     this.selectFeature(0);
-  }
-
-  ngAfterViewInit() {
-  }
-
-  ngOnDestroy() {
   }
 
   selectFeature(index: number) {
