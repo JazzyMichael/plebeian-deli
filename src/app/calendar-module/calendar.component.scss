@@ -1,5 +1,25 @@
 @import '~angular-calendar/scss/angular-calendar.scss';
 
+.cal-open-day-events {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.event-preview {
+  border: 1px solid white;
+  margin: 0.25em;
+  height: 150px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.event-image {
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+}
+
 .dark-theme {
   // First define some global color variables for your app, these are just for the demo, they can be anything you like
   $bg-dark-primary: #1f262d;

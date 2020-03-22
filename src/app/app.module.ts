@@ -125,8 +125,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
     BrowserAnimationsModule,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

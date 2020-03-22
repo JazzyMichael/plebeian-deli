@@ -1,18 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  startOfDay,
-  isSameDay,
-  isSameMonth
-} from 'date-fns';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarView
-} from 'angular-calendar';
+import { startOfDay, isSameDay, isSameMonth } from 'date-fns';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { Subject, of } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AnimationTriggerMetadata, transition, style, animate, trigger } from '@angular/animations';
 
 const colors: any = {
   red: { primary: '#ad2121', secondary: '#FAE3E3' },
@@ -20,30 +13,30 @@ const colors: any = {
   yellow: { primary: '#e3bc08', secondary: '#FDF1BA' }
 };
 
+export const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
+  transition('void => *', [
+    style({ height: 0, overflow: 'hidden' }),
+    animate('150ms', style({ height: '*' }))
+  ]),
+  transition('* => void', [
+    style({ height: '*', overflow: 'hidden' }),
+    animate('150ms', style({ height: 0 }))
+  ])
+]);
+
 @Component({
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  animations: [collapseAnimation]
 })
 export class CalendarComponent implements OnInit {
 
   view: CalendarView = CalendarView.Month;
-
   viewDate: Date = new Date();
-
   refresh: Subject<any> = new Subject();
-
   activeDayIsOpen: boolean = false;
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Deleted', event);
-      }
-    }
-  ];
 
   events$: any;
 
@@ -60,7 +53,6 @@ export class CalendarComponent implements OnInit {
             start: startOfDay(new Date(event.date.seconds * 1000)),
             title: event.title,
             color: colors.red,
-            actions: this.actions,
             data: event
           };
         }));
@@ -69,6 +61,7 @@ export class CalendarComponent implements OnInit {
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log('dayClicked');
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
