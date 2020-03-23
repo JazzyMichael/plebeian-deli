@@ -67,6 +67,11 @@ export class NotificationService {
 
   }
 
+  markAsRead(uid: string, docId: string) {
+    const obj = { new: false };
+    return this.afStore.collection(`users/${uid}/notification`).add(obj);
+  }
+
   addNotification(uid: string, obj: any) {
     this.afStore
       .collection('users')
