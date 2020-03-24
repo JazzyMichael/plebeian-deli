@@ -35,11 +35,11 @@
                 <div class="sub-total">
                     <div class="sub-total-heading sub-total-item">
                         <span>Subtotal:</span>
-                        <span>{{ order.subtotal | currency }}</span>
+                        <span>{{ order.subtotal / 100 | currency }}</span>
                     </div>
                     <div class="sub-total-item">
                         <span>Processing:</span>
-                        <span>+ {{ order.fee | currency }}</span>
+                        <span>+ {{ order.fee / 100 | currency }}</span>
                     </div>
                     <div class="sub-total-item">
                         <span>Shipping:</span>
@@ -49,7 +49,7 @@
     
                 <div class="total">
                     <h2>Total: </h2>
-                    <h2>{{ order.total | currency }}</h2>
+                    <h2>{{ order.total / 100 | currency }}</h2>
                 </div>
             </div>
     
@@ -59,35 +59,107 @@
     <mat-card-actions style="padding: 1em">
         <button mat-button style="width: 100%" [routerLink]="'/post/' + order.postId">View Post</button>
     </mat-card-actions>
-
 </mat-card>
 
+<ng-container *ngIf="isBuyer && order">
+    <div *ngIf="order.status === 'placed'" style="text-align: right; margin: 1.5em;">
+        <p style="color: #4caf50;">ArtistName is working on your order, well let you know when it ships!</p>
+        <p>{{ order.timestamp.toDate() | date:'short' }}</p>
+    </div>
 
-<div *ngIf="order?.status === 'pending' || order?.status === 'placed'" style="text-align: right; margin: 1.5em;">
-    <p style="color: #4caf50;">Waiting for ArtistName to accept your order!</p>
-</div>
+    <div *ngIf="order.status === 'placed'" style="text-align: right; margin: 1.5em;">
+        <p style="color: #4caf50;">You're order has been shipped!</p>
+        <p *ngIf="!order.rating" style="color: #4caf50;">Leave a rating when it arrives.</p>
+        <p>{{ order.timestamp.toDate() | date:'short' }}</p>
+    </div>
+    
+    <mat-card *ngIf="order.status === 'placed'" class="pleb-card">
+        <mat-card-header>
+            <mat-card-title>Tracking #</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="padding: 0.25em; text-align: center;">
+            <p>
+                <a style="color: white" href="http://www.google.com/search?q=1Z999AA10123456784" target="_blank">
+                    1Z 999 AA1 01 2345 6784
+                </a>
+            </p>
+        </mat-card-content>
+    </mat-card>
 
-<div *ngIf="order?.status === 'in-progress'" style="text-align: right; margin: 1.5em;">
-    <p style="color: #4caf50;">ArtistName is working on your order!</p>
-    <p>6 min ago</p>
-</div>
+    <button *ngIf="!showRating" mat-button style="display: block; width: 85%; max-width: 666px; margin: auto;" (click)="showRating = true">
+        Add rating and mark as recieved
+    </button>
+
+    <p *ngIf="rating" style="text-align: center; margin: 2em auto 1em;">{{ rating }}/5</p>
+
+    <div *ngIf="showRating" class="rating-container">
+        <img
+            *ngFor="let r of ratings"
+            [ngStyle]="{ 'opacity': rating && rating >= r ? '1' : '0.4' }"
+            (click)="rating = r"
+            src="assets/images/ticket-logo.png"
+            height="50"
+            alt="Logo">
+    </div>
+</ng-container>
 
 
-<div *ngIf="order?.status === 'fullfilled'" style="text-align: right; margin: 1.5em;">
-    <p style="color: #4caf50;">ArtistName has fullfilled your order!</p>
-    <p>6 min ago</p>
-</div>
+<ng-container *ngIf="isSeller && order">
+    <div *ngIf="order.status === 'placed'" style="text-align: right; margin: 1.5em;">
+        <p style="color: #4caf50;">BuyerName placed an order, mark it as shipped by adding a tracking number.</p>
+        <p>{{ order.timestamp.toDate() | date:'short' }}</p>
+    </div>
+    
+    <button mat-raised-button style="display: block; width: 85%; max-width: 666px; margin: auto;">
+        <mat-icon></mat-icon>
+        <span style="margin-left: 10px">Add Tracking #</span>
+    </button>
+
+    <div *ngIf="order.status === 'shipped'" style="text-align: right; margin: 1.5em;">
+        <p style="color: #4caf50;">BuyerName will be sent the tracking info, thanks for fullfilling the purchase!</p>
+        <p>{{ order.timestamp.toDate() | date:'short' }}</p>
+    </div>
+</ng-container>
 
 
-<div *ngIf="order?.status === 'fullfilled'" class="order-info-box">
-    <p>Tracking #</p>
-    <p><a style="color: white" href="http://www.google.com/search?q=LE000589587CA" target="_blank">LE000589587CA</a></p>
-</div>
+<div style="height: 33vh"></div>
 
 
-<button *ngIf="order?.sellerId === '' && order?.status !== 'accepted'" (click)="acceptOrder()" mat-raised-button color="accent" style="display: block; margin: 1em auto; width: 90%;">
-    Accept
-</button>
 
-<p *ngIf="order?.status === 'accepted'" style="text-align: center;">Accepted!</p>
+
+<!--
+    order.type === 'post' && order.status === 'placed'
+
+    buyer:
+    (message) ArtistName is working on your order, well let you know when it ships!
+
+    seller:
+    (message) BuyerName placed an order - timestamp
+    (message) Mark the order as shipped by adding a tracking # or link
+    (button) (icon) Add Tracking #
+
+-->
+
+<!--
+    order.type === 'post' && order.status === 'shipped'
+
+    buyer:
+    (message) Your order has been shipped! Leave a rating when it arrives.
+    (card) Tracking #: 1234
+    (button) Add rating and mark as recieved
+        - rating selector
+
+    seller:
+    (message) Shipped
+-->
+
+<!--
+    order.type === 'post' && order.status === 'shipped'
+
+    buyer:
+    (message) Thanks for rating!
+
+    seller:
+    (message) You've been rated
+-->
 
