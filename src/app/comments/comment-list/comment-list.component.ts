@@ -11,10 +11,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CommentListComponent implements OnInit {
   @Input() comments: any[];
   @Input() postId: string;
-
-  replying: any;
+  @Input() eventId: string;
 
   canReply: boolean;
+  replying: any;
 
   constructor(
     private auth: AuthService,
@@ -23,11 +23,11 @@ export class CommentListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const { postUserId } = this.comments.find(c => c.postUserId) || { postUserId: null };
+    const { postUserId, eventUserId } = this.comments.find(c => c.postUserId || c.eventUserId) || { postUserId: null, eventUserId: null };
 
     const user = await this.auth.getCurrentUser();
 
-    this.canReply = user && user.uid === postUserId;
+    this.canReply = user && (user.uid === postUserId || user.uid === eventUserId);
   }
 
   startReply(comment: any) {
@@ -44,15 +44,18 @@ export class CommentListComponent implements OnInit {
     const reply = {
       userId: user.uid,
       username: user.username,
-      postId: this.postId,
+      postId: this.postId || '',
       postUserId: '',
+      eventId: this.eventId || '',
+      eventUserId: '',
       sourceCommentId: this.replying.commentId,
       sourceCommentUserId: this.replying.userId,
       message: text,
       createdTimestamp: new Date()
     };
 
-    await this.commentsService.authorReplyToComment(reply);
+    if (this.postId) await this.commentsService.replyToPostComment(reply);
+    if (this.eventId) await this.commentsService.replyToEventComment(reply);
 
     this.replying = null;
 

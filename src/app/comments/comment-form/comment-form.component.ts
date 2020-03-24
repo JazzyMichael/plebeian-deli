@@ -9,14 +9,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./comment-form.component.scss']
 })
 export class CommentFormComponent implements OnInit {
-  @Input() deliPostId: string;
-  @Input() primePostId: string;
+  @Input() postId: string;
   @Input() postUserId: string;
+  @Input() eventId: string;
+  @Input() eventUserId: string;
 
   newComment: string;
 
   constructor(
-    public authService: AuthService,
+    public auth: AuthService,
     private commentsService: CommentsService,
     private snackbar: MatSnackBar
   ) { }
@@ -29,27 +30,29 @@ export class CommentFormComponent implements OnInit {
     const obj = {
       userId,
       username,
-      postId: this.deliPostId,
-      postUserId: this.postUserId,
+      postId: this.postId || '',
+      eventId: this.eventId || '',
+      postUserId: this.postUserId || '',
+      eventUserId: this.eventUserId || '',
       message: this.newComment,
       createdTimestamp: new Date()
     };
 
     let prom: Promise<any>;
 
-    if (this.deliPostId) {
-      prom = this.commentsService.addDeliComment(this.deliPostId, obj);
-    } else if (this.primePostId) {
-      prom = this.commentsService.addPrimeComment(this.primePostId, obj);
+    if (this.postId) {
+      prom = this.commentsService.addPostComment(this.postId, obj);
     }
 
-    if (!prom) {
-      return;
+    if (this.eventId) {
+      prom = this.commentsService.addEventComment(this.eventId, obj);
     }
+
+    if (!prom) return;
 
     prom
       .then(res => {
-        this.snackbar.open('Comment Added!', 'Ok', { duration: 3000 });
+        this.snackbar.open('Comment Added!', '', { duration: 2500 });
         this.newComment = '';
       });
   }

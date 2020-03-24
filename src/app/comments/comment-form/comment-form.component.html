@@ -1,5 +1,5 @@
 
-<div *ngIf="authService.user$ | async as user; else notLoggedIn" class="new-comment-form">
+<div *ngIf="auth.user$ | async as user; else notLoggedIn" class="new-comment-form">
 
     <h3>LEAVE A COMMENT</h3>
 

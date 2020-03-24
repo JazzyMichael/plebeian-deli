@@ -44,6 +44,7 @@
                     user && location.path() === '/' + user.username
                     || ['/edit-profile', '/seller'].includes(location.path())
                     || location.path().split('/')[1] === 'order-details'
+                    || location.path().split('/')[1] === 'event'
                     || location.path() === '/contact';
                     else noTitle"
                 style="font-size: 1.4em;">

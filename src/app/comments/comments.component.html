@@ -6,13 +6,19 @@
 </div>
 
 <!-- View all Comments -->
-<app-comment-list *ngIf="comments$ | async as comments" [comments]="comments" [postId]="deliPostId"></app-comment-list>
+<app-comment-list
+    *ngIf="comments$ | async as comments"
+    [comments]="comments"
+    [postId]="postId"
+    [eventId]="eventId">
+</app-comment-list>
 
 <br>
 
 <!-- Leave a Comment -->
 <app-comment-form
-    [deliPostId]="deliPostId"
+    [postId]="postId"
     [postUserId]="postUserId"
-    [primePostId]="primePostId">
+    [eventId]="eventId"
+    [eventUserId]="eventUserId">
 </app-comment-form>

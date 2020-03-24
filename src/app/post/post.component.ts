@@ -5,6 +5,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-post',
@@ -31,7 +32,8 @@ export class PostComponent implements OnInit, OnDestroy {
     private router: Router,
     private postService: PostService,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -90,6 +92,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
           this.likedUids.push(this.user.uid);
           await this.postService.updatePost(this.postId, { likedUids: this.likedUids, likes: this.likedUids.length });
+          this.snackbar.open('Liked :)', '', { duration: 2500 });
 
           // update post user notifications
           const obj = {
@@ -113,14 +116,13 @@ export class PostComponent implements OnInit, OnDestroy {
           }
 
           await this.postService.updatePost(this.postId, { likedUids, likes: likedUids.length });
+          this.snackbar.open('Unliked :(', '', { duration: 2500 });
         }
       });
   }
 
   ngOnDestroy() {
-    if (this.debounceSub) {
-      this.debounceSub.unsubscribe();
-    }
+    if (this.debounceSub) this.debounceSub.unsubscribe();
   }
 
   async likePost() {

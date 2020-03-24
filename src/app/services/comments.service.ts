@@ -8,7 +8,7 @@ export class CommentsService {
 
   constructor(private afStore: AngularFirestore) { }
 
-  watchDeliPostComments(postId: string) {
+  watchPostComments(postId: string) {
     return this.afStore
       .collection('posts')
       .doc(postId)
@@ -16,16 +16,15 @@ export class CommentsService {
       .valueChanges({ idField: 'commentId' });
   }
 
-  watchPrimePostComments(postId: string) {
+  watchEventComments(eventId: string) {
     return this.afStore
-      .collection('prime-cuts')
-      .doc(postId)
+      .collection('events')
+      .doc(eventId)
       .collection('comments')
       .valueChanges({ idField: 'commentId' });
   }
 
-
-  authorReplyToComment(reply: any) {
+  replyToPostComment(reply: any) {
     return this.afStore
       .collection('posts')
       .doc(reply.postId)
@@ -34,9 +33,17 @@ export class CommentsService {
       .update({ authorReply: reply });
   }
 
+  replyToEventComment(reply: any) {
+    return this.afStore
+      .collection('events')
+      .doc(reply.eventId)
+      .collection('comments')
+      .doc(reply.sourceCommentId)
+      .update({ authorReply: reply });
+  }
 
   // add to notifications for each user who commented
-  addDeliComment(postId: string, commentObj: any) {
+  addPostComment(postId: string, commentObj: any) {
     return this.afStore
       .collection('posts')
       .doc(postId)
@@ -44,10 +51,10 @@ export class CommentsService {
       .add(commentObj);
   }
 
-  addPrimeComment(postId: string, commentObj: any) {
+  addEventComment(eventId: string, commentObj: any) {
     return this.afStore
-      .collection('prime-cuts')
-      .doc(postId)
+      .collection('events')
+      .doc(eventId)
       .collection('comments')
       .add(commentObj);
   }

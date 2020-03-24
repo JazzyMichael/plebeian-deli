@@ -1,10 +1,23 @@
-<div *ngIf="event$ | async as event" style="text-align: center">
+<div *ngIf="event$ | async as event" style="margin-bottom: 20vh">
 
-    <h1 style="margin: 1.5em auto">{{ event.date?.toDate() | date }} - {{ event.title }}</h1>
+    <h2 style="text-align: center">{{ event.title }}</h2>
 
-    <img [src]="event.imageUrl" alt="Event Image" style="max-width: 95%; margin: 1em auto;">
+    <div style="display: flex; justify-content: space-around;">
+        <span>{{ event.date?.toDate() | date }}</span>
+        <span>{{ event.location }}</span>
+    </div>
 
-    <mat-card>{{ event.description }}</mat-card>
+    <img [src]="event.imageUrl" alt="Event Image" class="event-image">
+
+    <mat-card style="display: flex; justify-content: flex-end; align-items: center; padding: 0 1.5em;">
+        <button mat-icon-button (click)="like()" color="warn">
+            <mat-icon *ngIf="!alreadyLiked" color="warn">favorite_border</mat-icon>
+            <mat-icon *ngIf="alreadyLiked" color="warn">favorite</mat-icon>
+        </button>
+        <span *ngIf="likeCount">{{ likeCount }} {{ likeCount == 1 ? 'like' : 'likes' }}</span>
+    </mat-card>
+
+    <div style="text-align: center; margin: 1em;">{{ event.description }}</div>
 
     <mat-card *ngIf="gallery" class="gallery-info-card">
         <div
@@ -18,5 +31,7 @@
             <p>{{ gallery.description }}</p>
         </div>
     </mat-card>
+
+    <app-comments [eventId]="eventId" [eventUserId]="event.userId"></app-comments>
 
 </div>

@@ -12,7 +12,11 @@ import { UserService } from '../services/user.service';
 })
 export class EventComponent implements OnInit {
   event$: Observable<any>;
+  eventId: string;
   gallery: any;
+
+  likeCount: number;
+  alreadyLiked: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,21 +28,28 @@ export class EventComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
 
-      const eventId = params.get('id');
+      this.eventId = params.get('id');
 
-      if (!eventId) return this.router.navigateByUrl('/calendar');
+      if (!this.eventId) return this.router.navigateByUrl('/calendar');
 
       document.querySelector('.mat-drawer-content').scrollTop = 0;
       document.querySelector('.mat-sidenav-content').scrollTop = 0;
 
-      this.event$ = this.eventService.getEvent(eventId)
+      this.event$ = this.eventService.getEvent(this.eventId)
         .pipe(
           tap(async event => {
+            this.likeCount = 0;
+            this.alreadyLiked = false;
             if (!event) return this.router.navigateByUrl('/calendar');
-            this.gallery = await this.userService.getUserById(event.userId || event.gallerId);
+            this.gallery = await this.userService.getUserById(event.userId);
           })
         );
     });
+  }
+
+  like() {
+    this.alreadyLiked = !this.alreadyLiked;
+    this.likeCount = this.alreadyLiked ? 1 : 0;
   }
 
   viewGallery() {

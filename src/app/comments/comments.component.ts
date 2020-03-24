@@ -9,9 +9,11 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit {
-  @Input() deliPostId: string;
-  @Input() primePostId: string;
+  @Input() postId: string;
   @Input() postUserId: string;
+
+  @Input() eventId: string;
+  @Input() eventUserId: string;
 
   comments$: Observable<any[]>;
   commentCount: number;
@@ -19,11 +21,13 @@ export class CommentsComponent implements OnInit {
   constructor(private commentsService: CommentsService) { }
 
   ngOnInit() {
-    if (this.deliPostId) {
-      this.comments$ = this.commentsService.watchDeliPostComments(this.deliPostId)
+    if (this.postId) {
+      this.comments$ = this.commentsService.watchPostComments(this.postId)
         .pipe(tap(arr => this.commentCount = arr && arr.length ? arr.length : 0));
-    } else if (this.primePostId) {
-      this.comments$ = this.commentsService.watchPrimePostComments(this.primePostId)
+    }
+
+    if (this.eventId) {
+      this.comments$ = this.commentsService.watchEventComments(this.eventId)
         .pipe(tap(arr => this.commentCount = arr && arr.length ? arr.length : 0));
     }
   }
