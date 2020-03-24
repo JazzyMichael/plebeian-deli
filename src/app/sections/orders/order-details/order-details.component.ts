@@ -13,9 +13,6 @@ export class OrderDetailsComponent implements OnInit {
 
   order: any;
   user$: Observable<any>;
-  isBuyer: boolean;
-  isSeller: boolean;
-  showRating: boolean;
   ratings: number[];
   rating: number;
 
@@ -29,8 +26,6 @@ export class OrderDetailsComponent implements OnInit {
     this.ratings = [1, 2, 3, 4, 5];
     this.user$ = this.auth.user$.asObservable();
     this.order = this.ordersService.getSelectedOrder();
-    this.isBuyer = true;
-    this.showRating = false;
     console.log(this.order);
   }
 

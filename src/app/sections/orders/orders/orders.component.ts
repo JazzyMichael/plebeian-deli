@@ -54,8 +54,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
-  selectOrder(order: any) {
-    this.ordersService.selectOrder(order);
+  selectOrder(order: any, isBuyer: boolean) {
+    this.ordersService.selectOrder({ ...order, isBuyer});
   }
 
 }

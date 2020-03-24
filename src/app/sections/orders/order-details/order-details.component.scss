@@ -62,4 +62,6 @@
 .rating-container {
     display: flex;
     justify-content: space-around;
+    max-width: 500px;
+    margin: 1em auto;
 }

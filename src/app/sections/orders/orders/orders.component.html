@@ -2,7 +2,7 @@
 
     <mat-tab label="Bought">
         <div *ngIf="buyerOrders$ | async as orders" style="margin-top: 2em; min-height: 200px;">
-            <div *ngFor="let order of orders" (click)="selectOrder(order)" class="order-list-item">
+            <div *ngFor="let order of orders" (click)="selectOrder(order, true)" class="order-list-item">
                 <div
                     *ngIf="order.thumb$ | async as thumbnail"
                     class="order-image"
@@ -29,7 +29,7 @@
  
     <mat-tab label="Sold">
         <div *ngIf="isApprovedSeller; else notApprovedSeller" style="margin-top: 2em; min-height: 200px;">
-            <div *ngFor="let order of sellerOrders$ | async" (click)="selectOrder(order)" class="order-list-item">
+            <div *ngFor="let order of sellerOrders$ | async" (click)="selectOrder(order, false)" class="order-list-item">
                 <div
                     *ngIf="order.thumb$ | async as thumbnail; else noThumbnailTwo"
                     class="order-image"
