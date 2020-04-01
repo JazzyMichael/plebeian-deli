@@ -1,0 +1,62 @@
+<mat-card class="pleb-card">
+
+    <ng-template #noThumbnail>
+        <div
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'">
+        </div>
+    </ng-template>
+
+    <mat-card-header style="padding: 0.75em">
+        <div *ngIf="order.thumb$ | async as thumbnail; else noThumbnail"
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + thumbnail + ')'"></div>
+        <mat-card-title>Seller Username</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content style="padding: 0.5em">
+        <div class="center-container">
+
+            <div class="left-side">
+                <h3>{{ order.item?.name || 'name' }}</h3>
+        
+                <div *ngIf="order.thumb$ | async as thumbnail" class="order-image" [style.background-image]="'url(' + thumbnail + ')'"></div>
+            </div>
+    
+            <div class="right-side">
+                <h3 *ngIf="order.shipping">Shipping To: {{ order.shipping.address.name }}</h3>
+    
+                <p *ngIf="order.shipping" style="text-align: center">
+                    {{ order.shipping.address.line1 }} {{ order.shipping.address.line2 || '' }}, {{ order.shipping.address.city }} {{ order.shipping.address.state }} {{ order.shipping.address.postal_code }}, {{ order.shipping.address.country}}
+                </p>
+    
+                <div class="sub-total">
+                    <div class="sub-total-heading sub-total-item">
+                        <span>Subtotal:</span>
+                        <span>{{ order.subtotal / 100 | currency }}</span>
+                    </div>
+                    <div class="sub-total-item">
+                        <span>Processing:</span>
+                        <span>+ {{ order.fee / 100 | currency }}</span>
+                    </div>
+                    <div class="sub-total-item">
+                        <span>Shipping:</span>
+                        <span>+ $0.00</span>
+                    </div>
+                </div>
+    
+                <div class="total">
+                    <h2>Total: </h2>
+                    <h2>{{ order.total / 100 | currency }}</h2>
+                </div>
+            </div>
+    
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions style="padding: 1em">
+        <button mat-button style="width: 100%" [routerLink]="'/post/' + order.postId">View Post</button>
+    </mat-card-actions>
+</mat-card>

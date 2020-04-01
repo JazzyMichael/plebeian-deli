@@ -12,29 +12,19 @@ import { AuthService } from 'src/app/services/auth.service';
 export class OrderDetailsComponent implements OnInit {
 
   order: any;
-  user$: Observable<any>;
-  ratings: number[];
-  rating: number;
 
   constructor(
     private ordersService: OrdersService,
-    private auth: AuthService,
     private imgs: ImageService
   ) { }
 
   ngOnInit() {
-    this.ratings = [1, 2, 3, 4, 5];
-    this.user$ = this.auth.user$.asObservable();
     this.order = this.ordersService.getSelectedOrder();
     console.log(this.order);
   }
 
   getThumbnail(path: string): Observable<any> {
     return this.imgs.imageFromPath(path)
-  }
-
-  async acceptOrder() {
-    await this.ordersService.acceptOrder(this.order.id);
   }
 
 }

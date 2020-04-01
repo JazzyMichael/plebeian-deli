@@ -1,0 +1,49 @@
+<mat-card class="pleb-card">
+
+    <ng-template #noThumbnail>
+        <div
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + 'assets/icons/icon-192x192.png' + ')'">
+        </div>
+    </ng-template>
+
+    <mat-card-header>
+        <div *ngIf="order.thumb$ | async as thumbnail; else noThumbnail"
+            mat-card-avatar
+            style="background-size: cover"
+            [style.background-image]="'url(' + thumbnail + ')'"></div>
+        <mat-card-title>Seller Username</mat-card-title>
+        <mat-card-subtitle>{{ order?.item?.name }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <div>
+            <p>{{ order?.item?.description || 'Service Description' }}</p>
+        </div>
+
+        <div>
+            <p>Details</p>
+        </div>
+
+        <div>
+            <p>Requested Completion Date</p>
+        </div>
+
+        <div class="image-row">
+            <img src="" alt="">
+        </div>
+
+    </mat-card-content>
+
+    <mat-card-actions style="padding: 1em">
+        <button
+            mat-button
+            style="width: 100%"
+            [routerLink]="'/service/' + order.serviceId">
+            View Service
+        </button>
+    </mat-card-actions>
+
+</mat-card>
