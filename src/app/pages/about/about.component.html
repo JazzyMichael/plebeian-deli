@@ -17,16 +17,6 @@
         </div>
       </div>
     </div>
-    
-    <div class="page-top">
-      <iframe
-        src="https://www.youtube.com/embed/8GFp_nSfcfs"
-        style="width: 100%; height: 300px;"
-        frameborder="0"
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
 
     <br>
     
@@ -75,7 +65,7 @@
                 mat-button
                 style="display: block; margin: 4em auto 1em;"
                 [ngStyle]="{ 'color': selectedFeature.color }"
-                [routerLink]="selectedFeature.link">
+                (click)="goToFeature(selectedFeature)">
                 View {{ selectedFeature.name }}
                 <mat-icon style="margin-left: 10px; margin-bottom: 3px;">arrow_forward</mat-icon>
             </button>
@@ -83,14 +73,7 @@
         </div>
     </div>
 
-    <hr class="h-rule">
-    
-    <!-- <div class="page-section">
-      <div class="container">
-        <h2 style="text-align: center">Our Story</h2>
-      </div>
-    </div> -->
-  
+    <hr class="h-rule">  
   
 </div>
 

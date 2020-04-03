@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-about',
@@ -16,7 +17,7 @@ export class AboutComponent implements OnInit {
       author: 'Mike Tyson',
       firstBlob: 'This is our blog section where we produce daily content all about what’s going on in art. Interviews, features, what’s going on in art, some history, anything and everything art we cover it here!',
       secondBlob: 'All the information you need without the bore… and some jokes.  We have an ever growing list of writers and contributors who not only want to inform but also entertain you and give a little bit of personality.',
-      link: '/prime-cuts'
+      externalLink: 'https://www.plebeian.us/blog'
     },
     {
       name: 'Deli',
@@ -40,7 +41,7 @@ export class AboutComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.selectFeature(0);
@@ -48,6 +49,16 @@ export class AboutComponent implements OnInit {
 
   selectFeature(index: number) {
     this.selectedFeature = this.features[index];
+  }
+
+  goToFeature(feature: any) {
+    if (feature.externalLink) {
+      window.open(feature.externalLink, '_blank');
+    }
+
+    if (feature.link) {
+      this.router.navigateByUrl(feature.link);
+    }
   }
 
 }
