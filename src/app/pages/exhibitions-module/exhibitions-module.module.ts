@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../../material/material.module';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [

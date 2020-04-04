@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../services/event.service';
+import { EventService } from '../../services/event.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-event',

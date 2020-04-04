@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { startOfDay, isSameDay, isSameMonth } from 'date-fns';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { Subject, of } from 'rxjs';
-import { EventService } from '../services/event.service';
+import { EventService } from '../../services/event.service';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AnimationTriggerMetadata, transition, style, animate, trigger } from '@angular/animations';

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PostService } from '../services/post.service';
+import { PostService } from 'src/app/services/post.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
-import { NotificationService } from '../services/notification.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

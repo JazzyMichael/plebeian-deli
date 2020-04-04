@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServiceService } from '../services/service.service';
-import { AuthService } from '../services/auth.service';
-import { OrdersService } from '../services/orders.service';
+import { ServiceService } from '../../services/service.service';
+import { AuthService } from '../../services/auth.service';
+import { OrdersService } from '../../services/orders.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

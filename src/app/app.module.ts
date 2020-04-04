@@ -25,33 +25,33 @@ import { NavComponent } from './nav/nav.component';
 import { WidescreenHeaderComponent } from './nav/widescreen-header/widescreen-header.component';
 import { MobileHeaderComponent } from './nav/mobile-header/mobile-header.component';
 import { SidenavComponent } from './nav/sidenav/sidenav.component';
-import { FooterComponent } from './footer/footer.component';
-import { FooterBarComponent } from './footer-bar/footer-bar.component';
-import { DeliComponent } from './deli/deli.component';
-import { DeliHeaderComponent } from './deli/deli-header/deli-header.component';
-import { CategorySelectComponent } from './deli/category-select/category-select.component';
-import { PostLayoutComponent } from './post-layout/post-layout.component';
-import { PostThumbnailComponent } from './post-layout/post-thumbnail/post-thumbnail.component';
-import { PostComponent } from './post/post.component';
-import { PostImagesComponent } from './post/post-images/post-images.component';
-import { CommentsComponent } from './comments/comments.component';
-import { CommentListComponent } from './comments/comment-list/comment-list.component';
-import { CommentFormComponent } from './comments/comment-form/comment-form.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FooterBarComponent } from './components/footer-bar/footer-bar.component';
+import { DeliComponent } from './pages/deli/deli.component';
+import { DeliHeaderComponent } from './pages/deli/deli-header/deli-header.component';
+import { CategorySelectComponent } from './pages/deli/category-select/category-select.component';
+import { PostLayoutComponent } from './components/post-layout/post-layout.component';
+import { PostThumbnailComponent } from './components/post-layout/post-thumbnail/post-thumbnail.component';
+import { PostComponent } from './pages/post/post.component';
+import { PostImagesComponent } from './pages/post/post-images/post-images.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { CommentListComponent } from './components/comments/comment-list/comment-list.component';
+import { CommentFormComponent } from './components/comments/comment-form/comment-form.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SellerComponent } from './pages/seller/seller.component';
-import { EventComponent } from './event/event.component';
+import { EventComponent } from './pages/event/event.component';
 import { TermsComponent } from './pages/terms/terms.component';
-import { ProfileComponent } from './profile/profile.component';
-import { PostsComponent } from './profile/posts/posts.component';
-import { ConnectComponent } from './connect/connect.component';
-import { BuyPostComponent } from './buy-post/buy-post.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { PostsComponent } from './pages/profile/posts/posts.component';
+import { ConnectComponent } from './pages/connect/connect.component';
+import { BuyPostComponent } from './pages/buy-post/buy-post.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
-import { InquireServiceComponent } from './inquire-service/inquire-service.component';
-import { UsernameFormComponent } from './username-form/username-form.component';
-import { AddressFormComponent } from './address-form/address-form.component';
+import { InquireServiceComponent } from './pages/inquire-service/inquire-service.component';
+import { UsernameFormComponent } from './components/username-form/username-form.component';
+import { AddressFormComponent } from './components/address-form/address-form.component';
 import { UsernameComponent } from './pages/username/username.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -61,13 +61,13 @@ const redirectLoggedInToDeli = () => redirectLoggedInTo(['deli']);
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
-  { path: 'exhibitions', loadChildren: () => import('./exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
-  { path: 'calendar', loadChildren: () => import('./calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
-  { path: 'members', loadChildren: () => import('./members-module/members-module.module').then(m => m.MembersModuleModule) },
+  { path: 'exhibitions', loadChildren: () => import('./pages/exhibitions-module/exhibitions-module.module').then(m => m.ExhibitionsModuleModule) },
+  { path: 'calendar', loadChildren: () => import('./pages/calendar-module/calendar-module.module').then(m => m.CalendarModuleModule) },
+  { path: 'members', loadChildren: () => import('./pages/members-module/members-module.module').then(m => m.MembersModuleModule) },
   { path: 'orders', loadChildren: () => import('./sections/orders/orders.module').then(m => m.OrdersModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'new', loadChildren: () => import('./new/new.module').then(m => m.NewModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'new', loadChildren: () => import('./sections/new/new.module').then(m => m.NewModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'messages', loadChildren: () => import('./sections/messages/messages.module').then(m => m.MessagesModule), canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
+  { path: 'contact', loadChildren: () => import('./sections/contact/contact.module').then(m => m.ContactModule) },
 
   { path: 'deli', component: DeliComponent },
   { path: 'about', component: AboutComponent },

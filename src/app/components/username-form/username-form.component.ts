@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import { of } from 'rxjs';
 

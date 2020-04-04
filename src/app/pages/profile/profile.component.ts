@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { UserService } from '../services/user.service';
-import { ChatService } from '../services/chat.service';
-import { ServiceService } from '../services/service.service';
-import { EventService } from '../services/event.service';
+import { UserService } from '../../services/user.service';
+import { ChatService } from '../../services/chat.service';
+import { ServiceService } from '../../services/service.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-profile',

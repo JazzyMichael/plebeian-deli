@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CategoriesService } from '../../services/categories.service';
+import { CategoriesService } from '../../../services/categories.service';
 
 @Component({
   selector: 'app-members',

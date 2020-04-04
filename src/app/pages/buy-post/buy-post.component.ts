@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AuthService } from '../services/auth.service';
-import { PostService } from '../services/post.service';
+import { AuthService } from '../../services/auth.service';
+import { PostService } from '../../services/post.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 declare var Stripe: any;
 const stripe = Stripe(environment.stripe.key);
