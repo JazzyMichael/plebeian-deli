@@ -1,5 +1,5 @@
 # Update 4/7/20
-Recently learned from a mutual friend that the people I was working on this project with have been slandering me and talking a lot of "crap" behind my back since I started about 6 months ago. Until further notice this project is on hold.
+Recently learned from a mutual friend that the people I was working on this project with have been slandering me and talking a lot of "crap" behind my back since I started on this project. Until further notice this project is on hold.
 
 # Plebeian Deli
 
