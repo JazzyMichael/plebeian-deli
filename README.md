@@ -1,5 +1,5 @@
 # Update 4/7/20
-Recently learned from a mutual friend that the people I was working on this project with have been slandering me behind my back since I started on this project. Until further notice this project is on hold.
+I am no longer project is on hold, feel free to contribute!
 
 # Plebeian Deli
 
