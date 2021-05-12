@@ -33,7 +33,7 @@
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-swiper-wrapper": "^9.0.1",
     "rxjs": "~6.5.4",
-    "swiper": "^5.3.6",
+    "swiper": "^6.5.1",
     "tslib": "^1.11.0",
     "zone.js": "~0.10.2"
   },
